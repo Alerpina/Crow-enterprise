@@ -4,18 +4,66 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\DB;
+use App\Models\Generalsetting;
+use App\Helpers\Helper;
+use DOMDocument;
+use App\Classes\XMLHelper;
+
 
 class Kernel extends ConsoleKernel
 {
+    /**
+     * The Artisan commands provided by your application.
+     *
+     * @var array
+     */
+    protected $commands = [
+        Commands\CrudGenerator::class,
+        Commands\GenerateThumbnails::class,
+        Commands\UpdatePhotoReferences::class,
+        Commands\CheckDiscrepancies::class,
+        Commands\GenerateAccessToken::class,
+        //
+    ];
+
+    private $xml_helper;
+
     /**
      * Define the application's command schedule.
      *
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
+
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        /**
+         * Only execute the command, if the key in the .ENV is enabled.
+         * 
+         */
+        if (env("ENABLE_COMPRAS_PARAGUAI", false)) {
+            $schedule->call(function () {
+                $this->xml_helper = new XMLHelper();
+                $this->xml_helper->updateComprasParaguai();
+            });
+        }
+
+        if(Generalsetting::find(1)->is_lojaupdate){
+            $schedule->call(function () {
+                $this->xml_helper = new XMLHelper();
+                $this->xml_helper->updateLojaFacebook();
+                $this->xml_helper->updateLojaGoogle();
+            })->hourly();
+        }
+
+        if(Generalsetting::where('is_default', 1)->first()->ftp_folder){
+            $schedule->command('generate:thumbnails')->daily();
+        }
+
+        if(env("ENABLE_MERCADO_LIVRE",  false)) {
+            $schedule->command('regenerate:token')->cron('0 */4 * * *'); //Every four hours
+        }
     }
 
     /**
