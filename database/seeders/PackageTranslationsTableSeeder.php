@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeds;
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
@@ -14,12 +14,12 @@ class PackageTranslationsTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('package_translations')->delete();
-        
+
         \DB::table('package_translations')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'package_id' => 1,
@@ -27,7 +27,7 @@ class PackageTranslationsTableSeeder extends Seeder
                 'title' => 'Padrão',
                 'subtitle' => NULL,
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'package_id' => 1,
@@ -36,7 +36,7 @@ class PackageTranslationsTableSeeder extends Seeder
                 'subtitle' => NULL,
             ),
         ));
-        
-        
+
+
     }
 }

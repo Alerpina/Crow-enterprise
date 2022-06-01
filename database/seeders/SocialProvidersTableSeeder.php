@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeds;
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
@@ -14,12 +14,12 @@ class SocialProvidersTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('social_providers')->delete();
-        
+
         \DB::table('social_providers')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'user_id' => 37,
@@ -29,7 +29,7 @@ class SocialProvidersTableSeeder extends Seeder
                 'updated_at' => '2020-07-23 14:38:55',
             ),
         ));
-        
-        
+
+
     }
 }

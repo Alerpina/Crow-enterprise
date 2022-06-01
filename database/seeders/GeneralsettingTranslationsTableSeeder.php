@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeds;
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
@@ -14,12 +14,12 @@ class GeneralsettingTranslationsTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('generalsetting_translations')->delete();
-        
+
         \DB::table('generalsetting_translations')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'generalsetting_id' => 1,
@@ -40,7 +40,7 @@ class GeneralsettingTranslationsTableSeeder extends Seeder
                 'pagarme_text' => NULL,
                 'rede_text' => NULL,
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'generalsetting_id' => 1,
@@ -62,7 +62,7 @@ class GeneralsettingTranslationsTableSeeder extends Seeder
                 'rede_text' => NULL,
             ),
         ));
-        
-        
+
+
     }
 }

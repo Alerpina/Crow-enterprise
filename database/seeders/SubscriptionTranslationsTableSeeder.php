@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeds;
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
@@ -14,12 +14,12 @@ class SubscriptionTranslationsTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('subscription_translations')->delete();
-        
+
         \DB::table('subscription_translations')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'subscription_id' => 1,
@@ -27,7 +27,7 @@ class SubscriptionTranslationsTableSeeder extends Seeder
                 'title' => 'Teste',
                 'details' => NULL,
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'subscription_id' => 1,
@@ -36,7 +36,7 @@ class SubscriptionTranslationsTableSeeder extends Seeder
                 'details' => NULL,
             ),
         ));
-        
-        
+
+
     }
 }

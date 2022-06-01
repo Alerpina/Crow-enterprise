@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeds;
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
@@ -14,13 +14,11 @@ class AdminLanguagesTableSeeder extends Seeder
      */
     public function run()
     {
-        
-
         \DB::table('admin_languages')->delete();
-        
-        \DB::table('admin_languages')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('admin_languages')->insert(array(
+            0 =>
+            array(
                 'id' => 1,
                 'is_default' => 1,
                 'language' => 'Português',
@@ -28,8 +26,8 @@ class AdminLanguagesTableSeeder extends Seeder
                 'name' => 'pt-br',
                 'rtl' => 0,
             ),
-            1 => 
-            array (
+            1 =>
+            array(
                 'id' => 5,
                 'is_default' => 0,
                 'language' => 'Espanhol',
@@ -38,7 +36,5 @@ class AdminLanguagesTableSeeder extends Seeder
                 'rtl' => 0,
             ),
         ));
-        
-        
     }
 }

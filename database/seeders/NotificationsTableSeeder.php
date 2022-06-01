@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeds;
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
@@ -14,12 +14,12 @@ class NotificationsTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('notifications')->delete();
-        
+
         \DB::table('notifications')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'order_id' => NULL,
@@ -32,7 +32,7 @@ class NotificationsTableSeeder extends Seeder
                 'updated_at' => '2020-12-23 12:26:11',
             ),
         ));
-        
-        
+
+
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeds;
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
@@ -14,12 +14,12 @@ class EmailTemplateTranslationsTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('email_template_translations')->delete();
-        
+
         \DB::table('email_template_translations')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'email_template_id' => 1,
@@ -30,7 +30,7 @@ O número do seu pedido é {order_number}.
 
 </span></pre></p>',
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'email_template_id' => 2,
@@ -41,7 +41,7 @@ Você se registrou com sucesso no {website_title}. Desejamos que você tenha uma
 
 Obrigado!</span></pre></p>',
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 3,
                 'email_template_id' => 3,
@@ -52,7 +52,7 @@ Sua conta de fornecedor foi ativada com sucesso. Faça login em sua conta e crie
 
 Obrigado!</span></pre></p>',
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 4,
                 'email_template_id' => 4,
@@ -63,7 +63,7 @@ A duração do seu plano de assinatura terminará após cinco dias. Renove seu p
 
 Obrigado!</span></pre><p></p>',
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 5,
                 'email_template_id' => 5,
@@ -74,7 +74,7 @@ Você pediu para verificar sua conta. Por favor envie uma foto do seu documento.
 
 Obrigado!</span></pre>',
             ),
-            5 => 
+            5 =>
             array (
                 'id' => 6,
                 'email_template_id' => 5,
@@ -84,7 +84,7 @@ Obrigado!</span></pre>',
 Solicitó verificar su cuenta. Envíe una foto de su documento.<br>
 ¡Gracias!</span></pre><p></p>',
             ),
-            6 => 
+            6 =>
             array (
                 'id' => 7,
                 'email_template_id' => 4,
@@ -95,7 +95,7 @@ Su plan de suscripción vencerá después de cinco días. Renueve su plan, de lo
 
 ¡Gracias!</span></pre></p>',
             ),
-            7 => 
+            7 =>
             array (
                 'id' => 8,
                 'email_template_id' => 3,
@@ -106,7 +106,7 @@ Su cuenta de proveedor se ha activado correctamente. Inicie sesión en su cuenta
 
 ¡Gracias!</span></pre></p>',
             ),
-            8 => 
+            8 =>
             array (
                 'id' => 9,
                 'email_template_id' => 2,
@@ -117,7 +117,7 @@ Te has registrado correctamente en {website_title}. Esperamos que tenga una expe
 
 ¡Gracias!</span></pre></p>',
             ),
-            9 => 
+            9 =>
             array (
                 'id' => 10,
                 'email_template_id' => 1,
@@ -128,7 +128,7 @@ tu pedido fue exitoso!
 
 Su número de pedido es {order_number}.</span></pre></p>',
             ),
-            10 => 
+            10 =>
             array (
                 'id' => 11,
                 'email_template_id' => 6,
@@ -139,7 +139,7 @@ Vimos que você não finalizou sua compra. Clique no botão abaixo e continue de
 
 Obrigado!</span></pre></p>',
             ),
-            11 => 
+            11 =>
             array (
                 'id' => 12,
                 'email_template_id' => 6,
@@ -151,7 +151,7 @@ Obrigado!</span></pre></p>',
                 ¡Gracias!</span></pre></p>',
             ),
         ));
-        
-        
+
+
     }
 }

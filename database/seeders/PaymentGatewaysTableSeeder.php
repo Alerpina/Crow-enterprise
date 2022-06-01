@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeds;
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
@@ -14,12 +14,12 @@ class PaymentGatewaysTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('payment_gateways')->delete();
-        
+
         \DB::table('payment_gateways')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 46,
                 'subtitle' => 'Pay via your Mobile Money.',
@@ -28,7 +28,7 @@ class PaymentGatewaysTableSeeder extends Seeder
                 'status' => 0,
             ),
         ));
-        
-        
+
+
     }
 }

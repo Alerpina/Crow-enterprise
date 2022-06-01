@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeds;
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
@@ -14,12 +14,12 @@ class GeneralsettingsTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('generalsettings')->delete();
-        
+
         \DB::table('generalsettings')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'logo' => '1589403658logo azul.png',
@@ -194,7 +194,7 @@ class GeneralsettingsTableSeeder extends Seeder
                 'rede_installments' => 0,
             ),
         ));
-        
-        
+
+
     }
 }

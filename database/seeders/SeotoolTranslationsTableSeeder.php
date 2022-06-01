@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeds;
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
@@ -14,12 +14,12 @@ class SeotoolTranslationsTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('seotool_translations')->delete();
-        
+
         \DB::table('seotool_translations')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'seotool_id' => 1,
@@ -28,7 +28,7 @@ class SeotoolTranslationsTableSeeder extends Seeder
                 'meta_description' => NULL,
             ),
         ));
-        
-        
+
+
     }
 }

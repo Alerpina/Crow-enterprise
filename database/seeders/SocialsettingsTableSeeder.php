@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeds;
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
@@ -14,12 +14,12 @@ class SocialsettingsTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('socialsettings')->delete();
-        
+
         \DB::table('socialsettings')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'facebook' => 'https://facebook.com/',
@@ -44,7 +44,7 @@ class SocialsettingsTableSeeder extends Seeder
                 'gredirect' => NULL,
             ),
         ));
-        
-        
+
+
     }
 }

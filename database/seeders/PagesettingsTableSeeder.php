@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeds;
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
@@ -14,12 +14,12 @@ class PagesettingsTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('pagesettings')->delete();
-        
+
         \DB::table('pagesettings')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'contact_email' => '',
@@ -53,7 +53,7 @@ class PagesettingsTableSeeder extends Seeder
                 'featured_category' => 1,
             ),
         ));
-        
-        
+
+
     }
 }

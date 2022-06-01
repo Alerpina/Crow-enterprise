@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeds;
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
@@ -14,12 +14,12 @@ class CurrenciesTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('currencies')->delete();
-        
+
         \DB::table('currencies')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'name' => 'BRL',
@@ -30,7 +30,7 @@ class CurrenciesTableSeeder extends Seeder
                 'thousands_separator' => '.',
                 'decimal_digits' => 2,
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 10,
                 'name' => 'USD',
@@ -41,7 +41,7 @@ class CurrenciesTableSeeder extends Seeder
                 'thousands_separator' => ',',
                 'decimal_digits' => 2,
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 11,
                 'name' => 'PYG',
@@ -53,7 +53,7 @@ class CurrenciesTableSeeder extends Seeder
                 'decimal_digits' => 0,
             ),
         ));
-        
-        
+
+
     }
 }

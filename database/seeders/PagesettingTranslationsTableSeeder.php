@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeds;
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
@@ -14,12 +14,12 @@ class PagesettingTranslationsTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('pagesetting_translations')->delete();
-        
+
         \DB::table('pagesetting_translations')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'pagesetting_id' => 1,
@@ -30,7 +30,7 @@ class PagesettingTranslationsTableSeeder extends Seeder
                 'side_title' => '<h4 class="title" style="margin-bottom: 10px; font-weight: 600; line-height: 28px; font-size: 28px;">Let\'s Connect</h4>',
             'side_text' => '<span style="color: rgb(51, 51, 51);">Get in touch with us</span>',
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'pagesetting_id' => 1,
@@ -42,7 +42,7 @@ class PagesettingTranslationsTableSeeder extends Seeder
                 'side_text' => NULL,
             ),
         ));
-        
-        
+
+
     }
 }
