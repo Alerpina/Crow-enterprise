@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Spatie\Activitylog\LogOptions;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -9,9 +10,6 @@ class TeamMemberCategory extends LocalizedModel
 {
     use LogsActivity;
 
-    protected static $logName = 'team_member_categories';
-    protected static $logFillable = true;
-    protected static $logOnlyDirty = true;
 
     protected $with = ['translations'];
 
@@ -21,6 +19,14 @@ class TeamMemberCategory extends LocalizedModel
     protected $guarded = ['id'];
 
     public $timestamps = false;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('team_member_categories')
+            ->logFillable()
+            ->logOnlyDirty();
+    }
 
     public function team_members()
     {

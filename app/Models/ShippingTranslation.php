@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Spatie\Activitylog\LogOptions;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Contracts\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -9,13 +10,18 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class ShippingTranslation extends CachedModel
 {
     use LogsActivity;
-    
-    protected static $logName = 'shippings';
-    protected static $logFillable = true;
-    protected static $logOnlyDirty = true;
-    
+
+
     public $timestamps = false;
     protected $fillable = ['title', 'subtitle', 'delivery_time'];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('shippings')
+            ->logFillable()
+            ->logOnlyDirty();
+    }
 
     public function tapActivity(Activity $activity, string $eventName)
     {

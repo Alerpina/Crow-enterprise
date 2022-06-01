@@ -2,15 +2,13 @@
 
 namespace App\Models;
 
+use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class Generalsetting extends LocalizedModel
 {
     use LogsActivity;
 
-    protected static $logName = 'generalsetting';
-    protected static $logFillable = true;
-    protected static $logOnlyDirty = true;
 
     protected $with = ['translations'];
 
@@ -210,6 +208,14 @@ class Generalsetting extends LocalizedModel
 
     public $timestamps = false;
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('generalsetting')
+            ->logFillable()
+            ->logOnlyDirty();
+    }
+
 
     public function upload($name, $file, $oldname)
     {
@@ -235,7 +241,7 @@ class Generalsetting extends LocalizedModel
     {
         return $this->belongsToMany('App\Models\Banner', 'banner_store', 'store_id', 'banner_id');
     }
-    
+
     public function sliders()
     {
         return $this->belongsToMany('App\Models\Slider', 'slider_store', 'store_id', 'slider_id');

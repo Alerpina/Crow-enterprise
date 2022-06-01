@@ -2,22 +2,28 @@
 
 namespace App\Models;
 
+use Spatie\Activitylog\LogOptions;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class OrderTrack extends LocalizedModel
 {
     use LogsActivity;
-    
-    protected static $logName = 'order_tracks';
-    protected static $logFillable = true;
-    protected static $logOnlyDirty = true;
+
 
     protected $with = ['translations'];
-    
+
     public $translatedAttributes = ['title', 'text'];
 
     protected $fillable = ['order_id'];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('order_tracks')
+            ->logFillable()
+            ->logOnlyDirty();
+    }
 
     public function order()
     {

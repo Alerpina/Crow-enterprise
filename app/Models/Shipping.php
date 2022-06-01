@@ -2,27 +2,25 @@
 
 namespace App\Models;
 
+use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class Shipping extends LocalizedModel
 {
     use LogsActivity;
-    
-    protected static $logName = 'shippings';
-    protected static $logFillable = true;
-    protected static $logOnlyDirty = true;
+
 
     protected $with = ['translations'];
-    
+
     protected $translatedAttributes = ['title', 'subtitle', 'delivery_time'];
 
     protected $fillable = [
-        'user_id', 
-        'price', 
-        'shipping_type', 
+        'user_id',
+        'price',
+        'shipping_type',
         'price_free_shipping',
-        'price_per_kilo', 
-        'status', 
+        'price_per_kilo',
+        'status',
         'local_shipping',
         'city_id',
         'state_id',
@@ -34,10 +32,18 @@ class Shipping extends LocalizedModel
 
     protected $casts = [
         'cep_start' => 'integer',
-        'cep_end' => 'integer'  
+        'cep_end' => 'integer'
     ];
 
     public $timestamps = false;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('shippings')
+            ->logFillable()
+            ->logOnlyDirty();
+    }
 
     public function city()
     {
@@ -61,11 +67,13 @@ class Shipping extends LocalizedModel
      * @return void
      */
 
-    public function setCepStartAttribute($value){
+    public function setCepStartAttribute($value)
+    {
         $this->attributes['cep_start'] =  preg_replace("/[^0-9]/", "", $value);
     }
 
-    public function setCepEndAttribute($value){
+    public function setCepEndAttribute($value)
+    {
         $this->attributes['cep_end'] =  preg_replace("/[^0-9]/", "", $value);
     }
 }

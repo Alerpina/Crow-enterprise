@@ -2,18 +2,15 @@
 
 namespace App\Models;
 
-use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
+use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
+use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Admin extends Authenticatable implements JWTSubject
 {
-
     use LogsActivity;
 
-    protected static $logName = 'staff';
-    protected static $logFillable = true;
-    protected static $logOnlyDirty = true;
 
     protected $guard = 'admin';
 
@@ -25,31 +22,41 @@ class Admin extends Authenticatable implements JWTSubject
         'password', 'remember_token',
     ];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('staff')
+            ->logFillable()
+            ->logOnlyDirty();
+    }
+
     public function role()
     {
-    	return $this->belongsTo('App\Models\Role')->withDefault(function ($data) {
-            foreach($data->getFillable() as $dt){
+        return $this->belongsTo('App\Models\Role')->withDefault(function ($data) {
+            foreach ($data->getFillable() as $dt) {
                 $data[$dt] = __('Deleted');
             }
         });
     }
 
-    public function IsSuper(){
+    public function IsSuper()
+    {
         if ($this->role_id == 0) {
-           return true;
+            return true;
         }
         return false;
     }
 
-    public function sectionCheck($value){
+    public function sectionCheck($value)
+    {
         if ($this->IsSuper()) {
             return true;
         }
 
         $sections = explode(" , ", $this->role->section);
-        if (in_array($value, $sections)){
+        if (in_array($value, $sections)) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -73,6 +80,4 @@ class Admin extends Authenticatable implements JWTSubject
     {
         return [];
     }
-
-
 }

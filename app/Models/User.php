@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use Spatie\Activitylog\LogOptions;
+use Illuminate\Support\Facades\File;
 use Astrotomic\Translatable\Translatable;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
-use Illuminate\Support\Facades\File;
 
 class User extends Authenticatable implements TranslatableContract
 {
@@ -15,25 +16,22 @@ class User extends Authenticatable implements TranslatableContract
     protected $translatedAttributes = ['shop_message'];
 
     use LogsActivity;
-    
-    protected static $logName = 'customers';
-    protected static $logFillable = true;
-    protected static $logOnlyDirty = true;
+
 
     protected $fillable = [
-        'name', 
-        'photo', 
-        'zip', 
-        'residency', 
+        'name',
+        'photo',
+        'zip',
+        'residency',
         'district',
-        'state', 
-        'city', 
-        'country', 
-        'address', 
-        'address_number', 
-        'complement', 
-        'phone', 
-        'fax', 
+        'state',
+        'city',
+        'country',
+        'address',
+        'address_number',
+        'complement',
+        'phone',
+        'fax',
         'email',
         'password',
         'password_reset',
@@ -77,9 +75,18 @@ class User extends Authenticatable implements TranslatableContract
         'password', 'remember_token'
     ];
 
-    public function IsVendor(){
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('customers')
+            ->logFillable()
+            ->logOnlyDirty();
+    }
+
+    public function IsVendor()
+    {
         if ($this->is_vendor == 2) {
-           return true;
+            return true;
         }
         return false;
     }
@@ -149,17 +156,17 @@ class User extends Authenticatable implements TranslatableContract
 
     public function senders()
     {
-        return $this->hasMany('App\Models\Conversation','sent_user');
+        return $this->hasMany('App\Models\Conversation', 'sent_user');
     }
 
     public function recievers()
     {
-        return $this->hasMany('App\Models\Conversation','recieved_user');
+        return $this->hasMany('App\Models\Conversation', 'recieved_user');
     }
 
     public function notivications()
     {
-        return $this->hasMany('App\Models\UserNotification','user_id');
+        return $this->hasMany('App\Models\UserNotification', 'user_id');
     }
 
     public function subscribes()
@@ -174,57 +181,58 @@ class User extends Authenticatable implements TranslatableContract
 
     public function vendororders()
     {
-        return $this->hasMany('App\Models\VendorOrder','user_id');
+        return $this->hasMany('App\Models\VendorOrder', 'user_id');
     }
 
     public function shippings()
     {
-        return $this->hasMany('App\Models\Shipping','user_id');
+        return $this->hasMany('App\Models\Shipping', 'user_id');
     }
 
     public function packages()
     {
-        return $this->hasMany('App\Models\Package','user_id');
+        return $this->hasMany('App\Models\Package', 'user_id');
     }
 
     public function reports()
     {
-        return $this->hasMany('App\Models\Report','user_id');
+        return $this->hasMany('App\Models\Report', 'user_id');
     }
 
     public function verifies()
     {
-        return $this->hasMany('App\Models\Verification','user_id');
+        return $this->hasMany('App\Models\Verification', 'user_id');
     }
 
     public function checkVerification()
     {
-        return count($this->verifies) > 0 ? 
-        (empty($this->verifies()->where('admin_warning','=','0')->orderBy('id','desc')->first()->status) ? false : ($this->verifies()->orderBy('id','desc')->first()->status == 'Pending' ? true : false)) : false;
+        return count($this->verifies) > 0 ?
+        (empty($this->verifies()->where('admin_warning', '=', '0')->orderBy('id', 'desc')->first()->status) ? false : ($this->verifies()->orderBy('id', 'desc')->first()->status == 'Pending' ? true : false)) : false;
     }
 
     public function checkStatus()
     {
-        return count($this->verifies) > 0 ? ($this->verifies()->orderBy('id','desc')->first()->status == 'Verified' ? true : false) :false;
+        return count($this->verifies) > 0 ? ($this->verifies()->orderBy('id', 'desc')->first()->status == 'Verified' ? true : false) :false;
     }
 
     public function checkWarning()
     {
-        return count($this->verifies) > 0 ? ( empty( $this->verifies()->where('admin_warning','=','1')->orderBy('id','desc')->first() ) ? false : (empty($this->verifies()->where('admin_warning','=','1')->orderBy('id','desc')->first()->status) ? true : false) ) : false;
+        return count($this->verifies) > 0 ? (empty($this->verifies()->where('admin_warning', '=', '1')->orderBy('id', 'desc')->first()) ? false : (empty($this->verifies()->where('admin_warning', '=', '1')->orderBy('id', 'desc')->first()->status) ? true : false)) : false;
     }
 
     public function displayWarning()
     {
-        return $this->verifies()->where('admin_warning','=','1')->orderBy('id','desc')->first()->warning_reason;
+        return $this->verifies()->where('admin_warning', '=', '1')->orderBy('id', 'desc')->first()->warning_reason;
     }
 
     public function getVendorPhotoAttribute($value)
     {
-        if(!$this->photo) return asset("assets/images/noimage.png");
+        if (!$this->photo) {
+            return asset("assets/images/noimage.png");
+        }
         //if(!$value) return asset('assets/images/noimage.png');
-        if(File::exists(public_path('assets/images/users/'.$this->photo))){
+        if (File::exists(public_path('assets/images/users/'.$this->photo))) {
             return asset("assets/images/users/".$this->photo);
         }
     }
-
 }

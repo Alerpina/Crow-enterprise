@@ -2,18 +2,15 @@
 
 namespace App\Models;
 
+use App\Classes\MelhorEnvio;
+use Spatie\Activitylog\LogOptions;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
-use App\Classes\MelhorEnvio;
 
 class Order extends CachedModel
 {
     use LogsActivity;
-    
-    protected static $logName = 'orders';
-    protected static $logFillable = true;
-    protected static $logOnlyDirty = true;
-    
+
     protected $fillable = [
         'user_id',
         'cart',
@@ -62,6 +59,14 @@ class Order extends CachedModel
         'puntoid'
     ];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('orders')
+            ->logFillable()
+            ->logOnlyDirty();
+    }
+
     public function vendororders()
     {
         return $this->hasMany('App\Models\VendorOrder');
@@ -74,22 +79,22 @@ class Order extends CachedModel
 
     public function melhorenvio_requests()
     {
-        $order_store_id = explode(';',trim(strstr(strstr($this->internal_note, '#:['), ']',true),'#:['))[0];
-        
+        $order_store_id = explode(';', trim(strstr(strstr($this->internal_note, '#:['), ']', true), '#:['))[0];
+
         $melhorenvio_requests = MelhorenvioRequest::where('order_id', $this->id)->get();
 
         $orderStoreSettings = Generalsetting::find($order_store_id);
-        if(!isset($orderStoreSettings)){
+        if (!isset($orderStoreSettings)) {
             $orderStoreSettings = resolve('storeSettings');
         }
         $melhorenvio = new MelhorEnvio($orderStoreSettings->melhorenvio->token, $orderStoreSettings->melhorenvio->production);
-                
-        foreach($melhorenvio_requests as &$request){
+
+        foreach ($melhorenvio_requests as &$request) {
             $orderinfo = $melhorenvio->getOrderInfo($request->uuid);
-            if(!empty($orderinfo->id)){
-                if($request->status != $orderinfo->status){
+            if (!empty($orderinfo->id)) {
+                if ($request->status != $orderinfo->status) {
                     $track = new OrderTrack;
-                    switch($orderinfo->status){
+                    switch ($orderinfo->status) {
                         case 'pending':
                             $status_str = __('Pending');
                             break;
@@ -131,18 +136,17 @@ class Order extends CachedModel
                 $request->tracking = $orderinfo->tracking;
 
                 $request->save();
-                
             }
-            if(empty($request->preview_url)){
+            if (empty($request->preview_url)) {
                 $preview = $melhorenvio->preview([$request->uuid]);
-                if(!empty($preview->url)){
+                if (!empty($preview->url)) {
                     $request->preview_url = $preview->url;
                     $request->save();
                 }
             }
-            if(empty($request->print_url)){
+            if (empty($request->print_url)) {
                 $print = $melhorenvio->print([$request->uuid]);
-                if(!empty($print->url)){
+                if (!empty($print->url)) {
                     $request->print_url = $print->url;
                     $request->save();
                 }
@@ -152,20 +156,26 @@ class Order extends CachedModel
         return $this->hasMany('App\Models\MelhorenvioRequest', 'order_id');
     }
 
-    public static function scopeMercadoLivreOrders($query){
-        return $query->where('method','Pagamento Externo via Mercado Livre');;
+    public static function scopeMercadoLivreOrders($query)
+    {
+        return $query->where('method', 'Pagamento Externo via Mercado Livre');
+        ;
     }
 
-    public static function scopeMercadoLivreOrdersCompleted($query){
-        return $query->MercadoLivreOrders()->where('status','completed');
+    public static function scopeMercadoLivreOrdersCompleted($query)
+    {
+        return $query->MercadoLivreOrders()->where('status', 'completed');
     }
 
-    public static function scopeMercadoLivreOrdersPending($query){
-        return $query->MercadoLivreOrders()->where('status','pending');;
+    public static function scopeMercadoLivreOrdersPending($query)
+    {
+        return $query->MercadoLivreOrders()->where('status', 'pending');
+        ;
     }
 
-    public static function scopeMercadoLivreOrdersProcessing($query){
-        return $query->MercadoLivreOrders()->where('status','processing');;
+    public static function scopeMercadoLivreOrdersProcessing($query)
+    {
+        return $query->MercadoLivreOrders()->where('status', 'processing');
+        ;
     }
-
 }

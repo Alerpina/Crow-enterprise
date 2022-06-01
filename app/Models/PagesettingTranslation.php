@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Spatie\Activitylog\LogOptions;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Contracts\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -10,12 +11,17 @@ class PagesettingTranslation extends CachedModel
 {
     use LogsActivity;
 
-    protected static $logName = 'page_settings';
-    protected static $logFillable = true;
-    protected static $logOnlyDirty = true;
-    
+
     public $timestamps = false;
     protected $fillable = ['contact_success', 'contact_title', 'contact_text', 'side_title', 'side_text'];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('page_settings')
+            ->logFillable()
+            ->logOnlyDirty();
+    }
 
     public function tapActivity(Activity $activity, string $eventName)
     {

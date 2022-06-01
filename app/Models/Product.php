@@ -2,23 +2,19 @@
 
 namespace App\Models;
 
+use stdClass;
 use App\Models\Currency;
 use App\Models\Generalsetting;
+use Spatie\Activitylog\LogOptions;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use Spatie\Activitylog\Traits\LogsActivity;
-use stdClass;
 
 class Product extends LocalizedModel
 {
     use LogsActivity;
-    
-    protected static $logName = 'products';
-    protected static $logFillable = true;
-    protected static $logOnlyDirty = true;
-    protected static $logAttributesToIgnore = ['views'];
-    protected static $submitEmptyLogs = false;
+
 
     protected $storeSettings;
 
@@ -122,11 +118,21 @@ class Product extends LocalizedModel
         parent::__construct();
     }
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('products')
+            ->logFillable()
+            ->logOnlyDirty()
+            ->dontLogIfAttributesChangedOnly(['views'])
+            ->dontSubmitEmptyLogs();
+    }
+
     public function licenses()
     {
         return $this->hasMany(License::class);
     }
-    
+
     public static function filterProducts($collection)
     {
         foreach ($collection as $key => $data) {
@@ -271,7 +277,7 @@ class Product extends LocalizedModel
                 }
             }
         }
-        
+
         if (!empty($this->color)) {
             foreach ($this->color as $key => $color) {
                 if ($this->color_qty[$key] > 0) {
@@ -313,7 +319,7 @@ class Product extends LocalizedModel
         if (!$this->storeSettings->show_product_prices || !$this->show_price) {
             return '';
         }
-        
+
         $price = $this->price;
         if (Session::has('currency') && $this->storeSettings->is_currency) {
             $curr = Currency::find(Session::get('currency'));
@@ -338,11 +344,11 @@ class Product extends LocalizedModel
         if ($this->storeSettings->currency_id == 1) {
             return '';
         }
-        
+
         $price = $this->price;
-        
+
         $curr = Currency::where('id', '=', 1)->first();
-        
+
         $price = round($price * $curr->value, 2);
         //Add product_percent on price
         $price += $price * (($this->storeSettings->product_percent) / 100);
@@ -360,8 +366,8 @@ class Product extends LocalizedModel
             return '';
         }
 
-        
-        
+
+
         $price = $this->price;
 
         if ($this->user_id != 0) {
@@ -465,9 +471,9 @@ class Product extends LocalizedModel
         } else {
             $curr = Currency::find($this->storeSettings->currency_id);
         }
- 
- 
- 
+
+
+
         $price = round(($price) * $curr->value, 2);
         //Add product_percent on price
         $price += $price * (($this->storeSettings->product_percent) / 100);
@@ -532,9 +538,9 @@ class Product extends LocalizedModel
         } else {
             $curr = Currency::find($this->storeSettings->currency_id);
         }
- 
- 
- 
+
+
+
         $price = round(($price) * $curr->value, 2);
         //Add product_percent on price
         $price += $price * (($this->storeSettings->product_percent) / 100);
@@ -599,9 +605,9 @@ class Product extends LocalizedModel
         } else {
             $curr = Currency::find($this->storeSettings->currency_id);
         }
- 
- 
- 
+
+
+
         $price = round(($price) * $curr->value, 2);
         //Add product_percent on price
         $price += $price * (($this->storeSettings->product_percent) / 100);
@@ -678,9 +684,9 @@ class Product extends LocalizedModel
         } else {
             $curr = Currency::find($this->storeSettings->currency_id);
         }
- 
- 
- 
+
+
+
         $price = round(($price) * $curr->value, 2);
         //Add product_percent on price
         $price += $price * (($this->storeSettings->product_percent) / 100);
@@ -1113,7 +1119,7 @@ class Product extends LocalizedModel
         if (!isset($redplayData['redplay_code'])) {
             return null;
         }
-        
+
         $redPlayArray = [];
 
         for ($i = 0; $i < sizeof($redplayData['redplay_login']); $i++) {

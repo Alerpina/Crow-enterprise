@@ -2,19 +2,17 @@
 
 namespace App\Models;
 
+use Spatie\Activitylog\LogOptions;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class Blog extends LocalizedModel
 {
     use LogsActivity;
-    
-    protected static $logName = 'blogs';
-    protected static $logFillable = true;
-    protected static $logOnlyDirty = true;
+
 
     protected $with = ['translations'];
-    
+
     protected $translatedAttributes = ['title', 'details', 'meta_tag', 'meta_description', 'tags'];
 
     protected $fillable = ['category_id', 'photo', 'source', 'views', 'updated_at', 'status'];
@@ -22,6 +20,14 @@ class Blog extends LocalizedModel
     protected $dates = ['created_at'];
 
     public $timestamps = false;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('blogs')
+            ->logFillable()
+            ->logOnlyDirty();
+    }
 
     public static function boot()
     {

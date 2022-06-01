@@ -2,18 +2,15 @@
 
 namespace App\Models;
 
+use Spatie\Activitylog\LogOptions;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Contracts\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class ProductTranslation extends CachedModel
 {
-
     use LogsActivity;
 
-    protected static $logName = 'products';
-    protected static $logFillable = true;
-    protected static $logOnlyDirty = true;
 
     public $timestamps = false;
     protected $hidden = ['details'];
@@ -27,6 +24,14 @@ class ProductTranslation extends CachedModel
         'features',
         'tags'
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('products')
+            ->logFillable()
+            ->logOnlyDirty();
+    }
 
     public function tapActivity(Activity $activity, string $eventName)
     {

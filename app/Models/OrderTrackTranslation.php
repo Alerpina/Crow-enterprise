@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Spatie\Activitylog\LogOptions;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Contracts\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -10,12 +11,17 @@ class OrderTrackTranslation extends CachedModel
 {
     use LogsActivity;
 
-    protected static $logName = 'order_tracks';
-    protected static $logFillable = true;
-    protected static $logOnlyDirty = true;
-    
+
     public $timestamps = false;
     protected $fillable = ['title', 'text'];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('order_tracks')
+            ->logFillable()
+            ->logOnlyDirty();
+    }
 
     public function tapActivity(Activity $activity, string $eventName)
     {

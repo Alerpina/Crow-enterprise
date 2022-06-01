@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Spatie\Activitylog\LogOptions;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Contracts\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -10,12 +11,17 @@ class PackageTranslation extends Model
 {
     use LogsActivity;
 
-    protected static $logName = 'packages';
-    protected static $logFillable = true;
-    protected static $logOnlyDirty = true;
-    
+
     public $timestamps = false;
     protected $fillable = ['title', 'subtitle'];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('packages')
+            ->logFillable()
+            ->logOnlyDirty();
+    }
 
     public function tapActivity(Activity $activity, string $eventName)
     {
