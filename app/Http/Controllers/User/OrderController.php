@@ -18,13 +18,14 @@ use App\Models\Notification;
 
 class OrderController extends Controller
 {
-
     public function __construct()
     {
         parent::__construct();
 
-        if(!$this->storeSettings->is_cart) {
-            return app()->abort(404);
+        if (!app()->runningInConsole()) {
+            if (!$this->storeSettings->is_cart) {
+                return app()->abort(404);
+            }
         }
 
         $this->middleware('auth');
@@ -33,23 +34,22 @@ class OrderController extends Controller
     public function orders()
     {
         $user = Auth::guard('web')->user();
-        $orders = Order::where('user_id','=',$user->id)->orderBy('id','desc')->get();
+        $orders = Order::where('user_id', '=', $user->id)->orderBy('id', 'desc')->get();
         $currencies = Currency::orderBy('id')->get();
-        return view('user.order.index',compact('user','orders','currencies'));
+        return view('user.order.index', compact('user', 'orders', 'currencies'));
     }
 
     public function ordertrack()
     {
         $user = Auth::guard('web')->user();
-        return view('user.order-track',compact('user'));
+        return view('user.order-track', compact('user'));
     }
 
     public function trackload($id)
     {
-        $order = Order::where('order_number','=',$id)->first();
+        $order = Order::where('order_number', '=', $id)->first();
         $datas = array('Pending','Processing','On Delivery','Completed');
-        return view('load.track-load',compact('order','datas'));
-
+        return view('load.track-load', compact('order', 'datas'));
     }
 
 
@@ -58,22 +58,23 @@ class OrderController extends Controller
         $user = Auth::guard('web')->user();
         $order = Order::findOrfail($id);
         $cart = unserialize(bzdecompress(utf8_decode($order->cart)));
-        $first_curr = Currency::where('id','=',1)->first();
-        $order_curr = Currency::where('sign','=',$order->currency_sign)->first();
-        if(empty($order_curr)){ $order_curr = $first_curr; }
+        $first_curr = Currency::where('id', '=', 1)->first();
+        $order_curr = Currency::where('sign', '=', $order->currency_sign)->first();
+        if (empty($order_curr)) {
+            $order_curr = $first_curr;
+        }
 
-        $bank_accounts =  BankAccount::where('status','=',1)->get();
+        $bank_accounts =  BankAccount::where('status', '=', 1)->get();
 
-        return view('user.order.details',compact('user','order','cart','first_curr','order_curr', 'bank_accounts'));
+        return view('user.order.details', compact('user', 'order', 'cart', 'first_curr', 'order_curr', 'bank_accounts'));
     }
 
-    public function orderdownload($slug,$id)
+    public function orderdownload($slug, $id)
     {
         $user = Auth::guard('web')->user();
-        $order = Order::where('order_number','=',$slug)->first();
+        $order = Order::where('order_number', '=', $slug)->first();
         $prod = Product::findOrFail($id);
-        if(!isset($order) || $prod->type == 'Physical' || $order->user_id != $user->id)
-        {
+        if (!isset($order) || $prod->type == 'Physical' || $order->user_id != $user->id) {
             return redirect()->back();
         }
         return response()->download(public_path('assets/files/'.$prod->file));
@@ -84,14 +85,16 @@ class OrderController extends Controller
         $user = Auth::guard('web')->user();
         $order = Order::findOrfail($id);
         $cart = unserialize(bzdecompress(utf8_decode($order->cart)));
-        $first_curr = Currency::where('id','=',1)->first();
-        $order_curr = Currency::where('sign','=',$order->currency_sign)->first();
+        $first_curr = Currency::where('id', '=', 1)->first();
+        $order_curr = Currency::where('sign', '=', $order->currency_sign)->first();
         $seos = Seotool::all();
-        if(empty($order_curr)){ $order_curr = $first_curr; }
+        if (empty($order_curr)) {
+            $order_curr = $first_curr;
+        }
 
-        $bank_accounts =  BankAccount::where('status','=',1)->get();
+        $bank_accounts =  BankAccount::where('status', '=', 1)->get();
 
-        return view('user.order.print',compact('user','order','cart','first_curr','order_curr', 'bank_accounts', 'seos'));
+        return view('user.order.print', compact('user', 'order', 'cart', 'first_curr', 'order_curr', 'bank_accounts', 'seos'));
     }
 
     public function trans()
@@ -102,15 +105,17 @@ class OrderController extends Controller
         $order->txnid = $trans;
         $order->update();
         $data = $order->txnid;
-        return response()->json($data);            
-    }  
+        return response()->json($data);
+    }
 
-    public function uploadReceiptGet($id){
+    public function uploadReceiptGet($id)
+    {
         $order = Order::findOrFail($id);
         return view('user.order.receipt', compact('order'));
     }
 
-    public function uploadReceipt(Request $request, $id){
+    public function uploadReceipt(Request $request, $id)
+    {
         //--- Validation Section
         $rules = [
             'receipt' => 'required',
@@ -120,7 +125,7 @@ class OrderController extends Controller
             return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
         }
         $data = Order::findOrFail($request->id);
-        if(!is_dir(public_path().'/assets/images/receipts/')){
+        if (!is_dir(public_path().'/assets/images/receipts/')) {
             mkdir(public_path().'/assets/images/receipts/');
         }
         //--- Validation Section Ends
@@ -129,11 +134,11 @@ class OrderController extends Controller
         $image_name = time().Str::random(8).'.png';
         $path = 'assets/images/receipts/'.$image_name;
         $mime = mime_content_type($request->file('receipt')->getRealPath());
-        if($mime == "image/jpeg" || $mime == "image/png" || $mime == "image/gif" || $mime == "image/webp"){
+        if ($mime == "image/jpeg" || $mime == "image/png" || $mime == "image/gif" || $mime == "image/webp") {
             $img = Image::make($request->file('receipt')->getRealPath());
             $img->save(public_path().'/assets/images/receipts/'.$image_name);
-            if($data->receipt != null) {
-                if(file_exists(public_path().'/assets/images/receipts/'.$data->receipt)) {
+            if ($data->receipt != null) {
+                if (file_exists(public_path().'/assets/images/receipts/'.$data->receipt)) {
                     unlink(public_path().'/assets/images/receipts/'.$data->receipt);
                 }
             }
@@ -143,9 +148,8 @@ class OrderController extends Controller
             $notification->order_id = $data->id;
             $notification->save();
             return response()->json(['success'=> true, 'msg' => "Comprovante enviado com sucesso!"]);
-        } else{
+        } else {
             return response()->json(['success'=> false, 'msg' => "Formato de arquivo inválido!"]);
         }
     }
-
 }

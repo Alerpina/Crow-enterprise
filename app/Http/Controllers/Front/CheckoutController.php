@@ -44,8 +44,11 @@ class CheckoutController extends Controller
     public function __construct()
     {
         parent::__construct();
-        if (!$this->storeSettings->is_cart) {
-            return app()->abort(404);
+
+        if (!app()->runningInConsole()) {
+            if (!$this->storeSettings->is_cart) {
+                return app()->abort(404);
+            }
         }
     }
     public function loadpayment($slug1, $slug2)
@@ -69,16 +72,16 @@ class CheckoutController extends Controller
             return view('errors.404');
         }
 
-        if($request->abandonment && Auth::guard('web')->check()){
+        if ($request->abandonment && Auth::guard('web')->check()) {
             $ca = CartAbandonment::where('user_id', Auth::user()->id)->first();
-            if($ca != null){
+            if ($ca != null) {
                 Session::put('cart', unserialize(bzdecompress(utf8_decode($ca->temp_cart))));
                 return redirect()->route('front.checkout');
-            }  
+            }
         }
         if (!Session::has('cart')) {
             // Clear Cart Abandonment for current user if his Cart is empty
-            if(!$this->storeSettings->guest_checkout && $this->storeSettings->is_cart_abandonment && Auth::guard('web')->check()){
+            if (!$this->storeSettings->guest_checkout && $this->storeSettings->is_cart_abandonment && Auth::guard('web')->check()) {
                 CartAbandonment::where('user_id', Auth::user()->id)->delete();
             }
             return redirect()->route('front.cart')->with('success', __("You don't have any product to checkout."));
@@ -176,10 +179,9 @@ class CheckoutController extends Controller
                 $ck = true;
             }
         }
-        if(Auth::guard('web')->check() && !$this->storeSettings->guest_checkout && $this->storeSettings->is_complete_profile) {
+        if (Auth::guard('web')->check() && !$this->storeSettings->guest_checkout && $this->storeSettings->is_complete_profile) {
             $user = Auth::guard('web')->user();
-            if(!$user->document)
-            {
+            if (!$user->document) {
                 return redirect()->route("user-profile")->with('unsuccess', __("You need to complete your profile before checking out."));
             }
         }
@@ -188,94 +190,94 @@ class CheckoutController extends Controller
             $countries = Country::where('country_code', '=', $this->storeSettings->country_ship)->get();
         } else {
             $countries = Country::all();
-        }        
+        }
         foreach ($cart->items as $key => $prod) {
-            if(!empty($prod['max_quantity']) && ($prod['qty'] > $prod['max_quantity'])){
-                return redirect()->route('front.cart')->with('unsuccess',__('Max quantity of :prod  is :qty!',['prod' => $prod['item']['name'], 'qty' => $prod['max_quantity']]));
+            if (!empty($prod['max_quantity']) && ($prod['qty'] > $prod['max_quantity'])) {
+                return redirect()->route('front.cart')->with('unsuccess', __('Max quantity of :prod  is :qty!', ['prod' => $prod['item']['name'], 'qty' => $prod['max_quantity']]));
             }
 
-            if(!empty($prod['item']['stock']) && ($prod['qty'] > $prod['item']['stock'])){
-                return redirect()->route('front.cart')->with('unsuccess',__('The stock of :prod  is :qty!',['prod' => $prod['item']['name'], 'qty' => $prod['item']['stock']]));      
+            if (!empty($prod['item']['stock']) && ($prod['qty'] > $prod['item']['stock'])) {
+                return redirect()->route('front.cart')->with('unsuccess', __('The stock of :prod  is :qty!', ['prod' => $prod['item']['name'], 'qty' => $prod['item']['stock']]));
             }
             $db_prod = Product::find($prod['item']->id);
-            if($prod['item']->stock != $db_prod->stock){
-                if($db_prod->stock < $prod['qty']) {
-                    if($db_prod->stock == 0) {
-                        return redirect()->route('front.cart')->with('unsuccess',__('Product :prod has no stock!',['prod' => $prod['item']['name']]));
+            if ($prod['item']->stock != $db_prod->stock) {
+                if ($db_prod->stock < $prod['qty']) {
+                    if ($db_prod->stock == 0) {
+                        return redirect()->route('front.cart')->with('unsuccess', __('Product :prod has no stock!', ['prod' => $prod['item']['name']]));
                     }
-                    return redirect()->route('front.cart')->with('unsuccess',__('Insufficient stock of :prod!',['prod' => $prod['item']['name']]));
+                    return redirect()->route('front.cart')->with('unsuccess', __('Insufficient stock of :prod!', ['prod' => $prod['item']['name']]));
                 }
             }
         }
-            
-            if (!Auth::guard('web')->check()){
-                $city = City::with('state.country')->where('name', 'like', "%{'cidade'}")->first();
-            if($city) {
+
+        if (!Auth::guard('web')->check()) {
+            $city = City::with('state.country')->where('name', 'like', "%{'cidade'}")->first();
+            if ($city) {
                 $city_id = $city->id;
                 $state_id = $city->state_id;
                 $country_id = $city->state->country_id;
                 $state_name = $city->state->name;
                 $country_name = $city->state->country->country_name;
                 $city_name = $city->name;
-            }else{
+            } else {
                 $city = "";
                 $city_id = "";
                 $state_id = "";
-                $country_id = ""; 
-                $state_name = "";            
+                $country_id = "";
+                $state_name = "";
                 $country_name = "";
                 $city_name = "";
             }
-            }else{
-                $city = City::with('state.country')->where('id',Auth::guard('web')->user()->city_id)->first();
-            if($city) {
+        } else {
+            $city = City::with('state.country')->where('id', Auth::guard('web')->user()->city_id)->first();
+            if ($city) {
                 $city_id = $city->id;
                 $state_id = $city->state_id;
                 $country_id = $city->state->country_id;
                 $state_name = $city->state->name;
                 $country_name = $city->state->country->country_name;
                 $city_name = $city->name;
-            }else{
+            } else {
                 $city = "";
                 $city_id = "";
                 $state_id = "";
-                $country_id = ""; 
-                $state_name = "";            
+                $country_id = "";
+                $state_name = "";
                 $country_name = "";
                 $city_name = "";
             }
         }
-        
+
         $aex_cities = AexCity::orderBy('denominacion')->get();
 
-        if(!$this->storeSettings->guest_checkout && $this->storeSettings->is_cart_abandonment && Auth::guard('web')->check()){
+        if (!$this->storeSettings->guest_checkout && $this->storeSettings->is_cart_abandonment && Auth::guard('web')->check()) {
             $cas = CartAbandonment::where('user_id', Auth::user()->id)->get();
-            if($cas->count() == 0){
+            if ($cas->count() == 0) {
                 $ca = new CartAbandonment();
                 $ca->user_id = Auth::user()->id;
                 $ca->temp_cart = utf8_encode(bzcompress(serialize($request->session()->get('cart')), 9));
                 $ca->save();
-            } else{
+            } else {
                 $ca = $cas->first();
-                // Update Cart if user already has a Cart Abandonment in progress 
+                // Update Cart if user already has a Cart Abandonment in progress
                 $ca->temp_cart = utf8_encode(bzcompress(serialize($request->session()->get('cart')), 9));
                 $ca->email_sent = false;
                 $ca->update();
             }
         }
-        
+
         return view('front.checkout', [
             'customer' => $request->session()->get('temporder'),
             'products' => $cart->items, 'totalPrice' => $total, 'pickups' => $pickups, 'totalQty' => $cart->totalQty,
             'gateways' => $gateways, 'shipping_cost' => 0, 'checked' => $ck, 'digital' => $dp, 'curr_checkout' => $curr, 'first_curr' => $first_curr,
             'shipping_data' => $shipping_data, 'package_data' => $package_data, 'vendor_shipping_id' => $vendor_shipping_id,
             'vendor_packing_id' => $vendor_packing_id,
-            'bank_accounts' => $bankAccounts, 'countries' => $countries, 'cities' => $city, 'city_id' => $city_id, 'state_id' => $state_id, 
+            'bank_accounts' => $bankAccounts, 'countries' => $countries, 'cities' => $city, 'city_id' => $city_id, 'state_id' => $state_id,
             'country_id' => $country_id, 'state_name' => $state_name, 'country_name' => $country_name, 'city_name' => $city_name,
             'aex_cities' => $aex_cities
         ]);
     }
-    
+
     public function getCep(Request $request)
     {
         $SIGEP = 'https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente';
@@ -329,19 +331,19 @@ class CheckoutController extends Controller
         $country_id = "";
         $state_name = "";
 
-        $cities = City::with('state.country')->where('name','like',"%{$address['cidade']}")->get();
+        $cities = City::with('state.country')->where('name', 'like', "%{$address['cidade']}")->get();
 
-        if($cities->count() > 0) {
-            foreach($cities->toArray() as $city) {
+        if ($cities->count() > 0) {
+            foreach ($cities->toArray() as $city) {
                 //check if city belongs to correct state. It is possible to have
                 //same city name in different states (Cascavel is in Recife
                 //and Parana)
-                if(strtolower($city['state']['initial']) === strtolower($address['uf'])) {
+                if (strtolower($city['state']['initial']) === strtolower($address['uf'])) {
                     $city_id = $city['id'];
                     $state_id = $city['state']['id'];
                     $country_id = $city['state']['country']['id'];
                     $state_name = $city['state']['name'];
-                break;
+                    break;
                 }
             }
         }
@@ -367,7 +369,7 @@ class CheckoutController extends Controller
         $html = "";
         $cep = preg_replace('/[^0-9]/', null, $request->zip_code);
 
-        /* 
+        /*
         * Métodos de Envio por Região
         * Se o CEP digitado estiver na faixa de algum dos métodos ativos e com uso de região ativado [evita duplicidade de shipping em momentos indevidos]
         */
@@ -379,13 +381,13 @@ class CheckoutController extends Controller
         // 2 - Get shippings by state
         $shippingsByState = Shipping::where(['status' => 1, 'state_id' => $request->state_id])->whereNull('city_id')->get();
 
-         // 3 - Get shippings by country
-         $shippingsByCountry = Shipping::where(['status' => 1, 'country_id' => $request->country_id])->whereNull('city_id')->whereNull('state_id')->get();
+        // 3 - Get shippings by country
+        $shippingsByCountry = Shipping::where(['status' => 1, 'country_id' => $request->country_id])->whereNull('city_id')->whereNull('state_id')->get();
 
-         // 4 - Get shippings without location
-         $shippingsWithoutLocation = Shipping::where('status',1)->whereNull('city_id')->whereNull('state_id')->whereNull('country_id')->get();
-        
-        if($shippingsByRegion->count() && !$found){
+        // 4 - Get shippings without location
+        $shippingsWithoutLocation = Shipping::where('status', 1)->whereNull('city_id')->whereNull('state_id')->whereNull('country_id')->get();
+
+        if ($shippingsByRegion->count() && !$found) {
             $responseShippings = $shippingsByRegion->toArray();
             $found = true;
         }
@@ -427,7 +429,7 @@ class CheckoutController extends Controller
         }
 
         // Calculate prices using Cart
-        if($found) {
+        if ($found) {
             if (Session::has('currency')) {
                 $curr = Currency::find(Session::get('currency'));
             } else {
@@ -438,11 +440,11 @@ class CheckoutController extends Controller
             $decimal_digits = $curr->decimal_digits;
             $decimal_separator = $curr->decimal_separator;
             $thousands_separator = $curr->thousands_separator;
-    
+
             $oldCart = Session::get('cart');
             $cart = new Cart($oldCart);
             $products = $cart->items;
-    
+
             $total = $cart->totalPrice;
             $coupon = Session::has('coupon') ? Session::get('coupon') : 0;
             if ($this->storeSettings->tax != 0) {
@@ -456,7 +458,7 @@ class CheckoutController extends Controller
                 $total = Session::get('coupon_total');
                 $total = str_replace($curr->sign, '', $total) + round(0 * $curr->value, 2);
             }
-    
+
             $correios_weight = 0;
             foreach ($products as $prod) {
                 if (empty($prod['item']['original']['weight'])) {
@@ -465,7 +467,7 @@ class CheckoutController extends Controller
                     $correios_weight = $correios_weight + ($prod['item']['original']['weight'] * $prod['qty']);
                 }
             }
-    
+
             $peso = $correios_weight;
             if (empty($peso)) {
                 $peso = 1;
@@ -473,23 +475,22 @@ class CheckoutController extends Controller
 
             // Build final html result
             foreach ($responseShippings as $shipping) {
-
                 $ship_price = $shipping['price'];
 
                 if ($shipping['shipping_type'] == "Fixed Weight") {
                     $ship_price = $shipping['price'] * $peso;
-                } 
+                }
 
                 if ($shipping['shipping_type'] == "Percentage Price") {
                     $percentagevalue = $shipping['price'] / 100;
-                    $ship_price = $total * $percentagevalue; 
+                    $ship_price = $total * $percentagevalue;
                 }
 
                 // Apply free shipping if shipping method is fixed with over price
-                if($shipping['shipping_type'] != 'Free' &&
+                if ($shipping['shipping_type'] != 'Free' &&
                     $shipping['price_free_shipping'] > 0 &&
                     $cart->totalPrice >= $shipping['price_free_shipping']) {
-                        $ship_price = 0;
+                    $ship_price = 0;
                 }
 
                 Session::forget('NORMAL-SHIP-' . $shipping['id']);
@@ -525,30 +526,29 @@ class CheckoutController extends Controller
         $melhorenvioOption = '';
 
         $regional = false;
-        if (isset($local_cep_start) && isset($local_cep_end) && $dest_zipcode >= $local_cep_start && $dest_zipcode <= $local_cep_end){
+        if (isset($local_cep_start) && isset($local_cep_end) && $dest_zipcode >= $local_cep_start && $dest_zipcode <= $local_cep_end) {
             $regional = true;
         }
 
         if (empty($dest_zipcode) && empty($html)) {
             $html = '<p class="melhorenvio-sheep">' .__('Shipping'). '<br><small>' . __('Input Zip Code') . '</small></p>';
-        } else if($regional && empty($html)) {
+        } elseif ($regional && empty($html)) {
             $html = __('Regional Zip Code. Please check regional shipping prices in checkout.');
-        }else if(!$regional){
+        } elseif (!$regional) {
             // Get Correios shipping options, if available
             if ($this->storeSettings->is_correios) {
                 $correiosPac = $this->getCorreios($request->merge(['servico'=>'PAC']));
                 $correiosSedex = $this->getCorreios($request->merge(['servico'=>'SEDEX']));
             }
 
-            // Get Melhorenvio shipping options, if available            
+            // Get Melhorenvio shipping options, if available
             if (config("features.melhorenvio_shipping") && $this->storeSettings->is_melhorenvio) {
-
                 $melhorenvioOption = $this->getMelhorenvio($request);
             }
         }
         // Get AEX shipping options, if available
         $aexOption = '';
-        
+
         if (config("features.aex_shipping") && $this->storeSettings->is_aex && isset($request->codigo_ciudad)) {
             $aexOption = $this->getAex($request);
         }
@@ -570,7 +570,7 @@ class CheckoutController extends Controller
                 $cep_destino = $destino;
                 $cep_destino = preg_replace('/[^0-9]/', null, $cep_destino);
             }
-            
+
             $oldCart = Session::get('cart');
             $cart = new Cart($oldCart);
 
@@ -611,10 +611,16 @@ class CheckoutController extends Controller
             $valor_declarado = $valor;
             $aviso_recebimento = 's';
             $diametro = 0;
-            
-            if (empty($valor_declarado)) $valor_declarado = 0;
-            if ($valor_declarado < 0) $valor_declarado = 0;
-            if ($valor_declarado > 10000) $valor_declarado = 10000;
+
+            if (empty($valor_declarado)) {
+                $valor_declarado = 0;
+            }
+            if ($valor_declarado < 0) {
+                $valor_declarado = 0;
+            }
+            if ($valor_declarado > 10000) {
+                $valor_declarado = 10000;
+            }
             $url = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?nCdEmpresa=&sDsSenha=';
             $url = $url . '&sCepOrigem=' . $cep_origem;
             $url = $url . '&sCepDestino=' . $cep_destino;
@@ -635,10 +641,10 @@ class CheckoutController extends Controller
             $temp_brl  = Currency::where('name', '=', "BRL")->first();
             if (empty($temp_brl->value)) {
                 $retorno = ['erro' => 'BRL não cadastrado.'];
-            } else if ($frete->Erro == '0') {
+            } elseif ($frete->Erro == '0') {
                 $valor = (Helper::toFloat($frete->Valor) / $temp_brl->value);
                 $retorno = ['servico' => $servico, 'valor' => $valor, 'valor_original' => $frete->Valor, 'prazo' => $frete->PrazoEntrega];
-            } else if ($frete->Erro == '7') {
+            } elseif ($frete->Erro == '7') {
                 $retorno = ['erro' => 'Serviço indisponível, tente mais tarde.'];
             } else {
                 $retorno = ['erro' => 'Erro no cálculo do frete. Erro:' . $frete->Erro];
@@ -683,7 +689,6 @@ class CheckoutController extends Controller
                 return $html;
             }
         }
-  
     }
 
     public function getAex(request $request)
@@ -691,7 +696,7 @@ class CheckoutController extends Controller
         if ($this->storeSettings->is_aex && config("features.aex_shipping")) {
             $codigo_ciudad = $request->codigo_ciudad;
             $aex_origin = $this->storeSettings->aex_origin;
-            
+
             $oldCart = Session::get('cart');
             $cart = new Cart($oldCart);
 
@@ -715,7 +720,7 @@ class CheckoutController extends Controller
                 $total = Session::get('coupon_total');
                 $total = str_replace($curr->sign, '', $total) + round(0 * $curr->value, 2);
             }
-            
+
             $temp_pyg  = Currency::where('name', '=', "PYG")->first();
             if (empty($temp_pyg->value)) {
                 $html = '<p class="aex-sheep">AEX ' . __('Unavaiable') . '<br><small>PYG '.__('Unavaiable').'</small></p>';
@@ -733,18 +738,18 @@ class CheckoutController extends Controller
             $package = [$obj];
 
             $aex = new Aex($this->storeSettings->aex_public, $this->storeSettings->aex_private, $this->storeSettings->is_aex_production);
-            $aex_response = $aex->getRates($aex_origin,$codigo_ciudad,$package,'P');
-            
-            if($aex_response->codigo != 0){
+            $aex_response = $aex->getRates($aex_origin, $codigo_ciudad, $package, 'P');
+
+            if ($aex_response->codigo != 0) {
                 $html = '<p class="aex-sheep">AEX ' . __('Unavaiable') . '<br><small>' . $aex_response->mensaje . '</small></p>';
                 return $html;
-            }else{
+            } else {
                 $html = "";
-                foreach($aex_response->datos as $aex_service){
+                foreach ($aex_response->datos as $aex_service) {
                     $value = Helper::toFloat($aex_service->costo_servicio) / $temp_pyg->value;
-                    if(isset($aex_service->adicionales)){
-                        foreach($aex_service->adicionales as $adicional){
-                            if($this->storeSettings->is_aex_insurance || $adicional->obligatorio == 't'){
+                    if (isset($aex_service->adicionales)) {
+                        foreach ($aex_service->adicionales as $adicional) {
+                            if ($this->storeSettings->is_aex_insurance || $adicional->obligatorio == 't') {
                                 $value += Helper::toFloat($adicional->costo) / $temp_pyg->value;
                             }
                         }
@@ -754,17 +759,17 @@ class CheckoutController extends Controller
                     Session::put('aex_value_'.$aex_service->id_tipo_servicio, $value);
                     Session::put('aex_service_'.$aex_service->id_tipo_servicio, 'AEX-'.$aex_service->denominacion);
                     $value_format = $curr->sign . number_format(
-                                        $value * $curr->value,
-                                        $curr->decimal_digits,
-                                        $curr->decimal_separator,
-                                        $curr->thousands_separator
-                                    );
+                        $value * $curr->value,
+                        $curr->decimal_digits,
+                        $curr->decimal_separator,
+                        $curr->thousands_separator
+                    );
 
                     $estimated = $aex_service->tiempo_entrega;
-                    
+
                     $type_punto_entrega = "";
-                    if(empty($aex_service->puntos_entrega)){
-                        $html .= 
+                    if (empty($aex_service->puntos_entrega)) {
+                        $html .=
                         '<div class="radio-design aex-sheep" id="aex-ship">
                             <input type="radio" data-itemtype="standard" onclick="excluirPonto()" class="shipping aex-ship-input" id="aex-shepping" name="shipping"
                             data-price="' . $value * $curr->value . '" data-id="AEX_'.$aex_service->id_tipo_servicio.'" value="AEX_'.$aex_service->id_tipo_servicio.'">
@@ -777,9 +782,9 @@ class CheckoutController extends Controller
                         </div>';
                     }
 
-                    if(isset($aex_service->puntos_entrega)){
-                        foreach($aex_service->puntos_entrega as $punto){
-                            $type_punto_entrega .= 
+                    if (isset($aex_service->puntos_entrega)) {
+                        foreach ($aex_service->puntos_entrega as $punto) {
+                            $type_punto_entrega .=
                                 '<div class="radio-design punto-option">
                                         <input type="radio" class="punto_entrega" name="puntoentrega" onclick="gerarPonto('.$punto->id.')" value="'.$punto->punto_entrega.'">
                                         <input type="hidden" class="punto_id" name="puntoid" value="'.$punto->id.'">
@@ -794,7 +799,7 @@ class CheckoutController extends Controller
                                         </label>
                                 </div>';
                         }
-                            $html .=
+                        $html .=
                                         '<div class="radio-design aex-sheep">
                                             <input type="radio" class="aex-ship-input shipping" id="parent" name="shipping"
                                             data-price="' . $value * $curr->value . '" data-id="AEX_'.$aex_service->id_tipo_servicio.'" value="AEX_'.$aex_service->id_tipo_servicio.'">
@@ -807,7 +812,7 @@ class CheckoutController extends Controller
                                             </label>
                                         </div>';
                     }
-                }                
+                }
                 return $html;
             }
         }
@@ -815,12 +820,10 @@ class CheckoutController extends Controller
 
     public function getMelhorenvio(request $request)
     {
-
         if ($this->storeSettings->is_melhorenvio && config("features.melhorenvio_shipping") && $this->storeSettings->melhorenvio->token) {
-            
             $dest_zipcode = $request->zip_code;
             $melhorenvio_origin = $this->storeSettings->melhorenvio->from_postal_code;
-            
+
             $oldCart = Session::get('cart');
             $cart = new Cart($oldCart);
 
@@ -844,7 +847,7 @@ class CheckoutController extends Controller
                 $total = Session::get('coupon_total');
                 $total = str_replace($curr->sign, '', $total) + round(0 * $curr->value, 2);
             }
-            
+
             $temp_brl  = Currency::where('name', '=', "BRL")->first();
             if (empty($temp_brl->value)) {
                 $html = '<p class="melhorenvio-sheep">' .__('Shipping'). ' ' . __('Unavaiable') . '<br><small>BRL '.__('Unavaiable').'</small></p>';
@@ -871,23 +874,21 @@ class CheckoutController extends Controller
                 //"collect"  => $this->storeSettings->melhorenvio->collect
             ];
 
-            $services = implode(",",$this->storeSettings->melhorenvio->selected_services);
+            $services = implode(",", $this->storeSettings->melhorenvio->selected_services);
 
             $melhorenvio = new MelhorEnvio($this->storeSettings->melhorenvio->token, $this->storeSettings->melhorenvio->production);
-            $melhorenvio_response = $melhorenvio->getRates($melhorenvio_origin,$dest_zipcode, $package, null,$options,$services);
+            $melhorenvio_response = $melhorenvio->getRates($melhorenvio_origin, $dest_zipcode, $package, null, $options, $services);
 
-            if(isset($melhorenvio_response->message)){
+            if (isset($melhorenvio_response->message)) {
                 $html = '<p class="melhorenvio-sheep">' .__('Shipping'). ' ' . __('Unavaiable') . '<br><small>' . $melhorenvio_response->message . '</small></p>';
                 return $html;
-            }else{
-
+            } else {
                 $html = "";
-                
-                foreach($melhorenvio_response as $melhorenvio_service){
-                    if(!isset($melhorenvio_service->error)){
 
+                foreach ($melhorenvio_response as $melhorenvio_service) {
+                    if (!isset($melhorenvio_service->error)) {
                         $value = Helper::toFloat($melhorenvio_service->custom_price) / $temp_brl->value;
-                        
+
                         Session::put('melhorenvio_destination_'.$melhorenvio_service->id, $dest_zipcode);
                         Session::put('melhorenvio_value_'.$melhorenvio_service->id, $value);
                         Session::put('melhorenvio_service_'.$melhorenvio_service->id, $melhorenvio_service->company->name.' - '.$melhorenvio_service->name);
@@ -907,10 +908,10 @@ class CheckoutController extends Controller
                                     <span class="checkmark"></span>
                                     <label for="melhorenvio-shepping" id="melhorenvio-label">
                                     ' . $melhorenvio_service->company->name . ' - ' . $melhorenvio_service->name . ' + ' . $value_format . '
-                                    <small>' . __(':min to :max days',['min'=>$estimated_min, 'max'=>$estimated_max]) . '</small>
+                                    <small>' . __(':min to :max days', ['min'=>$estimated_min, 'max'=>$estimated_max]) . '</small>
                                     </label>
                                     </div>';
-                    }else{
+                    } else {
                         $html = $html.'<div class="radio-design melhorenvio-sheep" id="melhorenvio-ship">
                                     <label>' . $melhorenvio_service->company->name . ' - ' . $melhorenvio_service->name . '
                                     <small>' . $melhorenvio_service->error . '</small>
@@ -918,8 +919,8 @@ class CheckoutController extends Controller
                                     </div>';
                     }
                 }
-                
-                return $html;  
+
+                return $html;
             }
         }
     }

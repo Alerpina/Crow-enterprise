@@ -22,33 +22,31 @@ use Illuminate\Support\Facades\Session;
 
 class CheckoutSimplifiedController extends Controller
 {
-
     public function __construct()
     {
         parent::__construct();
 
-        if(!$this->storeSettings->is_cart) {
-            return app()->abort(404);
+        if (!app()->runningInConsole()) {
+            if (!$this->storeSettings->is_cart) {
+                return app()->abort(404);
+            }
         }
     }
 
-    public function loadpayment($slug1,$slug2)
+    public function loadpayment($slug1, $slug2)
     {
-        if (Session::has('currency'))
-        {
+        if (Session::has('currency')) {
             $curr = Currency::find(Session::get('currency'));
-        }
-        else
-        {
+        } else {
             $curr = Currency::find($this->storeSettings->currency_id);
         }
         $payment = $slug1;
         $pay_id = $slug2;
         $gateway = '';
-        if($pay_id != 0) {
+        if ($pay_id != 0) {
             $gateway = PaymentGateway::findOrFail($pay_id);
         }
-        return view('load.payment',compact('payment','pay_id','gateway','curr'));
+        return view('load.payment', compact('payment', 'pay_id', 'gateway', 'curr'));
     }
 
     public function create(Request $request)
@@ -58,18 +56,15 @@ class CheckoutSimplifiedController extends Controller
         }
 
         if (!Session::has('cart')) {
-            return redirect()->route('front.cart')->with('success',__("You don't have any product to checkout."));
+            return redirect()->route('front.cart')->with('success', __("You don't have any product to checkout."));
         }
 
-        if (Session::has('currency'))
-        {
+        if (Session::has('currency')) {
             $curr = Currency::find(Session::get('currency'));
-        }
-        else
-        {
+        } else {
             $curr = Currency::find($this->storeSettings->currency_id);
         }
-        $first_curr = Currency::where('id','=',1)->first();
+        $first_curr = Currency::where('id', '=', 1)->first();
 
         $order = new Order;
 
@@ -81,22 +76,20 @@ class CheckoutSimplifiedController extends Controller
         $success_url = action('Front\PaymentController@payreturnSimplifidCheckout');
 
         foreach ($cart->items as $key => $prod) {
-            if(!empty($prod['max_quantity']) && ($prod['qty'] > $prod['max_quantity']))
-                    {
-                return redirect()->route('front.cart')->with('unsuccess',__('Max quantity of :prod  is :qty!',['prod' => $prod['item']['name'], 'qty' => $prod['max_quantity']]));
-                    }
-    
-            if(!empty($prod['item']['stock']) && ($prod['qty'] > $prod['item']['stock']))
-                    {
-                        return redirect()->route('front.cart')->with('unsuccess',__('The stock of :prod  is :qty!',['prod' => $prod['item']['name'], 'qty' => $prod['item']['stock']]));      
-                    }  
-                }
+            if (!empty($prod['max_quantity']) && ($prod['qty'] > $prod['max_quantity'])) {
+                return redirect()->route('front.cart')->with('unsuccess', __('Max quantity of :prod  is :qty!', ['prod' => $prod['item']['name'], 'qty' => $prod['max_quantity']]));
+            }
 
-        if(Session::has('coupon_total')){
+            if (!empty($prod['item']['stock']) && ($prod['qty'] > $prod['item']['stock'])) {
+                return redirect()->route('front.cart')->with('unsuccess', __('The stock of :prod  is :qty!', ['prod' => $prod['item']['name'], 'qty' => $prod['item']['stock']]));
+            }
+        }
+
+        if (Session::has('coupon_total')) {
             $cart_total = Session::get('coupon_total') / $curr->value;
-        }else if(Session::has('coupon_total1')){
+        } elseif (Session::has('coupon_total1')) {
             $cart_total = Session::get('coupon_total1') / $curr->value;
-        }else{
+        } else {
             $cart_total = $oldCart->totalPrice * (1+($this->storeSettings->tax / 100));
         }
 
@@ -147,12 +140,10 @@ class CheckoutSimplifiedController extends Controller
         $notification->order_id = $order->id;
         $notification->save();
 
-        if($request->coupon_id != "")
-        {
+        if ($request->coupon_id != "") {
             $coupon = Coupon::findOrFail($request->coupon_id);
             $coupon->used++;
-            if($coupon->times != null)
-            {
+            if ($coupon->times != null) {
                 $i = (int)$coupon->times;
                 $i--;
                 $coupon->times = (string)$i;
@@ -174,7 +165,7 @@ class CheckoutSimplifiedController extends Controller
                 $product->size_qty =  $temp1;
                 $product->stock -= $prod['qty'];
                 $product->update();
-            } elseif(!empty($y)){
+            } elseif (!empty($y)) {
                 $y = (int) $y;
                 $y = $y - $prod['qty'];
                 $temp = $product->color_qty;
@@ -183,8 +174,7 @@ class CheckoutSimplifiedController extends Controller
                 $product->color_qty =  $temp1;
                 $product->stock -= $prod['qty'];
                 $product->update();
-            } 
-            elseif(!empty($z)){
+            } elseif (!empty($z)) {
                 $z = (int) $z;
                 $z = $z - $prod['qty'];
                 $temp = $product->material_qty;
@@ -193,10 +183,10 @@ class CheckoutSimplifiedController extends Controller
                 $product->material_qty =  $temp1;
                 $product->stock -= $prod['qty'];
                 $product->update();
-            } else{
+            } else {
                 $x = (string) $prod['stock'];
                 if ($x != null) {
-                    if($product->stock != null){
+                    if ($product->stock != null) {
                         $product->stock -= $prod['qty'];
                     }
                     $product->update();
@@ -211,10 +201,8 @@ class CheckoutSimplifiedController extends Controller
 
         $notf = null;
 
-        foreach($cart->items as $prod)
-        {
-            if($prod['item']['user_id'] != 0)
-            {
+        foreach ($cart->items as $prod) {
+            if ($prod['item']['user_id'] != 0) {
                 $vorder =  new VendorOrder;
                 $vorder->order_id = $order->id;
                 $vorder->user_id = $prod['item']['user_id'];
@@ -226,8 +214,7 @@ class CheckoutSimplifiedController extends Controller
             }
         }
 
-        if(!empty($notf))
-        {
+        if (!empty($notf)) {
             $users = array_unique($notf);
 
             foreach ($users as $user) {
@@ -237,11 +224,11 @@ class CheckoutSimplifiedController extends Controller
                 $notification->save();
             }
         }
-        if(Session::has('temporder')){
+        if (Session::has('temporder')) {
             Session::forget('temporder');
         }
-        Session::put('temporder',$order);
-        Session::put('tempcart',$cart);
+        Session::put('temporder', $order);
+        Session::put('tempcart', $cart);
 
         Session::forget('cart');
 
@@ -253,8 +240,7 @@ class CheckoutSimplifiedController extends Controller
         Session::forget('coupon_percentage');
 
         //Sending Email To Admin
-        if($this->storeSettings->is_smtp == 1)
-        {
+        if ($this->storeSettings->is_smtp == 1) {
             $data = [
                 'to' => Pagesetting::find(1)->contact_email,
                 'subject' => __("New Order Received!"),
@@ -266,15 +252,14 @@ class CheckoutSimplifiedController extends Controller
             $mailer = new GeniusMailer();
             $mailer->sendAdminMail($data, $order->id);
         } else {
-           $to = Pagesetting::find(1)->contact_email;
-           $subject = __("New Order Received!");
-           $msg =  $this->storeSettings->title . "<br>" .__("Hello Admin!")."<br>".__("Your store has received a new order.")."<br>".
+            $to = Pagesetting::find(1)->contact_email;
+            $subject = __("New Order Received!");
+            $msg =  $this->storeSettings->title . "<br>" .__("Hello Admin!")."<br>".__("Your store has received a new order.")."<br>".
                 __("Order Number is")." ".$order->order_number.".".__("Please login to your panel to check.")."<br>".
                 __("Thank you");
-           $headers = "From: ".$this->storeSettings->from_name."<".$this->storeSettings->from_email.">";
-           mail($to,$subject,$msg,$headers);
+            $headers = "From: ".$this->storeSettings->from_name."<".$this->storeSettings->from_email.">";
+            mail($to, $subject, $msg, $headers);
         }
         return redirect($success_url);
     }
-
 }
