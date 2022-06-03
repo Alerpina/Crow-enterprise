@@ -26,14 +26,14 @@
     @elseif(isset($cat)) {{--CATEGORY--}}
     <title>{{ucfirst($cat->name)}} - {{$gs->title}}</title>
     @if(stripos(strtolower($cat->photo), "noimage.png"))
-    <meta property="og:image" content="{{asset('assets/images/'.$gs->logo)}}" />
+    <meta property="og:image" content="{{asset('storage/images/'.$gs->logo)}}" />
     @else
-    <meta property="og:image" content="{{asset('assets/images/categories/'.$cat->photo)}}">
+    <meta property="og:image" content="{{asset('storage/images/categories/'.$cat->photo)}}">
     @endif
 
     @elseif(isset($brand) && !isset($brands)) {{--BRAND--}}
     <meta property="og:title" content="{{ucfirst($brand->name)}} - {{$gs->title}}" />
-    <meta property="og:image" content="{{asset('assets/images/brands/'.$brand->image)}}">
+    <meta property="og:image" content="{{asset('storage/images/brands/'.$brand->image)}}">
     <meta name="author" content="Agência Crow">
     <title>{{ $brand->name }} - {{$gs->title}}</title>
 
@@ -46,39 +46,39 @@
                         $productt->meta_description : strip_tags($productt->description) }}" />
 
     @if(stripos(strtolower($productt->thumbnail), "noimage.png"))
-    <meta property="og:image" content="{{asset('assets/images/'.$gs->logo)}}" />
+    <meta property="og:image" content="{{asset('storage/images/'.$gs->logo)}}" />
     @else
-    <meta property="og:image" content="{{asset('assets/images/thumbnails/'.$productt->thumbnail)}}">
+    <meta property="og:image" content="{{asset('storage/images/thumbnails/'.$productt->thumbnail)}}">
     @endif
 
     <meta name="author" content="Agência Crow">
     <title>{{($productt->name)}}</title>
     @elseif(request()->is('privacy-policy'))
-    <meta property="og:image" content="{{asset('assets/images/'.$gs->logo)}}" />
+    <meta property="og:image" content="{{asset('storage/images/'.$gs->logo)}}" />
     <meta name="keywords" content="{{ $seo->meta_keys }}">
     <meta name="description" content="{{ $seo->meta_description }}">
     <meta name="author" content="Agência Crow">
     <title>{{ __("Privacy Policy") }} - {{($gs->title)}}</title>
     @elseif(request()->is('terms-of-service'))
-    <meta property="og:image" content="{{asset('assets/images/'.$gs->logo)}}" />
+    <meta property="og:image" content="{{asset('storage/images/'.$gs->logo)}}" />
     <meta name="keywords" content="{{ $seo->meta_keys }}">
     <meta name="description" content="{{ $seo->meta_description }}">
     <meta name="author" content="Agência Crow">
     <title>{{ __("General Terms of Service") }} - {{($gs->title)}}</title>
     @elseif(request()->is('vendor-terms-of-service'))
-    <meta property="og:image" content="{{asset('assets/images/'.$gs->logo)}}" />
+    <meta property="og:image" content="{{asset('storage/images/'.$gs->logo)}}" />
     <meta name="keywords" content="{{ $seo->meta_keys }}">
     <meta name="description" content="{{ $seo->meta_description }}">
     <meta name="author" content="Agência Crow">
     <title>{{ __("Seller Terms of Service") }} - {{($gs->title)}}</title>
     @elseif(request()->is('policy'))
-    <meta property="og:image" content="{{asset('assets/images/'.$gs->logo)}}" />
+    <meta property="og:image" content="{{asset('storage/images/'.$gs->logo)}}" />
     <meta name="keywords" content="{{ $seo->meta_keys }}">
     <meta name="description" content="{{ $seo->meta_description }}">
     <meta name="author" content="Agência Crow">
     <title>{{ __("Buy & Return Policy") }} - {{($gs->title)}}</title>
     @else
-    <meta property="og:image" content="{{asset('assets/images/'.$gs->logo)}}" />
+    <meta property="og:image" content="{{asset('storage/images/'.$gs->logo)}}" />
     <meta name="keywords" content="{{ $seo->meta_keys }}">
     <meta name="description" content="{{ $seo->meta_description }}">
     <meta name="author" content="Agência Crow">
@@ -89,18 +89,17 @@
     {!! $seo->tag_manager_head !!}
 
     <!-- favicon -->
-    <link rel="icon" type="image/x-icon" href="{{asset('assets/images/'.$gs->favicon)}}" />
+    <link rel="icon" type="image/x-icon" href="{{asset('storage/images/'.$gs->favicon)}}" />
 
     <!-- stylesheet crow -->
-    <link rel="stylesheet" href="{{asset('resources/views/front/themes/shared/assets/css/crow.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/front/themes/shared/assets/css/crow.css')}}">
 
     @if($slocale->rtl == "1")
     <!-- stylesheet -->
-    <link rel="stylesheet" href="{{asset('resources/views/front/themes/shared/assets/css/rtl/all.css')}}">
-    <link rel="stylesheet"
-        href="{{asset('resources/views/front/themes/'.env('THEME','theme-01').'/assets/css/rtl/rtl.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/front/themes/shared/assets/css/rtl/all.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/front/themes/'.env('THEME','theme-01').'/assets/css/rtl/rtl.css')}}">
     <!--Updated CSS-->
-    <link rel="stylesheet" href="{{ asset('resources/views/front/themes/'.env('THEME','theme-01').'/assets/css/rtl/styles.php?'.
+    <link rel="stylesheet" href="{{ asset('assets/front/themes/'.env('THEME','theme-01').'/assets/css/rtl/styles.php?'.
             'color='.str_replace('#','',$gs->colors).'&'.
             'header_color='.str_replace('#','',$gs->header_color).'&'.
             'footer_color='.str_replace('#','',$gs->footer_color).'&'.
@@ -110,11 +109,10 @@
             'menu_hover_color='.str_replace('#','',$gs->menu_hover_color)) }}">
     @else
     <!-- stylesheet -->
-    <link rel="stylesheet" href="{{asset('resources/views/front/themes/shared/assets/css/all.css')}}">
-    <link rel="stylesheet"
-        href="{{asset('resources/views/front/themes/'.env('THEME','theme-01').'/assets/css/theme.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/front/themes/shared/assets/css/all.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/front/themes/'.env('THEME','theme-01').'/assets/css/theme.css')}}">
     <!--Updated CSS-->
-    <link rel="stylesheet" href="{{ asset('resources/views/front/themes/'.env('THEME','theme-01').'/assets/css/styles.php?'.
+    <link rel="stylesheet" href="{{ asset('assets/front/themes/'.env('THEME','theme-01').'/assets/css/styles.php?'.
             'theme_color_1='.str_replace('#','',$gs->colors).'&'.
             'theme_color_2='.str_replace('#','',$gs->header_color).'&'.
             'text_color_1='.str_replace('#','',$gs->copyright_color).'&'.
@@ -174,28 +172,28 @@
     </script>
 
     <!-- jquery -->
-    <script src="{{asset('resources/views/front/themes/shared/assets/js/jquery.js')}}"></script>
+    <script src="{{asset('assets/front/themes/shared/assets/js/jquery.js')}}"></script>
 
-    <script src="{{asset('resources/views/front/themes/shared/assets/js/jquery-ui/jquery-ui.min.js')}}">
+    <script src="{{asset('assets/front/themes/shared/assets/js/jquery-ui/jquery-ui.min.js')}}">
     </script>
     <!-- popper -->
-    <script src="{{asset('resources/views/front/themes/shared/assets/js/popper.min.js')}}"></script>
+    <script src="{{asset('assets/front/themes/shared/assets/js/popper.min.js')}}"></script>
     <!-- bootstrap -->
-    <script src="{{asset('resources/views/front/themes/shared/assets/js/bootstrap.min.js')}}"></script>
+    <script src="{{asset('assets/front/themes/shared/assets/js/bootstrap.min.js')}}"></script>
     <!-- plugin js-->
-    <script src="{{asset('resources/views/front/themes/shared/assets/js/plugin.js')}}"></script>
+    <script src="{{asset('assets/front/themes/shared/assets/js/plugin.js')}}"></script>
     <script src="{{asset('assets/admin/plugins/jquery-number-master/jquery.number.js')}}"></script>
     <script src="{{asset('assets/admin/plugins/jquery-number-master/jquery.number.min.js')}}"></script>
 
-    <script src="{{asset('resources/views/front/themes/shared/assets/js/xzoom.min.js')}}"></script>
-    <script src="{{asset('resources/views/front/themes/shared/assets/js/jquery.hammer.min.js')}}"></script>
-    <script src="{{asset('resources/views/front/themes/shared/assets/js/setup.js')}}"></script>
+    <script src="{{asset('assets/front/themes/shared/assets/js/xzoom.min.js')}}"></script>
+    <script src="{{asset('assets/front/themes/shared/assets/js/jquery.hammer.min.js')}}"></script>
+    <script src="{{asset('assets/front/themes/shared/assets/js/setup.js')}}"></script>
 
-    <script src="{{asset('resources/views/front/themes/shared/assets/js/toastr.js')}}"></script>
+    <script src="{{asset('assets/front/themes/shared/assets/js/toastr.js')}}"></script>
     <!-- theme -->
-    <script src="{{asset('resources/views/front/themes/'.env('THEME','theme-01').'/assets/js/theme.js')}}"></script>
+    <script src="{{asset('assets/front/themes/'.env('THEME','theme-01').'/assets/js/theme.js')}}"></script>
     <!-- shared -->
-    <script src="{{asset('resources/views/front/themes/shared/assets/js/shared.js')}}"></script>
+    <script src="{{asset('assets/front/themes/shared/assets/js/shared.js')}}"></script>
 
     {!! $seo->google_analytics !!}
 
