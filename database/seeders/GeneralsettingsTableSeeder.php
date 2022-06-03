@@ -14,13 +14,11 @@ class GeneralsettingsTableSeeder extends Seeder
      */
     public function run()
     {
-
-
         \DB::table('generalsettings')->delete();
 
-        \DB::table('generalsettings')->insert(array (
+        \DB::table('generalsettings')->insert(array(
             0 =>
-            array (
+            array(
                 'id' => 1,
                 'logo' => '1589403658logo azul.png',
                 'favicon' => '1589403704favicon.png',
@@ -54,12 +52,12 @@ class GeneralsettingsTableSeeder extends Seeder
                 'withdraw_charge' => 5.0,
                 'tax' => 0.0,
                 'shipping_cost' => 5.0,
-                'smtp_host' => NULL,
-                'smtp_port' => NULL,
-                'smtp_user' => '',
-                'smtp_pass' => '',
-                'from_email' => '',
-                'from_name' => NULL,
+                'smtp_host' => null,
+                'smtp_port' => null,
+                'smtp_user' => null,
+                'smtp_pass' => null,
+                'from_email' => null,
+                'from_name' => null,
                 'is_smtp' => 1,
                 'is_comment' => 1,
                 'is_currency' => 1,
@@ -121,7 +119,7 @@ class GeneralsettingsTableSeeder extends Seeder
                 'paypal_check' => 0,
                 'paypal_business' => 'shaon143-facilitator-1@gmail.com',
                 'footer_logo' => '1589403659logo branca.png',
-                'email_encryption' => NULL,
+                'email_encryption' => null,
                 'paytm_merchant' => 'tkogux49985047638244',
                 'paytm_secret' => 'LhNGUUKE9xCQ9xY8',
                 'paytm_website' => 'WEBSTAGING',
@@ -149,7 +147,7 @@ class GeneralsettingsTableSeeder extends Seeder
                 'ref_color' => '#186155',
                 'is_cart' => 1,
                 'is_simplified_checkout' => 0,
-                'simplified_checkout_number' => NULL,
+                'simplified_checkout_number' => null,
                 'is_standard_checkout' => 1,
                 'is_bancard' => 1,
                 'bancard_public_key' => '',
@@ -158,30 +156,30 @@ class GeneralsettingsTableSeeder extends Seeder
                 'is_mercadopago' => 0,
                 'mercadopago_access_token' => '',
                 'is_whatsapp' => 0,
-                'whatsapp_number' => NULL,
+                'whatsapp_number' => null,
                 'is_correios' => 1,
-                'correios_cep' => NULL,
-                'localcep_start' => NULL,
-                'localcep_end' => NULL,
-                'correios_width' => NULL,
-                'correios_height' => NULL,
-                'correios_length' => NULL,
-                'correios_weight' => NULL,
+                'correios_cep' => null,
+                'localcep_start' => null,
+                'localcep_end' => null,
+                'correios_width' => null,
+                'correios_height' => null,
+                'correios_length' => null,
+                'correios_weight' => null,
                 'is_cielo' => 1,
                 'cielo_merchantid' => '',
                 'is_pagseguro' => 1,
                 'pagseguro_token' => '',
                 'pagseguro_email' => '',
                 'is_pagseguro_sandbox' => 1,
-                'country_ship' => NULL,
+                'country_ship' => null,
                 'is_pagopar' => 0,
-                'pagopar_public_key' => NULL,
-                'pagopar_private_key' => NULL,
+                'pagopar_public_key' => null,
+                'pagopar_private_key' => null,
                 'bank_check' => 0,
-                'ftp_folder' => NULL,
+                'ftp_folder' => null,
                 'is_pagarme' => 0,
-                'pagarme_encryption_key' => NULL,
-                'pagarme_api_key' => NULL,
+                'pagarme_encryption_key' => null,
+                'pagarme_api_key' => null,
                 'is_comprasparaguai' => 0,
                 'store_comprasparaguai' => 1,
                 'is_lojaupdate' => 0,
@@ -189,12 +187,10 @@ class GeneralsettingsTableSeeder extends Seeder
                 'switch_highlight_currency' => 0,
                 'is_rede' => 0,
                 'is_rede_sandbox' => 0,
-                'rede_token' => NULL,
-                'rede_pv' => NULL,
+                'rede_token' => null,
+                'rede_pv' => null,
                 'rede_installments' => 0,
             ),
         ));
-
-
     }
 }
