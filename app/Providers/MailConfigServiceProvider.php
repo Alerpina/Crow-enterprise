@@ -17,10 +17,10 @@ class MailConfigServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if(Schema::hasTable('generalsettings')){
+        if (Schema::hasTable('generalsettings')) {
             $storeSettings = Generalsetting::where('is_default', 1)->first();
 
-            if($storeSettings){
+            if ($storeSettings) {
                 $mail_driver = "sendmail";
 
                 if ($storeSettings->header_email == 'smtp') {
@@ -28,16 +28,16 @@ class MailConfigServiceProvider extends ServiceProvider
                 }
 
                 $config = [
-                    "driver" => $mail_driver,
-                    "host" => $storeSettings->smtp_host,
-                    "port" => $storeSettings->smtp_port,
+                    "driver" => $mail_driver ?? config('mail.driver'),
+                    "host" => $storeSettings->smtp_host ?? config('mail.host'),
+                    "port" => $storeSettings->smtp_port ?? config('mail.port'),
                     "from" => [
-                        "address" => $storeSettings->from_email,
-                        "name" => $storeSettings->from_name
+                        "address" => $storeSettings->from_email ?? config('mail.from.address'),
+                        "name" => $storeSettings->from_name ?? config('mail.from.name')
                     ],
-                    "encryption" => $storeSettings->email_encryption,
-                    "username" => $storeSettings->smtp_user,
-                    "password" => $storeSettings->smtp_pass,
+                    "encryption" => $storeSettings->email_encryption ?? config('mail.encryption'),
+                    "username" => $storeSettings->smtp_user ?? config('mail.username'),
+                    "password" => $storeSettings->smtp_pass ?? config('mail.password'),
                 ];
 
                 Config::set('mail', array_merge(Config::get('mail'), $config));
