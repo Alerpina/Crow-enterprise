@@ -20,9 +20,9 @@
     <link rel="icon" type="image/x-icon" href="{{asset('storage/images/'.$gs->favicon)}}" />
 
     <!-- stylesheet crow -->
-    <link rel="stylesheet" href="{{asset('front/themes/shared/assets/css/crow.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/front/themes/shared/assets/css/crow.css')}}">
     <!-- stylesheet -->
-    <link rel="stylesheet" href="{{asset('front/themes/shared/assets/css/all.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/front/themes/shared/assets/css/all.css')}}">
     <!--Updated CSS-->
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
@@ -38,7 +38,7 @@
 
 <body>
     <section class="maintenance-lp"
-        style="background-image:url('{{ $gs->is_dark_mode ? asset('front/themes/shared/assets/images/dark-bg-maintenance.jpeg') : asset('front/themes/shared/assets/images/white-bg-maintenance.jpg') }}');">
+        style="background-image:url('{{ $gs->is_dark_mode ? asset('assets/front/themes/shared/assets/images/dark-bg-maintenance.jpeg') : asset('assets/front/themes/shared/assets/images/white-bg-maintenance.jpg') }}');">
         <div class="boxmaintenance-infos {{ $gs->is_dark_mode ? " dark" : "" }}">
             <h2 class="animate__animated">Em manutenção</h2>
             <img class="animate__animated maintenance-image" style="animation-delay:.3s;"
@@ -78,7 +78,7 @@
 
     </section>
 
-    <script src="{{asset('front/themes/shared/assets/js/jquery.js')}}"></script>
+    <script src="{{asset('assets/front/themes/shared/assets/js/jquery.js')}}"></script>
 
     <script>
         $(document).ready(function() {
