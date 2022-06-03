@@ -41,9 +41,8 @@
         style="background-image:url('{{ $gs->is_dark_mode ? asset('assets/front/themes/shared/assets/images/dark-bg-maintenance.jpeg') : asset('assets/front/themes/shared/assets/images/white-bg-maintenance.jpg') }}');">
         <div class="boxmaintenance-infos {{ $gs->is_dark_mode ? " dark" : "" }}">
             <h2 class="animate__animated">Em manutenção</h2>
-            <img class="animate__animated maintenance-image" style="animation-delay:.3s;"
-                src="{{ $gs->is_dark_mode ? asset('storage/images/')." /".$gs->footer_logo :
-            asset('storage/images/')."/".$gs->logo }}" alt="Logo">
+            <img class="animate__animated maintenance-image" style="animation-delay:.3s;" src="{{ $gs->is_dark_mode ? asset('storage/images/').'/'.$gs->footer_logo :
+            asset('storage/images/').'/'.$gs->logo }}" alt="Logo">
             <h5 class="animate__animated" style="animation-delay:.5s;">Estamos aperfeiçoando nossa plataforma para você
                 ter uma melhor expêriencia com nosso site. Enquanto isso, confira nossos outros canais de comunicação:
             </h5>
