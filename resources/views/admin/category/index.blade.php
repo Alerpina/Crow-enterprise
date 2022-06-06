@@ -1,17 +1,17 @@
 @extends('layouts.admin')
 
 @section('styles')
-    <style>
-            .presentation-pos {
-                color: black;
-                background-color: #e9e9ed;
-                text-align: center;
-                width: 30%;
-                border: 1px dashed #b5b5b582;
-                border-radius: 7px;
-                margin-left: 30%;
-                float: left;
-        }
+<style>
+    .presentation-pos {
+        color: black;
+        background-color: #e9e9ed;
+        text-align: center;
+        width: 30%;
+        border: 1px dashed #b5b5b582;
+        border-radius: 7px;
+        margin-left: 30%;
+        float: left;
+    }
 </style>
 @endsection
 
@@ -46,12 +46,15 @@
                         <table id="geniustable" class="table table-hover dt-responsive" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
-                                    <th width="20%"><i class="icofont-options icofont-lg" data-toggle="tooltip" title='{{ __("Options") }}'></i></th>
+                                    <th width="20%"><i class="icofont-options icofont-lg" data-toggle="tooltip"
+                                            title='{{ __("Options") }}'></i></th>
                                     <th>{{ __('Name') }}</th>
-                                    <th><i class="icofont-basket icofont-lg" data-toggle="tooltip" title='{{ __("Products") }}'></i></th>
+                                    <th><i class="icofont-basket icofont-lg" data-toggle="tooltip"
+                                            title='{{ __("Products") }}'></i></th>
                                     <th>{{ __("Attribute Count") }}</th>
-                                    <th><i class="icofont-eye icofont-lg" data-toggle="tooltip" title='{{ __("Status") }}'></i></th>
-                                    <th>{{ __("Presentation Position")     }}</th>
+                                    <th><i class="icofont-eye icofont-lg" data-toggle="tooltip"
+                                            title='{{ __("Status") }}'></i></th>
+                                    <th>{{ __("Presentation Position") }}</th>
                                 </tr>
                             </thead>
                         </table>
@@ -69,7 +72,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="submit-loader">
-                <img src="{{asset('assets/images/'.$admstore->admin_loader)}}" alt="">
+                <img src="{{asset('storage/images/'.$admstore->admin_loader)}}" alt="">
             </div>
             <div class="modal-header">
                 <h5 class="modal-title"></h5>
@@ -96,7 +99,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="submit-loader">
-                <img src="{{asset('assets/images/'.$admstore->admin_loader)}}" alt="">
+                <img src="{{asset('storage/images/'.$admstore->admin_loader)}}" alt="">
             </div>
             <div class="modal-header">
                 <h5 class="modal-title"></h5>
@@ -150,24 +153,24 @@
 {{-- DELETE MODAL ENDS --}}
 
 {{-- GALLERY MODAL --}}
-        @if(env("ENABLE_CUSTOM_PRODUCT"))
-		<div class="modal fade" id="setgallery" tabindex="-1" role="dialog" aria-labelledby="setgallery" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-				<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title"></h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">×</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					
-				</div>
-				</div>
-			</div>
-		</div>
-        @endif
-    {{-- GALLERY MODAL ENDS --}}
+@if(env("ENABLE_CUSTOM_PRODUCT"))
+<div class="modal fade" id="setgallery" tabindex="-1" role="dialog" aria-labelledby="setgallery" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+@endif
+{{-- GALLERY MODAL ENDS --}}
 
 @endsection
 
@@ -220,7 +223,7 @@
         ],
         language: {
             url: '{{$datatable_translation}}',
-            processing: '<img src="{{asset("assets/images/".$admstore->admin_loader)}}">'
+            processing: '<img src="{{asset("storage/images/".$admstore->admin_loader)}}">'
         },
         drawCallback: function(settings) {
             $(this).find('.select').niceSelect();
@@ -233,13 +236,13 @@
                 $.ajax({
                     type: 'GET',
                     url: '{{ url("admin/category/status") }}' + '/' + id + '/' + statusNovo
-                });                
+                });
             });
             $('.presentation-pos').on('change', function() {
                 $(this).val(Math.abs($(this).val()));
                 var id = $(this).attr('data-cat');
                 var pos = $(this).val();
-                $.ajax({                        
+                $.ajax({
                     type: 'GET',
                     url: '{{url("admin/category/changeCatPos") }}' + '/' + id + '/' +  pos
                 });
@@ -253,7 +256,7 @@
                 '</a>' +
                 '</div>'
             );
-            /* 
+            /*
             * Setando no Cookie a página atual
             */
             $("#geniustable").on('page.dt', function(){
@@ -319,8 +322,8 @@
 
 {{-- GALLERY IMAGES STARTS --}}
 
-    <script>
-        // Gallery Section Update
+<script>
+    // Gallery Section Update
     $(document).on('click', '.set-gallery', function() {
         var cid = $(this).find('input[type=hidden]').val();
         $('#cid').val(cid);
@@ -338,37 +341,37 @@
                 } else {
                     if (data[2]) {
                         $('.selected-image .row').removeClass('justify-content-center');
-                        $('.selected-image .row h3').remove();      
+                        $('.selected-image .row h3').remove();
                         for (var k in data[2]) {
                             $('.selected-image .row').append('<div class="col-sm-4">' +
-                                '<div class="img gallery-img">'+ 
+                                '<div class="img gallery-img">'+
                                 '<span class="remove-img"><i class="fas fa-times"></i>' +
                                 '<input type="hidden" value="' + data[2][k]['id'] + '">' +
                                 '</span>' +
                                 '<a href="' + data[2][k] + '" target="_blank">' +
                                 '<img src="' + data[2][k] + '" alt="gallery image">' +
-                                '<div>' + data[2][k]['id'] + '</div>' + 
+                                '<div>' + data[2][k]['id'] + '</div>' +
                                 '</a>' +
                                 '</div>' +
                                         '</div>');
                         }
                     } else {
                         $('.selected-image .row').removeClass('justify-content-center');
-                        $('.selected-image .row h3').remove();      
+                        $('.selected-image .row h3').remove();
                         var arr = $.map(data[1], function(el) {
                             return el
                         });
                         for (var k in arr) {
                             $('.selected-image .row').append('<div class="col-sm-4">' +
-                                '<div class="img gallery-img">'+ 
+                                '<div class="img gallery-img">'+
                                 '<span class="remove-img"><i class="fas fa-times"></i>' +
                                 '<input type="hidden" value="' + arr[k]['id'] + '">' +
                                 '</span>' +
-                                '<div class="gallery-img-id"><span>' + arr[k]['id'] + '</span></div>' + 
-                                '<a href="' + '{{asset("assets/images/galleries")."/"}}' + arr[k][
+                                '<div class="gallery-img-id"><span>' + arr[k]['id'] + '</span></div>' +
+                                '<a href="' + '{{asset("storage/images/galleries")."/"}}' + arr[k][
                                     'customizable_gallery'
                                 ] + '" target="_blank">' +
-                                '<img src="' + '{{asset("assets/images/galleries")."/"}}' + arr[k][
+                                '<img src="' + '{{asset("storage/images/galleries")."/"}}' + arr[k][
                                     'customizable_gallery'
                                 ] + '" alt="gallery image">' +
                                 '</a>' +
@@ -409,7 +412,7 @@
             success: function(data) {
                 if (data != 0) {
 	                    $('.selected-image .row').removeClass('justify-content-center');
-	      				$('.selected-image .row h3').remove();   
+	      				$('.selected-image .row h3').remove();
 		        var arr = $.map(data, function(el) {
                         return el
                     });
@@ -419,22 +422,22 @@
                             '<span class="remove-img"><i class="fas fa-times"></i>' +
                             '<input type="hidden" value="' + arr[k]['id'] + '">' +
                             '</span>' +
-                            '<a href="' + '{{asset("assets/images/galleries")."/"}}' + arr[k][
+                            '<a href="' + '{{asset("storage/images/galleries")."/"}}' + arr[k][
                                 'customizable_gallery'
                             ] + '" target="_blank">' +
-                            '<img src="' + '{{asset("assets/images/galleries")."/"}}' + arr[k][
+                            '<img src="' + '{{asset("storage/images/galleries")."/"}}' + arr[k][
                                 'customizable_gallery'
                             ] + '" alt="gallery image">' +
                             '</a>' +
                             '</div>' +
                                   	'</div>');
-		            }          
+		            }
 		    }
 		                       }
 		  });
 		  return false;
- }); 
-    // Gallery Section Update Ends	
+ });
+    // Gallery Section Update Ends
 
 </script>
 <script>
@@ -443,8 +446,8 @@
         if(sessionStorage.getItem("CurrentPage") == undefined){
             sessionStorage.setItem("CurrentPage", 0);
         }
-        $(document).on('click', 'a', function(e){ 
-            var link = jQuery(this); 
+        $(document).on('click', 'a', function(e){
+            var link = jQuery(this);
             var x = '{{ Request::route()->getPrefix() }}';
             y = x.split("/");
             if(!(link.attr("data-href") || link.attr("href").indexOf("#") > -1 || link.attr("href").indexOf("javascript") > -1 || !(link.attr("href").indexOf("category")))){
@@ -460,12 +463,11 @@
     function changePos(id, val) {
         var id = id;
         var pos = val;
-        $.ajax({                        
+        $.ajax({
             type: 'GET',
             url: '{{url("admin/slider/changeCatPos") }}' + '/' + id + '/' +  pos
-          
+
         });
     }
 </script>
 @endsection
-
