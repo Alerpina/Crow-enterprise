@@ -1025,16 +1025,16 @@ class Product extends LocalizedModel
         if (!filter_var($value, FILTER_VALIDATE_URL)) {
             if ($this->storeSettings->ftp_folder) {
                 if ($value) {
-                    return asset('assets/images/ftp/'.$this->storeSettings->ftp_folder.$this->ref_code_int.'/'.$value);
+                    return asset('storage/images/ftp/'.$this->storeSettings->ftp_folder.$this->ref_code_int.'/'.$value);
                 }
-                $ftp_path = public_path('assets/images/ftp/'.$this->storeSettings->ftp_folder.$this->ref_code_int.'/');
+                $ftp_path = public_path('storage/images/ftp/'.$this->storeSettings->ftp_folder.$this->ref_code_int.'/');
                 if (File::exists($ftp_path)) {
                     $files = scandir($ftp_path);
                     $extensions = array('.jpg','.jpeg','.gif','.png');
                     foreach ($files as $file) {
                         $file_extension = strtolower(strrchr($file, '.'));
                         if (in_array($file_extension, $extensions) === true) {
-                            return asset('assets/images/ftp/'.$this->storeSettings->ftp_folder.$this->ref_code_int.'/'.$file);
+                            return asset('storage/images/ftp/'.$this->storeSettings->ftp_folder.$this->ref_code_int.'/'.$file);
                         }
                     }
                 }
@@ -1042,10 +1042,10 @@ class Product extends LocalizedModel
             } elseif (!$value) {
                 return asset('assets/images/noimage.png');
             }
-            if (File::exists(public_path('assets/images/products/'.$value))) {
+            if (File::exists(public_path('storage/images/products/'.$value))) {
                 return $value;
             }
-            if (!File::exists(public_path('assets/images/products/'.$value))) {
+            if (!File::exists(public_path('storage/images/products/'.$value))) {
                 if (Auth::guard('admin')->check()) {
                     Product::where('id', $this->id)->update(['photo'=>null]);
                 }
@@ -1059,23 +1059,23 @@ class Product extends LocalizedModel
     {
         if (!filter_var($value, FILTER_VALIDATE_URL)) {
             if (!$value) {
-                $ftp_path = public_path('assets/images/ftp/'.$this->storeSettings->ftp_folder.$this->ref_code_int.'/');
+                $ftp_path = public_path('storage/images/ftp/'.$this->storeSettings->ftp_folder.$this->ref_code_int.'/');
                 if (File::exists($ftp_path)) {
                     $files = scandir($ftp_path);
                     $extensions = array('.jpg','.jpeg','.gif','.png');
                     foreach ($files as $file) {
                         $file_extension = strtolower(strrchr($file, '.'));
                         if (in_array($file_extension, $extensions) === true) {
-                            return asset('assets/images/ftp/'.$this->storeSettings->ftp_folder.$this->ref_code_int.'/'.$file);
+                            return asset('storage/images/ftp/'.$this->storeSettings->ftp_folder.$this->ref_code_int.'/'.$file);
                         }
                     }
                 }
                 return asset('assets/images/noimage.png');
             }
-            if (File::exists(public_path('assets/images/thumbnails/'.$value))) {
+            if (File::exists(public_path('storage/images/thumbnails/'.$value))) {
                 return $value;
             }
-            if (!File::exists(public_path('assets/images/thumbnails/'.$value))) {
+            if (!File::exists(public_path('storage/images/thumbnails/'.$value))) {
                 if (Auth::guard('admin')->check()) {
                     Product::where('id', $this->id)->update(['thumbnail'=>null]);
                 }

@@ -2,17 +2,16 @@
 
 @section('styles')
 <style>
+    .disabled {
+        pointer-events: none;
+        opacity: 0.5;
+    }
 
-.disabled {
-    pointer-events:none;
-    opacity: 0.5;
-}
-
-.delete-button{
-    justify-content: end;
-    display: flex;
-    align-items: baseline;
-}
+    .delete-button {
+        justify-content: end;
+        display: flex;
+        align-items: baseline;
+    }
 </style>
 
 <link href="{{asset('assets/admin/css/product.css')}}" rel="stylesheet" />
@@ -54,7 +53,7 @@
                     <div class="body-area">
 
                         <div class="gocover"
-                            style="background: url({{asset('assets/images/'.$gs->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
+                            style="background: url({{asset('storage/images/'.$gs->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
                         </div>
                         <form id="geniusform" action="{{route('admin-prod-update',$data->id)}}" method="POST"
                             enctype="multipart/form-data">
@@ -87,18 +86,19 @@
 
                                 <div class="col-12">
                                     <div class="input-form">
-                                    @component('admin.components.input-localized',["required" => true, "from" => $data])
-                                    @slot('name')
-                                    name
-                                    @endslot
-                                    @slot('placeholder')
-                                    {{ __('Enter Product Name') }}
-                                    @endslot
-                                    @slot('value')
-                                    name
-                                    @endslot
-                                    {{ __('Product Name') }}*
-                                    @endcomponent
+                                        @component('admin.components.input-localized',["required" => true, "from" =>
+                                        $data])
+                                        @slot('name')
+                                        name
+                                        @endslot
+                                        @slot('placeholder')
+                                        {{ __('Enter Product Name') }}
+                                        @endslot
+                                        @slot('value')
+                                        name
+                                        @endslot
+                                        {{ __('Product Name') }}*
+                                        @endcomponent
                                     </div>
                                 </div>
 
@@ -136,32 +136,40 @@
                                         <h4 class="heading">{{ __('Show Price') }}* </h4>
                                         <div class="row justify-content-left">
                                             <div class="col-lg-12 d-flex justify-content-between">
-                                                <label class="control-label" for="showPrice">{{ __("Show this Product price") }}</label>
+                                                <label class="control-label" for="showPrice">{{ __("Show this Product
+                                                    price") }}</label>
                                                 <label class="switch">
-                                                    <input type="checkbox" name="show_price" id="showPrice" {{ $data->show_price == 1? "checked" : "" }}>
+                                                    <input type="checkbox" name="show_price" id="showPrice" {{
+                                                        $data->show_price == 1? "checked" : "" }}>
                                                     <span class="slider round"></span>
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                @else 
+                                @else
                                 <input type="hidden" name="price" value="0">
                                 @endif
 
                                 <div class="col-xl-6">
                                     <div class="input-form">
                                         <h4 class="heading">{{ __('Ref Code') }}* </h4>
-                                        <input type="text" class="input-field" placeholder="{{ __('Enter Product Code') }}"
-                                        name="ref_code" required="" value="{{ $data->ref_code }}">
+                                        <input type="text" class="input-field"
+                                            placeholder="{{ __('Enter Product Code') }}" name="ref_code" required=""
+                                            value="{{ $data->ref_code }}">
                                     </div>
                                 </div>
 
                                 <div class="col-xl-6">
                                     <div class="input-form">
-                                        <h4 class="heading">{{ __('Product Sku') }}* <i class="icofont-question-circle" data-toggle="tooltip" style="display: inline-block " data-placement="top" title="{{ __('SKU (Stock Keeping Unit) helps you to track your stock, measure sales by product and category') }}"></i></h4>
-                                        <input type="text" class="input-field" placeholder="{{ __('Enter Product Sku') }}"
-                                        name="sku" required="" value="{{ $data->sku }}">
+                                        <h4 class="heading">{{ __('Product Sku') }}* <i class="icofont-question-circle"
+                                                data-toggle="tooltip" style="display: inline-block "
+                                                data-placement="top"
+                                                title="{{ __('SKU (Stock Keeping Unit) helps you to track your stock, measure sales by product and category') }}"></i>
+                                        </h4>
+                                        <input type="text" class="input-field"
+                                            placeholder="{{ __('Enter Product Sku') }}" name="sku" required=""
+                                            value="{{ $data->sku }}">
                                     </div>
 
                                 </div>
@@ -172,12 +180,13 @@
                                         @foreach($storesList as $store)
                                         <div class="row justify-content-left">
                                             <div class="col-lg-12 d-flex justify-content-between">
-                                                <label class="control-label" for="store{{$store->id}}">{{$store->title}} |
+                                                <label class="control-label" for="store{{$store->id}}">{{$store->title}}
+                                                    |
                                                     {{$store->domain}}</label>
                                                 <label class="switch">
                                                     <input type="checkbox" name="stores[]" id="store{{$store->id}}"
-                                                    value="{{$store->id}}"
-                                                    {{in_array($store->id, $currentStores) ? "checked":""}}>
+                                                        value="{{$store->id}}" {{in_array($store->id, $currentStores) ?
+                                                    "checked":""}}>
                                                     <span class="slider round"></span>
                                                 </label>
                                             </div>
@@ -187,7 +196,7 @@
                                 </div>
 
                                 <div class="col-xl-6">
-                                {{-- Attributes of category starts --}}
+                                    {{-- Attributes of category starts --}}
                                     <div id="catAttributes">
                                         @if (!empty($catAttributes))
                                         @foreach ($catAttributes as $catAttribute)
@@ -195,49 +204,56 @@
                                             <div class="row">
                                                 <div class="col-xl-12">
                                                     <h3 class="heading">{{ __('Category attribute') }}</h3>
-                                                    <h4 class="heading" style="font-weight:bold;padding-top:1rem;">{{ $catAttribute->name }}</h4>
+                                                    <h4 class="heading" style="font-weight:bold;padding-top:1rem;">{{
+                                                        $catAttribute->name }}</h4>
                                                 </div>
                                                 <div class="col-xl-12">
                                                     @foreach ($catAttribute->attribute_options as $catOption)
                                                     @php
-                                                        $catOptChecked = (
-                                                            is_array($selectedAttrs) && 
-                                                            array_key_exists($catAttribute->input_name,$selectedAttrs) &&
-                                                            is_array($selectedAttrs[$catAttribute->input_name]["values"]) && 
-                                                            in_array($catOption->id, $selectedAttrs[$catAttribute->input_name]["values"])
-                                                        );
+                                                    $catOptChecked = (
+                                                    is_array($selectedAttrs) &&
+                                                    array_key_exists($catAttribute->input_name,$selectedAttrs) &&
+                                                    is_array($selectedAttrs[$catAttribute->input_name]["values"]) &&
+                                                    in_array($catOption->id,
+                                                    $selectedAttrs[$catAttribute->input_name]["values"])
+                                                    );
 
-                                                        $catOptPrice = (
-                                                            !empty($selectedAttrs[$catAttribute->input_name]['prices'][$loop->index]) && 
-                                                            $catOptChecked ? $selectedAttrs[$catAttribute->input_name]['prices'][$loop->index] : ''
-                                                        );
+                                                    $catOptPrice = (
+                                                    !empty($selectedAttrs[$catAttribute->input_name]['prices'][$loop->index])
+                                                    &&
+                                                    $catOptChecked ?
+                                                    $selectedAttrs[$catAttribute->input_name]['prices'][$loop->index] :
+                                                    ''
+                                                    );
                                                     @endphp
 
-                                                    <div class="option-row" style="display:flex;justify-content:start;align-items:center;">
-                                                        <div class="custom-control custom-checkbox">                                                
-                                                            <input type="checkbox" 
-                                                                id="{{ $catAttribute->input_name }}{{$catOption->id}}" 
-                                                                name="attr_{{ $catAttribute->input_name }}[]" 
-                                                                value="{{$catOption->id}}" 
-                                                                class="custom-control-input attr-checkbox" 
-                                                                {{ $catOptChecked ? "checked" : "" }}>
-                                                            <label class="custom-control-label" 
+                                                    <div class="option-row"
+                                                        style="display:flex;justify-content:start;align-items:center;">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox"
+                                                                id="{{ $catAttribute->input_name }}{{$catOption->id}}"
+                                                                name="attr_{{ $catAttribute->input_name }}[]"
+                                                                value="{{$catOption->id}}"
+                                                                class="custom-control-input attr-checkbox" {{
+                                                                $catOptChecked ? "checked" : "" }}>
+                                                            <label class="custom-control-label"
                                                                 for="{{ $catAttribute->input_name }}{{$catOption->id}}">
                                                                 {{ $catOption->name }}
                                                             </label>
                                                         </div>
-                                                    
-                                                        <div class="{{ $catAttribute->price_status == 0 ? "d-none" : "" }}" style="display:flex;justify-content:center;align-items:center;min-width:220px;">
+
+                                                        <div class="{{ $catAttribute->price_status == 0 ? " d-none" : ""
+                                                            }}"
+                                                            style="display:flex;justify-content:center;align-items:center;min-width:220px;">
                                                             <span style="padding:0 1rem;">+</span>
                                                             <div class="price-container">
                                                                 <span class="price-curr">{{ $sign->sign }}</span>
-                                                                <input type="number" 
-                                                                        step="0.01"
-                                                                        class="input-field price-input"
-                                                                        id="{{ $catAttribute->input_name }}{{$catOption->id}}_price"
-                                                                        data-name="attr_{{ $catAttribute->input_name }}_price[]"
-                                                                        placeholder="0.00 (Additional Price)"
-                                                                        value="{{ $catOptPrice }}">
+                                                                <input type="number" step="0.01"
+                                                                    class="input-field price-input"
+                                                                    id="{{ $catAttribute->input_name }}{{$catOption->id}}_price"
+                                                                    data-name="attr_{{ $catAttribute->input_name }}_price[]"
+                                                                    placeholder="0.00 (Additional Price)"
+                                                                    value="{{ $catOptPrice }}">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -258,49 +274,56 @@
                                             <div class="row">
                                                 <div class="col-xl-12">
                                                     <h3 class="heading">{{ __('Subcategory attribute') }}</h3>
-                                                    <h4 class="heading" style="font-weight:bold;padding-top:1rem;">{{ $subcatAttribute->name }}</h4>
+                                                    <h4 class="heading" style="font-weight:bold;padding-top:1rem;">{{
+                                                        $subcatAttribute->name }}</h4>
                                                 </div>
                                                 <div class="col-xl-12">
                                                     @foreach ($subcatAttribute->attribute_options as $subcatOption)
                                                     @php
-                                                        $subcatOptChecked = (
-                                                            is_array($selectedAttrs) && 
-                                                            array_key_exists($subcatAttribute->input_name,$selectedAttrs) &&
-                                                            is_array($selectedAttrs[$subcatAttribute->input_name]["values"]) && 
-                                                            in_array($subcatOption->id, $selectedAttrs[$subcatAttribute->input_name]["values"])
-                                                        );
+                                                    $subcatOptChecked = (
+                                                    is_array($selectedAttrs) &&
+                                                    array_key_exists($subcatAttribute->input_name,$selectedAttrs) &&
+                                                    is_array($selectedAttrs[$subcatAttribute->input_name]["values"]) &&
+                                                    in_array($subcatOption->id,
+                                                    $selectedAttrs[$subcatAttribute->input_name]["values"])
+                                                    );
 
-                                                        $subcatOptPrice = (
-                                                            !empty($selectedAttrs[$subcatAttribute->input_name]['prices'][$loop->index]) && 
-                                                            $subcatOptChecked ? $selectedAttrs[$subcatAttribute->input_name]['prices'][$loop->index] : ''
-                                                        );
+                                                    $subcatOptPrice = (
+                                                    !empty($selectedAttrs[$subcatAttribute->input_name]['prices'][$loop->index])
+                                                    &&
+                                                    $subcatOptChecked ?
+                                                    $selectedAttrs[$subcatAttribute->input_name]['prices'][$loop->index]
+                                                    : ''
+                                                    );
                                                     @endphp
 
-                                                    <div class="option-row" style="display:flex;justify-content:start;align-items:center;">
-                                                        <div class="custom-control custom-checkbox">                                                
-                                                            <input type="checkbox" 
-                                                                id="{{ $subcatAttribute->input_name }}{{$subcatOption->id}}" 
-                                                                name="attr_{{ $subcatAttribute->input_name }}[]" 
-                                                                value="{{$subcatOption->id}}" 
-                                                                class="custom-control-input attr-checkbox" 
-                                                                {{ $subcatOptChecked ? "checked" : "" }}>
-                                                            <label class="custom-control-label" 
+                                                    <div class="option-row"
+                                                        style="display:flex;justify-content:start;align-items:center;">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox"
+                                                                id="{{ $subcatAttribute->input_name }}{{$subcatOption->id}}"
+                                                                name="attr_{{ $subcatAttribute->input_name }}[]"
+                                                                value="{{$subcatOption->id}}"
+                                                                class="custom-control-input attr-checkbox" {{
+                                                                $subcatOptChecked ? "checked" : "" }}>
+                                                            <label class="custom-control-label"
                                                                 for="{{ $subcatAttribute->input_name }}{{$subcatOption->id}}">
                                                                 {{ $subcatOption->name }}
                                                             </label>
                                                         </div>
-                                                    
-                                                        <div class="{{ $subcatAttribute->price_status == 0 ? "d-none" : "" }}" style="display:flex;justify-content:center;align-items:center;min-width:220px;">
+
+                                                        <div class="{{ $subcatAttribute->price_status == 0 ? " d-none"
+                                                            : "" }}"
+                                                            style="display:flex;justify-content:center;align-items:center;min-width:220px;">
                                                             <span style="padding:0 1rem;">+</span>
                                                             <div class="price-container">
                                                                 <span class="price-curr">{{ $sign->sign }}</span>
-                                                                <input type="number" 
-                                                                        step="0.01"
-                                                                        class="input-field price-input"
-                                                                        id="{{ $subcatAttribute->input_name }}{{$subcatOption->id}}_price"
-                                                                        data-name="attr_{{ $subcatAttribute->input_name }}_price[]"
-                                                                        placeholder="0.00 (Additional Price)"
-                                                                        value="{{ $subcatOptPrice }}">
+                                                                <input type="number" step="0.01"
+                                                                    class="input-field price-input"
+                                                                    id="{{ $subcatAttribute->input_name }}{{$subcatOption->id}}_price"
+                                                                    data-name="attr_{{ $subcatAttribute->input_name }}_price[]"
+                                                                    placeholder="0.00 (Additional Price)"
+                                                                    value="{{ $subcatOptPrice }}">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -315,55 +338,63 @@
 
                                     {{-- Attributes of child category starts --}}
                                     <div id="childcatAttributes">
-                                    @if (!empty($childAttributes))
+                                        @if (!empty($childAttributes))
                                         @foreach ($childAttributes as $childcatAttribute)
                                         <div class="input-form">
                                             <div class="row">
                                                 <div class="col-xl-12">
                                                     <h3 class="heading">{{ __('Child category attribute') }}</h3>
-                                                    <h4 class="heading" style="font-weight:bold;padding-top:1rem;">{{ $childcatAttribute->name }}</h4>
+                                                    <h4 class="heading" style="font-weight:bold;padding-top:1rem;">{{
+                                                        $childcatAttribute->name }}</h4>
                                                 </div>
                                                 <div class="col-xl-12">
                                                     @foreach ($childcatAttribute->attribute_options as $childcatOption)
                                                     @php
-                                                        $childcatOptChecked = (
-                                                            is_array($selectedAttrs) && 
-                                                            array_key_exists($childcatAttribute->input_name,$selectedAttrs) &&
-                                                            is_array($selectedAttrs[$childcatAttribute->input_name]["values"]) && 
-                                                            in_array($childcatOption->id, $selectedAttrs[$childcatAttribute->input_name]["values"])
-                                                        );
+                                                    $childcatOptChecked = (
+                                                    is_array($selectedAttrs) &&
+                                                    array_key_exists($childcatAttribute->input_name,$selectedAttrs) &&
+                                                    is_array($selectedAttrs[$childcatAttribute->input_name]["values"])
+                                                    &&
+                                                    in_array($childcatOption->id,
+                                                    $selectedAttrs[$childcatAttribute->input_name]["values"])
+                                                    );
 
-                                                        $childcatOptPrice = (
-                                                            !empty($selectedAttrs[$childcatAttribute->input_name]['prices'][$loop->index]) && 
-                                                            $childcatOptChecked ? $selectedAttrs[$childcatAttribute->input_name]['prices'][$loop->index] : ''
-                                                        );
+                                                    $childcatOptPrice = (
+                                                    !empty($selectedAttrs[$childcatAttribute->input_name]['prices'][$loop->index])
+                                                    &&
+                                                    $childcatOptChecked ?
+                                                    $selectedAttrs[$childcatAttribute->input_name]['prices'][$loop->index]
+                                                    : ''
+                                                    );
                                                     @endphp
 
-                                                    <div class="option-row" style="display:flex;justify-content:start;align-items:center;">
-                                                        <div class="custom-control custom-checkbox">                                                
-                                                            <input type="checkbox" 
-                                                                id="{{ $childcatAttribute->input_name }}{{$childcatOption->id}}" 
-                                                                name="attr_{{ $childcatAttribute->input_name }}[]" 
-                                                                value="{{$childcatOption->id}}" 
-                                                                class="custom-control-input attr-checkbox" 
-                                                                {{ $childcatOptChecked ? "checked" : "" }}>
-                                                            <label class="custom-control-label" 
+                                                    <div class="option-row"
+                                                        style="display:flex;justify-content:start;align-items:center;">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox"
+                                                                id="{{ $childcatAttribute->input_name }}{{$childcatOption->id}}"
+                                                                name="attr_{{ $childcatAttribute->input_name }}[]"
+                                                                value="{{$childcatOption->id}}"
+                                                                class="custom-control-input attr-checkbox" {{
+                                                                $childcatOptChecked ? "checked" : "" }}>
+                                                            <label class="custom-control-label"
                                                                 for="{{ $childcatAttribute->input_name }}{{$childcatOption->id}}">
                                                                 {{ $childcatOption->name }}
                                                             </label>
                                                         </div>
-                                                    
-                                                        <div class="{{ $childcatAttribute->price_status == 0 ? "d-none" : "" }}" style="display:flex;justify-content:center;align-items:center;min-width:220px;">
+
+                                                        <div class="{{ $childcatAttribute->price_status == 0 ? " d-none"
+                                                            : "" }}"
+                                                            style="display:flex;justify-content:center;align-items:center;min-width:220px;">
                                                             <span style="padding:0 1rem;">+</span>
                                                             <div class="price-container">
                                                                 <span class="price-curr">{{ $sign->sign }}</span>
-                                                                <input type="number" 
-                                                                        step="0.01"
-                                                                        class="input-field price-input"
-                                                                        id="{{ $childcatAttribute->input_name }}{{$childcatOption->id}}_price"
-                                                                        data-name="attr_{{ $childcatAttribute->input_name }}_price[]"
-                                                                        placeholder="0.00 (Additional Price)"
-                                                                        value="{{ $childcatOptPrice }}">
+                                                                <input type="number" step="0.01"
+                                                                    class="input-field price-input"
+                                                                    id="{{ $childcatAttribute->input_name }}{{$childcatOption->id}}_price"
+                                                                    data-name="attr_{{ $childcatAttribute->input_name }}_price[]"
+                                                                    placeholder="0.00 (Additional Price)"
+                                                                    value="{{ $childcatOptPrice }}">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -385,9 +416,11 @@
                                         <h4 class="heading">Licença Redplay* </h4>
                                         <div class="row justify-content-left">
                                             <div class="col-lg-12 d-flex justify-content-between">
-                                                <label class="control-label" for="hasLicense">Marque esta opção para habilitar a configuração de licença Redplay.</label>
+                                                <label class="control-label" for="hasLicense">Marque esta opção para
+                                                    habilitar a configuração de licença Redplay.</label>
                                                 <label class="switch">
-                                                    <input type="checkbox" name="has_license" id="hasLicense" {{ $data->licenses()->count() > 0 ? "checked" : "" }}>
+                                                    <input type="checkbox" name="has_license" id="hasLicense" {{
+                                                        $data->licenses()->count() > 0 ? "checked" : "" }}>
                                                     <span class="slider round"></span>
                                                 </label>
                                             </div>
@@ -400,7 +433,8 @@
                                         <h4 class="heading text-center">Licença Redplay</h4>
                                         <div class="row justify-content-center">
                                             <div class="col-lg-12 d-flex justify-content-center">
-                                                <a href="#" class="btn btn-info" data-toggle="modal" data-target="#setlicenseconfig">
+                                                <a href="#" class="btn btn-info" data-toggle="modal"
+                                                    data-target="#setlicenseconfig">
                                                     <i class="icofont-wrench"></i> Configurar
                                                 </a>
                                             </div>
@@ -410,7 +444,8 @@
                                 @endif
 
 
-                            </div> <!--FINAL DA ROW DE DADOS OBRIGATÓRIOS-->
+                            </div>
+                            <!--FINAL DA ROW DE DADOS OBRIGATÓRIOS-->
 
                             <div class="title-section-form">
                                 <span>2</span>
@@ -419,7 +454,8 @@
                                 </h3>
                             </div>
 
-                            <div class="row border-sep"> <!--COMEÇO DA ROW DE DADOS OPCIONAIS IMPORTANTES-->
+                            <div class="row border-sep">
+                                <!--COMEÇO DA ROW DE DADOS OPCIONAIS IMPORTANTES-->
 
                                 <div class="col-xl-6">
                                     <div class="input-form">
@@ -428,7 +464,8 @@
                                             <option value="">{{ __('Select Brand') }}</option>
                                             @foreach($brands as $brand)
                                             <option data-href="{{ route('admin-brand-load',$brand->id) }}"
-                                                value="{{ $brand->id }}" {{$brand->id == $data->brand_id ? "selected":""}}>
+                                                value="{{ $brand->id }}" {{$brand->id == $data->brand_id ?
+                                                "selected":""}}>
                                                 {{$brand->name}}</option>
                                             @endforeach
                                         </select>
@@ -437,10 +474,12 @@
 
                                 <div class="col-xl-6">
                                     <div class="input-form">
-                                        <h4 class="heading">{{ __('Part Number') }} <i class="icofont-question-circle" data-toggle="tooltip" style="display: inline-block " data-placement="top" title="{{ __('Product model') }}"></i></h4>
+                                        <h4 class="heading">{{ __('Part Number') }} <i class="icofont-question-circle"
+                                                data-toggle="tooltip" style="display: inline-block "
+                                                data-placement="top" title="{{ __('Product model') }}"></i></h4>
                                         <input type="text" class="input-field"
-                                        placeholder="{{ __('Enter Product Part Number') }}" name="mpn"
-                                        value="{{ $data->mpn }}">
+                                            placeholder="{{ __('Enter Product Part Number') }}" name="mpn"
+                                            value="{{ $data->mpn }}">
                                     </div>
                                 </div>
 
@@ -457,7 +496,8 @@
                                             @else
                                             @foreach($data->category->subs as $sub)
                                             <option data-href="{{ route('admin-childcat-load',$sub->id) }}"
-                                                value="{{$sub->id}}" {{$sub->id == $data->subcategory_id ? "selected":""}}>
+                                                value="{{$sub->id}}" {{$sub->id == $data->subcategory_id ?
+                                                "selected":""}}>
                                                 {{$sub->name}}</option>
                                             @endforeach
                                             @endif
@@ -469,8 +509,8 @@
                                 <div class="col-xl-6">
                                     <div class="input-form">
                                         <h4 class="heading">{{ __('Child Category') }}</h4>
-                                        <select id="childcat" name="childcategory_id"
-                                        {{$data->subcategory_id == null ? "disabled":""}}>
+                                        <select id="childcat" name="childcategory_id" {{$data->subcategory_id == null ?
+                                            "disabled":""}}>
                                             <option value="">{{ __('Select Child Category') }}</option>
                                             @if($data->subcategory_id != null)
                                             @if($data->childcategory_id == null)
@@ -479,8 +519,8 @@
                                             @endforeach
                                             @else
                                             @foreach($data->subcategory->childs as $child)
-                                            <option value="{{$child->id}} "
-                                                {{$child->id == $data->childcategory_id ? "selected":""}}>{{$child->name}}
+                                            <option value="{{$child->id}} " {{$child->id == $data->childcategory_id ?
+                                                "selected":""}}>{{$child->name}}
                                             </option>
                                             @endforeach
                                             @endif
@@ -490,7 +530,8 @@
                                 </div>
 
                                 <div class="col-xl-6">
-                                    <div class="input-form" style="display:flex;flex-direction:column;align-items:center;">
+                                    <div class="input-form"
+                                        style="display:flex;flex-direction:column;align-items:center;">
                                         <h4 class="heading">{{ __('Feature Image') }} </h4>
                                         <div class="row">
                                             <div class="panel panel-body">
@@ -511,7 +552,7 @@
                                 </div>
 
                                 <input type="hidden" id="feature_photo" name="photo" value="{{ $data->photo }}"
-                                accept="image/*">
+                                    accept="image/*">
 
                                 <div class="col-xl-6">
 
@@ -519,7 +560,8 @@
                                         <h4 class="heading">
                                             {{ __('Product Gallery Images') }}
                                         </h4>
-                                        <a href="#" class="set-gallery-product" data-toggle="modal" data-target="#setgallery">
+                                        <a href="#" class="set-gallery-product" data-toggle="modal"
+                                            data-target="#setgallery">
                                             <input type="hidden" value="{{$data->id}}">
                                             <i class="icofont-plus"></i> {{ __('Set Gallery') }}
                                         </a>
@@ -527,8 +569,8 @@
 
                                     <div class="checkbox-wrapper list list-personalizada">
                                         <input type="checkbox" name="product_condition_check" class="checkclick1"
-                                            id="conditionCheck" value="1"
-                                            {{ $data->product_condition != 0 ? "checked":"" }}>
+                                            id="conditionCheck" value="1" {{ $data->product_condition != 0 ?
+                                        "checked":"" }}>
                                         <label for="conditionCheck">{{ __('Allow Product Condition') }}</label>
                                     </div>
 
@@ -540,13 +582,14 @@
                                             <option value="1" {{$data->product_condition == 1 ? "selected":""}}>
                                                 {{ __('Used') }}</option>
                                         </select>
-                                    </div> 
+                                    </div>
 
                                 </div>
 
                                 <div class="col-xl-12">
                                     <div class="input-form">
-                                        @component('admin.components.input-localized',["from" => $data, "type" => "richtext"])
+                                        @component('admin.components.input-localized',["from" => $data, "type" =>
+                                        "richtext"])
                                         @slot('name')
                                         details
                                         @endslot
@@ -560,7 +603,8 @@
 
                                 <div class="col-xl-12">
                                     <div class="input-form">
-                                        @component('admin.components.input-localized',["from" => $data, "type" => "richtext"])
+                                        @component('admin.components.input-localized',["from" => $data, "type" =>
+                                        "richtext"])
                                         @slot('name')
                                         policy
                                         @endslot
@@ -573,7 +617,8 @@
                                 </div>
 
 
-                            </div><!--FINAL DA ROW DE DADOS OPCIONAIS IMPORTANTES-->
+                            </div>
+                            <!--FINAL DA ROW DE DADOS OPCIONAIS IMPORTANTES-->
 
                             <div class="title-section-form">
                                 <span>3</span>
@@ -591,7 +636,7 @@
                                         </li>
                                     </ul>
                                     <div class='{{ !empty($data->color) ? "":"showbox" }}'>
-    
+
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="input-form product-size-details">
@@ -616,7 +661,8 @@
                                                             <label>
                                                                 {{ __('Color Price') }}
                                                                 <span>
-                                                                    {{ __('(This price will be added with base price)') }}
+                                                                    {{ __('(This price will be added with base price)')
+                                                                    }}
                                                                 </span>
                                                             </label>
                                                         </div>
@@ -625,7 +671,8 @@
                                                             <label>
                                                                 {{ __("Gallery") }}
                                                                 <span>
-                                                                    {{ __("These photos will be shown when this color is selected.") }}
+                                                                    {{ __("These photos will be shown when this color is
+                                                                    selected.") }}
                                                                 </span>
                                                             </label>
                                                         </div>
@@ -640,67 +687,90 @@
                                                             <div class="col-md-2">
                                                                 <div class="select-input-color">
                                                                     <div class="color-area">
-                                                                        <div class="input-group colorpicker-component cp">
-                                                                            <input type="text" name="color[]" value="{{ !empty($data1) ? $data1 : "#000000" }}"
-                                                                                class="input-field cp" />
-                                                                            <span class="input-group-addon"><i></i></span>
+                                                                        <div
+                                                                            class="input-group colorpicker-component cp">
+                                                                            <input type="text" name="color[]"
+                                                                                value="{{ !empty($data1) ? $data1 : "
+                                                                                #000000" }}" class="input-field cp" />
+                                                                            <span
+                                                                                class="input-group-addon"><i></i></span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3">
-                                                                <input type="number" name="color_qty[]" class="input-field"
-                                                                    placeholder="{{ __('Color Qty') }}" value="{{ isset($data->color_qty[$key]) ? $data->color_qty[$key] : "0" }}" min="0" required>
+                                                                <input type="number" name="color_qty[]"
+                                                                    class="input-field"
+                                                                    placeholder="{{ __('Color Qty') }}"
+                                                                    value="{{ isset($data->color_qty[$key]) ? $data->color_qty[$key] : "
+                                                                    0" }}" min="0" required>
                                                             </div>
                                                             <div class="col-md-3">
-                                                                <input type="number" step="0.01" name="color_price[]" class="input-field"
-                                                                    placeholder="{{ __('Color Price') }}" value="{{ isset($data->color_price[$key]) ? $data->color_price[$key] : "0" }}" min="0" required>
+                                                                <input type="number" step="0.01" name="color_price[]"
+                                                                    class="input-field"
+                                                                    placeholder="{{ __('Color Price') }}"
+                                                                    value="{{ isset($data->color_price[$key]) ? $data->color_price[$key] : "
+                                                                    0" }}" min="0" required>
                                                             </div>
                                                             <div class="col-md-3">
                                                                 @if(config("features.color_gallery"))
                                                                 @php
-                                                                    $gallery = isset($data->color_gallery) ?  explode(",", $data->color_gallery) : null;
+                                                                $gallery = isset($data->color_gallery) ? explode(",",
+                                                                $data->color_gallery) : null;
                                                                 @endphp
                                                                 @if($data->color_gallery)
-                                                                <input type="file" name="color_gallery[{{ $key }}][]" id="uploadgallery_color" accept="image/*" multiple>
-                                                                <input type="hidden" name="color_gallery_current[{{ $key }}]" value="{{ isset($gallery) ? $gallery[$key] : null }}">
+                                                                <input type="file" name="color_gallery[{{ $key }}][]"
+                                                                    id="uploadgallery_color" accept="image/*" multiple>
+                                                                <input type="hidden"
+                                                                    name="color_gallery_current[{{ $key }}]"
+                                                                    value="{{ isset($gallery) ? $gallery[$key] : null }}">
                                                                 @else
-                                                                <input type="file" name="color_gallery[{{ $key }}][]" id="uploadgallery_color" accept="image/*" multiple required>
+                                                                <input type="file" name="color_gallery[{{ $key }}][]"
+                                                                    id="uploadgallery_color" accept="image/*" multiple
+                                                                    required>
                                                                 @endif
                                                                 @endif
                                                             </div>
                                                             @if(config("features.color_gallery"))
                                                             <div class="col-md-1">
-                                                                <button type="button" class="btn btn-danger text-white color-remove-with-gallery"><i class="fa fa-times"></i></button>
+                                                                <button type="button"
+                                                                    class="btn btn-danger text-white color-remove-with-gallery"><i
+                                                                        class="fa fa-times"></i></button>
                                                             </div>
-                                                            @else 
+                                                            @else
                                                             <div class="col-md-1">
-                                                                <button type="button" class="btn btn-danger text-white color-remove"><i class="fa fa-times"></i></button>
+                                                                <button type="button"
+                                                                    class="btn btn-danger text-white color-remove"><i
+                                                                        class="fa fa-times"></i></button>
                                                             </div>
-                                                            @endif 
+                                                            @endif
                                                         </div>
                                                         @endforeach
                                                     </div>
-                                                
-                                                    <a href="javascript:;" id="{{ config("features.color_gallery") ? "color-btn-with-gallery" : "color-btn" }}" class="add-more mt-4 mb-3"><i
-                                                            class="fas fa-plus"></i>{{ __('Add More Color') }} </a>
+
+                                                    <a href="javascript:;" id="{{ config(" features.color_gallery")
+                                                        ? "color-btn-with-gallery" : "color-btn" }}"
+                                                        class="add-more mt-4 mb-3"><i class="fas fa-plus"></i>{{ __('Add
+                                                        More Color') }} </a>
                                                 </div>
                                             </div>
-                
+
                                         </div>
-    
+
                                     </div>
-                                </div><!--FECHAMENTO COL-XL-6-->
+                                </div>
+                                <!--FECHAMENTO COL-XL-6-->
                                 @if(config("features.material_gallery"))
                                 <div class="col-xl-12">
                                     <ul class="list list-personalizada">
                                         <li>
-                                            <input class="checkclick" name="material_check" type="checkbox" id="check_material"
-                                                value="1" {{ empty($data->material) ? "":"checked" }}>
+                                            <input class="checkclick" name="material_check" type="checkbox"
+                                                id="check_material" value="1" {{ empty($data->material) ? "":"checked"
+                                            }}>
                                             <label for="check_material">{{ __('Allow Product Materials') }}</label>
                                         </li>
                                     </ul>
-                                    <div class="{{ !empty($data->material) ? "":"showbox" }}">
+                                    <div class="{{ !empty($data->material) ? "":" showbox" }}">
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="input-form product-size-details">
@@ -725,7 +795,8 @@
                                                             <label>
                                                                 {{ __('Material Price') }}
                                                                 <span>
-                                                                    {{ __('(This price will be added with base price)') }}
+                                                                    {{ __('(This price will be added with base price)')
+                                                                    }}
                                                                 </span>
                                                             </label>
                                                         </div>
@@ -733,65 +804,89 @@
                                                             <label>
                                                                 {{ __('Material Gallery') }}
                                                                 <span>
-                                                                    {{ __('(These photos will be displayed when this material is selected)') }}
+                                                                    {{ __('(These photos will be displayed when this
+                                                                    material is selected)') }}
                                                                 </span>
                                                             </label>
                                                         </div>
                                                     </div>
                                                     <div id="material-section">
                                                         @foreach((array)$data->material as $key => $material)
-                                                            <div class="row">
-                                                                <div class="col-md-3">
-                                                                    <div class="select-input-color">
-                                                                        <div class="color-area">
-                                                                            <div class="input-group">
-                                                                                <input type="text" name="material[]" class="input-field"
-                                                                                    placeholder="{{ __('Material Name') }}" value="{{ $material }}">
-                                                                            </div>
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <div class="select-input-color">
+                                                                    <div class="color-area">
+                                                                        <div class="input-group">
+                                                                            <input type="text" name="material[]"
+                                                                                class="input-field"
+                                                                                placeholder="{{ __('Material Name') }}"
+                                                                                value="{{ $material }}">
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-3">
-                                                                    <input type="number" name="material_qty[]" class="input-field"
-                                                                        placeholder="{{ __('material Qty') }}" value="{{ isset($data->material_qty[$key]) ? $data->material_qty[$key] : "0" }}" min="0" required>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <input type="number" step="0.01" name="material_price[]" class="input-field"
-                                                                        placeholder="{{ __('material Price') }}" value="{{ isset($data->material_price[$key]) ? $data->material_price[$key] : "0" }}" min="0" required>
-                                                                </div>
-                                                                <div class="col-md-3 delete-button">
-                                                                    @php
-                                                                        $gallery = isset($data->material_gallery) ?  explode(",", $data->material_gallery) : null;
-                                                                    @endphp
-                                                                    @if($data->material_gallery && array_key_exists($key, $gallery))
-                                                                    <input type="file" name="material_gallery[{{ $key }}][]" id="uploadgallery_material" accept="image/*" multiple>
-                                                                    <input type="hidden" name="material_gallery_current[{{ $key }}]" value="{{ isset($gallery) ? $gallery[$key] : null }}">
-                                                                    @else 
-                                                                    <input type="file" name="material_gallery[{{ $key }}][]" id="uploadgallery_material" accept="image/*" multiple>
-                                                                    @endif
-                                                                    <button type="button" class="btn btn-danger text-white color-remove-with-gallery"><i class="fa fa-times"></i></button>
-                                                                </div>
-                                                                {{-- <div class="col-md-2">
-                                                                    <button type="button" class="btn btn-danger text-white color-remove-with-gallery"><i class="fa fa-times"></i></button>
-                                                                </div> --}}
                                                             </div>
+                                                            <div class="col-md-3">
+                                                                <input type="number" name="material_qty[]"
+                                                                    class="input-field"
+                                                                    placeholder="{{ __('material Qty') }}"
+                                                                    value="{{ isset($data->material_qty[$key]) ? $data->material_qty[$key] : "
+                                                                    0" }}" min="0" required>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <input type="number" step="0.01" name="material_price[]"
+                                                                    class="input-field"
+                                                                    placeholder="{{ __('material Price') }}"
+                                                                    value="{{ isset($data->material_price[$key]) ? $data->material_price[$key] : "
+                                                                    0" }}" min="0" required>
+                                                            </div>
+                                                            <div class="col-md-3 delete-button">
+                                                                @php
+                                                                $gallery = isset($data->material_gallery) ? explode(",",
+                                                                $data->material_gallery) : null;
+                                                                @endphp
+                                                                @if($data->material_gallery && array_key_exists($key,
+                                                                $gallery))
+                                                                <input type="file" name="material_gallery[{{ $key }}][]"
+                                                                    id="uploadgallery_material" accept="image/*"
+                                                                    multiple>
+                                                                <input type="hidden"
+                                                                    name="material_gallery_current[{{ $key }}]"
+                                                                    value="{{ isset($gallery) ? $gallery[$key] : null }}">
+                                                                @else
+                                                                <input type="file" name="material_gallery[{{ $key }}][]"
+                                                                    id="uploadgallery_material" accept="image/*"
+                                                                    multiple>
+                                                                @endif
+                                                                <button type="button"
+                                                                    class="btn btn-danger text-white color-remove-with-gallery"><i
+                                                                        class="fa fa-times"></i></button>
+                                                            </div>
+                                                            {{-- <div class="col-md-2">
+                                                                <button type="button"
+                                                                    class="btn btn-danger text-white color-remove-with-gallery"><i
+                                                                        class="fa fa-times"></i></button>
+                                                            </div> --}}
+                                                        </div>
                                                         @endforeach
                                                     </div>
-                                                
-                                                    <a href="javascript:;" id="material-btn" class="add-more mt-4 mb-3"><i
-                                                            class="fas fa-plus"></i>{{ __('Add More Materials') }} </a>
+
+                                                    <a href="javascript:;" id="material-btn"
+                                                        class="add-more mt-4 mb-3"><i class="fas fa-plus"></i>{{ __('Add
+                                                        More Materials') }} </a>
                                                 </div>
                                             </div>
-                
+
                                         </div>
 
                                     </div>
-                                </div><!--FECHAMENTO COL-XL-6-->
+                                </div>
+                                <!--FECHAMENTO COL-XL-6-->
                                 @endif
                             </div>
 
 
-                            <div class="row"> <!--COMEÇO DA ROW DE DADOS EXTRAS-->
+                            <div class="row">
+                                <!--COMEÇO DA ROW DE DADOS EXTRAS-->
 
                                 <div class="col-xl-6">
                                     <div class="form-list">
@@ -800,9 +895,9 @@
                                                 id="check1" value="1" {{$data->ship != null ? "checked":""}} >
                                             <label for="check1">{{ __('Allow Estimated Shipping Time') }}</label>
                                         </ul>
-                                        
+
                                         <div class='input-form {{ $data->ship != null ? "":"showbox" }}'>
-                                            
+
                                             @component('admin.components.input-localized',["from" => $data])
                                             @slot('name')
                                             ship
@@ -818,18 +913,20 @@
 
                                         </div>
                                     </div>
-                                </div><!--FECHAMENTO COL-XL-6-->
+                                </div>
+                                <!--FECHAMENTO COL-XL-6-->
 
                                 <div class="col-xl-6">
                                     <ul class="list list-personalizada">
                                         <li>
-                                            <input name="size_check" type="checkbox" id="size-check" value="1"
-                                                {{ !empty($data->size) ? "checked":"" }} >
+                                            <input name="size_check" type="checkbox" id="size-check" value="1" {{
+                                                !empty($data->size) ? "checked":"" }} >
                                             <label for="size-check">{{ __('Allow Product Sizes') }}</label>
                                         </li>
                                     </ul>
 
-                                    <div class='input-form {{ $data->size != null ? "" : "showbox" }}' id="size-display">
+                                    <div class='input-form {{ $data->size != null ? "" : "showbox" }}'
+                                        id="size-display">
                                         <div class="row">
                                             <div class="col-xl-12">
 
@@ -837,7 +934,8 @@
                                                     @if(!empty($data->size))
                                                     @foreach($data->size as $key => $data1)
                                                     <div class="size-area">
-                                                        <span class="remove size-remove"><i class="fas fa-times"></i></span>
+                                                        <span class="remove size-remove"><i
+                                                                class="fas fa-times"></i></span>
                                                         <div class="row">
                                                             <div class="col-md-4 col-sm-6">
                                                                 <label>
@@ -857,18 +955,21 @@
                                                                         {{ __('(Number of quantity of this size)') }}
                                                                     </span>
                                                                 </label>
-                                                                <input type="number" name="size_qty[]" class="input-field"
-                                                                    placeholder="{{__('Size Qty')}}"
-                                                                    value="{{ $data->size_qty[$key] }}" value="1" min="1" required>
+                                                                <input type="number" name="size_qty[]"
+                                                                    class="input-field" placeholder="{{__('Size Qty')}}"
+                                                                    value="{{ $data->size_qty[$key] }}" value="1"
+                                                                    min="1" required>
                                                             </div>
                                                             <div class="col-md-4 col-sm-6">
                                                                 <label>
                                                                     {{ __('Size Price') }} :
                                                                     <span>
-                                                                        {{ __('(This price will be added with base price)') }}
+                                                                        {{ __('(This price will be added with base
+                                                                        price)') }}
                                                                     </span>
                                                                 </label>
-                                                                <input type="number" step="0.01" name="size_price[]" class="input-field"
+                                                                <input type="number" step="0.01" name="size_price[]"
+                                                                    class="input-field"
                                                                     placeholder="{{ __('Size Price') }}" min="0"
                                                                     value="{{ $data->size_price[$key] }}">
                                                             </div>
@@ -877,7 +978,8 @@
                                                     @endforeach
                                                     @else
                                                     <div class="size-area">
-                                                        <span class="remove size-remove"><i class="fas fa-times"></i></span>
+                                                        <span class="remove size-remove"><i
+                                                                class="fas fa-times"></i></span>
                                                         <div class="row">
                                                             <div class="col-md-4 col-sm-6">
                                                                 <label>
@@ -896,18 +998,22 @@
                                                                         {{ __('(Number of quantity of this size)') }}
                                                                     </span>
                                                                 </label>
-                                                                <input type="number" name="size_qty[]" class="input-field"
-                                                                    placeholder="{{__('Size Qty')}}" value="1" min="1" required>
+                                                                <input type="number" name="size_qty[]"
+                                                                    class="input-field" placeholder="{{__('Size Qty')}}"
+                                                                    value="1" min="1" required>
                                                             </div>
                                                             <div class="col-md-4 col-sm-6">
                                                                 <label>
                                                                     {{ __('Size Price') }} :
                                                                     <span>
-                                                                        {{ __('(This price will be added with base price)') }}
+                                                                        {{ __('(This price will be added with base
+                                                                        price)') }}
                                                                     </span>
                                                                 </label>
-                                                                <input type="number" step="0.01" name="size_price[]" class="input-field"
-                                                                    placeholder="{{__('Size Price')}}" value="0" min="0">
+                                                                <input type="number" step="0.01" name="size_price[]"
+                                                                    class="input-field"
+                                                                    placeholder="{{__('Size Price')}}" value="0"
+                                                                    min="0">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -919,14 +1025,16 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
-                                </div> <!--FECHAMENTO COL-XL-6-->
+
+                                </div>
+                                <!--FECHAMENTO COL-XL-6-->
 
                                 <div class="col-xl-6">
                                     <ul class="list list-personalizada">
                                         <li>
                                             <input class="checkclick" name="whole_check" type="checkbox"
-                                                id="whole_check" value="1" {{ !empty($data->whole_sell_qty) ? "checked":"" }}>
+                                                id="whole_check" value="1" {{ !empty($data->whole_sell_qty) ?
+                                            "checked":"" }}>
                                             <label for="whole_check">{{ __('Allow Product Whole Sell') }}</label>
                                         </li>
                                     </ul>
@@ -935,56 +1043,59 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="featured-keyword-area input-form">
-                                                <div class="feature-tag-top-filds" id="whole-section">
-                                                @if(!empty($data->whole_sell_qty))
+                                                    <div class="feature-tag-top-filds" id="whole-section">
+                                                        @if(!empty($data->whole_sell_qty))
 
-                                                @foreach($data->whole_sell_qty as $key => $data1)
+                                                        @foreach($data->whole_sell_qty as $key => $data1)
 
-                                                <div class="feature-area">
-                                                    <span class="remove whole-remove"><i
-                                                            class="fas fa-times"></i></span>
-                                                    <div class="row">
-                                                        <div class="col-lg-6">
-                                                            <input type="number" name="whole_sell_qty[]"
-                                                                class="input-field"
-                                                                placeholder="{{ __('Enter Quantity') }}" min="0"
-                                                                value="{{ $data->whole_sell_qty[$key] }}" required="">
+                                                        <div class="feature-area">
+                                                            <span class="remove whole-remove"><i
+                                                                    class="fas fa-times"></i></span>
+                                                            <div class="row">
+                                                                <div class="col-lg-6">
+                                                                    <input type="number" name="whole_sell_qty[]"
+                                                                        class="input-field"
+                                                                        placeholder="{{ __('Enter Quantity') }}" min="0"
+                                                                        value="{{ $data->whole_sell_qty[$key] }}"
+                                                                        required="">
+                                                                </div>
+
+                                                                <div class="col-lg-6">
+                                                                    <input type="number" name="whole_sell_discount[]"
+                                                                        class="input-field"
+                                                                        placeholder="{{ __('Enter Discount Percentage') }}"
+                                                                        min="0"
+                                                                        value="{{ $data->whole_sell_discount[$key] }}"
+                                                                        required="">
+                                                                </div>
+                                                            </div>
                                                         </div>
 
-                                                        <div class="col-lg-6">
-                                                            <input type="number" name="whole_sell_discount[]"
-                                                                class="input-field"
-                                                                placeholder="{{ __('Enter Discount Percentage') }}"
-                                                                min="0" value="{{ $data->whole_sell_discount[$key] }}"
-                                                                required="">
+                                                        @endforeach
+                                                        @else
+
+                                                        <div class="feature-area">
+                                                            <span class="remove whole-remove"><i
+                                                                    class="fas fa-times"></i></span>
+                                                            <div class="row">
+                                                                <div class="col-lg-6">
+                                                                    <input type="number" name="whole_sell_qty[]"
+                                                                        class="input-field"
+                                                                        placeholder="{{ __('Enter Quantity') }}"
+                                                                        min="0">
+                                                                </div>
+
+                                                                <div class="col-lg-6">
+                                                                    <input type="number" name="whole_sell_discount[]"
+                                                                        class="input-field"
+                                                                        placeholder="{{ __('Enter Discount Percentage') }}"
+                                                                        min="0" />
+                                                                </div>
+                                                            </div>
                                                         </div>
+
+                                                        @endif
                                                     </div>
-                                                </div>
-
-                                                @endforeach
-                                                @else
-
-                                                <div class="feature-area">
-                                                    <span class="remove whole-remove"><i
-                                                            class="fas fa-times"></i></span>
-                                                    <div class="row">
-                                                        <div class="col-lg-6">
-                                                            <input type="number" name="whole_sell_qty[]"
-                                                                class="input-field"
-                                                                placeholder="{{ __('Enter Quantity') }}" min="0">
-                                                        </div>
-
-                                                        <div class="col-lg-6">
-                                                            <input type="number" name="whole_sell_discount[]"
-                                                                class="input-field"
-                                                                placeholder="{{ __('Enter Discount Percentage') }}"
-                                                                min="0" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                @endif
-                                            </div>
 
                                                     <a href="javascript:;" id="whole-btn" class="add-more"><i
                                                             class="icofont-plus"></i> {{ __('Add More Field') }}</a>
@@ -992,7 +1103,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div> <!--FECHAMENTO COL-XL-6-->
+                                </div>
+                                <!--FECHAMENTO COL-XL-6-->
 
                                 <div class="col-xl-3">
                                     <div class="input-form">
@@ -1001,10 +1113,11 @@
                                             <span>(un.)</span>
                                         </h4>
                                         <input name="max_quantity" type="number" class="input-field"
-                                        placeholder="{{ __('e.g 20') }}" step="1" min="0"
-                                        value="{{$data->max_quantity}}">
+                                            placeholder="{{ __('e.g 20') }}" step="1" min="0"
+                                            value="{{$data->max_quantity}}">
                                     </div>
-                                </div><!--FINAL ROW COL-XL-6-->
+                                </div>
+                                <!--FINAL ROW COL-XL-6-->
 
                                 <div class="col-xl-3">
                                     <div class="input-form">
@@ -1013,9 +1126,11 @@
                                             <span>(kg.)</span>
                                         </h4>
                                         <input name="weight" type="number" class="input-field"
-                                        placeholder="{{ __('e.g 20') }}" step="0.01" min="0" value="{{$data->weight}}">
+                                            placeholder="{{ __('e.g 20') }}" step="0.01" min="0"
+                                            value="{{$data->weight}}">
                                     </div>
-                                </div><!--FINAL ROW COL-XL-6-->
+                                </div>
+                                <!--FINAL ROW COL-XL-6-->
 
                                 <div class="col-xl-3">
                                     <div class="input-form">
@@ -1025,9 +1140,10 @@
                                         </h4>
 
                                         <input name="width" type="number" class="input-field"
-                                        placeholder="{{ __('e.g 20') }}" step="1" min="0" value="{{$data->width}}">
+                                            placeholder="{{ __('e.g 20') }}" step="1" min="0" value="{{$data->width}}">
                                     </div>
-                                </div><!--FINAL ROW COL-XL-6-->
+                                </div>
+                                <!--FINAL ROW COL-XL-6-->
 
                                 <div class="col-xl-3">
                                     <div class="input-form">
@@ -1036,9 +1152,10 @@
                                             <span>(cm.)</span>
                                         </h4>
                                         <input name="height" type="number" class="input-field"
-                                        placeholder="{{ __('e.g 20') }}" step="1" min="0" value="{{$data->height}}">
+                                            placeholder="{{ __('e.g 20') }}" step="1" min="0" value="{{$data->height}}">
                                     </div>
-                                </div> <!--FINAL ROW COL-XL-6-->
+                                </div>
+                                <!--FINAL ROW COL-XL-6-->
 
                                 <div class="col-xl-3">
                                     <div class="input-form">
@@ -1047,9 +1164,10 @@
                                             <span>(cm.)</span>
                                         </h4>
                                         <input name="length" type="number" class="input-field"
-                                        placeholder="{{ __('e.g 20') }}" step="1" min="0" value="{{$data->length}}">
+                                            placeholder="{{ __('e.g 20') }}" step="1" min="0" value="{{$data->length}}">
                                     </div>
-                                </div> <!--FINAL ROW COL-XL-6-->
+                                </div>
+                                <!--FINAL ROW COL-XL-6-->
 
                                 <div class="col-xl-3">
                                     <div class="input-form">
@@ -1058,10 +1176,11 @@
                                             <span>{{ __('(Optional)') }}</span>
                                         </h4>
                                         <input name="previous_price" step="0.01" type="number" class="input-field"
-                                        placeholder="{{ __('e.g 20') }}" min="0"
-                                        value="{{ round($data->previous_price * $sign->value , 2)}}">
+                                            placeholder="{{ __('e.g 20') }}" min="0"
+                                            value="{{ round($data->previous_price * $sign->value , 2)}}">
                                     </div>
-                                </div> <!--FINAL ROW COL-XL-6-->
+                                </div>
+                                <!--FINAL ROW COL-XL-6-->
 
                                 <div class="col-xl-3">
                                     <div class="input-form">
@@ -1070,21 +1189,25 @@
                                                 {{ __('(Leave Empty will Show Always Available)') }}
                                             </span>
                                         </h4>
-                                        <input name="stock" id="stock" type="text" class="input-field" placeholder="e.g 20"
-                                        value="{{ $data->stock }}">
-                                        
+                                        <input name="stock" id="stock" type="text" class="input-field"
+                                            placeholder="e.g 20" value="{{ $data->stock }}">
+
                                     </div>
-                                </div> <!--FINAL ROW COL-XL-3-->
+                                </div>
+                                <!--FINAL ROW COL-XL-3-->
 
                                 <div class="col-xl-3">
 
                                     <div class="checkbox-wrapper list list-personalizada">
-                                        <input type="checkbox" name="measure_check" class="checkclick1" id="allowProductMeasurement" value="1" {{ $data->measure == null ? '' : 'checked' }}>
-                                        <label for="allowProductMeasurement">{{ __('Allow Product Measurement') }}</label>
+                                        <input type="checkbox" name="measure_check" class="checkclick1"
+                                            id="allowProductMeasurement" value="1" {{ $data->measure == null ? '' :
+                                        'checked' }}>
+                                        <label for="allowProductMeasurement">{{ __('Allow Product Measurement')
+                                            }}</label>
                                     </div>
 
                                     <div class="input-form {{ $data->measure == null ? 'showbox' : '' }}">
-                                                
+
                                         <h4 class="heading">{{ __('Product Measurement') }}</h4>
                                         <select id="product_measure">
                                             <option value="" {{$data->measure == null ? 'selected':''}}>{{ __('None') }}
@@ -1099,8 +1222,8 @@
                                             <option value="Pound" {{$data->measure == 'Pound' ? 'selected':''}}>
                                                 {{ __('Pound') }}
                                             </option>
-                                            <option value="Custom"
-                                                {{ in_array($data->measure,explode(',', 'Gram,Kilogram,Litre,Pound')) ? '' : 'selected' }}>
+                                            <option value="Custom" {{ in_array($data->measure,explode(',',
+                                                'Gram,Kilogram,Litre,Pound')) ? '' : 'selected' }}>
                                                 {{ __('Custom') }}</option>
                                         </select>
                                         <div class="hidden" id="measure">
@@ -1110,7 +1233,8 @@
 
                                     </div>
 
-                                </div> <!--FINAL ROW COL-XL-6-->
+                                </div>
+                                <!--FINAL ROW COL-XL-6-->
 
                                 <div class="col-xl-12">
                                     <div class="title-section-form"></div>
@@ -1123,7 +1247,9 @@
                                             <span>
                                                 {{ __('(You can create up to 2 Product Tags)') }}
                                             </span>
-                                            <i class="icofont-question-circle" data-toggle="tooltip" style="display: inline-block " data-placement="top" title="{{ __('Tags are showed in the product card and can help you to track your products') }}"></i>
+                                            <i class="icofont-question-circle" data-toggle="tooltip"
+                                                style="display: inline-block " data-placement="top"
+                                                title="{{ __('Tags are showed in the product card and can help you to track your products') }}"></i>
                                         </h4>
 
                                         <div class="feature-tag-top-filds" id="feature-section">
@@ -1150,14 +1276,20 @@
                                                                             value="{{ isset($data['features'][0]) ? $data['features'][0] : "" }}">
                                                                     </div>
                                                                     @foreach($locales as $loc)
-                                                                        @if($loc->locale === $lang->locale)
-                                                                            @continue
-                                                                        @endif
+                                                                    @if($loc->locale === $lang->locale)
+                                                                    @continue
+                                                                    @endif
                                                                     @php
-                                                                    $transFeature = explode(',', $data->translate($loc->locale)['features']);
+                                                                    $transFeature = explode(',',
+                                                                    $data->translate($loc->locale)['features']);
                                                                     @endphp
-                                                                    <div role="tabpanel" class="tab-pane" id="{{$loc->locale}}-features0">
-                                                                        <input type="text" name="{{$loc->locale}}[features][]" class="input-field" placeholder="{{ __('Enter Your Keyword') }}" value="{{ $transFeature[0] ?? '' }}">
+                                                                    <div role="tabpanel" class="tab-pane"
+                                                                        id="{{$loc->locale}}-features0">
+                                                                        <input type="text"
+                                                                            name="{{$loc->locale}}[features][]"
+                                                                            class="input-field"
+                                                                            placeholder="{{ __('Enter Your Keyword') }}"
+                                                                            value="{{ $transFeature[0] ?? '' }}">
                                                                     </div>
                                                                     @endforeach
                                                                 </div>
@@ -1168,8 +1300,8 @@
                                                     <div class="col-lg-6">
                                                         <div class="input-group colorpicker-component cp">
                                                             <input type="text" name="colors[]"
-                                                                value="{{ isset($data->colors[0]) ? $data->colors[0] : "#000000"}}"
-                                                                class="input-field cp" />
+                                                                value="{{ isset($data->colors[0]) ? $data->colors[0] : "
+                                                                #000000"}}" class="input-field cp" />
                                                             <span class="input-group-addon"><i></i></span>
                                                         </div>
                                                     </div>
@@ -1178,7 +1310,9 @@
                                                     <div class="panel-footer">
                                                         <ul class="nav nav-pills" role="tablist">
                                                             <li role="presentation" class="active">
-                                                                <a href="#{{$lang->locale}}-features0" class="active" aria-controls="{{$lang->locale}}-features0" role="tab" data-toggle="tab">
+                                                                <a href="#{{$lang->locale}}-features0" class="active"
+                                                                    aria-controls="{{$lang->locale}}-features0"
+                                                                    role="tab" data-toggle="tab">
                                                                     {{$lang->language}}
                                                                 </a>
                                                             </li>
@@ -1187,7 +1321,9 @@
                                                             @continue
                                                             @endif
                                                             <li role="presentation">
-                                                                <a href="#{{$loc->locale}}-features0" aria-controls="{{$loc->locale}}-features0" role="tab" data-toggle="tab">
+                                                                <a href="#{{$loc->locale}}-features0"
+                                                                    aria-controls="{{$loc->locale}}-features0"
+                                                                    role="tab" data-toggle="tab">
                                                                     {{$loc->language}}
                                                                 </a>
                                                             </li>
@@ -1211,14 +1347,20 @@
                                                                             value="{{ isset($data['features'][1]) ? $data['features'][1] : ""}}">
                                                                     </div>
                                                                     @foreach($locales as $loc)
-                                                                        @if($loc->locale === $lang->locale)
-                                                                            @continue
-                                                                        @endif
+                                                                    @if($loc->locale === $lang->locale)
+                                                                    @continue
+                                                                    @endif
                                                                     @php
-                                                                    $transFeature = explode(',', $data->translate($loc->locale)['features']);
+                                                                    $transFeature = explode(',',
+                                                                    $data->translate($loc->locale)['features']);
                                                                     @endphp
-                                                                    <div role="tabpanel" class="tab-pane" id="{{$loc->locale}}-features1">
-                                                                        <input type="text" name="{{$loc->locale}}[features][]" class="input-field" placeholder="{{ __('Enter Your Keyword') }}" value="{{ $transFeature[1] ?? '' }}">
+                                                                    <div role="tabpanel" class="tab-pane"
+                                                                        id="{{$loc->locale}}-features1">
+                                                                        <input type="text"
+                                                                            name="{{$loc->locale}}[features][]"
+                                                                            class="input-field"
+                                                                            placeholder="{{ __('Enter Your Keyword') }}"
+                                                                            value="{{ $transFeature[1] ?? '' }}">
                                                                     </div>
                                                                     @endforeach
                                                                 </div>
@@ -1229,8 +1371,8 @@
                                                     <div class="col-lg-6">
                                                         <div class="input-group colorpicker-component cp">
                                                             <input type="text" name="colors[]"
-                                                                value="{{ isset($data->colors[1]) ? $data->colors[1] : "#000000" }}"
-                                                                class="input-field cp" />
+                                                                value="{{ isset($data->colors[1]) ? $data->colors[1] : "
+                                                                #000000" }}" class="input-field cp" />
                                                             <span class="input-group-addon"><i></i></span>
                                                         </div>
                                                     </div>
@@ -1239,7 +1381,9 @@
                                                     <div class="panel-footer">
                                                         <ul class="nav nav-pills" role="tablist">
                                                             <li role="presentation" class="active">
-                                                                <a href="#{{$lang->locale}}-features1" class="active" aria-controls="{{$lang->locale}}-features1" role="tab" data-toggle="tab">
+                                                                <a href="#{{$lang->locale}}-features1" class="active"
+                                                                    aria-controls="{{$lang->locale}}-features1"
+                                                                    role="tab" data-toggle="tab">
                                                                     {{$lang->language}}
                                                                 </a>
                                                             </li>
@@ -1248,7 +1392,9 @@
                                                             @continue
                                                             @endif
                                                             <li role="presentation">
-                                                                <a href="#{{$loc->locale}}-features1" aria-controls="{{$loc->locale}}-features1" role="tab" data-toggle="tab">
+                                                                <a href="#{{$loc->locale}}-features1"
+                                                                    aria-controls="{{$loc->locale}}-features1"
+                                                                    role="tab" data-toggle="tab">
                                                                     {{$loc->language}}
                                                                 </a>
                                                             </li>
@@ -1259,7 +1405,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div><!--FINAL ROW COL-XL-6-->
+                                </div>
+                                <!--FINAL ROW COL-XL-6-->
 
                                 <div class="col-xl-6">
                                     <div class="input-form">
@@ -1270,21 +1417,27 @@
                                             </span>
                                         </h4>
                                         <input name="youtube" type="text" class="input-field"
-                                        placeholder="{{__('Enter Youtube Video URL')}}" value="{{$data->youtube}}">
+                                            placeholder="{{__('Enter Youtube Video URL')}}" value="{{$data->youtube}}">
                                     </div>
 
-                                    
+
 
                                     <div class="checkbox-wrapper list list-personalizada">
                                         <input type="checkbox" name="seo_check" value="1" class="checkclick1"
-                                            id="allowProductSEO" value="1" {{ ($data->meta_tag != null || strip_tags($data->meta_description) != null) ? 'checked':'' }}>
-                                        <label for="allowProductSEO">{{ __('Allow Product SEO') }}</label><i class="icofont-question-circle" data-toggle="tooltip" style="display: inline-block " data-placement="top" title="{{ __('SEO (Search Engine Optimization) focuses on your website presence in search results on search engines like Google') }}"></i>
+                                            id="allowProductSEO" value="1" {{ ($data->meta_tag != null ||
+                                        strip_tags($data->meta_description) != null) ? 'checked':'' }}>
+                                        <label for="allowProductSEO">{{ __('Allow Product SEO') }}</label><i
+                                            class="icofont-question-circle" data-toggle="tooltip"
+                                            style="display: inline-block " data-placement="top"
+                                            title="{{ __('SEO (Search Engine Optimization) focuses on your website presence in search results on search engines like Google') }}"></i>
                                     </div>
 
-                                    <div class="{{ ($data->meta_tag == null && strip_tags($data->meta_description) == null) ? "showbox":"" }}"">
-                
+                                    <div class="{{ ($data->meta_tag == null && strip_tags($data->meta_description) == null) ? "
+                                        showbox":"" }}"">
+
                                         <div class="input-form">
-                                            @component('admin.components.input-localized',["from" => $data, "type" => "tags"])
+                                            @component('admin.components.input-localized',["from" => $data, "type" =>
+                                            "tags"])
                                             @slot('name')
                                             meta_tag
                                             @endslot
@@ -1296,7 +1449,8 @@
                                         </div>
 
                                         <div class="input-form">
-                                            @component('admin.components.input-localized',["from" => $data, "type" => "textarea"])
+                                            @component('admin.components.input-localized',["from" => $data, "type" =>
+                                            "textarea"])
                                             @slot('name')
                                             meta_description
                                             @endslot
@@ -1310,12 +1464,14 @@
                                             @endcomponent
                                         </div>
                                     </div>
-                                
-
-                                </div> <!--FINAL ROW COL-XL-6-->
 
 
-                            </div> <!--FINAL DA ROW DE DADOS EXTRAS-->
+                                </div>
+                                <!--FINAL ROW COL-XL-6-->
+
+
+                            </div>
+                            <!--FINAL DA ROW DE DADOS EXTRAS-->
 
                             <div class="row">
                                 <div class="col-xl-12 text-center">
@@ -1324,14 +1480,18 @@
                             </div>
 
                             @if(config('features.redplay_digital_product'))
-                            <div class="modal fade" id="setlicenseconfig" tabindex="-1" role="dialog" aria-labelledby="setlicenseconfig" aria-hidden="true">
+                            <div class="modal fade" id="setlicenseconfig" tabindex="-1" role="dialog"
+                                aria-labelledby="setlicenseconfig" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalCenterTitle">Licença Redplay para este Produto<small><br>
-                                                Os dados preenchidos aqui serão enviados por e-mail ao cliente ao término da compra e aprovação do pagamento. <br>
-                                                Sempre que um código for enviado a determinado cliente, o mesmo imediatamente será dado como INDISPONÍVEL.
-                                            </small></h5>
+                                            <h5 class="modal-title" id="exampleModalCenterTitle">Licença Redplay para
+                                                este Produto<small><br>
+                                                    Os dados preenchidos aqui serão enviados por e-mail ao cliente ao
+                                                    término da compra e aprovação do pagamento. <br>
+                                                    Sempre que um código for enviado a determinado cliente, o mesmo
+                                                    imediatamente será dado como INDISPONÍVEL.
+                                                </small></h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">×</span>
                                             </button>
@@ -1341,43 +1501,60 @@
                                                 @forelse($data->licenses as $redplayLicense)
                                                 <div class="row mb-2">
                                                     <div class="col-3">
-                                                        <input {{ !$redplayLicense->available ? "readonly" : "" }} type="text" name="redplay_login[]" class="input-field m-0" placeholder="Login Redplay" value="{{ $redplayLicense->login }}">
+                                                        <input {{ !$redplayLicense->available ? "readonly" : "" }}
+                                                        type="text" name="redplay_login[]" class="input-field m-0"
+                                                        placeholder="Login Redplay" value="{{ $redplayLicense->login
+                                                        }}">
                                                     </div>
                                                     <div class="col-3">
-                                                        <input {{ !$redplayLicense->available ? "readonly" : "" }} type="text" name="redplay_password[]" class="input-field m-0" placeholder="Senha Redplay" value="{{ $redplayLicense->password }}">
+                                                        <input {{ !$redplayLicense->available ? "readonly" : "" }}
+                                                        type="text" name="redplay_password[]" class="input-field m-0"
+                                                        placeholder="Senha Redplay" value="{{ $redplayLicense->password
+                                                        }}">
                                                     </div>
                                                     <div class="col-3">
-                                                        <input {{ !$redplayLicense->available ? "readonly" : "" }} type="text" name="redplay_code[]" class="input-field m-0" placeholder="Código Redplay" value="{{ $redplayLicense->code }}">
+                                                        <input {{ !$redplayLicense->available ? "readonly" : "" }}
+                                                        type="text" name="redplay_code[]" class="input-field m-0"
+                                                        placeholder="Código Redplay" value="{{ $redplayLicense->code
+                                                        }}">
                                                     </div>
                                                     <div class="col-1 d-flex align-items-center justify-content-center">
-                                                        <button type="button" class="btn btn-info bg-dark border border-dark btnAddRedplay">
+                                                        <button type="button"
+                                                            class="btn btn-info bg-dark border border-dark btnAddRedplay">
                                                             <span aria-hidden="true"><i class="fa fa-plus"></i></span>
                                                         </button>
                                                         @if(!$loop->first && $redplayLicense->available)
-                                                        <button type="button" class="btn btn-danger border border-red btnRemoveRedplay ml-2">
+                                                        <button type="button"
+                                                            class="btn btn-danger border border-red btnRemoveRedplay ml-2">
                                                             <span aria-hidden="true"><i class="fa fa-trash"></i></span>
                                                         </button>
                                                         @endif
                                                     </div>
 
                                                     <div class="col-1 d-flex align-items-center justify-content-center">
-                                                        <span class="badge badge-{{ $redplayLicense->available ? "success" : "danger" }} ml-2">{{ $redplayLicense->available ? "Disponível" : "Usado" }}</span>
+                                                        <span class="badge badge-{{ $redplayLicense->available ? "
+                                                            success" : "danger" }} ml-2">{{ $redplayLicense->available ?
+                                                            "Disponível" : "Usado" }}</span>
                                                     </div>
-                                                    
+
                                                 </div>
                                                 @empty
                                                 <div class="row mb-2">
                                                     <div class="col-3">
-                                                        <input type="text" name="redplay_login[]" class="input-field m-0" placeholder="Login Redplay">
+                                                        <input type="text" name="redplay_login[]"
+                                                            class="input-field m-0" placeholder="Login Redplay">
                                                     </div>
                                                     <div class="col-3">
-                                                        <input type="text" name="redplay_password[]" class="input-field m-0" placeholder="Senha Redplay">
+                                                        <input type="text" name="redplay_password[]"
+                                                            class="input-field m-0" placeholder="Senha Redplay">
                                                     </div>
                                                     <div class="col-3">
-                                                        <input type="text" name="redplay_code[]" class="input-field m-0" placeholder="Código Redplay">
+                                                        <input type="text" name="redplay_code[]" class="input-field m-0"
+                                                            placeholder="Código Redplay">
                                                     </div>
                                                     <div class="col-1 d-flex align-items-center justify-content-center">
-                                                        <button type="button" class="btn btn-info bg-dark border border-dark btnAddRedplay">
+                                                        <button type="button"
+                                                            class="btn btn-info bg-dark border border-dark btnAddRedplay">
                                                             <span aria-hidden="true"><i class="fa fa-plus"></i></span>
                                                         </button>
                                                     </div>
@@ -1385,13 +1562,14 @@
                                                     <div class="col-1 d-flex align-items-center justify-content-center">
                                                         <span class="badge badge-success ml-2">Disponível</span>
                                                     </div>
-                                                    
+
                                                 </div>
                                                 @endforelse
                                             </div>
                                             <div class="row mt-5">
                                                 <div class="col-12 text-center">
-                                                    <button class="btn btn-success" data-dismiss="modal" id="btnSaveLicenses">Salvar</button>
+                                                    <button class="btn btn-success" data-dismiss="modal"
+                                                        id="btnSaveLicenses">Salvar</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -1426,8 +1604,8 @@
                                     <input type="hidden" id="pid" name="product_id" value="">
                                     <input type="file" name="gallery[]" class="hidden" id="uploadgallery"
                                         accept="image/*" multiple>
-                                    <label for="image-upload" id="prod_gallery"><i
-                                            class="icofont-upload-alt"></i>{{ __('Upload File') }}</label>
+                                    <label for="image-upload" id="prod_gallery"><i class="icofont-upload-alt"></i>{{
+                                        __('Upload File') }}</label>
                                 </form>
                             </div>
                         </div>
@@ -1440,33 +1618,33 @@
                     </div>
                 </div>
                 @if (empty($ftp_gallery))
-                    <div class="gallery-images">
-                        <div class="selected-image">
-                            <div class="row">
+                <div class="gallery-images">
+                    <div class="selected-image">
+                        <div class="row">
 
-                            </div>
                         </div>
                     </div>
+                </div>
                 @else
-                    <div class="gallery-images">
-                        <div class="">
-                            <div class="row">
-                                @foreach($ftp_gallery as $ftp_image)
-                                    @if ($ftp_image != $data->photo)
+                <div class="gallery-images">
+                    <div class="">
+                        <div class="row">
+                            @foreach($ftp_gallery as $ftp_image)
+                            @if ($ftp_image != $data->photo)
 
-                                        <div class="col-sm-6">
-                                            <div class="img gallery-img">
-                                                <a href="{{ $ftp_image }}">
-                                                    <img src="{{ $ftp_image }}" alt="gallery image">
-                                                </a>
-                                            </div>   
-                                        </div>
-
-                                    @endif
-                                @endforeach
+                            <div class="col-sm-6">
+                                <div class="img gallery-img">
+                                    <a href="{{ $ftp_image }}">
+                                        <img src="{{ $ftp_image }}" alt="gallery image">
+                                    </a>
+                                </div>
                             </div>
+
+                            @endif
+                            @endforeach
                         </div>
                     </div>
+                </div>
                 @endif
             </div>
         </div>
@@ -1485,7 +1663,6 @@
 </script>
 
 <script>
-
     $(document).ready(function(){
 
         $("input[name='color_qty[]']").on('keyup', function(){
@@ -1495,11 +1672,11 @@
                 color_stock_total = parseInt(color_stock_total) + parseInt(color_input[i].value);
             }
             if(isNaN(color_stock_total)){
-                $("#stock").val(null); 
+                $("#stock").val(null);
             } else{
                 $("#stock").val(color_stock_total);
             }
-            
+
         });
 
         // color check
@@ -1510,11 +1687,11 @@
                 color_stock_total = parseInt(color_stock_total) + parseInt(color_input[i].value);
             }
             if(isNaN(color_stock_total)){
-                $("#stock").val(null); 
+                $("#stock").val(null);
             } else{
                 $("#stock").val(color_stock_total);
             }
-            
+
             $("#stock").val(color_stock_total);
             $("#stock").attr("readonly", true);
             $("#stock").addClass("disabled");
@@ -1527,11 +1704,11 @@
                 material_stock_total = parseInt(material_stock_total) + parseInt(material_input[i].value);
             }
             if(isNaN(material_stock_total)){
-                $("#stock").val(null); 
+                $("#stock").val(null);
             } else{
                 $("#stock").val(material_stock_total);
             }
-            
+
             $("#stock").val(material_stock_total);
             $("#stock").attr("readonly", true);
             $("#stock").addClass("disabled");
@@ -1544,11 +1721,11 @@
                 material_stock_total = parseInt(material_stock_total) + parseInt(material_input[i].value);
             }
             if(isNaN(material_stock_total)){
-                $("#stock").val(null); 
+                $("#stock").val(null);
             } else{
                 $("#stock").val(material_stock_total);
             }
-            
+
         });
 
         // material check
@@ -1559,11 +1736,11 @@
                 material_stock_total = parseInt(material_stock_total) + parseInt(material_input[i].value);
             }
             if(isNaN(material_stock_total)){
-                $("#stock").val(null); 
+                $("#stock").val(null);
             } else{
                 $("#stock").val(material_stock_total);
             }
-            
+
             $("#stock").val(material_stock_total);
             $("#stock").attr("readonly", true);
             $("#stock").addClass("disabled");
@@ -1579,11 +1756,11 @@
                     material_stock_total = parseInt(material_stock_total) + parseInt(material_input[i].value);
                 }
                 if(isNaN(material_stock_total)){
-                    $("#stock").val(null); 
+                    $("#stock").val(null);
                 } else{
                     $("#stock").val(material_stock_total);
                 }
-                
+
                 $("#stock").attr("readonly", true);
                 $("#stock").addClass("disabled");
             } else{
@@ -1603,11 +1780,11 @@
                     color_stock_total = parseInt(color_stock_total) + parseInt(color_input[i].value);
                 }
                 if(isNaN(color_stock_total)){
-                    $("#stock").val(null); 
+                    $("#stock").val(null);
                 } else{
                     $("#stock").val(color_stock_total);
                 }
-                
+
                 $("#stock").attr("readonly", true);
                 $("#stock").addClass("disabled");
             } else{
@@ -1624,11 +1801,11 @@
                 size_stock_total = parseInt(size_stock_total) + parseInt(size_input[i].value);
             }
             if(isNaN(size_stock_total)){
-                $("#stock").val(null); 
+                $("#stock").val(null);
             } else{
                 $("#stock").val(size_stock_total);
             }
-            
+
         });
 
         if($("#size-check").is(":checked")){
@@ -1638,11 +1815,11 @@
                 size_stock_total = parseInt(size_stock_total) + parseInt(size_input[i].value);
             }
             if(isNaN(size_stock_total)){
-                $("#stock").val(null); 
+                $("#stock").val(null);
             } else{
                 $("#stock").val(size_stock_total);
             }
-            
+
             $("#stock").val(size_stock_total);
             $("#stock").attr("readonly", true);
             $("#stock").addClass("disabled");
@@ -1655,11 +1832,11 @@
                     size_stock_total = parseInt(size_stock_total) + parseInt(size_input[i].value);
                 }
                 if(isNaN(size_stock_total)){
-                    $("#stock").val(null); 
+                    $("#stock").val(null);
                 } else{
                     $("#stock").val(size_stock_total);
                 }
-                
+
                 $("#stock").attr("readonly", true);
                 $("#stock").addClass("disabled");
             } else{
@@ -1698,10 +1875,10 @@
                             '<span class="remove-img"><i class="fas fa-times"></i>' +
                             '<input type="hidden" value="' + arr[k]["id"] + '">' +
                             '</span>' +
-                            '<a href="' + '{{asset("assets/images/galleries")."/"}}' + arr[k][
+                            '<a href="' + '{{asset("storage/images/galleries")."/"}}' + arr[k][
                                 "photo"
                             ] + '" target="_blank">' +
-                            '<img src="' + '{{asset("assets/images/galleries")."/"}}' + arr[k][
+                            '<img src="' + '{{asset("storage/images/galleries")."/"}}' + arr[k][
                                 "photo"
                             ] + '" alt="gallery image">' +
                             '</a>' +
@@ -1888,10 +2065,10 @@
                             '<span class="remove-img"><i class="fas fa-times"></i>' +
                             '<input type="hidden" value="' + arr[k]["id"] + '">' +
                             '</span>' +
-                            '<a href="' + '{{asset("assets/images/galleries")."/"}}' + arr[k][
+                            '<a href="' + '{{asset("storage/images/galleries")."/"}}' + arr[k][
                                 "photo"
                             ] + '" target="_blank">' +
-                            '<img src="' + '{{asset("assets/images/galleries")."/"}}' + arr[k][
+                            '<img src="' + '{{asset("storage/images/galleries")."/"}}' + arr[k][
                                 "photo"
                             ] + '" alt="gallery image">' +
                             '</a>' +
@@ -1903,7 +2080,7 @@
         });
         return false;
     });
-    // Gallery Section Update Ends			
+    // Gallery Section Update Ends
 </script>
 
 <script src="{{asset('assets/admin/js/jquery.SimpleCropper.js')}}"></script>
@@ -1920,7 +2097,7 @@
 <script>
     $(document).ready(function() {
         let html =
-            `<img src="{{ (filter_var($data->photo, FILTER_VALIDATE_URL) ? $data->photo : asset('assets/images/products/'.$data->photo)) }}" alt="">`;
+            `<img src="{{ (filter_var($data->photo, FILTER_VALIDATE_URL) ? $data->photo : asset('storage/images/products/'.$data->photo)) }}" alt="">`;
         $('.span4.cropme').html(html);
         $.ajaxSetup({
             headers: {
