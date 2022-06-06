@@ -3,7 +3,7 @@
     <div class="modal-dialog quickview-modal modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="submit-loader">
-                <img src="{{asset('assets/images/'.$gs->loader)}}" alt="">
+                <img src="{{asset('storage/images/'.$gs->loader)}}" alt="">
             </div>
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
