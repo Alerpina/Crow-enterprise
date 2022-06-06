@@ -2,16 +2,16 @@
 
 @section('styles')
 <style>
+    .disabled {
+        pointer-events: none;
+        opacity: 0.5;
+    }
 
-.disabled {
-    pointer-events:none;
-    opacity: 0.5;
-}
-.delete-button{
-    justify-content: end;
-    display: flex;
-    align-items: baseline;
-}
+    .delete-button {
+        justify-content: end;
+        display: flex;
+        align-items: baseline;
+    }
 </style>
 
 <link href="{{asset('assets/admin/css/product.css')}}" rel="stylesheet" />
@@ -51,7 +51,7 @@
                     <div class="body-area">
 
                         <div class="gocover"
-                            style="background: url({{asset('assets/images/'.$admstore->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
+                            style="background: url({{asset('storage/images/'.$admstore->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
                         </div>
                         <form id="geniusform" action="{{route('admin-prod-store')}}" method="POST"
                             enctype="multipart/form-data">
@@ -66,7 +66,8 @@
                                 </h3>
                             </div>
 
-                            <div class="row border-sep"> <!--COMEÇO DA ROW DE DADOS OBRIGATORIOS-->
+                            <div class="row border-sep">
+                                <!--COMEÇO DA ROW DE DADOS OBRIGATORIOS-->
 
                                 <div class="col-12">
                                     <div class="input-form">
@@ -81,7 +82,8 @@
                                         @endcomponent
 
                                         @php
-                                        $temp_sku = Illuminate\Support\Str::random(3).substr(time(), 6,8).Illuminate\Support\Str::random(3);
+                                        $temp_sku = Illuminate\Support\Str::random(3).substr(time(),
+                                        6,8).Illuminate\Support\Str::random(3);
                                         @endphp
                                     </div>
                                 </div>
@@ -110,7 +112,7 @@
                                             </h4>
                                         </div>
                                         <input name="price" type="number" class="input-field"
-                                        placeholder="{{ __('e.g 20') }}" step="0.01" required="" min="0">
+                                            placeholder="{{ __('e.g 20') }}" step="0.01" required="" min="0">
                                     </div>
                                 </div>
                                 <div class="col-xl-4">
@@ -118,7 +120,8 @@
                                         <h4 class="heading">{{ __('Show Price') }}* </h4>
                                         <div class="row justify-content-left">
                                             <div class="col-lg-12 d-flex justify-content-between">
-                                                <label class="control-label" for="showPrice">{{ __("Show this Product price") }}</label>
+                                                <label class="control-label" for="showPrice">{{ __("Show this Product
+                                                    price") }}</label>
                                                 <label class="switch">
                                                     <input type="checkbox" name="show_price" id="showPrice" checked>
                                                     <span class="slider round"></span>
@@ -127,23 +130,29 @@
                                         </div>
                                     </div>
                                 </div>
-                                @else 
+                                @else
                                 <input type="hidden" name="price" value="0">
                                 @endif
 
                                 <div class="col-xl-6">
                                     <div class="input-form">
                                         <h4 class="heading">{{ __('Ref Code') }}* </h4>
-                                        <input type="text" class="input-field" placeholder="{{ __('Enter Product Code') }}"
-                                        name="ref_code" required="" value="{{ $temp_sku }}">
+                                        <input type="text" class="input-field"
+                                            placeholder="{{ __('Enter Product Code') }}" name="ref_code" required=""
+                                            value="{{ $temp_sku }}">
                                     </div>
                                 </div>
 
                                 <div class="col-xl-6">
                                     <div class="input-form">
-                                        <h4 class="heading">{{ __('Product Sku') }}* <i class="icofont-question-circle" data-toggle="tooltip" style="display: inline-block " data-placement="top" title="{{ __('SKU (Stock Keeping Unit) helps you to track your stock, measure sales by product and category') }}"></i></h4> 
-                                        <input type="text" class="input-field" placeholder="{{ __('Enter Product Sku') }}"
-                                        name="sku" required="" value="{{ $temp_sku }}">
+                                        <h4 class="heading">{{ __('Product Sku') }}* <i class="icofont-question-circle"
+                                                data-toggle="tooltip" style="display: inline-block "
+                                                data-placement="top"
+                                                title="{{ __('SKU (Stock Keeping Unit) helps you to track your stock, measure sales by product and category') }}"></i>
+                                        </h4>
+                                        <input type="text" class="input-field"
+                                            placeholder="{{ __('Enter Product Sku') }}" name="sku" required=""
+                                            value="{{ $temp_sku }}">
                                     </div>
 
                                 </div>
@@ -154,7 +163,8 @@
                                         @foreach($storesList as $store)
                                         <div class="row justify-content-left">
                                             <div class="col-lg-12 d-flex justify-content-between">
-                                                <label class="control-label" for="store{{$store->id}}">{{$store->title}} |
+                                                <label class="control-label" for="store{{$store->id}}">{{$store->title}}
+                                                    |
                                                     {{$store->domain}}</label>
                                                 <label class="switch">
                                                     <input type="checkbox" name="stores[]" id="store{{$store->id}}"
@@ -179,7 +189,8 @@
                                         <h4 class="heading">Licença Redplay* </h4>
                                         <div class="row justify-content-left">
                                             <div class="col-lg-12 d-flex justify-content-between">
-                                                <label class="control-label" for="hasLicense">Marque esta opção para habilitar a configuração de licença Redplay.</label>
+                                                <label class="control-label" for="hasLicense">Marque esta opção para
+                                                    habilitar a configuração de licença Redplay.</label>
                                                 <label class="switch">
                                                     <input type="checkbox" name="has_license" id="hasLicense">
                                                     <span class="slider round"></span>
@@ -194,7 +205,8 @@
                                         <h4 class="heading text-center">Licença Redplay</h4>
                                         <div class="row justify-content-center">
                                             <div class="col-lg-12 d-flex justify-content-center">
-                                                <a href="#" class="btn btn-info" data-toggle="modal" data-target="#setlicenseconfig">
+                                                <a href="#" class="btn btn-info" data-toggle="modal"
+                                                    data-target="#setlicenseconfig">
                                                     <i class="icofont-wrench"></i> Configurar
                                                 </a>
                                             </div>
@@ -203,7 +215,8 @@
                                 </div>
                                 @endif
 
-                            </div> <!--FINAL DA ROW DE DADOS OBRIGATORIOS-->
+                            </div>
+                            <!--FINAL DA ROW DE DADOS OBRIGATORIOS-->
 
                             <div class="title-section-form">
                                 <span>2</span>
@@ -212,7 +225,8 @@
                                 </h3>
                             </div>
 
-                            <div class="row border-sep"> <!--COMEÇO DA ROW DE DADOS OPCIONAIS IMPORTANTES-->
+                            <div class="row border-sep">
+                                <!--COMEÇO DA ROW DE DADOS OPCIONAIS IMPORTANTES-->
 
                                 <div class="col-xl-6">
                                     <div class="input-form">
@@ -229,9 +243,11 @@
 
                                 <div class="col-xl-6">
                                     <div class="input-form">
-                                        <h4 class="heading">{{ __('Part Number') }} <i class="icofont-question-circle" data-toggle="tooltip" style="display: inline-block " data-placement="top" title="{{ __('Product model') }}"></i></h4>
+                                        <h4 class="heading">{{ __('Part Number') }} <i class="icofont-question-circle"
+                                                data-toggle="tooltip" style="display: inline-block "
+                                                data-placement="top" title="{{ __('Product model') }}"></i></h4>
                                         <input type="text" class="input-field"
-                                        placeholder="{{ __('Enter Product Part Number') }}" name="mpn">
+                                            placeholder="{{ __('Enter Product Part Number') }}" name="mpn">
                                     </div>
                                 </div>
 
@@ -254,7 +270,8 @@
                                 </div>
 
                                 <div class="col-xl-6">
-                                    <div class="input-form" style="display:flex;flex-direction:column;align-items:center;">
+                                    <div class="input-form"
+                                        style="display:flex;flex-direction:column;align-items:center;">
                                         <h4 class="heading">{{ __('Feature Image') }} </h4>
                                         <div class="row">
                                             <div class="panel panel-body">
@@ -271,7 +288,7 @@
 
                                 <input type="hidden" id="feature_photo" name="photo" value="">
                                 <input type="file" name="gallery[]" class="hidden" id="uploadgallery" accept="image/*"
-                                multiple>
+                                    multiple>
 
                                 <div class="col-xl-6">
 
@@ -279,7 +296,8 @@
                                         <h4 class="heading">
                                             {{ __('Product Gallery Images') }}
                                         </h4>
-                                        <a href="#" class="set-gallery-product" data-toggle="modal" data-target="#setgallery">
+                                        <a href="#" class="set-gallery-product" data-toggle="modal"
+                                            data-target="#setgallery">
                                             <i class="icofont-plus"></i> {{ __('Set Gallery') }}
                                         </a>
                                     </div>
@@ -296,7 +314,7 @@
                                             <option value="2">{{ __('New') }}</option>
                                             <option value="1">{{ __('Used') }}</option>
                                         </select>
-                                    </div> 
+                                    </div>
 
                                 </div>
 
@@ -322,7 +340,8 @@
                                     </div>
                                 </div>
 
-                            </div> <!--FINAL DA ROW DE DADOS OPCIONAIS IMPORTANTES-->
+                            </div>
+                            <!--FINAL DA ROW DE DADOS OPCIONAIS IMPORTANTES-->
 
                             <div class="title-section-form">
                                 <span>3</span>
@@ -331,7 +350,8 @@
                                 </h3>
                             </div>
 
-                            <div class="row"> <!--COMEÇO DA ROW DE DADOS EXTRAS-->
+                            <div class="row">
+                                <!--COMEÇO DA ROW DE DADOS EXTRAS-->
 
                                 <div class="col-xl-12">
                                     <ul class="list list-personalizada">
@@ -367,7 +387,8 @@
                                                             <label>
                                                                 {{ __('Color Price') }}
                                                                 <span>
-                                                                    {{ __('(This price will be added with base price)') }}
+                                                                    {{ __('(This price will be added with base price)')
+                                                                    }}
                                                                 </span>
                                                             </label>
                                                         </div>
@@ -376,7 +397,8 @@
                                                             <label>
                                                                 {{ __('Color Gallery') }}
                                                                 <span>
-                                                                    {{ __('(These photos will be displayed when this color is selected)') }}
+                                                                    {{ __('(These photos will be displayed when this
+                                                                    color is selected)') }}
                                                                 </span>
                                                             </label>
                                                         </div>
@@ -387,53 +409,69 @@
                                                             <div class="col-md-2">
                                                                 <div class="select-input-color">
                                                                     <div class="color-area">
-                                                                        <div class="input-group colorpicker-component cp">
-                                                                            <input type="text" name="color[]" value="#000000"
+                                                                        <div
+                                                                            class="input-group colorpicker-component cp">
+                                                                            <input type="text" name="color[]"
+                                                                                value="#000000"
                                                                                 class="input-field cp" />
-                                                                            <span class="input-group-addon"><i></i></span>
+                                                                            <span
+                                                                                class="input-group-addon"><i></i></span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3">
-                                                                <input type="number" name="color_qty[]" class="input-field"
-                                                                    placeholder="{{ __('Color Qty') }}" value="0" min="0" required>
+                                                                <input type="number" name="color_qty[]"
+                                                                    class="input-field"
+                                                                    placeholder="{{ __('Color Qty') }}" value="0"
+                                                                    min="0" required>
                                                             </div>
                                                             <div class="col-md-3">
-                                                                <input type="number" step="0.01" name="color_price[]" class="input-field"
-                                                                    placeholder="{{ __('Color Price') }}" value="0" min="0" required>
+                                                                <input type="number" step="0.01" name="color_price[]"
+                                                                    class="input-field"
+                                                                    placeholder="{{ __('Color Price') }}" value="0"
+                                                                    min="0" required>
                                                             </div>
                                                             @if(config("features.color_gallery"))
                                                             <div class="col-md-3">
-                                                                <input type="file" name="color_gallery[0][]" id="uploadgallery_color" accept="image/*" multiple required>
-                                                                
+                                                                <input type="file" name="color_gallery[0][]"
+                                                                    id="uploadgallery_color" accept="image/*" multiple
+                                                                    required>
+
                                                             </div>
                                                             <div class="col-md-1">
-                                                                <button type="button" class="btn btn-danger text-white color-remove-with-gallery"><i class="fa fa-times"></i></button>
+                                                                <button type="button"
+                                                                    class="btn btn-danger text-white color-remove-with-gallery"><i
+                                                                        class="fa fa-times"></i></button>
                                                             </div>
-                                                            @else 
+                                                            @else
                                                             <div class="col-md-1">
-                                                                <button type="button" class="btn btn-danger text-white color-remove"><i class="fa fa-times"></i></button>
+                                                                <button type="button"
+                                                                    class="btn btn-danger text-white color-remove"><i
+                                                                        class="fa fa-times"></i></button>
                                                             </div>
                                                             @endif
                                                         </div>
                                                     </div>
-                                                
-                                                    <a href="javascript:;" id="{{ config("features.color_gallery") ? "color-btn-with-gallery" : "color-btn" }}" class="add-more mt-4 mb-3"><i
-                                                            class="fas fa-plus"></i>{{ __('Add More Color') }} </a>
+
+                                                    <a href="javascript:;" id="{{ config(" features.color_gallery")
+                                                        ? "color-btn-with-gallery" : "color-btn" }}"
+                                                        class="add-more mt-4 mb-3"><i class="fas fa-plus"></i>{{ __('Add
+                                                        More Color') }} </a>
                                                 </div>
                                             </div>
-                
+
                                         </div>
 
                                     </div>
-                                </div><!--FECHAMENTO COL-XL-6-->
+                                </div>
+                                <!--FECHAMENTO COL-XL-6-->
                                 @if(config("features.material_gallery"))
                                 <div class="col-xl-12">
                                     <ul class="list list-personalizada">
                                         <li>
-                                            <input class="checkclick" name="material_check" type="checkbox" id="check_material"
-                                                value="1">
+                                            <input class="checkclick" name="material_check" type="checkbox"
+                                                id="check_material" value="1">
                                             <label for="check_material">{{ __('Allow Product Materials') }}</label>
                                         </li>
                                     </ul>
@@ -463,15 +501,17 @@
                                                             <label>
                                                                 {{ __('Material Price') }}
                                                                 <span>
-                                                                    {{ __('(This price will be added with base price)') }}
+                                                                    {{ __('(This price will be added with base price)')
+                                                                    }}
                                                                 </span>
                                                             </label>
                                                         </div>
                                                         <div class="col-md-3">
-                                                            <label>                                                         
+                                                            <label>
                                                                 {{ __('Material Gallery') }}
                                                                 <span>
-                                                                    {{ __('(These photos will be displayed when this material is selected)') }}
+                                                                    {{ __('(These photos will be displayed when this
+                                                                    material is selected)') }}
                                                                 </span>
                                                             </label>
                                                         </div>
@@ -482,39 +522,52 @@
                                                                 <div class="select-input-color">
                                                                     <div class="color-area">
                                                                         <div class="input-group">
-                                                                            <input type="text" name="material[]" class="input-field"
+                                                                            <input type="text" name="material[]"
+                                                                                class="input-field"
                                                                                 placeholder="{{ __('Material Name') }}">
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3">
-                                                                <input type="number" name="material_qty[]" class="input-field"
-                                                                    placeholder="{{ __('Material Qty') }}" value="0" min="0" required>
+                                                                <input type="number" name="material_qty[]"
+                                                                    class="input-field"
+                                                                    placeholder="{{ __('Material Qty') }}" value="0"
+                                                                    min="0" required>
                                                             </div>
                                                             <div class="col-md-3">
-                                                                <input type="number" step="0.01" name="material_price[]" class="input-field"
-                                                                    placeholder="{{ __('Material Price') }}" value="0" min="0" required>
+                                                                <input type="number" step="0.01" name="material_price[]"
+                                                                    class="input-field"
+                                                                    placeholder="{{ __('Material Price') }}" value="0"
+                                                                    min="0" required>
                                                             </div>
                                                             <div class="col-md-3 delete-button">
-                                                                <input type="file" name="material_gallery[0][]" id="uploadgallery_material" accept="image/*" multiple required>
-                                                                <button type="button" class="btn btn-danger text-white color-remove-with-gallery"><i class="fa fa-times"></i></button>
+                                                                <input type="file" name="material_gallery[0][]"
+                                                                    id="uploadgallery_material" accept="image/*"
+                                                                    multiple required>
+                                                                <button type="button"
+                                                                    class="btn btn-danger text-white color-remove-with-gallery"><i
+                                                                        class="fa fa-times"></i></button>
                                                             </div>
                                                             {{-- <div class="col-md-1">
-                                                                <button type="button" class="btn btn-danger text-white color-remove-with-gallery"><i class="fa fa-times"></i></button>
+                                                                <button type="button"
+                                                                    class="btn btn-danger text-white color-remove-with-gallery"><i
+                                                                        class="fa fa-times"></i></button>
                                                             </div> --}}
                                                         </div>
                                                     </div>
-                                                
-                                                    <a href="javascript:;" id="material-btn" class="add-more mt-4 mb-3"><i
-                                                            class="fas fa-plus"></i>{{ __('Add More Materials') }} </a>
+
+                                                    <a href="javascript:;" id="material-btn"
+                                                        class="add-more mt-4 mb-3"><i class="fas fa-plus"></i>{{ __('Add
+                                                        More Materials') }} </a>
                                                 </div>
                                             </div>
-                
+
                                         </div>
 
                                     </div>
-                                </div><!--FECHAMENTO COL-XL-6-->
+                                </div>
+                                <!--FECHAMENTO COL-XL-6-->
                                 @endif
 
 
@@ -527,10 +580,10 @@
                                                 <label for="check1">{{ __('Allow Estimated Shipping Time') }}</label>
                                             </li>
                                         </ul>
-                                        
+
                                         <div class="showbox input-form">
-                                            
-                                    
+
+
                                             @component('admin.components.input-localized')
                                             @slot('name')
                                             ship
@@ -540,11 +593,12 @@
                                             @endslot
                                             {{ __('Product Estimated Shipping Time') }}
                                             @endcomponent
-                        
+
 
                                         </div>
                                     </div>
-                                </div><!--FECHAMENTO COL-XL-6-->
+                                </div>
+                                <!--FECHAMENTO COL-XL-6-->
 
                                 <div class="col-xl-6">
                                     <ul class="list list-personalizada">
@@ -559,7 +613,8 @@
                                             <div class="col-xl-12">
                                                 <div class="product-size-details" id="size-section">
                                                     <div class="size-area">
-                                                        <span class="remove size-remove"><i class="fas fa-times"></i></span>
+                                                        <span class="remove size-remove"><i
+                                                                class="fas fa-times"></i></span>
                                                         <div class="row">
                                                             <div class="col-md-4 col-sm-6">
                                                                 <label>
@@ -578,18 +633,23 @@
                                                                         {{ __('(Number of quantity of this size)') }}
                                                                     </span>
                                                                 </label>
-                                                                <input type="number" name="size_qty[]" class="input-field"
-                                                                    placeholder="{{ __('Size Qty') }}" value="1" min="1">
+                                                                <input type="number" name="size_qty[]"
+                                                                    class="input-field"
+                                                                    placeholder="{{ __('Size Qty') }}" value="1"
+                                                                    min="1">
                                                             </div>
                                                             <div class="col-md-4 col-sm-6">
                                                                 <label>
                                                                     {{ __('Size Price') }} :
                                                                     <span>
-                                                                        {{ __('(This price will be added with base price)') }}
+                                                                        {{ __('(This price will be added with base
+                                                                        price)') }}
                                                                     </span>
                                                                 </label>
-                                                                <input type="number" step="0.01" name="size_price[]" class="input-field"
-                                                                    placeholder="{{ __('Size Price') }}" value="0" min="0">
+                                                                <input type="number" step="0.01" name="size_price[]"
+                                                                    class="input-field"
+                                                                    placeholder="{{ __('Size Price') }}" value="0"
+                                                                    min="0">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -600,9 +660,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
-                                </div> <!--FECHAMENTO COL-XL-6-->
-                                
+
+                                </div>
+                                <!--FECHAMENTO COL-XL-6-->
+
                                 <div class="col-xl-6">
                                     <ul class="list list-personalizada">
                                         <li>
@@ -624,7 +685,8 @@
                                                                 <div class="col-lg-6">
                                                                     <input type="number" name="whole_sell_qty[]"
                                                                         class="input-field"
-                                                                        placeholder="{{ __('Enter Quantity') }}" min="0">
+                                                                        placeholder="{{ __('Enter Quantity') }}"
+                                                                        min="0">
                                                                 </div>
 
                                                                 <div class="col-lg-6">
@@ -643,7 +705,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div> <!--FECHAMENTO COL-XL-6-->
+                                </div>
+                                <!--FECHAMENTO COL-XL-6-->
 
                                 <div class="col-xl-3">
                                     <div class="input-form">
@@ -652,9 +715,10 @@
                                             <span>(un.)</span>
                                         </h4>
                                         <input name="max_quantity" type="number" class="input-field"
-                                        placeholder="{{ __('e.g 20') }}" step="1" min="0">
+                                            placeholder="{{ __('e.g 20') }}" step="1" min="0">
                                     </div>
-                                </div><!--FINAL ROW COL-XL-6-->
+                                </div>
+                                <!--FINAL ROW COL-XL-6-->
 
                                 <div class="col-xl-3">
                                     <div class="input-form">
@@ -663,9 +727,10 @@
                                             <span>(kg.)</span>
                                         </h4>
                                         <input name="weight" type="number" class="input-field"
-                                        placeholder="{{ __('e.g 20') }}" step="0.01" min="0">
+                                            placeholder="{{ __('e.g 20') }}" step="0.01" min="0">
                                     </div>
-                                </div><!--FINAL ROW COL-XL-6-->
+                                </div>
+                                <!--FINAL ROW COL-XL-6-->
 
                                 <div class="col-xl-3">
                                     <div class="input-form">
@@ -675,10 +740,11 @@
                                         </h4>
 
                                         <input name="width" type="number" class="input-field"
-                                        placeholder="{{ __('e.g 20') }}" step="1" min="1">
+                                            placeholder="{{ __('e.g 20') }}" step="1" min="1">
                                     </div>
-                                </div><!--FINAL ROW COL-XL-6-->
-                                
+                                </div>
+                                <!--FINAL ROW COL-XL-6-->
+
                                 <div class="col-xl-3">
                                     <div class="input-form">
                                         <h4 class="heading">
@@ -686,9 +752,10 @@
                                             <span>(cm.)</span>
                                         </h4>
                                         <input name="height" type="number" class="input-field"
-                                        placeholder="{{ __('e.g 20') }}" step="1" min="1">
+                                            placeholder="{{ __('e.g 20') }}" step="1" min="1">
                                     </div>
-                                </div> <!--FINAL ROW COL-XL-6-->
+                                </div>
+                                <!--FINAL ROW COL-XL-6-->
 
                                 <div class="col-xl-3">
                                     <div class="input-form">
@@ -697,9 +764,10 @@
                                             <span>(cm.)</span>
                                         </h4>
                                         <input name="length" type="number" class="input-field"
-                                        placeholder="{{ __('e.g 20') }}" step="1" min="1">
+                                            placeholder="{{ __('e.g 20') }}" step="1" min="1">
                                     </div>
-                                </div> <!--FINAL ROW COL-XL-6-->
+                                </div>
+                                <!--FINAL ROW COL-XL-6-->
 
                                 <div class="col-xl-3">
                                     <div class="input-form">
@@ -708,9 +776,10 @@
                                             <span>{{ __('(Optional)') }}</span>
                                         </h4>
                                         <input name="previous_price" step="0.01" type="number" class="input-field"
-                                        placeholder="{{ __('e.g 20') }}" min="0">
+                                            placeholder="{{ __('e.g 20') }}" min="0">
                                     </div>
-                                </div> <!--FINAL ROW COL-XL-6-->
+                                </div>
+                                <!--FINAL ROW COL-XL-6-->
 
                                 <div class="col-xl-3">
                                     <div class="input-form">
@@ -720,20 +789,22 @@
                                             </span>
                                         </h4>
                                         <input name="stock" id="stock" type="text" class="input-field"
-                                        placeholder="{{ __('e.g 20') }}">
-                                        
+                                            placeholder="{{ __('e.g 20') }}">
+
                                     </div>
                                 </div>
 
                                 <div class="col-xl-3">
 
                                     <div class="checkbox-wrapper list list-personalizada">
-                                        <input type="checkbox" name="measure_check" class="checkclick1" id="allowProductMeasurement" value="1">
-                                        <label for="allowProductMeasurement">{{ __('Allow Product Measurement') }}</label>
+                                        <input type="checkbox" name="measure_check" class="checkclick1"
+                                            id="allowProductMeasurement" value="1">
+                                        <label for="allowProductMeasurement">{{ __('Allow Product Measurement')
+                                            }}</label>
                                     </div>
 
                                     <div class="showbox input-form">
-                                                
+
                                         <h4 class="heading">{{ __('Product Measurement') }}</h4>
                                         <select id="product_measure">
                                             <option value="">{{ __('None') }}</option>
@@ -745,12 +816,13 @@
                                         </select>
                                         <div class="hidden" id="measure">
                                             <input name="measure" type="text" id="measurement" class="input-field"
-                                                    placeholder="{{ __('Enter Unit') }}">
+                                                placeholder="{{ __('Enter Unit') }}">
                                         </div>
 
                                     </div>
 
-                                </div> <!--FINAL ROW COL-XL-6-->
+                                </div>
+                                <!--FINAL ROW COL-XL-6-->
 
                                 <div class="col-xl-12">
                                     <div class="title-section-form"></div>
@@ -763,7 +835,9 @@
                                             <span>
                                                 {{ __('(You can create up to 2 Product Tags)') }}
                                             </span>
-                                            <i class="icofont-question-circle" data-toggle="tooltip" style="display: inline-block " data-placement="top" title="{{ __('Tags are showed in the product card and can help you to track your products') }}"></i>
+                                            <i class="icofont-question-circle" data-toggle="tooltip"
+                                                style="display: inline-block " data-placement="top"
+                                                title="{{ __('Tags are showed in the product card and can help you to track your products') }}"></i>
                                         </h4>
 
                                         <div class="feature-tag-top-filds" id="feature-section">
@@ -809,8 +883,7 @@
                                                     <div class="panel-footer">
                                                         <ul class="nav nav-pills" role="tablist">
                                                             <li role="presentation" class="active">
-                                                                <a href="#{{$lang->locale}}-features0"
-                                                                    class="active"
+                                                                <a href="#{{$lang->locale}}-features0" class="active"
                                                                     aria-controls="{{$lang->locale}}-features0"
                                                                     role="tab" data-toggle="tab">
                                                                     {{$lang->language}}
@@ -877,8 +950,7 @@
                                                     <div class="panel-footer">
                                                         <ul class="nav nav-pills" role="tablist">
                                                             <li role="presentation" class="active">
-                                                                <a href="#{{$lang->locale}}-features1"
-                                                                    class="active"
+                                                                <a href="#{{$lang->locale}}-features1" class="active"
                                                                     aria-controls="{{$lang->locale}}-features1"
                                                                     role="tab" data-toggle="tab">
                                                                     {{$lang->language}}
@@ -902,7 +974,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div><!--FINAL ROW COL-XL-6-->
+                                </div>
+                                <!--FINAL ROW COL-XL-6-->
 
                                 <div class="col-xl-6">
                                     <div class="input-form">
@@ -913,19 +986,22 @@
                                             </span>
                                         </h4>
                                         <input name="youtube" type="text" class="input-field"
-                                        placeholder="{{ __('Enter Youtube Video URL') }}">
+                                            placeholder="{{ __('Enter Youtube Video URL') }}">
                                     </div>
 
-                                    
+
 
                                     <div class="checkbox-wrapper list list-personalizada">
                                         <input type="checkbox" name="seo_check" value="1" class="checkclick1"
                                             id="allowProductSEO" value="1">
-                                        <label for="allowProductSEO">{{ __('Allow Product SEO') }} </label> <i class="icofont-question-circle" data-toggle="tooltip" style="display: inline-block " data-placement="top" title="{{ __('SEO (Search Engine Optimization) focuses on your website presence in search results on search engines like Google') }}"></i>
+                                        <label for="allowProductSEO">{{ __('Allow Product SEO') }} </label> <i
+                                            class="icofont-question-circle" data-toggle="tooltip"
+                                            style="display: inline-block " data-placement="top"
+                                            title="{{ __('SEO (Search Engine Optimization) focuses on your website presence in search results on search engines like Google') }}"></i>
                                     </div>
 
                                     <div class="showbox">
-                
+
                                         <div class="input-form">
                                             @component('admin.components.input-localized',["type" => "tags"])
                                             @slot('name')
@@ -947,12 +1023,14 @@
                                             @endcomponent
                                         </div>
                                     </div>
-                                
-
-                                </div> <!--FINAL ROW COL-XL-6-->
 
 
-                            </div> <!--FINAL DA ROW DE DADOS EXTRAS-->
+                                </div>
+                                <!--FINAL ROW COL-XL-6-->
+
+
+                            </div>
+                            <!--FINAL DA ROW DE DADOS EXTRAS-->
 
                             @if(config('mercadolivre.is_active'))
                             <div class="title-section-form">
@@ -962,43 +1040,61 @@
                                 </h3>
                             </div>
 
-                            <div class="row"> <!-- ROW MERCADO LIVRE -->
-                                
+                            <div class="row">
+                                <!-- ROW MERCADO LIVRE -->
+
                                 <div class="col-12">
                                     <div class="input-form">
-                                        <h4 class="heading">{{ __('Mercado Livre Name') }} * <i class="icofont-question-circle" data-toggle="tooltip" style="display: inline-block " data-placement="top" title="{{ __('Name to be shown at Mercado Livre Announcement') }}"></i></h4>  </h4>
-                                        <input type="text" class="input-field" placeholder="{{ __('Enter Mercado Livre Name') }}"
-                                        name="mercadolivre_name" required="" value="">
+                                        <h4 class="heading">{{ __('Mercado Livre Name') }} * <i
+                                                class="icofont-question-circle" data-toggle="tooltip"
+                                                style="display: inline-block " data-placement="top"
+                                                title="{{ __('Name to be shown at Mercado Livre Announcement') }}"></i>
+                                        </h4>
+                                        </h4>
+                                        <input type="text" class="input-field"
+                                            placeholder="{{ __('Enter Mercado Livre Name') }}" name="mercadolivre_name"
+                                            required="" value="">
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="input-form">
-                                        <h4 class="heading">{{ __('Mercado Livre Description') }} * <i class="icofont-question-circle" data-toggle="tooltip" style="display: inline-block " data-placement="top" title="{{ __('Description to be shown at Mercado Livre Announcement') }}"></i></h4>  </h4>
-                                        <textarea class="input-field" name="mercadolivre_description" placeholder="{{ __('Enter Mercado Livre Description') }}" cols="30" rows="10"></textarea>
+                                        <h4 class="heading">{{ __('Mercado Livre Description') }} * <i
+                                                class="icofont-question-circle" data-toggle="tooltip"
+                                                style="display: inline-block " data-placement="top"
+                                                title="{{ __('Description to be shown at Mercado Livre Announcement') }}"></i>
+                                        </h4>
+                                        </h4>
+                                        <textarea class="input-field" name="mercadolivre_description"
+                                            placeholder="{{ __('Enter Mercado Livre Description') }}" cols="30"
+                                            rows="10"></textarea>
                                     </div>
                                 </div>
                             </div>
                             @endif
 
-                            
+
 
                             <input type="hidden" name="type" value="Physical">
                             <div class="row">
                                 <div class="col-xl-12 text-center">
-                                    <button class="addProductSubmit-btn"
-                                        type="submit">{{ __('Create Product') }}</button>
+                                    <button class="addProductSubmit-btn" type="submit">{{ __('Create Product')
+                                        }}</button>
                                 </div>
                             </div>
 
                             @if(config('features.redplay_digital_product'))
-                            <div class="modal fade" id="setlicenseconfig" tabindex="-1" role="dialog" aria-labelledby="setlicenseconfig" aria-hidden="true">
+                            <div class="modal fade" id="setlicenseconfig" tabindex="-1" role="dialog"
+                                aria-labelledby="setlicenseconfig" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalCenterTitle">Licença Redplay para este Produto<small><br>
-                                                Os dados preenchidos aqui serão enviados por e-mail ao cliente ao término da compra e aprovação do pagamento. <br>
-                                                Sempre que um código for enviado a determinado cliente, o mesmo imediatamente será dado como INDISPONÍVEL.
-                                            </small></h5>
+                                            <h5 class="modal-title" id="exampleModalCenterTitle">Licença Redplay para
+                                                este Produto<small><br>
+                                                    Os dados preenchidos aqui serão enviados por e-mail ao cliente ao
+                                                    término da compra e aprovação do pagamento. <br>
+                                                    Sempre que um código for enviado a determinado cliente, o mesmo
+                                                    imediatamente será dado como INDISPONÍVEL.
+                                                </small></h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">×</span>
                                             </button>
@@ -1007,16 +1103,20 @@
                                             <div class="top-area" id="redplayInputArea">
                                                 <div class="row mb-2">
                                                     <div class="col-3">
-                                                        <input type="text" name="redplay_login[]" class="input-field m-0" placeholder="Login Redplay">
+                                                        <input type="text" name="redplay_login[]"
+                                                            class="input-field m-0" placeholder="Login Redplay">
                                                     </div>
                                                     <div class="col-3">
-                                                        <input type="text" name="redplay_password[]" class="input-field m-0" placeholder="Senha Redplay">
+                                                        <input type="text" name="redplay_password[]"
+                                                            class="input-field m-0" placeholder="Senha Redplay">
                                                     </div>
                                                     <div class="col-3">
-                                                        <input type="text" name="redplay_code[]" class="input-field m-0" placeholder="Código Redplay">
+                                                        <input type="text" name="redplay_code[]" class="input-field m-0"
+                                                            placeholder="Código Redplay">
                                                     </div>
                                                     <div class="col-1 d-flex align-items-center justify-content-center">
-                                                        <button type="button" class="btn btn-info bg-dark border border-dark btnAddRedplay">
+                                                        <button type="button"
+                                                            class="btn btn-info bg-dark border border-dark btnAddRedplay">
                                                             <span aria-hidden="true"><i class="fa fa-plus"></i></span>
                                                         </button>
                                                     </div>
@@ -1024,12 +1124,13 @@
                                                     <div class="col-1 d-flex align-items-center justify-content-center">
                                                         <span class="badge badge-success ml-2">Disponível</span>
                                                     </div>
-                                                    
+
                                                 </div>
                                             </div>
                                             <div class="row mt-5">
                                                 <div class="col-12 text-center">
-                                                    <button class="btn btn-success" data-dismiss="modal" id="btnSaveLicenses">Salvar</button>
+                                                    <button class="btn btn-success" data-dismiss="modal"
+                                                        id="btnSaveLicenses">Salvar</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -1066,8 +1167,8 @@
                     <div class="row">
                         <div class="col-sm-6 text-right">
                             <div class="upload-img-btn">
-                                <label for="image-upload" id="prod_gallery"><i
-                                        class="icofont-upload-alt"></i>{{ __('Upload File') }}</label>
+                                <label for="image-upload" id="prod_gallery"><i class="icofont-upload-alt"></i>{{
+                                    __('Upload File') }}</label>
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -1090,7 +1191,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="setgallery_color" tabindex="-1" role="dialog" aria-labelledby="setgallery_color" aria-hidden="true">
+<div class="modal fade" id="setgallery_color" tabindex="-1" role="dialog" aria-labelledby="setgallery_color"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered  modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -1104,8 +1206,8 @@
                     <div class="row">
                         <div class="col-sm-6 text-right">
                             <div class="upload-img-btn">
-                                <label for="image-upload" id="prod_gallery_color"><i
-                                        class="icofont-upload-alt"></i>{{ __('Upload File') }}</label>
+                                <label for="image-upload" id="prod_gallery_color"><i class="icofont-upload-alt"></i>{{
+                                    __('Upload File') }}</label>
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -1137,7 +1239,6 @@
 <script src="{{asset('assets/admin/js/jquery.SimpleCropper.js')}}"></script>
 
 <script>
-
     $(document).ready(function(){
 
         $("input[name='color_qty[]']").on('keyup', function(){
@@ -1147,11 +1248,11 @@
                 color_stock_total = parseInt(color_stock_total) + parseInt(color_input[i].value);
             }
             if(isNaN(color_stock_total)){
-                $("#stock").val(null); 
+                $("#stock").val(null);
             } else{
                 $("#stock").val(color_stock_total);
             }
-            
+
         });
 
         $("input[name='material_qty[]']").on('keyup', function(){
@@ -1161,11 +1262,11 @@
                 material_stock_total = parseInt(material_stock_total) + parseInt(material_input[i].value);
             }
             if(isNaN(material_stock_total)){
-                $("#stock").val(null); 
+                $("#stock").val(null);
             } else{
                 $("#stock").val(material_stock_total);
             }
-            
+
         });
 
         $("#check3").change(function(){
@@ -1176,11 +1277,11 @@
                     color_stock_total = parseInt(color_stock_total) + parseInt(color_input[i].value);
                 }
                 if(isNaN(color_stock_total)){
-                    $("#stock").val(null); 
+                    $("#stock").val(null);
                 } else{
                     $("#stock").val(color_stock_total);
                 }
-                
+
                 $("#uploadgallery_color").prop("required", true);
                 $("#stock").attr("readonly", true);
                 $("#stock").addClass("disabled");
@@ -1199,11 +1300,11 @@
                     material_stock_total = parseInt(material_stock_total) + parseInt(material_input[i].value);
                 }
                 if(isNaN(material_stock_total)){
-                    $("#stock").val(null); 
+                    $("#stock").val(null);
                 } else{
                     $("#stock").val(material_stock_total);
                 }
-                
+
                 $("#uploadgallery_material").prop("required", true);
                 $("#stock").attr("readonly", true);
                 $("#stock").addClass("disabled");
@@ -1221,11 +1322,11 @@
                 size_stock_total = parseInt(size_stock_total) + parseInt(size_input[i].value);
             }
             if(isNaN(size_stock_total)){
-                $("#stock").val(null); 
+                $("#stock").val(null);
             } else{
                 $("#stock").val(size_stock_total);
             }
-            
+
         });
 
         $("#size-check").change(function(){
@@ -1236,11 +1337,11 @@
                     size_stock_total = parseInt(size_stock_total) + parseInt(size_input[i].value);
                 }
                 if(isNaN(size_stock_total)){
-                    $("#stock").val(null); 
+                    $("#stock").val(null);
                 } else{
                     $("#stock").val(size_stock_total);
                 }
-                
+
                 $("#stock").attr("readonly", true);
                 $("#stock").addClass("disabled");
             } else{

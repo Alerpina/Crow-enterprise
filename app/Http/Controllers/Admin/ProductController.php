@@ -2,45 +2,45 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\CategoryTranslation;
-use App\Models\ChildcategoryTranslation;
-use App\Models\SubcategoryTranslation;
 use DB;
-use Image;
 use DOMDocument;
 use Carbon\Carbon;
 use App\Models\Brand;
+use League\Csv\Reader;
+use App\Helpers\Helper;
 use App\Models\Gallery;
+use App\Models\License;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Currency;
 use App\Models\Language;
 use App\Models\Attribute;
+use League\Csv\Statement;
+use App\Classes\XMLHelper;
 use App\Models\Gallery360;
+use App\Events\BackInStock;
 use App\Models\Subcategory;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Facades\MercadoLivre;
 use App\Models\Childcategory;
 use App\Models\Generalsetting;
 use App\Models\AttributeOption;
 use Yajra\DataTables\DataTables;
 use App\Models\ProductTranslation;
+use App\Models\CategoryTranslation;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\File;
-use League\Csv\Reader;
-use League\Csv\Statement;
-use App\Helpers\Helper;
-use Symfony\Component\HttpFoundation\Response;
-use App\Events\BackInStock;
-use App\Facades\MercadoLivre;
-use Illuminate\Support\Facades\Validator;
+use Intervention\Image\Facades\Image;
+use App\Models\SubcategoryTranslation;
+use Illuminate\Support\Facades\Session;
+use App\Models\ChildcategoryTranslation;
 
 use function League\Csv\delimiter_detect;
 
-use App\Classes\XMLHelper;
-use App\Models\License;
+use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends Controller
 {
@@ -58,10 +58,11 @@ class ProductController extends Controller
         parent::__construct();
     }
 
-    public function updateXMLComprasParaguai(){
+    public function updateXMLComprasParaguai()
+    {
         try {
             $this->xml_helper->updateComprasparaguai();
-    
+
             $msg = __("Compras Paraguai XML successfully updated.");
             return response()->json($msg);
         } catch (\Exception $e) {
@@ -69,7 +70,8 @@ class ProductController extends Controller
         }
     }
 
-    public function updateXMLGoogleAndFacebook(){
+    public function updateXMLGoogleAndFacebook()
+    {
         try {
             $this->xml_helper->updateLojaGoogle();
             $this->xml_helper->updateLojaFacebook();
@@ -82,7 +84,7 @@ class ProductController extends Controller
     }
 
     //*** JSON Request
-    public function datatables($status = NULL)
+    public function datatables($status = null)
     {
         $datas = Product::where('user_id', 0);
         if ($status == 'active') {
@@ -92,13 +94,13 @@ class ProductController extends Controller
         } elseif ($status == 'without_image') {
             $datas = $datas->whereNull('photo')->orWhere('photo', '=', "")->orderBy('id', 'desc');
         } elseif ($status == 'without_details') {
-            $datas = $datas->whereTranslation('details', NULL, $this->lang->locale)->orderBy('id', 'desc');
+            $datas = $datas->whereTranslation('details', null, $this->lang->locale)->orderBy('id', 'desc');
         } elseif ($status == 'featured') {
             $datas = $datas->where('featured', '=', 1)->orderBy('id', 'desc');
         } elseif ($status == 'latest') {
             $datas = $datas->where('latest', '=', 1)->orderBy('id', 'desc');
         } elseif ($status == 'without_category') {
-            $datas = $datas->where('category_id', '=', NULL)->orWhere('category_id', '=', 0)->orderBy('id', 'desc');
+            $datas = $datas->where('category_id', '=', null)->orWhere('category_id', '=', 0)->orderBy('id', 'desc');
         } elseif ($status == 'active_without_image') {
             $datas = $datas->whereRaw('(photo is null or photo = "")')->where('status', '=', 1)->orderBy('id', 'desc');
         } elseif ($status == 'system_name') {
@@ -112,38 +114,38 @@ class ProductController extends Controller
             $datas = $datas->whereIn('id', $query1->pluck('id1'))->orderBy('id', 'desc');
         } elseif ($status == "catalog") {
             $datas = $datas->where('is_catalog', '=', 1)->orderBy('id', 'desc');
-        } elseif ($status == "with_tags"){
+        } elseif ($status == "with_tags") {
             $query = DB::table('products')
             ->select('products.id as id1')
-            ->join('product_translations', function($join){
+            ->join('product_translations', function ($join) {
                 $join->on('products.id', '=', 'product_translations.product_id');
             })
-            ->where('product_translations.features', '!=', NULL)->where('product_translations.features', '!=', "")
+            ->where('product_translations.features', '!=', null)->where('product_translations.features', '!=', "")
             ->where('product_translations.locale', '=', $this->lang->locale);
             $datas = $datas->whereIn('id', $query->pluck('id1'))->orderBy('id', 'desc');
-        } elseif($status == "without_tags"){
-            $datas = $datas->whereTranslation('features', NULL, $this->lang->locale)->orderBy('id', 'desc');
+        } elseif ($status == "without_tags") {
+            $datas = $datas->whereTranslation('features', null, $this->lang->locale)->orderBy('id', 'desc');
         } else {
             $datas = $datas->orderBy('id', 'desc');
         }
-         //--- Integrating This Collection Into Datatables
-         return Datatables::of($datas)
-            ->editColumn('brand', function(Product $data){
+        //--- Integrating This Collection Into Datatables
+        return Datatables::of($datas)
+            ->editColumn('brand', function (Product $data) {
                 return $data->brand->name;
             })
-            ->editColumn('category', function(Product $data){
+            ->editColumn('category', function (Product $data) {
                 return $data->category->name;
             })
-            ->editColumn('store', function(Product $data){
-                foreach($data->stores as $store){
+            ->editColumn('store', function (Product $data) {
+                foreach ($data->stores as $store) {
                     return $store->domain;
                 }
             })
             ->addColumn('action', function (Product $data) {
                 $meli = null;
-                if(config('mercadolivre.is_active')) {
+                if (config('mercadolivre.is_active')) {
                     $meli = '<a href="' . route('admin-prod-meli-send', $data->id) . '" ><i class="fas fa-upload"></i> ' . __("Send to Mercado Livre") . '<a/>';
-                    if($data->mercadolivre_id) {
+                    if ($data->mercadolivre_id) {
                         $meli = '<a href="' . route('admin-prod-meli-update', $data->id) . '" ><i class="fas fa-upload"></i> ' . __("Update at Mercado Livre") . '<a/>';
                     }
                 }
@@ -151,7 +153,7 @@ class ProductController extends Controller
                 <div class="godropdown">
                     <button class="go-dropdown-toggle"> ' . __('Actions') . '<i class="fas fa-chevron-down"></i></button>
                     <div class="action-list"><a href="' . route('admin-prod-edit', $data->id) . '"> <i class="fas fa-edit"></i> ' . __('Edit') . '</a>
-                        <a href="javascript:;" data-href="' . route('admin-prod-copy',$data->id) . '" data-toggle="modal" data-target="#confirm-copy" class="delete"><i class="fas fa-edit"></i> ' . __('Copy') . '</a>
+                        <a href="javascript:;" data-href="' . route('admin-prod-copy', $data->id) . '" data-toggle="modal" data-target="#confirm-copy" class="delete"><i class="fas fa-edit"></i> ' . __('Copy') . '</a>
                         '. $meli . '
                         <a href="javascript" data-header="'.__("Image Gallery").'" class="set-gallery-product" data-toggle="modal" data-target="#setgallery">
                         <input type="hidden" value="' . $data->id . '"><i class="fas fa-eye"></i> ' . __('View Gallery') . '</a>
@@ -159,15 +161,15 @@ class ProductController extends Controller
                     </div>
                 </div>';
             })
-            ->filterColumn('brand_id', function($query, $keyword){
+            ->filterColumn('brand_id', function ($query, $keyword) {
                 $this->brand_id = $keyword;
                 $query->where('brand_id', $this->brand_id);
             })
-            ->filterColumn('category_id', function($query, $keyword){
+            ->filterColumn('category_id', function ($query, $keyword) {
                 $this->category_id = $keyword;
                 $query->where('category_id', $this->category_id);
             })
-            ->filterColumn('store_id', function($query, $keyword){
+            ->filterColumn('store_id', function ($query, $keyword) {
                 $this->store_id = $keyword;
                 $query->whereHas('stores', function ($query) {
                     $query->where('store_id', $this->store_id);
@@ -182,7 +184,7 @@ class ProductController extends Controller
             ->editColumn('name', function (Product $data) {
                 $this->useStoreLocale();
                 $name = mb_strlen(strip_tags($data->name), 'utf-8') > 50 ? mb_substr(strip_tags($data->name), 0, 50, 'utf-8') . '...' : strip_tags($data->name);
-                if(config('mercadolivre.is_active') && $data->mercadolivre_id) {
+                if (config('mercadolivre.is_active') && $data->mercadolivre_id) {
                     $mercadolivre_id = substr($data->mercadolivre_id, 0, 3) . '-' . substr($data->mercadolivre_id, 3, 10);
                     $text = '<small> Anúncio Mercado Livre <a target="_blank" href="https://produto.mercadolivre.com.br/'.$mercadolivre_id.'">'. $mercadolivre_id .'</a> <i
                     class="fas fa-check"></i></small>';
@@ -190,17 +192,17 @@ class ProductController extends Controller
                 }
                 $id = '<small>ID: <a href="' . route('front.product', $data->slug) . '?admin-view=true" target="_blank">' . sprintf("%'.08d", $data->id) . '</a></small>';
                 $id2 = '';
-                if(config('features.marketplace')) {
+                if (config('features.marketplace')) {
                     $id2 = $data->user_id != 0 ? (count($data->user->products) > 0 ? '<small class="ml-2"> ' . __('VENDOR') . ': <a href="' . route('admin-vendor-show', $data->user_id) . '" target="_blank">' . $data->user->shop_name . '</a></small>' : '') : '';
                 }
                 $id3 = $data->type == 'Physical' ? '<small class="ml-2"> SKU: <a href="' . route('front.product', $data->slug) . '?admin-view=true" target="_blank">' . $data->sku . '</a></small>' : '';
                 $id4 = '<small class="ml-2"> ' . __('REF CODE') . ': ' . $data->ref_code . '</small>';
-                $fast_edit_btn = '<a title="'.__("Edit").'" data-href="' . route('admin-prod-fastedit',$data->id) . '" class="fasteditbtn" data-header="'.__("Edit")." ".$data->ref_code.'" data-toggle="modal" data-target="#fast_edit_modal"><i class="fas fa-edit text-primary"></i></a>';
+                $fast_edit_btn = '<a title="'.__("Edit").'" data-href="' . route('admin-prod-fastedit', $data->id) . '" class="fasteditbtn" data-header="'.__("Edit")." ".$data->ref_code.'" data-toggle="modal" data-target="#fast_edit_modal"><i class="fas fa-edit text-primary"></i></a>';
                 $this->useAdminLocale();
                 return  $fast_edit_btn.$name . '<br>' . $id . $id3 . $id4 . $id2;
             })
 
-            ->editColumn('features', function(Product $data){
+            ->editColumn('features', function (Product $data) {
                 return !empty($data->features[1]) ? $data->features[0].", ".$data->features[1] : $data->features;
             })
 
@@ -208,22 +210,24 @@ class ProductController extends Controller
                 $sign = Currency::where('id', '=', 1)->first();
                 $price = number_format($data->price * $sign->value, $sign->decimal_digits, $sign->decimal_separator, $sign->thousands_separator);
                 $price = $sign->sign . $price;
-                                return  $price;
+                return  $price;
             })
             ->editColumn('photo', function (Product $data) {
-                if (file_exists(public_path().'/assets/images/thumbnails/'.$data->thumbnail)) {
-                    return asset('assets/images/thumbnails/'.$data->thumbnail);
-                } else{
+                if (file_exists(public_path().'/storage/images/thumbnails/'.$data->thumbnail)) {
+                    return asset('storage/images/thumbnails/'.$data->thumbnail);
+                } else {
                     return asset('assets/images/noimage.png');
                 }
             })
             ->editColumn('stock', function (Product $data) {
-                    $stck = (string)$data->stock;
-                if ($stck == "0")
+                $stck = (string)$data->stock;
+                if ($stck == "0") {
                     return __("Out Of Stock!");
-                elseif ($stck == null)
+                } elseif ($stck == null) {
                     return __("Unlimited");
-                    else return $data->stock;
+                } else {
+                    return $data->stock;
+                }
             })
             ->addColumn('status', function (Product $data) {
                 $s = $data->status == 1 ? 'checked' : '';
@@ -263,10 +267,10 @@ class ProductController extends Controller
 
         $cats = Category::all();
         $brands = Brand::orderBy('slug')->get();
-        $sign = Currency::where('id','=',1)->first();
+        $sign = Currency::where('id', '=', 1)->first();
         $storesList = Generalsetting::all();
 
-        return view('admin.product.index', compact('filters','cats','brands','sign','storesList'));
+        return view('admin.product.index', compact('filters', 'cats', 'brands', 'sign', 'storesList'));
     }
 
     //*** GET Request
@@ -280,30 +284,30 @@ class ProductController extends Controller
     {
         $cats = Category::all();
         $brands = Brand::orderBy('slug')->get();
-        $sign = Currency::where('id','=',1)->first();
+        $sign = Currency::where('id', '=', 1)->first();
         $storesList = Generalsetting::all();
 
-        return view('admin.product.create.physical',compact('cats','sign','brands','storesList'));
+        return view('admin.product.create.physical', compact('cats', 'sign', 'brands', 'storesList'));
     }
 
     //*** GET Request
     public function createDigital()
     {
         $cats = Category::all();
-        $sign = Currency::where('id','=',1)->first();
-        return view('admin.product.create.digital',compact('cats','sign'));
+        $sign = Currency::where('id', '=', 1)->first();
+        return view('admin.product.create.digital', compact('cats', 'sign'));
     }
 
     //*** GET Request
     public function createLicense()
     {
         $cats = Category::all();
-        $sign = Currency::where('id','=',1)->first();
-        return view('admin.product.create.license',compact('cats','sign'));
+        $sign = Currency::where('id', '=', 1)->first();
+        return view('admin.product.create.license', compact('cats', 'sign'));
     }
 
     //*** GET Request
-    public function status($id1,$id2)
+    public function status($id1, $id2)
     {
         $data = Product::findOrFail($id1);
         $data->status = $id2;
@@ -311,7 +315,7 @@ class ProductController extends Controller
     }
 
     //*** GET Featured
-    public function featured($id1,$id2)
+    public function featured($id1, $id2)
     {
         $data = Product::findOrFail($id1);
         $data->featured = $id2;
@@ -319,24 +323,22 @@ class ProductController extends Controller
     }
 
     //*** GET Request
-    public function catalog($id1,$id2)
+    public function catalog($id1, $id2)
     {
         $data = Product::findOrFail($id1);
         $data->is_catalog = $id2;
         $data->update();
-        if($id2 == 1) {
+        if ($id2 == 1) {
             $msg = __("Product added to catalog successfully.");
-        }
-        else {
+        } else {
             $msg = __("Product removed from catalog successfully.");
         }
 
         return response()->json($msg);
-
     }
 
     //*** POST Request
-    public function uploadUpdate(Request $request,$id)
+    public function uploadUpdate(Request $request, $id)
     {
         //--- Validation Section
         $rules = [
@@ -344,7 +346,7 @@ class ProductController extends Controller
         ];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
-          return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
+            return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
         }
 
         $data = Product::findOrFail($id);
@@ -355,32 +357,29 @@ class ProductController extends Controller
         list(, $image)      = explode(',', $image);
         $image = base64_decode($image);
         $image_name = time().Str::random(8).'.png';
-        $path = 'assets/images/products/'.$image_name;
+        $path = 'storage/images/products/'.$image_name;
         file_put_contents($path, $image);
-                if($data->photo != null)
-                {
-                    if (file_exists(public_path().'/assets/images/products/'.$data->photo)) {
-                        unlink(public_path().'/assets/images/products/'.$data->photo);
-                    }
-                }
-                        $input['photo'] = $image_name;
-         $data->update($input);
-                if($data->thumbnail != null)
-                {
-                    if (file_exists(public_path().'/assets/images/thumbnails/'.$data->thumbnail)) {
-                        unlink(public_path().'/assets/images/thumbnails/'.$data->thumbnail);
-                    }
-                }
+        if ($data->photo != null) {
+            if (file_exists(public_path().'/storage/images/products/'.$data->photo)) {
+                unlink(public_path().'/storage/images/products/'.$data->photo);
+            }
+        }
+        $input['photo'] = $image_name;
+        $data->update($input);
+        if ($data->thumbnail != null) {
+            if (file_exists(public_path().'/storage/images/thumbnails/'.$data->thumbnail)) {
+                unlink(public_path().'/storage/images/thumbnails/'.$data->thumbnail);
+            }
+        }
 
-        $img = Image::make(public_path().'/assets/images/products/'.$data->photo)->resize(285, 285);
+        $img = Image::make(public_path().'/storage/images/products/'.$data->photo)->resize(285, 285);
         $thumbnail = time().Str::random(8).'.png';
-        $img->save(public_path().'/assets/images/thumbnails/'.$thumbnail);
+        $img->save(public_path().'/storage/images/thumbnails/'.$thumbnail);
         $data->thumbnail  = $thumbnail;
         $data->update();
         return response()->json(['status'=>true,'file_name' => $image_name]);
     }
 
-    //*** POST Request
     //*** POST Request
     public function store(Request $request)
     {
@@ -391,40 +390,40 @@ class ProductController extends Controller
             'file'       => 'mimes:zip'
         ];
         $customs = [
-            "{$this->lang->locale}.name.required" => __('Product Name in :lang is required',['lang' => $this->lang->language]),
+            "{$this->lang->locale}.name.required" => __('Product Name in :lang is required', ['lang' => $this->lang->language]),
         ];
 
         $validator = Validator::make($request->all(), $rules, $customs);
 
         if ($validator->fails()) {
-            if($request->api) {
-                return response()->json(array('errors' => $validator->getMessageBag()->toArray()),Response::HTTP_BAD_REQUEST);
+            if ($request->api) {
+                return response()->json(array('errors' => $validator->getMessageBag()->toArray()), Response::HTTP_BAD_REQUEST);
             }
             return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
         }
         //--- Validation Section Ends
         //--- Logic Section
         $data = new Product;
-        $sign = Currency::where('id','=',1)->first();
+        $sign = Currency::where('id', '=', 1)->first();
         $input = $this->withRequiredFields($request->all(), ['name']);
         $input['show_price'] = (boolean) $request->show_price ?? false;
 
         // Check File
         if ($file = $request->file('file')) {
             $name = time().$file->getClientOriginalName();
-            $file->move('assets/files',$name);
+            $file->move('storage/files', $name);
             $input['file'] = $name;
         }
 
-        if(!empty($input['photo'])){
-        $image = $request->photo;
-        list($type, $image) = explode(';', $image);
-        list(, $image)      = explode(',', $image);
-        $image = base64_decode($image);
-        $image_name = time().Str::random(8).'.png';
-        $path = 'assets/images/products/'.$image_name;
-        file_put_contents($path, $image);
-        $input['photo'] = $image_name;
+        if (!empty($input['photo'])) {
+            $image = $request->photo;
+            list($type, $image) = explode(';', $image);
+            list(, $image)      = explode(',', $image);
+            $image = base64_decode($image);
+            $image_name = time().Str::random(8).'.png';
+            $path = 'storage/images/products/'.$image_name;
+            file_put_contents($path, $image);
+            $input['photo'] = $image_name;
         }
         //-- Translations Section
         // Will check each field in language 1 and then for each other language
@@ -466,23 +465,22 @@ class ProductController extends Controller
                 $input[$loc->locale]['meta_tag'] = implode(',', $input[$loc->locale]['meta_tag']);
             }
 
-            if(!empty($input[$loc->locale]['features'])) {
+            if (!empty($input[$loc->locale]['features'])) {
                 if (in_array(null, $input[$loc->locale]['features'])) {
                     $input[$loc->locale]['features'] = null;
                 } else {
                     $input[$loc->locale]['features'] = implode(
-                            ',',
-                            str_replace(',', ' ', $input[$loc->locale]['features'])
-                        );
+                        ',',
+                        str_replace(',', ' ', $input[$loc->locale]['features'])
+                    );
                 }
             }
         }
         //-- End Translations Section
 
         // Check Physical
-        if($request->type == "Physical")
-        {
-            if($request->api) {
+        if ($request->type == "Physical") {
+            if ($request->api) {
                 $api_rules = [
                     'sku' => 'required|unique:products',
                     'price' => 'required',
@@ -490,7 +488,7 @@ class ProductController extends Controller
                 ];
                 $validator = Validator::make($request->all(), $api_rules);
                 if ($validator->fails()) {
-                    return response()->json(array('errors' => $validator->getMessageBag()->toArray()),Response::HTTP_BAD_REQUEST);
+                    return response()->json(array('errors' => $validator->getMessageBag()->toArray()), Response::HTTP_BAD_REQUEST);
                 }
             }
 
@@ -509,39 +507,34 @@ class ProductController extends Controller
 
 
             // Check Condition
-            if ($request->product_condition_check == ""){
+            if ($request->product_condition_check == "") {
                 $input['product_condition'] = 0;
             }
 
             // Check Shipping Time
-            if ($request->shipping_time_check == ""){
+            if ($request->shipping_time_check == "") {
                 $input['ship'] = null;
             }
 
             // Check Size
-            if(empty($request->size_check ))
-            {
+            if (empty($request->size_check)) {
                 $input['size'] = null;
                 $input['size_qty'] = null;
                 $input['size_price'] = null;
-            }
-            else{
-                if(in_array(null, $request->size) || in_array(null, $request->size_qty))
-                {
+            } else {
+                if (in_array(null, $request->size) || in_array(null, $request->size_qty)) {
                     $input['size'] = null;
                     $input['size_qty'] = null;
                     $input['size_price'] = null;
-                }
-                else
-                {
-                    foreach($request->size as $key => $size){
+                } else {
+                    foreach ($request->size as $key => $size) {
                         $size_without_comma[$key] = str_replace(',', '.', $size);
                     }
                     $input['size'] = implode(',', $size_without_comma);
                     $input['size_qty'] = implode(',', $request->size_qty);
                     $input['size_price'] = implode(',', $request->size_price);
                     $stck = 0;
-                    foreach($request->size_qty as $key => $size){
+                    foreach ($request->size_qty as $key => $size) {
                         $stck += (int)$request->size_qty[$key];
                     }
                     $input['stock'] = $stck;
@@ -550,45 +543,35 @@ class ProductController extends Controller
 
 
             // Check Whole Sale
-            if(empty($request->whole_check ))
-            {
+            if (empty($request->whole_check)) {
                 $input['whole_sell_qty'] = null;
                 $input['whole_sell_discount'] = null;
-            }
-            else{
-                if(in_array(null, $request->whole_sell_qty) || in_array(null, $request->whole_sell_discount))
-                {
-                $input['whole_sell_qty'] = null;
-                $input['whole_sell_discount'] = null;
-                }
-                else
-                {
+            } else {
+                if (in_array(null, $request->whole_sell_qty) || in_array(null, $request->whole_sell_discount)) {
+                    $input['whole_sell_qty'] = null;
+                    $input['whole_sell_discount'] = null;
+                } else {
                     $input['whole_sell_qty'] = implode(',', $request->whole_sell_qty);
                     $input['whole_sell_discount'] = implode(',', $request->whole_sell_discount);
                 }
             }
 
             // Check Color
-            if(empty($request->color_check ))
-            {
+            if (empty($request->color_check)) {
                 $input['color'] = null;
                 $input['color_qty'] = null;
                 $input['color_price'] = null;
-            }
-            else{
-                if(in_array(null, $request->color) || in_array(null, $request->color_qty))
-                {
+            } else {
+                if (in_array(null, $request->color) || in_array(null, $request->color_qty)) {
                     $input['color'] = null;
                     $input['color_qty'] = null;
                     $input['color_price'] = null;
-                }
-                else
-                {
+                } else {
                     $input['color'] = implode(',', $request->color);
                     $input['color_qty'] = implode(',', $request->color_qty);
                     $input['color_price'] = implode(',', $request->color_price);
                     $stck = 0;
-                    foreach($request->color_qty as $key => $color){
+                    foreach ($request->color_qty as $key => $color) {
                         $stck += (int)$request->color_qty[$key];
                     }
                     $input['stock'] = $stck;
@@ -596,12 +579,12 @@ class ProductController extends Controller
                     $input['color_gallery'] = null;
 
                     // Color Gallery
-                    if ($files_arr = $request->file('color_gallery')){
-                        foreach ($files_arr as  $key => $file_arr){
-                            foreach($file_arr as $key => $file){
+                    if ($files_arr = $request->file('color_gallery')) {
+                        foreach ($files_arr as  $key => $file_arr) {
+                            foreach ($file_arr as $key => $file) {
                                 $name = time().Str::random(8).".".$file->getClientOriginalExtension();
                                 $input['color_gallery'] .= $name . "|";
-                                $file->move('assets/images/color_galleries',$name);
+                                $file->move('storage/images/color_galleries', $name);
                             }
                             $input['color_gallery'] = substr_replace($input['color_gallery'], "", -1);
                             $input['color_gallery'] .= ",";
@@ -611,33 +594,33 @@ class ProductController extends Controller
                 }
             }
 
-            if(empty($request->material_check)){
+            if (empty($request->material_check)) {
                 $input['material'] = null;
                 $input['material_gallery'] = null;
                 $input['material_qty'] = null;
                 $input['material_price'] = null;
             } else {
-                if(in_array(null, $request->material)|| in_array(null, $request->material_qty)){
+                if (in_array(null, $request->material)|| in_array(null, $request->material_qty)) {
                     $input['material'] = null;
                     $input['material_qty'] = null;
                     $input['material_price'] = null;
                     $input['material_gallery'] = null;
-                } else{
+                } else {
                     $input['material'] = implode(",", $request->material);
                     $input['material_qty'] = implode(',', $request->material_qty);
                     $input['material_price'] = implode(',', $request->material_price);
                     $input['material_gallery'] = null;
                     $stck = 0;
-                    foreach($request->material_qty as $key => $material){
+                    foreach ($request->material_qty as $key => $material) {
                         $stck += (int)$request->material_qty[$key];
                     }
                     $input['stock'] = $stck;
-                    if($files_arr = $request->file('material_gallery')){
-                        foreach($files_arr as $key => $file_arr){
-                            foreach($file_arr as $key => $file){
+                    if ($files_arr = $request->file('material_gallery')) {
+                        foreach ($files_arr as $key => $file_arr) {
+                            foreach ($file_arr as $key => $file) {
                                 $name = time().Str::random(8).".".$file->getClientOriginalExtension();
                                 $input['material_gallery'] .= $name . "|";
-                                $file->move("assets/images/material_galleries", $name);
+                                $file->move("storage/images/material_galleries", $name);
                             }
                             $input['material_gallery'] = substr_replace($input['material_gallery'], "", -1);
                             $input['material_gallery'] .= ",";
@@ -649,28 +632,21 @@ class ProductController extends Controller
 
 
             // Check Measurement
-            if ($request->measure_check == "")
-            {
+            if ($request->measure_check == "") {
                 $input['measure'] = null;
             }
         }
 
         // Check License
 
-        if($request->type == "License")
-        {
-
-            if(in_array(null, $request->license) || in_array(null, $request->license_qty))
-            {
+        if ($request->type == "License") {
+            if (in_array(null, $request->license) || in_array(null, $request->license_qty)) {
                 $input['license'] = null;
                 $input['license_qty'] = null;
-            }
-            else
-            {
+            } else {
                 $input['license'] = implode(',,', $request->license);
                 $input['license_qty'] = implode(',', $request->license_qty);
             }
-
         }
         // Conert Price According to Currency
         $input['price'] = (floatval($input['price']) / $sign->value);
@@ -679,65 +655,65 @@ class ProductController extends Controller
         // store filtering attributes for physical product
         $attrArr = [];
         if (!empty($request->category_id)) {
-          $catAttrs = Attribute::where('attributable_id', $request->category_id)->where('attributable_type', 'App\Models\Category')->get();
-          if (!empty($catAttrs)) {
-            foreach ($catAttrs as $key => $catAttr) {
-              $in_name = $catAttr->input_name;
-              if ($request->has("attr_"."$in_name")) {
-                $attrArr["$in_name"]["values"] = $request["attr_"."$in_name"];
-                $attrArr["$in_name"]["prices"] = $request["attr_"."$in_name"."_price"];
-                if ($catAttr->details_status) {
-                  $attrArr["$in_name"]["details_status"] = 1;
-                } else {
-                  $attrArr["$in_name"]["details_status"] = 0;
+            $catAttrs = Attribute::where('attributable_id', $request->category_id)->where('attributable_type', 'App\Models\Category')->get();
+            if (!empty($catAttrs)) {
+                foreach ($catAttrs as $key => $catAttr) {
+                    $in_name = $catAttr->input_name;
+                    if ($request->has("attr_"."$in_name")) {
+                        $attrArr["$in_name"]["values"] = $request["attr_"."$in_name"];
+                        $attrArr["$in_name"]["prices"] = $request["attr_"."$in_name"."_price"];
+                        if ($catAttr->details_status) {
+                            $attrArr["$in_name"]["details_status"] = 1;
+                        } else {
+                            $attrArr["$in_name"]["details_status"] = 0;
+                        }
+                    }
                 }
-              }
             }
-          }
         }
 
         if (!empty($request->subcategory_id)) {
-          $subAttrs = Attribute::where('attributable_id', $request->subcategory_id)->where('attributable_type', 'App\Models\Subcategory')->get();
-          if (!empty($subAttrs)) {
-            foreach ($subAttrs as $key => $subAttr) {
-              $in_name = $subAttr->input_name;
-              if ($request->has("attr_"."$in_name")) {
-                $attrArr["$in_name"]["values"] = $request["attr_"."$in_name"];
-                $attrArr["$in_name"]["prices"] = $request["attr_"."$in_name"."_price"];
-                if ($subAttr->details_status) {
-                  $attrArr["$in_name"]["details_status"] = 1;
-                } else {
-                  $attrArr["$in_name"]["details_status"] = 0;
+            $subAttrs = Attribute::where('attributable_id', $request->subcategory_id)->where('attributable_type', 'App\Models\Subcategory')->get();
+            if (!empty($subAttrs)) {
+                foreach ($subAttrs as $key => $subAttr) {
+                    $in_name = $subAttr->input_name;
+                    if ($request->has("attr_"."$in_name")) {
+                        $attrArr["$in_name"]["values"] = $request["attr_"."$in_name"];
+                        $attrArr["$in_name"]["prices"] = $request["attr_"."$in_name"."_price"];
+                        if ($subAttr->details_status) {
+                            $attrArr["$in_name"]["details_status"] = 1;
+                        } else {
+                            $attrArr["$in_name"]["details_status"] = 0;
+                        }
+                    }
                 }
-              }
             }
-          }
         }
         if (!empty($request->childcategory_id)) {
-          $childAttrs = Attribute::where('attributable_id', $request->childcategory_id)->where('attributable_type', 'App\Models\Childcategory')->get();
-          if (!empty($childAttrs)) {
-            foreach ($childAttrs as $key => $childAttr) {
-              $in_name = $childAttr->input_name;
-              if ($request->has("attr_"."$in_name")) {
-                $attrArr["$in_name"]["values"] = $request["attr_"."$in_name"];
-                $attrArr["$in_name"]["prices"] = $request["attr_"."$in_name"."_price"];
-                if ($childAttr->details_status) {
-                  $attrArr["$in_name"]["details_status"] = 1;
-                } else {
-                  $attrArr["$in_name"]["details_status"] = 0;
+            $childAttrs = Attribute::where('attributable_id', $request->childcategory_id)->where('attributable_type', 'App\Models\Childcategory')->get();
+            if (!empty($childAttrs)) {
+                foreach ($childAttrs as $key => $childAttr) {
+                    $in_name = $childAttr->input_name;
+                    if ($request->has("attr_"."$in_name")) {
+                        $attrArr["$in_name"]["values"] = $request["attr_"."$in_name"];
+                        $attrArr["$in_name"]["prices"] = $request["attr_"."$in_name"."_price"];
+                        if ($childAttr->details_status) {
+                            $attrArr["$in_name"]["details_status"] = 1;
+                        } else {
+                            $attrArr["$in_name"]["details_status"] = 0;
+                        }
+                    }
                 }
-              }
             }
-          }
         }
 
 
 
         if (empty($attrArr)) {
-          $input['attributes'] = NULL;
+            $input['attributes'] = null;
         } else {
-          $jsonAttr = json_encode($attrArr);
-          $input['attributes'] = $jsonAttr;
+            $jsonAttr = json_encode($attrArr);
+            $input['attributes'] = $jsonAttr;
         }
 
         // Save Data
@@ -746,8 +722,7 @@ class ProductController extends Controller
         $prod = Product::find($data->id);
 
         # Validate Redplay
-        if($request->redplay_login && $request->redplay_password && $request->redplay_code)
-        {
+        if ($request->redplay_login && $request->redplay_password && $request->redplay_code) {
             $redplayData = Product::sanitizeRedplayData([
                 'redplay_login' => $request->redplay_login,
                 'redplay_password' => $request->redplay_password,
@@ -755,21 +730,19 @@ class ProductController extends Controller
             ]);
 
             # Não permite que itens completamente vazios sejam inseridos no banco.
-            foreach($redplayData as $key => $redplay)
-            {
-                if(!$redplay['login'] && !$redplay['password'] && !$redplay['code'])
-                {
+            foreach ($redplayData as $key => $redplay) {
+                if (!$redplay['login'] && !$redplay['password'] && !$redplay['code']) {
                     unset($redplayData[$key]);
                 }
             }
 
             # Cria ou atualiza novas licenças.
-            foreach($redplayData as $redplay)
-            {
+            foreach ($redplayData as $redplay) {
                 $license = License::where('code', $redplay['code'])->first();
 
-                if(!$license)
+                if (!$license) {
                     $license = new License;
+                }
 
                 $license->product_id = $data->id;
                 $license->login = $redplay['login'];
@@ -779,32 +752,30 @@ class ProductController extends Controller
             }
         }
 
-        if($prod->type != 'Physical'){
-            $prod->slug = Str::slug($data->name,'-').'-'.strtolower(Str::random(3).$data->id.Str::random(3));
-        }
-        else {
-            $prod->slug = Str::slug($data->name,'-').'-'.strtolower(Str::slug($data->sku));
+        if ($prod->type != 'Physical') {
+            $prod->slug = Str::slug($data->name, '-').'-'.strtolower(Str::random(3).$data->id.Str::random(3));
+        } else {
+            $prod->slug = Str::slug($data->name, '-').'-'.strtolower(Str::slug($data->sku));
         }
         $prod->update();
-       
-        if(!empty($input['photo'])){
+
+        if (!empty($input['photo'])) {
             // Set Thumbnail
-            $img = Image::make(public_path().'/assets/images/products/'.$input['photo'])->resize(285, 285);
+            $img = Image::make(public_path().'/storage/images/products/'.$input['photo'])->resize(285, 285);
             $thumbnail = time().Str::random(8).'.jpg';
-            $img->save(public_path().'/assets/images/thumbnails/'.$thumbnail);
+            $img->save(public_path().'/storage/images/thumbnails/'.$thumbnail);
             $prod->thumbnail  = $thumbnail;
             $prod->update();
         }
 
         // Add To Gallery If any
         $lastid = $data->id;
-        if ($files = $request->file('gallery')){
-            foreach ($files as  $key => $file){
-                if(in_array($key, $request->galval))
-                {
+        if ($files = $request->file('gallery')) {
+            foreach ($files as  $key => $file) {
+                if (in_array($key, $request->galval)) {
                     $gallery = new Gallery;
                     $name = time().$file->getClientOriginalName();
-                    $file->move('assets/images/galleries',$name);
+                    $file->move('storage/images/galleries', $name);
                     $gallery['photo'] = $name;
                     $gallery['product_id'] = $lastid;
                     $gallery->save();
@@ -814,13 +785,12 @@ class ProductController extends Controller
 
         // Add To Gallery 360 If any
         $lastid = $data->id;
-        if ($files = $request->file('gallery360')){
-            foreach ($files as  $key => $file){
-                if(in_array($key, $request->galval))
-                {
+        if ($files = $request->file('gallery360')) {
+            foreach ($files as  $key => $file) {
+                if (in_array($key, $request->galval)) {
                     $gallery360 = new Gallery360;
                     $name = time().$file->getClientOriginalName();
-                    $file->move('assets/images/galleries360',$name);
+                    $file->move('storage/images/galleries360', $name);
                     $gallery360['photo'] = $name;
                     $gallery360['product_id'] = $lastid;
                     $gallery360->save();
@@ -829,13 +799,12 @@ class ProductController extends Controller
         }
 
         //associates with stores
-        if($request->has('stores')) {
+        if ($request->has('stores')) {
             $prod->stores()->sync($input['stores']);
         }
 
         # Validate Redplay License
-        if($request->redplay_license)
-        {
+        if ($request->redplay_license) {
             $licenseModel = new License;
             $licenseModel->product_id = $prod->id;
             $licenseModel->data = $request->redplay_license;
@@ -846,14 +815,14 @@ class ProductController extends Controller
         //logic Section Ends
 
         //--- Redirect Section
-        if($request->has('bulk_form')) {
+        if ($request->has('bulk_form')) {
             return response()->json([
                 'bulk_store' => true
             ]);
             exit;
         }
 
-        if($request->api) {
+        if ($request->api) {
             return response()->json(array('status' => 'ok'), Response::HTTP_CREATED);
         }
 
@@ -863,13 +832,15 @@ class ProductController extends Controller
     }
 
     //*** POST Request
-    public function import(){
+    public function import()
+    {
         $cats = Category::all();
-        $sign = Currency::where('id','=',1)->first();
-        return view('admin.product.productcsv',compact('cats','sign'));
+        $sign = Currency::where('id', '=', 1)->first();
+        return view('admin.product.productcsv', compact('cats', 'sign'));
     }
 
-    public function prepareImport(Request $request) {
+    public function prepareImport(Request $request)
+    {
         $rules = ['csvfile'=> 'required|mimes:csv,txt'];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
@@ -881,12 +852,12 @@ class ProductController extends Controller
         $filename = '';
         if ($file = $request->file('csvfile')) {
             $filename = time().'-'.$file->getClientOriginalName();
-            $file->move('assets/temp_files',$filename);
+            $file->move('storage/temp_files', $filename);
         }
 
         $row = -1; // desconsidere o header
-        if (($fp = fopen(public_path('assets/temp_files/'.$filename), "r")) !== FALSE) { 
-            while (($record = fgetcsv($fp)) !== FALSE) {
+        if (($fp = fopen(public_path('storage/temp_files/'.$filename), "r")) !== false) {
+            while (($record = fgetcsv($fp)) !== false) {
                 $row++;
             }
         }
@@ -905,19 +876,21 @@ class ProductController extends Controller
         $line = $offset + 2;
         $updateCheck = $request->updateCheck;
 
-        $csv = Reader::createFromPath(public_path('assets/temp_files/'.$filename), 'r');
-        $csv->setHeaderOffset(0); //set the CSV header offset        
-        
+        $csv = Reader::createFromPath(public_path('storage/temp_files/'.$filename), 'r');
+        $csv->setHeaderOffset(0); //set the CSV header offset
+
         $stmt = (new Statement())
         ->offset($offset)
         ->limit(1);
         $records = $stmt->process($csv);
 
         foreach ($records as $record) {
-            if (!is_array($record) || count($record) < 2) return response()->json(['error' => __('Insert a valid File')], 400);
-            
+            if (!is_array($record) || count($record) < 2) {
+                return response()->json(['error' => __('Insert a valid File')], 400);
+            }
+
             $headers = $records->getHeader();
-            foreach ($headers as $header){
+            foreach ($headers as $header) {
                 if (strpos($header, '*') !== false && empty($record[$header])) {
                     return response()->json(array(
                         'errors' => __("The field: "). $header . __(' in line: '). $line . __(' cannot be empty')
@@ -925,34 +898,33 @@ class ProductController extends Controller
                 }
             }
             $record = $this->validateRecord($record);
-            $product = Product::where('sku',$record['sku'])->first();
+            $product = Product::where('sku', $record['sku'])->first();
 
             if (!$product || $product && $updateCheck) {
-                
                 $record['type'] = 'Physical';
                 $record['previous_price'] = 0;
                 $record['stock'] = ($record['stock'] === '' ? null : $record['stock']);
 
                 $cat = CategoryTranslation::where(DB::raw('lower(name)'), strtolower($record['category_id']));
-                if($cat->exists()){
+                if ($cat->exists()) {
                     $record['category_id'] = $cat->first()->category_id;
-                    if($record['subcategory_id'] != ""){
+                    if ($record['subcategory_id'] != "") {
                         $scat = SubcategoryTranslation::where(DB::raw('lower(name)'), strtolower($record['subcategory_id']));
-                        $record['subcategory_id'] = ($scat->exists() ? $scat->first()->subcategory_id : NULL);
+                        $record['subcategory_id'] = ($scat->exists() ? $scat->first()->subcategory_id : null);
                     } else {
-                        $record['subcategory_id'] = NULL;
+                        $record['subcategory_id'] = null;
                     }
-                    if($record['childcategory_id'] != ""){
+                    if ($record['childcategory_id'] != "") {
                         $chcat = ChildcategoryTranslation::where(DB::raw('lower(name)'), strtolower($record['childcategory_id']));
-                        $record['childcategory_id'] = $chcat->exists() ? $chcat->first()->childcategory_id : NULL;
+                        $record['childcategory_id'] = $chcat->exists() ? $chcat->first()->childcategory_id : null;
                     } else {
-                        $record['childcategory_id'] = NULL;
+                        $record['childcategory_id'] = null;
                     }
-                    if($record['brand_id'] != ""){
+                    if ($record['brand_id'] != "") {
                         $brand = Brand::where(DB::raw('lower(name)'), strtolower($record['brand_id']));
-                        $record['brand_id'] = $brand->exists() ? $brand->first()->id : NULL;
+                        $record['brand_id'] = $brand->exists() ? $brand->first()->id : null;
                     } else {
-                        $record['brand_id'] = NULL;
+                        $record['brand_id'] = null;
                     }
 
                     $record[$this->lang->locale]['name'] = $record['name'];
@@ -963,14 +935,16 @@ class ProductController extends Controller
                     $record['bulk_form'] = true;
                     $request = new Request();
                     $request->replace($record);
-                    if ($product && $updateCheck) return $this->update($request, $product->id);
+                    if ($product && $updateCheck) {
+                        return $this->update($request, $product->id);
+                    }
                     return $this->store($request);
-                }else{
+                } else {
                     return response()->json(array(
                         'errors' => __("No Category Found!") .__('in line') . ": " . $line
                     ));
                 }
-            }else{
+            } else {
                 return response()->json(array(
                     'errors' => __("Duplicate Product Code! in line: ").$line
                 ));
@@ -982,7 +956,7 @@ class ProductController extends Controller
     {
         $filename = $request->fileName;
 
-        unlink(public_path('assets/temp_files/'.$filename));
+        unlink(public_path('storage/temp_files/'.$filename));
         $msg = '<p>'. __('Bulk Product File Imported Successfully.').'<a href="'.route('admin-prod-index').'">'.__('View Product Lists.').'</a></p>';
         $msg .= '<p>'. __('Total insert data: ').'<span class="insertCount"></span></p>';
         $msg .= '<p>'. __('Total update products: ').'<span class="updateCount"></span></p>';
@@ -990,7 +964,8 @@ class ProductController extends Controller
         return response()->json($msg);
     }
 
-    private function validateRecord ($record) {
+    private function validateRecord($record)
+    {
         $newKey = array(
             "sku*" => "sku",
             "category*" => "category_id",
@@ -1003,7 +978,8 @@ class ProductController extends Controller
         return $record;
     }
 
-    private function renameRecord($record, $newKey) {
+    private function renameRecord($record, $newKey)
+    {
         foreach ($newKey as $key => $value) {
             $record[$value] = $record[$key];
             unset($record[$key]);
@@ -1011,7 +987,8 @@ class ProductController extends Controller
         return $record;
     }
 
-    private function cleanEmptyValues($record) {
+    private function cleanEmptyValues($record)
+    {
         foreach ($record as $key => $value) {
             if (empty($value)) {
                 unset($record[$key]);
@@ -1023,9 +1000,8 @@ class ProductController extends Controller
     //*** GET Request
     public function edit($id)
     {
-        if(!Product::where('id',$id)->exists())
-        {
-            return redirect()->route('admin.dashboard')->with('unsuccess',__('Sorry the page does not exist.'));
+        if (!Product::where('id', $id)->exists()) {
+            return redirect()->route('admin.dashboard')->with('unsuccess', __('Sorry the page does not exist.'));
         }
         $cats = Category::all();
         $brands = Brand::orderBy('slug')->get();
@@ -1034,39 +1010,48 @@ class ProductController extends Controller
         $catAttributes = !empty($data->category->attributes) ? $data->category->attributes : '';
         $subAttributes = !empty($data->subcategory->attributes) ? $data->subcategory->attributes : '';
         $childAttributes = !empty($data->childcategory->attributes) ? $data->childcategory->attributes : '';
-        $sign = Currency::where('id','=',1)->first();
+        $sign = Currency::where('id', '=', 1)->first();
         $storesList = Generalsetting::all();
         $currentStores = $data->stores()->pluck('id')->toArray();
 
-        $ftp_path = public_path('assets/images/ftp/'.$this->storeSettings->ftp_folder.$data->ref_code_int.'/');
+        $ftp_path = public_path('storage/images/ftp/'.$this->storeSettings->ftp_folder.$data->ref_code_int.'/');
         $ftp_gallery=[];
-        if(File::exists($ftp_path)){
-        $files = scandir ($ftp_path);
-        $extensions = array('.jpg','.jpeg','.gif','.png');
-        foreach($files as $file){
-            $file_extension = strtolower(strrchr($file, '.'));                      
-            if(in_array($file_extension, $extensions) === true){
-            $ftp_gallery[]=asset('assets/images/ftp/'.$this->storeSettings->ftp_folder.$data->ref_code_int.'/'.$file);
+        if (File::exists($ftp_path)) {
+            $files = scandir($ftp_path);
+            $extensions = array('.jpg','.jpeg','.gif','.png');
+            foreach ($files as $file) {
+                $file_extension = strtolower(strrchr($file, '.'));
+                if (in_array($file_extension, $extensions) === true) {
+                    $ftp_gallery[]=asset('storage/images/ftp/'.$this->storeSettings->ftp_folder.$data->ref_code_int.'/'.$file);
+                }
             }
         }
-        }
 
-        if($data->type == 'Digital')
-            return view('admin.product.edit.digital',compact('cats','data','sign'));
-        elseif($data->type == 'License')
-            return view('admin.product.edit.license',compact('cats','data','sign'));
-        else
-            return view('admin.product.edit.physical',compact(
-                'cats','data','selectedAttrs','catAttributes','childAttributes',
-                'subAttributes','sign','brands','storesList','currentStores', 'ftp_gallery'
+        if ($data->type == 'Digital') {
+            return view('admin.product.edit.digital', compact('cats', 'data', 'sign'));
+        } elseif ($data->type == 'License') {
+            return view('admin.product.edit.license', compact('cats', 'data', 'sign'));
+        } else {
+            return view('admin.product.edit.physical', compact(
+                'cats',
+                'data',
+                'selectedAttrs',
+                'catAttributes',
+                'childAttributes',
+                'subAttributes',
+                'sign',
+                'brands',
+                'storesList',
+                'currentStores',
+                'ftp_gallery'
             ));
+        }
     }
 
     public function editMeli($id)
     {
-        if(!Product::where('id',$id)->exists())
-        {
-            return redirect()->route('admin.dashboard')->with('unsuccess',__('Sorry the page does not exist.'));
+        if (!Product::where('id', $id)->exists()) {
+            return redirect()->route('admin.dashboard')->with('unsuccess', __('Sorry the page does not exist.'));
         }
 
         $data = Product::findOrFail($id);
@@ -1078,11 +1063,11 @@ class ProductController extends Controller
         $extraData = [];
         $warranties = [];
         $withoutWarrantyId = null;
-        if($data->mercadolivre_name){
+        if ($data->mercadolivre_name) {
             $meli_category_id = MercadoLivre::getCategoryId($data->mercadolivre_name);
-            
+
             $meli_category_attributes = MercadoLivre::getCategoryAttributes($meli_category_id);
-            
+
             $extraData['meli_category_attributes'] = json_decode($meli_category_attributes);
             /*if($data->mercadolivre_category_attributes) {
                 $extraData['meli_category_attributes'] = (object) array_merge((array) json_decode($meli_category_attributes), (array) json_decode($data->mercadolivre_category_attributes));
@@ -1091,19 +1076,15 @@ class ProductController extends Controller
             $selectedCategoryAttributes = json_decode($data->mercadolivre_category_attributes);
 
             # procura por atributos de categoria já preenchidos
-            foreach($extraData['meli_category_attributes'] as $key => $categoryAttribute)
-            {
-                if(isset($selectedCategoryAttributes->$key->value)){
+            foreach ($extraData['meli_category_attributes'] as $key => $categoryAttribute) {
+                if (isset($selectedCategoryAttributes->$key->value)) {
                     $categoryAttribute->value = $selectedCategoryAttributes->$key->value;
                 }
 
-                if(isset($selectedCategoryAttributes->$key->allowed_unit_selected))
-                {
-                    foreach($categoryAttribute->allowed_units as $allowedUnit)
-                    {
+                if (isset($selectedCategoryAttributes->$key->allowed_unit_selected)) {
+                    foreach ($categoryAttribute->allowed_units as $allowedUnit) {
                         $allowedUnit->selected = false;
-                        if ($allowedUnit->name === $selectedCategoryAttributes->$key->allowed_unit_selected)
-                        {
+                        if ($allowedUnit->name === $selectedCategoryAttributes->$key->allowed_unit_selected) {
                             $allowedUnit->selected = true;
                         }
                     }
@@ -1119,15 +1100,13 @@ class ProductController extends Controller
             $withoutWarrantyId = null;
 
             # Encontra qual garantia é a gratuita para validar ID dinamicamente no Front
-            foreach($warranties as $warranty)
-            {
+            foreach ($warranties as $warranty) {
                 # Verifica se é Tipo de Garantia
-                if(isset($warranty['values']) && $warranty['id'] === "WARRANTY_TYPE")
-                {
-                    foreach($warranty['values'] as $warrantyType)
-                    {
-                        if($warrantyType->name === "Sem garantia")
+                if (isset($warranty['values']) && $warranty['id'] === "WARRANTY_TYPE") {
+                    foreach ($warranty['values'] as $warrantyType) {
+                        if ($warrantyType->name === "Sem garantia") {
                             $withoutWarrantyId = $warrantyType->id;
+                        }
                     }
                 }
             }
@@ -1141,16 +1120,14 @@ class ProductController extends Controller
 
         $listingTypesWithDetails = [];
 
-        foreach($listingTypes as $listingType)
-        {
+        foreach ($listingTypes as $listingType) {
             $listingTypesWithDetails[$listingType->id]['site_id'] = $listingType->site_id;
             $listingTypesWithDetails[$listingType->id]['id'] = $listingType->id;
             $listingTypesWithDetails[$listingType->id]['name'] = $listingType->name;
 
             $detail = MercadoLivre::getListingTypeDetail($listingType->id);
             $listingTypesWithDetails[$listingType->id]['details'] = $detail;
-            switch($detail['configuration']->listing_exposure)
-            {
+            switch ($detail['configuration']->listing_exposure) {
                 case 'lowest':
                     $detail['configuration']->listing_exposure = 'Baixíssima';
                     break;
@@ -1175,45 +1152,44 @@ class ProductController extends Controller
     //*** GET Request
     public function copy($id)
     {
-        if(!Product::where('id',$id)->exists())
-        {
-            return redirect()->route('admin.dashboard')->with('unsuccess',__('Sorry the page does not exist.'));
+        if (!Product::where('id', $id)->exists()) {
+            return redirect()->route('admin.dashboard')->with('unsuccess', __('Sorry the page does not exist.'));
         }
 
         // Start Get info from Old Product
         $old = Product::findOrFail($id);
-        if($old->category_id){
+        if ($old->category_id) {
             $selectedAttrs = json_decode($old->attributes, true);
             $catAttributes = !empty($old->category->attributes) ? $old->category->attributes : '';
         }
-        if($old->subcategory_id){
+        if ($old->subcategory_id) {
             $subAttributes = !empty($old->subcategory->attributes) ? $old->subcategory->attributes : '';
         }
-        if($old->childcategory_id){
+        if ($old->childcategory_id) {
             $childAttributes = !empty($old->childcategory->attributes) ? $old->childcategory->attributes : '';
         }
-        
-        $sign = Currency::where('id','=',1)->first();
+
+        $sign = Currency::where('id', '=', 1)->first();
         $storesList = Generalsetting::all();
         $currentStores = $old->stores()->pluck('id')->toArray();
 
         // Replicate into a new product and change what's necessary
         $new = $old->replicateWithTranslations();
-        $new->slug = Str::slug($new->name,'-').'-'.strtolower(Str::random(3).$new->id.Str::random(3));
-        $new->sku = Str::random(3).substr(time(), 6,8).Str::random(3);
+        $new->slug = Str::slug($new->name, '-').'-'.strtolower(Str::random(3).$new->id.Str::random(3));
+        $new->sku = Str::random(3).substr(time(), 6, 8).Str::random(3);
         $new->ref_code = $new->sku;
-        $new->photo = NULL;
+        $new->photo = null;
         $new->thumbnail = null;
         $new->Push();
 
         // Associate with stores
-        if($old->has('stores')) {
+        if ($old->has('stores')) {
             $new->stores()->sync($old->stores);
         }
         $new->update();
 
         $msg = __('Product Copied Successfully.');
-        return response()->json($msg);        
+        return response()->json($msg);
     }
     //*** POST Request
     public function update(Request $request, $id)
@@ -1225,14 +1201,14 @@ class ProductController extends Controller
             'file'       => 'mimes:zip'
             ];
         $customs = [
-            "{$this->lang->locale}.name.required" => __('Product Name in :lang is required',['lang' => $this->lang->language]),
+            "{$this->lang->locale}.name.required" => __('Product Name in :lang is required', ['lang' => $this->lang->language]),
         ];
 
         $validator = Validator::make($request->all(), $rules, $customs);
 
         if ($validator->fails()) {
-            if($request->api) {
-                return response()->json(array('errors' => $validator->getMessageBag()->toArray()),Response::HTTP_BAD_REQUEST);
+            if ($request->api) {
+                return response()->json(array('errors' => $validator->getMessageBag()->toArray()), Response::HTTP_BAD_REQUEST);
             }
             return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
         }
@@ -1240,11 +1216,11 @@ class ProductController extends Controller
 
         //-- Logic Section
         $data = Product::findOrFail($id);
-        if($this->storeSettings->is_back_in_stock && $data->stock == 0 && $request->stock > 0) {
+        if ($this->storeSettings->is_back_in_stock && $data->stock == 0 && $request->stock > 0) {
             BackInStock::dispatch($data, $this->storeSettings);
         }
 
-        $sign = Currency::where('id','=',1)->first();
+        $sign = Currency::where('id', '=', 1)->first();
         //$input = $this->removeEmptyTranslations($request->all(), $data);
         $input = $this->withRequiredFields($request->except(['photo', 'thumbnail']), ['name']);
         $input['show_price'] = (boolean) $request->show_price ?? false;
@@ -1257,14 +1233,15 @@ class ProductController extends Controller
             $input[$this->lang->locale]['meta_tag'] = implode(',', $input[$this->lang->locale]['meta_tag']);
         }
 
-        if(!$request->api){
+        if (!$request->api) {
             // Check Features
             if (empty($input[$this->lang->locale]['features']) || empty($request->colors)) {
                 $input[$this->lang->locale]['features'] = null;
                 $input['colors'] = null;
             } else {
                 if (!in_array(null, $input[$this->lang->locale]['features']) && !in_array(null, $request->colors)) {
-                    $input[$this->lang->locale]['features'] = implode(',',
+                    $input[$this->lang->locale]['features'] = implode(
+                        ',',
                         str_replace(',', ' ', $input[$this->lang->locale]['features'])
                     );
                     $input['colors'] = implode(',', str_replace(',', ' ', $request->colors));
@@ -1293,7 +1270,7 @@ class ProductController extends Controller
                 $input[$loc->locale]['meta_tag'] = implode(',', $input[$loc->locale]['meta_tag']);
             }
 
-            if(!empty($input[$loc->locale]['features'])) {
+            if (!empty($input[$loc->locale]['features'])) {
                 if (!in_array(null, $input[$loc->locale]['features'])) {
                     $input[$loc->locale]['features'] = implode(',', str_replace(',', ' ', $input[$loc->locale]['features']));
                 } else {
@@ -1308,360 +1285,330 @@ class ProductController extends Controller
         }
         //-- End of Translations Section
 
-            //Check Types
-            if($request->type_check == 1)
-            {
-                $input['link'] = null;
-            }
-            else
-            {
-                if($data->file!=null){
-                        if (file_exists(public_path().'/assets/files/'.$data->file)) {
-                        unlink(public_path().'/assets/files/'.$data->file);
-                    }
+        //Check Types
+        if ($request->type_check == 1) {
+            $input['link'] = null;
+        } else {
+            if ($data->file!=null) {
+                if (file_exists(public_path().'/storage/files/'.$data->file)) {
+                    unlink(public_path().'/storage/files/'.$data->file);
                 }
-                $input['file'] = null;
             }
+            $input['file'] = null;
+        }
 
 
-            // Check Physical
-            if($data->type == "Physical")
-            {
+        // Check Physical
+        if ($data->type == "Physical") {
 
                     //--- Validation Section
-                    $rules = [
+            $rules = [
                         'sku' => 'min:1|unique:products,sku,'.$id,
                         'ref_code' => 'max:50|unique:products,ref_code,'.$id,
                         'mpn'      => 'max:50'
                     ];
 
-                    $validator = Validator::make($request->all(), $rules);
+            $validator = Validator::make($request->all(), $rules);
 
-                    if ($validator->fails()) {
-                        if($request->api) {
-                            return response()->json(array('errors' => $validator->getMessageBag()->toArray()),Response::HTTP_BAD_REQUEST);
-                        }
-                        return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
-                    }
-                    //--- Validation Section Ends
-
-                    // Check Size
-                    if(empty($request->size_check ))
-                    {
-                        $input['size'] = null;
-                        $input['size_qty'] = null;
-                        $input['size_price'] = null;
-                    }
-                    else{
-                            if(in_array(null, $request->size) || in_array(null, $request->size_qty) || in_array(null, $request->size_price))
-                            {
-                                $input['size'] = null;
-                                $input['size_qty'] = null;
-                                $input['size_price'] = null;
-                            }
-                            else
-                            {
-                                foreach($request->size as $key => $size){
-                                    $size_without_comma[$key] = str_replace(',', '.', $size);
-                                }
-                                $input['size'] = implode(',', $size_without_comma);
-                                $input['size_qty'] = implode(',', $request->size_qty);
-                                $input['size_price'] = implode(',', $request->size_price);
-                                $stck = 0;
-                                foreach($request->size_qty as $key => $size){
-                                    $stck += (int)$request->size_qty[$key];
-                                }
-                                $input['stock'] = $stck;
-                            }
-                    }
-
-                    if(!$request->api) {
-                    //Check Shipping
-                        if ($request->free_shipping == ""){
-                            $input['free_shipping'] = null;
-                        }
-
-                        // Check Condition
-                        if ($request->product_condition_check == ""){
-                            $input['product_condition'] = 0;
-                        }
-
-                        // Check Shipping Time
-                        if ($request->shipping_time_check == ""){
-                            $input['ship'] = null;
-                        }
-
-                                    // Check Whole Sale
-                        if(empty($request->whole_check ))
-                        {
-                            $input['whole_sell_qty'] = null;
-                            $input['whole_sell_discount'] = null;
-                        }
-                        else{
-                            if(in_array(null, $request->whole_sell_qty) || in_array(null, $request->whole_sell_discount))
-                            {
-                            $input['whole_sell_qty'] = null;
-                            $input['whole_sell_discount'] = null;
-                            }
-                            else
-                            {
-                                $input['whole_sell_qty'] = implode(',', $request->whole_sell_qty);
-                                $input['whole_sell_discount'] = implode(',', $request->whole_sell_discount);
-                            }
-                        }
-
-                        // Check Color
-                        if(empty($request->color_check ))
-                        {
-                            $input['color'] = null;
-                            $input['color_qty'] = null;
-                            $input['color_price'] = null;
-                            $input['color_gallery'] = null;
-                        }
-                        else{
-                            if(in_array(null, $request->color) || in_array(null, $request->color_qty))
-                            {
-                                $input['color'] = null;
-                                $input['color_qty'] = null;
-                                $input['color_price'] = null;
-                                $input['color_gallery'] = null;
-                            }
-                            else
-                            {
-                                $input['color'] = implode(',', $request->color);
-                                $input['color_qty'] = implode(',', $request->color_qty);
-                                $input['color_price'] = implode(',', $request->color_price);
-                                $stck = 0;
-                                foreach($request->color_qty as $key => $color){
-                                    $stck += (int)$request->color_qty[$key];
-                                }
-                                $input['stock'] = $stck;
-
-                                $input['color_gallery'] = null;
-
-                                // Color Gallery
-                                if ($files_arr = $request->file('color_gallery')){
-                                    /* Searches for "current gallery" by new photos key with the aim of substitution */
-                                    if($request->color_gallery_current){
-                                        foreach($request->color_gallery_current as $current_key => $current_arr){
-                                            if(array_key_exists($current_key, $request->color_gallery)){
-                                                $input['color_gallery_current'][$current_key] = null;
-                                                foreach($request->color_gallery[$current_key] as $file){
-                                                    $name = time().Str::random(8).".".$file->getClientOriginalExtension();
-                                                    $input['color_gallery_current'][$current_key] .= $name . "|";
-                                                    $file->move('assets/images/color_galleries',$name);
-                                                }
-                                                $input['color_gallery_current'][$current_key] = substr_replace($input['color_gallery_current'][$current_key], "", -1);
-                                            } elseif(isset($request->color_gallery[$key])) {
-                                                $input['color_gallery_current'][$key] = null;
-                                                foreach($request->color_gallery[$key] as $file){
-                                                    $name = time().Str::random(8).".".$file->getClientOriginalExtension();
-                                                    $input['color_gallery_current'][$key] .= $name . "|";
-                                                    $file->move('assets/images/color_galleries',$name);
-                                                }
-                                                $input['color_gallery_current'][$key] = substr_replace($input['color_gallery_current'][$key], "", -1);
-                                                break;
-                                            }
-                                            
-                                        }
-                                        $input['color_gallery'] = implode(",", $input['color_gallery_current']);
-                                    } else {
-                                        foreach ($files_arr as  $key => $file_arr){
-                                            foreach($file_arr as $file_key => $file){
-                                                $name = time().Str::random(8).".".$file->getClientOriginalExtension();
-                                                $input['color_gallery'] .= $name . "|";
-                                                $file->move('assets/images/color_galleries',$name);
-                                            }
-                                            $input['color_gallery'] = substr_replace($input['color_gallery'], "", -1);
-                                            $input['color_gallery'] .= ",";
-                                        }
-                                        $input['color_gallery'] = substr_replace($input['color_gallery'], "", -1);
-                                    }
-                                } else{
-                                    if ($request->color_gallery_current) {
-                                        $input['color_gallery'] = implode(",", $request->color_gallery_current);
-                                    } else $input['color_gallery'] = null;
-                                }
-                            }
-                        }
-
-                        // Check Material
-                        if(empty($request->material_check ))
-                        {
-                            $input['material'] = null;
-                            $input['material_qty'] = null;
-                            $input['material_price'] = null;
-                            $input['material_gallery'] = null;
-                        }else {
-                            if(in_array(null, $request->material) || in_array(null, $request->material_qty))
-                            {
-                                $input['material'] = null;
-                                $input['material_gallery'] = null;
-                                $input['material_qty'] = null;
-                                $input['material_price'] = null;
-                            } else {
-                                $input['material'] = implode(",", $request->material);
-                                $input['material_gallery'] = null;
-                                $input['material_qty'] = implode(',', $request->material_qty);
-                                $input['material_price'] = implode(',', $request->material_price);
-                                $stck = 0;
-                                foreach($request->material_qty as $key => $material){
-                                    $stck += (int)$request->material_qty[$key];
-                                }
-                                $input['stock'] = $stck;
-
-                                if($files_arr = $request->file('material_gallery')) {
-                                    if($request->material_gallery_current) {
-                                        foreach($request->material_gallery_current as $current_key => $current_arr){
-                                            if(array_key_exists($current_key, $request->material_gallery)){
-                                                $input['material_gallery_current'][$current_key] = null;
-                                                foreach($request->material_gallery[$current_key] as $file){
-                                                    $name = time().Str::random(8).".".$file->getClientOriginalExtension();
-                                                    $input['material_gallery_current'][$current_key] .= $name . "|";
-                                                    $file->move('assets/images/material_galleries',$name);
-                                                }
-                                                $input['material_gallery_current'][$current_key] = substr_replace($input['material_gallery_current'][$current_key], "", -1);
-                                            } elseif(isset($request->material_gallery[$key])) {
-                                                $input['material_gallery_current'][$key] = null;
-                                                foreach($request->material_gallery[$key] as $file){
-                                                    $name = time().Str::random(8).".".$file->getClientOriginalExtension();
-                                                    $input['material_gallery_current'][$key] .= $name . "|";
-                                                    $file->move('assets/images/material_galleries',$name);
-                                                }
-                                                $input['material_gallery_current'][$key] = substr_replace($input['material_gallery_current'][$key], "", -1);
-                                                break;
-                                            }
-                                        }
-                                        $input['material_gallery'] = implode(",", $input['material_gallery_current']);
-                                    } else {
-                                        foreach ($files_arr as  $key => $file_arr){
-                                            foreach($file_arr as $file_key => $file){
-                                                $name = time().Str::random(8).".".$file->getClientOriginalExtension();
-                                                $input['material_gallery'] .= $name . "|";
-                                                $file->move('assets/images/material_galleries',$name);
-                                            }
-                                            $input['material_gallery'] = substr_replace($input['material_gallery'], "", -1);
-                                            $input['material_gallery'] .= ",";
-                                        }
-                                        $input['material_gallery'] = substr_replace($input['material_gallery'], "", -1);
-                                    }
-                                } else{
-                                    if ($request->material_gallery_current) {
-                                        $input['material_gallery'] = implode(",", $request->material_gallery_current);
-                                    } else {
-                                        $input['material_gallery'] = null;
-                                    }
-                                }
-                            }
-                        }
-
-                        // Check Measure
-                        if ($request->measure_check == "")
-                        {
-                            $input['measure'] = null;
-                        }
-                    }
+            if ($validator->fails()) {
+                if ($request->api) {
+                    return response()->json(array('errors' => $validator->getMessageBag()->toArray()), Response::HTTP_BAD_REQUEST);
+                }
+                return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
             }
+            //--- Validation Section Ends
+
+            // Check Size
+            if (empty($request->size_check)) {
+                $input['size'] = null;
+                $input['size_qty'] = null;
+                $input['size_price'] = null;
+            } else {
+                if (in_array(null, $request->size) || in_array(null, $request->size_qty) || in_array(null, $request->size_price)) {
+                    $input['size'] = null;
+                    $input['size_qty'] = null;
+                    $input['size_price'] = null;
+                } else {
+                    foreach ($request->size as $key => $size) {
+                        $size_without_comma[$key] = str_replace(',', '.', $size);
+                    }
+                    $input['size'] = implode(',', $size_without_comma);
+                    $input['size_qty'] = implode(',', $request->size_qty);
+                    $input['size_price'] = implode(',', $request->size_price);
+                    $stck = 0;
+                    foreach ($request->size_qty as $key => $size) {
+                        $stck += (int)$request->size_qty[$key];
+                    }
+                    $input['stock'] = $stck;
+                }
+            }
+
+            if (!$request->api) {
+                //Check Shipping
+                if ($request->free_shipping == "") {
+                    $input['free_shipping'] = null;
+                }
+
+                // Check Condition
+                if ($request->product_condition_check == "") {
+                    $input['product_condition'] = 0;
+                }
+
+                // Check Shipping Time
+                if ($request->shipping_time_check == "") {
+                    $input['ship'] = null;
+                }
+
+                // Check Whole Sale
+                if (empty($request->whole_check)) {
+                    $input['whole_sell_qty'] = null;
+                    $input['whole_sell_discount'] = null;
+                } else {
+                    if (in_array(null, $request->whole_sell_qty) || in_array(null, $request->whole_sell_discount)) {
+                        $input['whole_sell_qty'] = null;
+                        $input['whole_sell_discount'] = null;
+                    } else {
+                        $input['whole_sell_qty'] = implode(',', $request->whole_sell_qty);
+                        $input['whole_sell_discount'] = implode(',', $request->whole_sell_discount);
+                    }
+                }
+
+                // Check Color
+                if (empty($request->color_check)) {
+                    $input['color'] = null;
+                    $input['color_qty'] = null;
+                    $input['color_price'] = null;
+                    $input['color_gallery'] = null;
+                } else {
+                    if (in_array(null, $request->color) || in_array(null, $request->color_qty)) {
+                        $input['color'] = null;
+                        $input['color_qty'] = null;
+                        $input['color_price'] = null;
+                        $input['color_gallery'] = null;
+                    } else {
+                        $input['color'] = implode(',', $request->color);
+                        $input['color_qty'] = implode(',', $request->color_qty);
+                        $input['color_price'] = implode(',', $request->color_price);
+                        $stck = 0;
+                        foreach ($request->color_qty as $key => $color) {
+                            $stck += (int)$request->color_qty[$key];
+                        }
+                        $input['stock'] = $stck;
+
+                        $input['color_gallery'] = null;
+
+                        // Color Gallery
+                        if ($files_arr = $request->file('color_gallery')) {
+                            /* Searches for "current gallery" by new photos key with the aim of substitution */
+                            if ($request->color_gallery_current) {
+                                foreach ($request->color_gallery_current as $current_key => $current_arr) {
+                                    if (array_key_exists($current_key, $request->color_gallery)) {
+                                        $input['color_gallery_current'][$current_key] = null;
+                                        foreach ($request->color_gallery[$current_key] as $file) {
+                                            $name = time().Str::random(8).".".$file->getClientOriginalExtension();
+                                            $input['color_gallery_current'][$current_key] .= $name . "|";
+                                            $file->move('storage/images/color_galleries', $name);
+                                        }
+                                        $input['color_gallery_current'][$current_key] = substr_replace($input['color_gallery_current'][$current_key], "", -1);
+                                    } elseif (isset($request->color_gallery[$key])) {
+                                        $input['color_gallery_current'][$key] = null;
+                                        foreach ($request->color_gallery[$key] as $file) {
+                                            $name = time().Str::random(8).".".$file->getClientOriginalExtension();
+                                            $input['color_gallery_current'][$key] .= $name . "|";
+                                            $file->move('storage/images/color_galleries', $name);
+                                        }
+                                        $input['color_gallery_current'][$key] = substr_replace($input['color_gallery_current'][$key], "", -1);
+                                        break;
+                                    }
+                                }
+                                $input['color_gallery'] = implode(",", $input['color_gallery_current']);
+                            } else {
+                                foreach ($files_arr as  $key => $file_arr) {
+                                    foreach ($file_arr as $file_key => $file) {
+                                        $name = time().Str::random(8).".".$file->getClientOriginalExtension();
+                                        $input['color_gallery'] .= $name . "|";
+                                        $file->move('storage/images/color_galleries', $name);
+                                    }
+                                    $input['color_gallery'] = substr_replace($input['color_gallery'], "", -1);
+                                    $input['color_gallery'] .= ",";
+                                }
+                                $input['color_gallery'] = substr_replace($input['color_gallery'], "", -1);
+                            }
+                        } else {
+                            if ($request->color_gallery_current) {
+                                $input['color_gallery'] = implode(",", $request->color_gallery_current);
+                            } else {
+                                $input['color_gallery'] = null;
+                            }
+                        }
+                    }
+                }
+
+                // Check Material
+                if (empty($request->material_check)) {
+                    $input['material'] = null;
+                    $input['material_qty'] = null;
+                    $input['material_price'] = null;
+                    $input['material_gallery'] = null;
+                } else {
+                    if (in_array(null, $request->material) || in_array(null, $request->material_qty)) {
+                        $input['material'] = null;
+                        $input['material_gallery'] = null;
+                        $input['material_qty'] = null;
+                        $input['material_price'] = null;
+                    } else {
+                        $input['material'] = implode(",", $request->material);
+                        $input['material_gallery'] = null;
+                        $input['material_qty'] = implode(',', $request->material_qty);
+                        $input['material_price'] = implode(',', $request->material_price);
+                        $stck = 0;
+                        foreach ($request->material_qty as $key => $material) {
+                            $stck += (int)$request->material_qty[$key];
+                        }
+                        $input['stock'] = $stck;
+
+                        if ($files_arr = $request->file('material_gallery')) {
+                            if ($request->material_gallery_current) {
+                                foreach ($request->material_gallery_current as $current_key => $current_arr) {
+                                    if (array_key_exists($current_key, $request->material_gallery)) {
+                                        $input['material_gallery_current'][$current_key] = null;
+                                        foreach ($request->material_gallery[$current_key] as $file) {
+                                            $name = time().Str::random(8).".".$file->getClientOriginalExtension();
+                                            $input['material_gallery_current'][$current_key] .= $name . "|";
+                                            $file->move('storage/images/material_galleries', $name);
+                                        }
+                                        $input['material_gallery_current'][$current_key] = substr_replace($input['material_gallery_current'][$current_key], "", -1);
+                                    } elseif (isset($request->material_gallery[$key])) {
+                                        $input['material_gallery_current'][$key] = null;
+                                        foreach ($request->material_gallery[$key] as $file) {
+                                            $name = time().Str::random(8).".".$file->getClientOriginalExtension();
+                                            $input['material_gallery_current'][$key] .= $name . "|";
+                                            $file->move('storage/images/material_galleries', $name);
+                                        }
+                                        $input['material_gallery_current'][$key] = substr_replace($input['material_gallery_current'][$key], "", -1);
+                                        break;
+                                    }
+                                }
+                                $input['material_gallery'] = implode(",", $input['material_gallery_current']);
+                            } else {
+                                foreach ($files_arr as  $key => $file_arr) {
+                                    foreach ($file_arr as $file_key => $file) {
+                                        $name = time().Str::random(8).".".$file->getClientOriginalExtension();
+                                        $input['material_gallery'] .= $name . "|";
+                                        $file->move('storage/images/material_galleries', $name);
+                                    }
+                                    $input['material_gallery'] = substr_replace($input['material_gallery'], "", -1);
+                                    $input['material_gallery'] .= ",";
+                                }
+                                $input['material_gallery'] = substr_replace($input['material_gallery'], "", -1);
+                            }
+                        } else {
+                            if ($request->material_gallery_current) {
+                                $input['material_gallery'] = implode(",", $request->material_gallery_current);
+                            } else {
+                                $input['material_gallery'] = null;
+                            }
+                        }
+                    }
+                }
+
+                // Check Measure
+                if ($request->measure_check == "") {
+                    $input['measure'] = null;
+                }
+            }
+        }
 
         // Check License
-        if($data->type == "License")
-        {
-
-        if(!in_array(null, $request->license) && !in_array(null, $request->license_qty))
-        {
-            $input['license'] = implode(',,', $request->license);
-            $input['license_qty'] = implode(',', $request->license_qty);
-        }
-        else
-        {
-            if(in_array(null, $request->license) || in_array(null, $request->license_qty))
-            {
-                $input['license'] = null;
-                $input['license_qty'] = null;
-            }
-            else
-            {
-                $license = explode(',,', $prod->license);
-                $license_qty = explode(',', $prod->license_qty);
-                $input['license'] = implode(',,', $license);
-                $input['license_qty'] = implode(',', $license_qty);
+        if ($data->type == "License") {
+            if (!in_array(null, $request->license) && !in_array(null, $request->license_qty)) {
+                $input['license'] = implode(',,', $request->license);
+                $input['license_qty'] = implode(',', $request->license_qty);
+            } else {
+                if (in_array(null, $request->license) || in_array(null, $request->license_qty)) {
+                    $input['license'] = null;
+                    $input['license_qty'] = null;
+                } else {
+                    $license = explode(',,', $prod->license);
+                    $license_qty = explode(',', $prod->license_qty);
+                    $input['license'] = implode(',,', $license);
+                    $input['license_qty'] = implode(',', $license_qty);
+                }
             }
         }
 
+        $input['price'] = (floatval($input['price']) / $sign->value);
+        $input['previous_price'] = (floatval($input['previous_price']) / $sign->value);
+
+        // store filtering attributes for physical product
+        $attrArr = [];
+        if (!empty($request->category_id)) {
+            $catAttrs = Attribute::where('attributable_id', $request->category_id)->where('attributable_type', 'App\Models\Category')->get();
+            if (!empty($catAttrs)) {
+                foreach ($catAttrs as $key => $catAttr) {
+                    $in_name = $catAttr->input_name;
+                    if ($request->has("attr_"."$in_name")) {
+                        $attrArr["$in_name"]["values"] = $request["attr_"."$in_name"];
+                        $attrArr["$in_name"]["prices"] = $request["attr_"."$in_name"."_price"];
+                        if ($catAttr->details_status) {
+                            $attrArr["$in_name"]["details_status"] = 1;
+                        } else {
+                            $attrArr["$in_name"]["details_status"] = 0;
+                        }
+                    }
+                }
+            }
         }
 
-         $input['price'] = (floatval($input['price']) / $sign->value);
-         $input['previous_price'] = (floatval($input['previous_price']) / $sign->value);
+        if (!empty($request->subcategory_id)) {
+            $subAttrs = Attribute::where('attributable_id', $request->subcategory_id)->where('attributable_type', 'App\Models\Subcategory')->get();
+            if (!empty($subAttrs)) {
+                foreach ($subAttrs as $key => $subAttr) {
+                    $in_name = $subAttr->input_name;
+                    if ($request->has("attr_"."$in_name")) {
+                        $attrArr["$in_name"]["values"] = $request["attr_"."$in_name"];
+                        $attrArr["$in_name"]["prices"] = $request["attr_"."$in_name"."_price"];
+                        if ($subAttr->details_status) {
+                            $attrArr["$in_name"]["details_status"] = 1;
+                        } else {
+                            $attrArr["$in_name"]["details_status"] = 0;
+                        }
+                    }
+                }
+            }
+        }
+        if (!empty($request->childcategory_id)) {
+            $childAttrs = Attribute::where('attributable_id', $request->childcategory_id)->where('attributable_type', 'App\Models\Childcategory')->get();
+            if (!empty($childAttrs)) {
+                foreach ($childAttrs as $key => $childAttr) {
+                    $in_name = $childAttr->input_name;
+                    if ($request->has("attr_"."$in_name")) {
+                        $attrArr["$in_name"]["values"] = $request["attr_"."$in_name"];
+                        $attrArr["$in_name"]["prices"] = $request["attr_"."$in_name"."_price"];
+                        if ($childAttr->details_status) {
+                            $attrArr["$in_name"]["details_status"] = 1;
+                        } else {
+                            $attrArr["$in_name"]["details_status"] = 0;
+                        }
+                    }
+                }
+            }
+        }
 
-         // store filtering attributes for physical product
-         $attrArr = [];
-         if (!empty($request->category_id)) {
-           $catAttrs = Attribute::where('attributable_id', $request->category_id)->where('attributable_type', 'App\Models\Category')->get();
-           if (!empty($catAttrs)) {
-             foreach ($catAttrs as $key => $catAttr) {
-               $in_name = $catAttr->input_name;
-               if ($request->has("attr_"."$in_name")) {
-                 $attrArr["$in_name"]["values"] = $request["attr_"."$in_name"];
-                 $attrArr["$in_name"]["prices"] = $request["attr_"."$in_name"."_price"];
-                 if ($catAttr->details_status) {
-                   $attrArr["$in_name"]["details_status"] = 1;
-                 } else {
-                   $attrArr["$in_name"]["details_status"] = 0;
-                 }
-               }
-             }
-           }
-         }
-
-         if (!empty($request->subcategory_id)) {
-           $subAttrs = Attribute::where('attributable_id', $request->subcategory_id)->where('attributable_type', 'App\Models\Subcategory')->get();
-           if (!empty($subAttrs)) {
-             foreach ($subAttrs as $key => $subAttr) {
-               $in_name = $subAttr->input_name;
-               if ($request->has("attr_"."$in_name")) {
-                 $attrArr["$in_name"]["values"] = $request["attr_"."$in_name"];
-                 $attrArr["$in_name"]["prices"] = $request["attr_"."$in_name"."_price"];
-                 if ($subAttr->details_status) {
-                   $attrArr["$in_name"]["details_status"] = 1;
-                 } else {
-                   $attrArr["$in_name"]["details_status"] = 0;
-                 }
-               }
-             }
-           }
-         }
-         if (!empty($request->childcategory_id)) {
-           $childAttrs = Attribute::where('attributable_id', $request->childcategory_id)->where('attributable_type', 'App\Models\Childcategory')->get();
-           if (!empty($childAttrs)) {
-             foreach ($childAttrs as $key => $childAttr) {
-               $in_name = $childAttr->input_name;
-               if ($request->has("attr_"."$in_name")) {
-                 $attrArr["$in_name"]["values"] = $request["attr_"."$in_name"];
-                 $attrArr["$in_name"]["prices"] = $request["attr_"."$in_name"."_price"];
-                 if ($childAttr->details_status) {
-                   $attrArr["$in_name"]["details_status"] = 1;
-                 } else {
-                   $attrArr["$in_name"]["details_status"] = 0;
-                 }
-               }
-             }
-           }
-         }
-
-         if (empty($attrArr)) {
-           $input['attributes'] = NULL;
-         } else {
-           $jsonAttr = json_encode($attrArr);
-           $input['attributes'] = $jsonAttr;
-         }
+        if (empty($attrArr)) {
+            $input['attributes'] = null;
+        } else {
+            $jsonAttr = json_encode($attrArr);
+            $input['attributes'] = $jsonAttr;
+        }
         $data->update($input);
         $data = Product::findOrFail($id);
 
-        $new_slug = Str::slug($data->name,'-').'-'.strtolower(Str::slug($data->sku));
+        $new_slug = Str::slug($data->name, '-').'-'.strtolower(Str::slug($data->sku));
 
-        if(config("features.marketplace")){
+        if (config("features.marketplace")) {
             $vendor_products = Product::where('slug', $data->slug)->where('user_id', '!=', 0)->get();
-            foreach($vendor_products as $v_prod){
+            foreach ($vendor_products as $v_prod) {
                 // Save unique attrs
                 $sku = $v_prod->sku;
                 $ref_code = $v_prod->ref_code;
@@ -1684,13 +1631,12 @@ class ProductController extends Controller
 
         //associates with stores
         $data->stores()->detach();
-        if($request->has('stores')) {
+        if ($request->has('stores')) {
             $data->stores()->sync($input['stores']);
         }
 
         # Validate Redplay
-        if($request->redplay_login && $request->redplay_password && $request->redplay_code)
-        {
+        if ($request->redplay_login && $request->redplay_password && $request->redplay_code) {
             $redplayData = Product::sanitizeRedplayData([
                 'redplay_login' => $request->redplay_login,
                 'redplay_password' => $request->redplay_password,
@@ -1698,28 +1644,25 @@ class ProductController extends Controller
             ]);
 
             # Não permite que itens completamente vazios sejam inseridos no banco.
-            foreach($redplayData as $key => $redplay)
-            {
-                if(!$redplay['login'] && !$redplay['password'] && !$redplay['code'])
-                {
+            foreach ($redplayData as $key => $redplay) {
+                if (!$redplay['login'] && !$redplay['password'] && !$redplay['code']) {
                     unset($redplayData[$key]);
                 }
             }
 
             # Remove licenças que não estão mais preenchidas no formulário.
             $licensesThatMustBeRemoved = License::whereIn('product_id', [$data->id])->whereNotIn('code', $request->redplay_code)->get();
-            foreach($licensesThatMustBeRemoved as $licenseToBeRemoved)
-            {
+            foreach ($licensesThatMustBeRemoved as $licenseToBeRemoved) {
                 $licenseToBeRemoved->delete();
             }
 
             # Cria ou atualiza novas licenças.
-            foreach($redplayData as $redplay)
-            {
+            foreach ($redplayData as $redplay) {
                 $license = License::where('code', $redplay['code'])->first();
 
-                if(!$license)
+                if (!$license) {
                     $license = new License;
+                }
 
                 $license->product_id = $data->id;
                 $license->login = $redplay['login'];
@@ -1733,14 +1676,14 @@ class ProductController extends Controller
         //-- Logic Section Ends
 
         //--- Redirect Section
-        if($request->has('bulk_form')) {
+        if ($request->has('bulk_form')) {
             return response()->json([
                 'bulk_update' => true
             ]);
             exit;
         }
 
-        if($request->api) {
+        if ($request->api) {
             return response()->json(array('status' => 'ok'));
         }
 
@@ -1753,7 +1696,7 @@ class ProductController extends Controller
     {
         //-- Logic Section
         $data = Product::findOrFail($id);
-        
+
         $input['mercadolivre_name'] = $request->mercadolivre_name;
         $input['mercadolivre_description'] = $request->mercadolivre_description;
         $input['mercadolivre_listing_type_id'] = $request->listing_type_id;
@@ -1767,116 +1710,101 @@ class ProductController extends Controller
 
         $input['mercadolivre_without_warranty'] = false;
 
-        if(!$request->warranty_time && !$request->warranty_time_unit)
-        {
+        if (!$request->warranty_time && !$request->warranty_time_unit) {
             $input['mercadolivre_without_warranty'] = true;
         }
 
-        if($request->mercadolivre_category_attributes)
-        {
-            foreach($request->mercadolivre_category_attributes as $key => $attribute) {
+        if ($request->mercadolivre_category_attributes) {
+            foreach ($request->mercadolivre_category_attributes as $key => $attribute) {
                 $this->mercadolivre_category_attributes[$key] = [
                     'name' => array_key_first($attribute),
                     'value' => $attribute[array_key_first($attribute)]['value']
                 ];
 
-                if(isset($attribute[array_key_first($attribute)]['allowed_unit_selected']))
-                {
+                if (isset($attribute[array_key_first($attribute)]['allowed_unit_selected'])) {
                     $this->mercadolivre_category_attributes[$key]['allowed_unit_selected'] = $attribute[array_key_first($attribute)]['allowed_unit_selected'];
                 }
-                    
             }
-            
-            if($request->mercadolivre_category_attributes){
+
+            if ($request->mercadolivre_category_attributes) {
                 $input['mercadolivre_category_attributes'] = json_encode($this->mercadolivre_category_attributes);
             }
         }
-        
+
         $data->update($input);
 
         # Checks if UPDATE ON MERCADO LIVRE checkbox exists to create or edit Announcement.
-        if($request->has('update_check'))
-        {
+        if ($request->has('update_check')) {
             return redirect()->route($data->mercadolivre_id ? 'admin-prod-meli-update' : 'admin-prod-meli-send', $data->id);
         }
 
-        return redirect()->route('admin-prod-edit-meli', $data->id)->with('success',__('Product Updated Successfully.'));
+        return redirect()->route('admin-prod-edit-meli', $data->id)->with('success', __('Product Updated Successfully.'));
         //--- Redirect Section Ends
     }
     //*** GET Request
     public function load($id)
     {
         $brand = Brand::findOrFail($id);
-        return view('load.brand',compact('brand'));
+        return view('load.brand', compact('brand'));
     }
 
     //*** GET Request
     public function feature($id)
     {
-            $data = Product::findOrFail($id);
-            return view('admin.product.highlight',compact('data'));
+        $data = Product::findOrFail($id);
+        return view('admin.product.highlight', compact('data'));
     }
 
     //*** POST Request
     public function featuresubmit(Request $request, $id)
     {
         //-- Logic Section
-            $data = Product::findOrFail($id);
-            $input = $request->all();
-            if($request->featured == "")
-            {
-                $input['featured'] = 0;
-            }
-            if($request->hot == "")
-            {
-                $input['hot'] = 0;
-            }
-            if($request->best == "")
-            {
-                $input['best'] = 0;
-            }
-            if($request->top == "")
-            {
-                $input['top'] = 0;
-            }
-            if($request->latest == "")
-            {
-                $input['latest'] = 0;
-            }
-            if($request->big == "")
-            {
-                $input['big'] = 0;
-            }
-            if($request->trending == "")
-            {
-                $input['trending'] = 0;
-            }
-            if($request->sale == "")
-            {
-                $input['sale'] = 0;
-            }
-            if($request->is_discount == "")
-            {
-                $input['is_discount'] = 0;
-                $input['discount_date'] = null;
-            }
+        $data = Product::findOrFail($id);
+        $input = $request->all();
+        if ($request->featured == "") {
+            $input['featured'] = 0;
+        }
+        if ($request->hot == "") {
+            $input['hot'] = 0;
+        }
+        if ($request->best == "") {
+            $input['best'] = 0;
+        }
+        if ($request->top == "") {
+            $input['top'] = 0;
+        }
+        if ($request->latest == "") {
+            $input['latest'] = 0;
+        }
+        if ($request->big == "") {
+            $input['big'] = 0;
+        }
+        if ($request->trending == "") {
+            $input['trending'] = 0;
+        }
+        if ($request->sale == "") {
+            $input['sale'] = 0;
+        }
+        if ($request->is_discount == "") {
+            $input['is_discount'] = 0;
+            $input['discount_date'] = null;
+        }
 
-            $data->update($input);
+        $data->update($input);
         //-- Logic Section Ends
 
         //--- Redirect Section
         $msg = __('Highlight Updated Successfully.');
         return response()->json($msg);
         //--- Redirect Section Ends
-
     }
 
     //*** GET Request
     public function fastedit($id)
     {
-            $data = Product::findOrFail($id);
-            $sign = Currency::where('id','=',1)->first();
-            return view('admin.product.fastedit',compact('data','sign'));
+        $data = Product::findOrFail($id);
+        $sign = Currency::where('id', '=', 1)->first();
+        return view('admin.product.fastedit', compact('data', 'sign'));
     }
 
     //*** GET Request
@@ -1884,9 +1812,9 @@ class ProductController extends Controller
     {
         $cats = Category::all();
         $brands = Brand::orderBy('slug')->get();
-        $sign = Currency::where('id','=',1)->first();
+        $sign = Currency::where('id', '=', 1)->first();
         $storesList = Generalsetting::all();
-        return view('admin.product.bulkedit',compact('cats','brands','storesList','sign'));
+        return view('admin.product.bulkedit', compact('cats', 'brands', 'storesList', 'sign'));
     }
 
     //*** POST Request
@@ -1899,7 +1827,7 @@ class ProductController extends Controller
             'file'       => 'mimes:zip'
         ];
         $customs = [
-            "{$this->lang->locale}.name.required" => __('Product Name in :lang is required',['lang' => $this->lang->language]),
+            "{$this->lang->locale}.name.required" => __('Product Name in :lang is required', ['lang' => $this->lang->language]),
         ];
 
         $validator = Validator::make($request->all(), $rules, $customs);
@@ -1910,13 +1838,13 @@ class ProductController extends Controller
         $input = $this->withRequiredFields($request->all(), ['name']);
         //-- Logic Section
         $data = Product::findOrFail($id);
-        $new_slug = Str::slug($data->name,'-').'-'.strtolower(Str::slug($data->sku));
+        $new_slug = Str::slug($data->name, '-').'-'.strtolower(Str::slug($data->sku));
 
-        
 
-        if(config("features.marketplace")){
+
+        if (config("features.marketplace")) {
             $vendor_products = Product::where('slug', $data->slug)->where('user_id', '!=', 0)->get();
-            foreach($vendor_products as $v_prod){
+            foreach ($vendor_products as $v_prod) {
                 // Save unique attrs
                 $sku = $v_prod->sku;
                 $ref_code = $v_prod->ref_code;
@@ -1946,19 +1874,21 @@ class ProductController extends Controller
     //*** POST Request
     public function bulkeditsubmit(Request $request)
     {
-        if(!$request->array_id)
+        if (!$request->array_id) {
             return response()->json(__("No products selected to update."));
-        
-        $productIds = explode(',',$request->array_id);
+        }
+
+        $productIds = explode(',', $request->array_id);
 
         $input = array_filter($request->all());
-        $input = $this->removeEmptyTranslations($input,null,true);
+        $input = $this->removeEmptyTranslations($input, null, true);
 
-        foreach($productIds as $productId){
+        foreach ($productIds as $productId) {
             $data = Product::find($productId);
 
-            if($request->change_price_type)
+            if ($request->change_price_type) {
                 $input['price'] = $data->applyBulkEditChangePrice($request->change_price_type, $request->price);
+            }
 
             $data->update($input);
         }
@@ -1969,8 +1899,8 @@ class ProductController extends Controller
     //*** POST Request
     public function bulkdeletesubmit(Request $request)
     {
-        $array_id = explode(',',$request['array_id']);
-        foreach($array_id as $prod_id){
+        $array_id = explode(',', $request['array_id']);
+        foreach ($array_id as $prod_id) {
             $this->destroy($prod_id);
         }
         // --- Redirect Section
@@ -1981,86 +1911,73 @@ class ProductController extends Controller
     //*** GET Request
     public function destroy($id)
     {
-
         $data = Product::findOrFail($id);
 
-        if($data->galleries->count() > 0)
-        {
-
+        if ($data->galleries->count() > 0) {
             foreach ($data->galleries as $gal) {
-                    if (file_exists(public_path().'/assets/images/galleries/'.$gal->photo) && !empty($gal->photo)) {
-                        unlink(public_path().'/assets/images/galleries/'.$gal->photo);
-                    }
+                if (file_exists(public_path().'/storage/images/galleries/'.$gal->photo) && !empty($gal->photo)) {
+                    unlink(public_path().'/storage/images/galleries/'.$gal->photo);
+                }
                 $gal->delete();
             }
-
         }
 
-        if($data->galleries360->count() > 0)
-        {
-
+        if ($data->galleries360->count() > 0) {
             foreach ($data->galleries360 as $gal) {
-                    if (file_exists(public_path().'/assets/images/galleries360/'.$gal->photo) && !empty($gal->photo)) {
-                        unlink(public_path().'/assets/images/galleries360/'.$gal->photo);
-                    }
+                if (file_exists(public_path().'/storage/images/galleries360/'.$gal->photo) && !empty($gal->photo)) {
+                    unlink(public_path().'/storage/images/galleries360/'.$gal->photo);
+                }
                 $gal->delete();
             }
-
         }
 
-        if($data->reports->count() > 0)
-        {
+        if ($data->reports->count() > 0) {
             foreach ($data->reports as $gal) {
                 $gal->delete();
             }
         }
 
-        if($data->ratings->count() > 0)
-        {
+        if ($data->ratings->count() > 0) {
             foreach ($data->ratings  as $gal) {
                 $gal->delete();
             }
         }
-        if($data->wishlists->count() > 0)
-        {
+        if ($data->wishlists->count() > 0) {
             foreach ($data->wishlists as $gal) {
                 $gal->delete();
             }
         }
-        if($data->clicks->count() > 0)
-        {
+        if ($data->clicks->count() > 0) {
             foreach ($data->clicks as $gal) {
                 $gal->delete();
             }
         }
-        if($data->comments->count() > 0)
-        {
+        if ($data->comments->count() > 0) {
             foreach ($data->comments as $gal) {
-            if($gal->replies->count() > 0)
-            {
-                foreach ($gal->replies as $key) {
-                    $key->delete();
+                if ($gal->replies->count() > 0) {
+                    foreach ($gal->replies as $key) {
+                        $key->delete();
+                    }
                 }
-            }
                 $gal->delete();
             }
         }
 
-        if($data->photo != null){
-            if (!filter_var($data->photo,FILTER_VALIDATE_URL)){
-                if (file_exists(public_path().'/assets/images/products/'.$data->photo)) {
-                    unlink(public_path().'/assets/images/products/'.$data->photo);
+        if ($data->photo != null) {
+            if (!filter_var($data->photo, FILTER_VALIDATE_URL)) {
+                if (file_exists(public_path().'/storage/images/products/'.$data->photo)) {
+                    unlink(public_path().'/storage/images/products/'.$data->photo);
                 }
             }
         }
 
-        if (file_exists(public_path().'/assets/images/thumbnails/'.$data->thumbnail) && $data->thumbnail != "") {
-            unlink(public_path().'/assets/images/thumbnails/'.$data->thumbnail);
+        if (file_exists(public_path().'/storage/images/thumbnails/'.$data->thumbnail) && $data->thumbnail != "") {
+            unlink(public_path().'/storage/images/thumbnails/'.$data->thumbnail);
         }
 
-        if($data->file != null){
-            if (file_exists(public_path().'/assets/files/'.$data->file)) {
-                unlink(public_path().'/assets/files/'.$data->file);
+        if ($data->file != null) {
+            if (file_exists(public_path().'/storage/files/'.$data->file)) {
+                unlink(public_path().'/storage/files/'.$data->file);
             }
         }
 
@@ -2076,42 +1993,43 @@ class ProductController extends Controller
 // PRODUCT DELETE ENDS
     }
 
-    public function getAttributes(Request $request) {
-      $model = '';
-      if ($request->type == 'category') {
-        $model = 'App\Models\Category';
-      } elseif ($request->type == 'subcategory') {
-        $model = 'App\Models\Subcategory';
-      } elseif ($request->type == 'childcategory') {
-        $model = 'App\Models\Childcategory';
-      }
-
-      $attributes = Attribute::where('attributable_id', $request->id)->where('attributable_type', $model)->get();
-      $attrOptions = [];
-      foreach ($attributes as $key => $attribute) {
-        $attribute->name = $attribute->name;
-        $options = AttributeOption::where('attribute_id', $attribute->id)->get();
-        foreach($options as $opt) {
-            $opt->name = $opt->name;
+    public function getAttributes(Request $request)
+    {
+        $model = '';
+        if ($request->type == 'category') {
+            $model = 'App\Models\Category';
+        } elseif ($request->type == 'subcategory') {
+            $model = 'App\Models\Subcategory';
+        } elseif ($request->type == 'childcategory') {
+            $model = 'App\Models\Childcategory';
         }
-        $attrOptions[] = ['attribute' => $attribute, 'options' => $options];
-      }
-      return response()->json($attrOptions);
+
+        $attributes = Attribute::where('attributable_id', $request->id)->where('attributable_type', $model)->get();
+        $attrOptions = [];
+        foreach ($attributes as $key => $attribute) {
+            $attribute->name = $attribute->name;
+            $options = AttributeOption::where('attribute_id', $attribute->id)->get();
+            foreach ($options as $opt) {
+                $opt->name = $opt->name;
+            }
+            $attrOptions[] = ['attribute' => $attribute, 'options' => $options];
+        }
+        return response()->json($attrOptions);
     }
 
     public function deleteProductImage(Request $request)
     {
         $data = Product::findOrFail($request->id);
-        if($data->photo != null){
-            if (!filter_var($data->photo,FILTER_VALIDATE_URL)){
-                if (file_exists(public_path().'/assets/images/products/'.$data->photo)) {
-                    unlink(public_path().'/assets/images/products/'.$data->photo);
+        if ($data->photo != null) {
+            if (!filter_var($data->photo, FILTER_VALIDATE_URL)) {
+                if (file_exists(public_path().'/storage/images/products/'.$data->photo)) {
+                    unlink(public_path().'/storage/images/products/'.$data->photo);
                 }
             }
         }
-        if($data->thumbnail != null){
-            if (file_exists(public_path().'/assets/images/thumbnails/'.$data->thumbnail) && $data->thumbnail != "") {
-                unlink(public_path().'/assets/images/thumbnails/'.$data->thumbnail);
+        if ($data->thumbnail != null) {
+            if (file_exists(public_path().'/storage/images/thumbnails/'.$data->thumbnail) && $data->thumbnail != "") {
+                unlink(public_path().'/storage/images/thumbnails/'.$data->thumbnail);
             }
         }
         //$data->update(['photo' => null, 'thumbnail' => null]);
@@ -2122,10 +2040,11 @@ class ProductController extends Controller
         ]);
     }
 
-    public function generateThumbnailsFtp(){
-        if(resolve('storeSettings')->ftp_folder){
+    public function generateThumbnailsFtp()
+    {
+        if (resolve('storeSettings')->ftp_folder) {
             $prods = Product::byStore()->where('status', '=', 1)->get();
-            foreach($prods as $prod){
+            foreach ($prods as $prod) {
                 Helper::generateProductThumbnailsFtp(resolve('storeSettings')->ftp_folder, $prod->ref_code_int);
             }
             $msg = __('Thumbnails successfully updated!');
@@ -2133,7 +2052,7 @@ class ProductController extends Controller
                 'status' => true,
                 'message' => $msg
             ]);
-        } else{
+        } else {
             $msg = __("You can't update thumbnails since FTP Integration is disabled.");
             return response()->json([
                 'status' => false,
@@ -2142,18 +2061,19 @@ class ProductController extends Controller
         }
     }
 
-    public function generateThumbnails(){
+    public function generateThumbnails()
+    {
         $updated = 0;
         $products = Product::whereRaw('status = 1 and photo is not null')->get();
-        foreach($products as $product){
-            $thumb_path = public_path('assets/images/thumbnails/');
-            if($product->thumbnail == asset("assets/images/noimage.png") && $product->photo != asset("assets/images/noimage.png")){
+        foreach ($products as $product) {
+            $thumb_path = public_path('storage/images/thumbnails/');
+            if ($product->thumbnail == asset("assets/images/noimage.png") && $product->photo != asset("assets/images/noimage.png")) {
                 $product->thumbnail = $product->photo;
-                if($product->update()){
-                    $img_dir = public_path().'/assets/images/products/'.$product->photo;
+                if ($product->update()) {
+                    $img_dir = public_path().'/storage/images/products/'.$product->photo;
                     $thumb_path .= $product->photo;
                     $img = Image::make($img_dir);
-                    $thumb = $img->resize(null, 285, function($constraint){
+                    $thumb = $img->resize(null, 285, function ($constraint) {
                         $constraint->aspectRatio();
                     });
                     $thumb->save($thumb_path);
@@ -2161,12 +2081,12 @@ class ProductController extends Controller
                 }
             }
         }
-        if($updated > 0) { 
-            $msg = $updated . " " . __('Thumbnails successfully updated!'); 
+        if ($updated > 0) {
+            $msg = $updated . " " . __('Thumbnails successfully updated!');
             $alert = false;
-        } else { 
-            $msg = __('There is no thumbnails to update!'); 
-            $alert = true; 
+        } else {
+            $msg = __('There is no thumbnails to update!');
+            $alert = true;
         }
         return response()->json(['status' => true, 'message' => $msg, 'alert' => $alert]);
     }
