@@ -29,7 +29,8 @@
                         <table id="geniustable" class="table table-hover dt-responsive" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
-                                    <th><i class="icofont-options icofont-lg" data-toggle="tooltip" title='{{ __("Options") }}'></i></th>
+                                    <th><i class="icofont-options icofont-lg" data-toggle="tooltip"
+                                            title='{{ __("Options") }}'></i></th>
                                     <th>{{ __('Domain') }}</th>
                                     <th>{{ __('Title') }}</th>
                                     <th>{{ __('Company Document') }}</th>
@@ -52,7 +53,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="submit-loader">
-                <img src="{{asset('assets/images/'.$admstore->admin_loader)}}" alt="">
+                <img src="{{asset('storage/images/'.$admstore->admin_loader)}}" alt="">
             </div>
             <div class="modal-header">
                 <h5 class="modal-title"></h5>
@@ -112,7 +113,6 @@
 @section('scripts')
 
 <script type="text/javascript">
-    
     var table = $('#geniustable').DataTable({
         stateSave: true,
         stateDuration: -1,
@@ -138,7 +138,7 @@
         ]
         , language: {
             url: '{{$datatable_translation}}',
-            processing: '<img src="{{asset('assets/images/'.$admstore->admin_loader)}}">'
+            processing: '<img src="{{asset('storage/images/'.$admstore->admin_loader)}}">'
         },
         drawCallback: function(settings) {
             $(this).find('.select').niceSelect();
@@ -151,7 +151,7 @@
                     '</a>' +
                     '</div>');
             @endif
-            /* 
+            /*
             * Setando no Cookie a página atual
             */
             $("#geniustable").on('page.dt', function(){
@@ -167,8 +167,8 @@
         if(sessionStorage.getItem("CurrentPage") == undefined){
             sessionStorage.setItem("CurrentPage", 0);
         }
-        $(document).on('click', 'a', function(e){ 
-            var link = jQuery(this); 
+        $(document).on('click', 'a', function(e){
+            var link = jQuery(this);
             var x = '{{ Request::route()->getPrefix() }}';
             y = x.split("/");
             if(!(link.attr("data-href") || link.attr("href").indexOf("#") > -1 || link.attr("href").indexOf("javascript") > -1 || link.attr("href").indexOf(y[1]) > -1)){
