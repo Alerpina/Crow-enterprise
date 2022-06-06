@@ -42,9 +42,11 @@ class CategoryController extends Controller
             })
             ->addColumn('products', function (Category $data) {
                 $buttons = __('None');
-                if(config("features.marketplace")){
+                if (config("features.marketplace")) {
                     $products_count = $data->products()->where('user_id', 0)->count();
-                } else $products_count = $data->products()->count();
+                } else {
+                    $products_count = $data->products()->count();
+                }
                 if ($products_count > 0) {
                     $buttons = '<div class="ml-4">';
                     $buttons .= $products_count;
@@ -58,7 +60,7 @@ class CategoryController extends Controller
             })
             ->addColumn('action', function (Category $data) {
                 $customProducts = env("ENABLE_CUSTOM_PRODUCT", false);
-                if($customProducts && $data->is_customizable == 1 ){
+                if ($customProducts && $data->is_customizable == 1) {
                     return '<div class="godropdown">
                     <button class="go-dropdown-toggle"> ' . __('Actions') .  '<i class="fas fa-chevron-down"></i></button>
                     <div class="action-list">
@@ -67,9 +69,8 @@ class CategoryController extends Controller
                         <a data-href="'.route('admin-categorygallery-open', $data->id).'" data-header="'.__("Image Gallery").'" class="set-gallery" data-toggle="modal" data-target="#setgallery"><i class="fas fa-eye"></i> ' . __('View Gallery') . '</a>
                         <a href="javascript:;" data-href="' . route('admin-cat-delete', $data->id) . '" data-toggle="modal" data-target="#confirm-delete" class="delete"><i class="fas fa-trash-alt"></i> ' . __('Delete') . '</a>
                     </div>';
-                }
-            else{
-                return '<div class="godropdown">
+                } else {
+                    return '<div class="godropdown">
                 <button class="go-dropdown-toggle"> ' . __('Actions') .  '<i class="fas fa-chevron-down"></i></button><div class="action-list">
                     <a href="' . route('admin-attr-manage', $data->id) . '?type=category' . '" class="edit"> <i class="fas fa-edit"></i> ' . __('Manage Attributes') . '</a>
                     <a data-href="' . route('admin-cat-edit', $data->id) . '" data-header="' . __('Edit Category') . '" class="edit" data-toggle="modal" data-target="#modal1"> <i class="fas fa-edit"></i> ' . __('Edit') . '</a>
@@ -79,7 +80,7 @@ class CategoryController extends Controller
             })
             ->rawColumns(['status', 'products','presentation_position','action', 'attr_count'])
             ->toJson(); //--- Returning Json Data To Client Side
-            $this->useAdminLocale();
+        $this->useAdminLocale();
     }
 
     //*** GET Request
@@ -98,7 +99,7 @@ class CategoryController extends Controller
     //*** POST Request
     public function store(Request $request)
     {
-        
+
         //--- Validation Section
         $rules = [
             "{$this->lang->locale}.name" => 'required',
@@ -107,7 +108,7 @@ class CategoryController extends Controller
             'slug' => 'unique:categories|regex:/^[a-zA-Z0-9\s-]+$/'
                  ];
         $customs = [
-            "{$this->lang->locale}.name.required" => __('Category Name in :lang is required',['lang' => $this->lang->language]),
+            "{$this->lang->locale}.name.required" => __('Category Name in :lang is required', ['lang' => $this->lang->language]),
             'photo.mimes' => __('Icon Type is Invalid.'),
             'banner' => __('Banner Type is Invalid.'),
             'slug.unique' => __('This slug has already been taken.'),
@@ -116,104 +117,97 @@ class CategoryController extends Controller
         $validator = Validator::make($request->all(), $rules, $customs);
 
         if ($validator->fails()) {
-            if($request->api) {
-                return response()->json(array('errors' => $validator->getMessageBag()->toArray()),Response::HTTP_BAD_REQUEST);
+            if ($request->api) {
+                return response()->json(array('errors' => $validator->getMessageBag()->toArray()), Response::HTTP_BAD_REQUEST);
             }
             return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
         }
         //--- Validation Section Ends
 
-        
+
         //--- Logic Section
         $data = new Category();
         $input = $this->removeEmptyTranslations($request->all());
 
-        if ($file = $request->file('photo'))
-         {
+        if ($file = $request->file('photo')) {
             $name = time().$file->getClientOriginalName();
-            $file->move('assets/images/categories',$name);
+            $file->move('storage/images/categories', $name);
             $input['photo'] = $name;
         }
-        if ($banner = $request->file('banner'))
-        {
+        if ($banner = $request->file('banner')) {
             $name = Str::random(8).time().".".$banner->getClientOriginalExtension();
-            $banner->move('assets/images/categories/banners',$name);
+            $banner->move('storage/images/categories/banners', $name);
             $input['banner'] = $name;
         }
 
-        //Customizable checkbutton 
-        if ($request->is_customizable == ""){
+        //Customizable checkbutton
+        if ($request->is_customizable == "") {
             $input['is_customizable'] = 0;
-        }
-        else {
+        } else {
             $input['is_customizable'] = 1;
         }
 
         //Customizable number checkbutton
-        if ($request->is_customizable_number == ""){
+        if ($request->is_customizable_number == "") {
             $input['is_customizable_number'] = 0;
-        }
-        else {
+        } else {
             $input['is_customizable_number'] = 1;
         }
 
         //Featured checkbutton
-        if ($request->is_featured == ""){
+        if ($request->is_featured == "") {
             $input['is_featured'] = 0;
-        }
-        else {
-                $input['is_featured'] = 1;
-                //--- Validation Section
-                $rules = [
+        } else {
+            $input['is_featured'] = 1;
+            //--- Validation Section
+            $rules = [
                     'image' => 'required|mimes:jpeg,jpg,png,svg'
                         ];
-                $customs = [
+            $customs = [
                     'image.required' => __('Feature Image is required.'),
                     'image.mimes' => __('Feature Image Type is Invalid.')
                         ];
-                $validator = Validator::make($request->all(), $rules, $customs);
+            $validator = Validator::make($request->all(), $rules, $customs);
 
-                if ($validator->fails()) {
+            if ($validator->fails()) {
                 return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
-                }
-                //--- Validation Section Ends
-                if ($file = $request->file('image'))
-                {
-                   $name = time().$file->getClientOriginalName();
-                   $file->move('assets/images/categories',$name);
-                   $input['image'] = $name;
-                }
+            }
+            //--- Validation Section Ends
+            if ($file = $request->file('image')) {
+                $name = time().$file->getClientOriginalName();
+                $file->move('storage/images/categories', $name);
+                $input['image'] = $name;
+            }
         }
-        
+
         $data->fill($input)->save();
         //--- Logic Section Ends
 
-            // Add To Gallery If any
-            $lastid = $data->id;
-            if ($files = $request->file('gallery')){
-                foreach ($files as  $key => $file){
-                    if(in_array($key, $request->galval))
-                    {
-                        $gallery = new CategoryGallery;
-                        $name = time().$file->getClientOriginalName();
-                        $file->move('assets/images/galleries',$name);
-                        $gallery['photo'] = $name;
-                        $gallery['category_id'] = $lastid;
-                        $gallery->save();
-                    }
+        // Add To Gallery If any
+        $lastid = $data->id;
+        if ($files = $request->file('gallery')) {
+            foreach ($files as  $key => $file) {
+                if (in_array($key, $request->galval)) {
+                    $gallery = new CategoryGallery;
+                    $name = time().$file->getClientOriginalName();
+                    $file->move('storage/images/galleries', $name);
+                    $gallery['photo'] = $name;
+                    $gallery['category_id'] = $lastid;
+                    $gallery->save();
                 }
             }
+        }
 
         //-----Creating automatic slug
         $cat = Category::find($data->id);
-        $cat->slug = Str::slug($data->name,'-').'-'.strtolower($data->id);
+        $cat->slug = Str::slug($data->name, '-').'-'.strtolower($data->id);
         $cat->update();
 
         //--- Redirect Section
-        if($request->api) {
+        if ($request->api) {
             return response()->json(array('status' => 'ok'), Response::HTTP_CREATED);
         }
-        
+
         $msg = __('New Data Added Successfully.');
         return response()->json($msg);
         //--- Redirect Section Ends
@@ -223,32 +217,32 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $data = Category::findOrFail($id);
-        return view('admin.category.edit',compact('data'));
+        return view('admin.category.edit', compact('data'));
     }
 
     //*** POST Request
     public function update(Request $request, $id)
     {
-        
+
         //--- Validation Section
         $rules = [
             "{$this->lang->locale}.name" => 'required',
-        	'photo' => 'mimes:jpeg,jpg,png,svg',
+            'photo' => 'mimes:jpeg,jpg,png,svg',
             'banner' => 'mimes:jpeg,jpg,png,svg',
-        	'slug' => 'unique:categories,slug,'.$id.'|regex:/^[a-zA-Z0-9\s-]+$/'
-        		 ];
+            'slug' => 'unique:categories,slug,'.$id.'|regex:/^[a-zA-Z0-9\s-]+$/'
+                 ];
         $customs = [
-            "{$this->lang->locale}.name.required" => __('Category Name in :lang is required',['lang' => $this->lang->language]),
-        	'photo.mimes' => __('Icon Type is Invalid.'),
+            "{$this->lang->locale}.name.required" => __('Category Name in :lang is required', ['lang' => $this->lang->language]),
+            'photo.mimes' => __('Icon Type is Invalid.'),
             'banner' => __('Banner Type is Invalid.'),
-        	'slug.unique' => __('This slug has already been taken.'),
+            'slug.unique' => __('This slug has already been taken.'),
             'slug.regex' => __('Slug Must Not Have Any Special Characters.')
-        		   ];
+                   ];
         $validator = Validator::make($request->all(), $rules, $customs);
 
         if ($validator->fails()) {
-            if($request->api) {
-                return response()->json(array('errors' => $validator->getMessageBag()->toArray()),Response::HTTP_BAD_REQUEST);
+            if ($request->api) {
+                return response()->json(array('errors' => $validator->getMessageBag()->toArray()), Response::HTTP_BAD_REQUEST);
             }
             return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
         }
@@ -258,84 +252,77 @@ class CategoryController extends Controller
         $data = Category::findOrFail($id);
         $input = $this->removeEmptyTranslations($request->all(), $data);
 
-            if ($file = $request->file('photo'))
-            {
-                $name = time().$file->getClientOriginalName();
-                $file->move('assets/images/categories',$name);
-                if($data->photo != null)
-                {
-                    if (file_exists(public_path().'/assets/images/categories/'.$data->photo)) {
-                        unlink(public_path().'/assets/images/categories/'.$data->photo);
-                    }
+        if ($file = $request->file('photo')) {
+            $name = time().$file->getClientOriginalName();
+            $file->move('storage/images/categories', $name);
+            if ($data->photo != null) {
+                if (file_exists(public_path().'/storage/images/categories/'.$data->photo)) {
+                    unlink(public_path().'/storage/images/categories/'.$data->photo);
                 }
+            }
             $input['photo'] = $name;
-            }
+        }
 
-            if ($banner = $request->file('banner')) {
-                $name = Str::random(8).time().".".$banner->getClientOriginalExtension();
-                $banner->move('assets/images/categories/banners',$name);
-                if($data->banner != null)
-                {
-                    if (file_exists(public_path().'/assets/images/categories/banners/'.$data->banner) && !empty($data->banner)) {
-                        unlink(public_path().'/assets/images/categories/banners/'.$data->banner);
-                    }
+        if ($banner = $request->file('banner')) {
+            $name = Str::random(8).time().".".$banner->getClientOriginalExtension();
+            $banner->move('storage/images/categories/banners', $name);
+            if ($data->banner != null) {
+                if (file_exists(public_path().'/storage/images/categories/banners/'.$data->banner) && !empty($data->banner)) {
+                    unlink(public_path().'/storage/images/categories/banners/'.$data->banner);
                 }
-                $input['banner'] = $name;
             }
+            $input['banner'] = $name;
+        }
 
-            if ($request->is_customizable == ""){
-                $input['is_customizable'] = 0;
-            }
-            else {
-                    $input['is_customizable'] = 1;
-            }
+        if ($request->is_customizable == "") {
+            $input['is_customizable'] = 0;
+        } else {
+            $input['is_customizable'] = 1;
+        }
 
-            if ($request->is_customizable_number == ""){
+        if ($request->is_customizable_number == "") {
             $input['is_customizable_number'] = 0;
-            }
-            else {
-                $input['is_customizable_number'] = 1;
-            }
-            
-            if ($request->is_featured == ""){
-                $input['is_featured'] = 0;
-            }
-            else {
-                    $input['is_featured'] = 1;
-                    //--- Validation Section
-                    $rules = [
+        } else {
+            $input['is_customizable_number'] = 1;
+        }
+
+        if ($request->is_featured == "") {
+            $input['is_featured'] = 0;
+        } else {
+            $input['is_featured'] = 1;
+            //--- Validation Section
+            $rules = [
                         'image' => 'mimes:jpeg,jpg,png,svg'
                             ];
-                    $customs = [
+            $customs = [
                         'image.required' => __('Feature Image is required.')
                             ];
-                    $validator = Validator::make($request->all(), $rules, $customs);
+            $validator = Validator::make($request->all(), $rules, $customs);
 
-                    if ($validator->fails()) {
-                        if($request->api) {
-                            return response()->json(array('errors' => $validator->getMessageBag()->toArray()),Response::HTTP_BAD_REQUEST);
-                        }
-                        return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
-                    }
-                    //--- Validation Section Ends
-                    if ($file = $request->file('image'))
-                    {
-                       $name = time().$file->getClientOriginalName();
-                       $file->move('assets/images/categories',$name);
-                       $input['image'] = $name;
-                    }
+            if ($validator->fails()) {
+                if ($request->api) {
+                    return response()->json(array('errors' => $validator->getMessageBag()->toArray()), Response::HTTP_BAD_REQUEST);
+                }
+                return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
             }
+            //--- Validation Section Ends
+            if ($file = $request->file('image')) {
+                $name = time().$file->getClientOriginalName();
+                $file->move('storage/images/categories', $name);
+                $input['image'] = $name;
+            }
+        }
 
         $data->update($input);
         //----Slug automatic
         $data = Category::findOrFail($id);
-        $data->slug = Str::slug($data->name,'-').'-'.strtolower($data->id);
+        $data->slug = Str::slug($data->name, '-').'-'.strtolower($data->id);
         $data->update($input);
 
         //--- Logic Section Ends
 
         //--- Redirect Section
-        if($request->api) {
+        if ($request->api) {
             return response()->json(array('status' => 'ok'));
         }
 
@@ -344,19 +331,20 @@ class CategoryController extends Controller
         //--- Redirect Section Ends
     }
 
-      //*** GET Request Status
-      public function status($id1,$id2)
-      {
-          $data = Category::findOrFail($id1);
-          $data->status = $id2;
-          $data->update();
-          foreach($data->products as $prod) {
-              $prod->status = $id2;
-              $prod->update();
-          }
-      }
+    //*** GET Request Status
+    public function status($id1, $id2)
+    {
+        $data = Category::findOrFail($id1);
+        $data->status = $id2;
+        $data->update();
+        foreach ($data->products as $prod) {
+            $prod->status = $id2;
+            $prod->update();
+        }
+    }
 
-      public function changeCatPos($id,$newPos){
+    public function changeCatPos($id, $newPos)
+    {
         $data = Category::findOrFail($id);
         $data->presentation_position = $newPos;
         $data->update();
@@ -368,9 +356,8 @@ class CategoryController extends Controller
     {
         $data = Category::findOrFail($id);
 
-        if($data->attributes->count() > 0)
-        {
-          Attribute::where('attributable_id', $id)->where('attributable_type','=', 'App\Models\Category')->delete();  
+        if ($data->attributes->count() > 0) {
+            Attribute::where('attributable_id', $id)->where('attributable_type', '=', 'App\Models\Category')->delete();
         }
 
         if ($data->subs->count() > 0) {
@@ -384,9 +371,9 @@ class CategoryController extends Controller
                 }
             }
         }
-        
+
         //If Photo Doesn't Exist
-        if($data->photo == null && $data->image == null){
+        if ($data->photo == null && $data->image == null) {
             $data->delete();
             //--- Redirect Section
             $msg = __('Data Deleted Successfully.');
@@ -394,11 +381,11 @@ class CategoryController extends Controller
             //--- Redirect Section Ends
         }
         //If Photo Exist
-        if (file_exists(public_path().'/assets/images/categories/'.$data->photo) && !empty($data->photo)) {
-            unlink(public_path().'/assets/images/categories/'.$data->photo);
+        if (file_exists(public_path().'/storage/images/categories/'.$data->photo) && !empty($data->photo)) {
+            unlink(public_path().'/storage/images/categories/'.$data->photo);
         }
-        if (file_exists(public_path().'/assets/images/categories/'.$data->image) && !empty($data->image)) {
-            unlink(public_path().'/assets/images/categories/'.$data->image);
+        if (file_exists(public_path().'/storage/images/categories/'.$data->image) && !empty($data->image)) {
+            unlink(public_path().'/storage/images/categories/'.$data->image);
         }
         $data->delete();
         //--- Redirect Section
@@ -410,7 +397,7 @@ class CategoryController extends Controller
     public function deleteImage(Request $request)
     {
         $data = Category::findOrFail($request->id);
-        $path = public_path().'/assets/images/categories/'.$data->{$request->target};
+        $path = public_path().'/storage/images/categories/'.$data->{$request->target};
         if (file_exists($path) && !empty($data->{$request->target})) {
             unlink($path);
             $data->{$request->target} = '';
@@ -427,7 +414,7 @@ class CategoryController extends Controller
     public function deleteBanner(Request $request)
     {
         $data = Category::findOrFail($request->id);
-        $path = public_path().'/assets/images/categories/banners/'.$data->{$request->target};
+        $path = public_path().'/storage/images/categories/banners/'.$data->{$request->target};
         if (file_exists($path) && !empty($data->{$request->target})) {
             unlink($path);
             $data->{$request->target} = '';
