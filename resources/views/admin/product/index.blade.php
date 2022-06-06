@@ -1,4 +1,4 @@
-@extends('layouts.admin') 
+@extends('layouts.admin')
 
 @section('styles')
 <style>
@@ -17,180 +17,195 @@
         padding-right: 30px;
     }
 
-    .add-btn{
+    .add-btn {
         padding-left: 20px;
         padding-right: 30px;
         margin-bottom: 20px;
     }
-
-    
 </style>
 @endsection
 
-@section('content')  
+@section('content')
 
 <div class="content-area">
-						<div class="mr-breadcrumb">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <h4 class="heading">
-                                    {{ __('Products') }}
-                                </h4>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <ul class="links">
-                                            <li>
-                                                <a href="{{ route('admin.dashboard') }}">{{ __("Dashboard") }} </a>
-                                            </li>
-                                            <li>
-                                                <a href="{{ route('admin-prod-index') }}">{{ __("Products") }} </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    @if($gs->ftp_folder)
-                                    <div class="col-lg-6 col-offset-6 text-right">
-                                        <button class="add-btn" id="generateThumbnails" href="{{ route('admin-prod-btngeneratethumbnails') }}"><i class="fas fa-sync-alt"></i> {{__("Update Thumbnails")}}</button>
-                                      </div>
-                                    @endif
-                                </div>
-                                <div class="row">
-                                    
-                                </div>
-                                <div class="row">   
-                                    <div class="col-lg-12">
-                                            <ul class="links">
-                                                <li>
-                                                    <div class="action-list godropdown">
-                                                        <select id="product_filters" class="process select go-dropdown-toggle">
-                                                            @foreach ($filters as $filter => $name)
-                                                            <option value="{{ route('admin-prod-datatables', $filter) }}">{{$name}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="action-list godropdown">
-                                                        <select id="brand_filters" class="process go-dropdown-toggle">
-                                                            <option value="">{{ __("All Brands") }}</option>
-                                                            @foreach ($brands as $brand)
-                                                            <option value='{{$brand->id}}'>{{$brand->name}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="action-list godropdown">
-                                                        <select id="category_filters" class="process go-dropdown-toggle">
-                                                            <option value="">{{ __("All Categories") }}</option>
-                                                            @foreach ($cats as $category)
-                                                            <option value='{{$category->id}}'>{{$category->name}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="action-list godropdown">
-                                                        <select id="store_filters" class="process go-dropdown-toggle">
-                                                            <option value="">{{ __("All Stores") }} </option>
-                                                            @foreach ($storesList as $store)
-                                                            <option value='{{$store->id}}'>{{$store->domain}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <a class="mybtn1 bulkeditbtn add-btn" data-href="{{route('admin-prod-bulkedit')}}" data-header="{{__('Edit Multiple')}}" data-toggle="modal" data-target="#bulk_edit_modal" style="display: none;">
-                                                        <i class="fas fa-edit"></i><span class="remove-mobile">{{ __("Edit Multiple") }}</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="mybtn1 bulkremovebtn add-btn" data-href="{{route('admin-prod-bulkdelete')}}" data-toggle="modal" data-target="#confirm-bulkdelete" style="display: none;">
-                                                        <i class="fas fa-trash-alt"></i><span class="remove-mobile">{{ __("Remove Multiple") }}</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        
-                                        @if ($gs->is_comprasparaguai)
-                                        <a class="mybtn1 btn-info btn-comprasparaguai add-btn" data-href="{{route('admin-prod-comprasparaguai')}}">
-                                            <i class="fas fa-sync-alt"></i><span class="remove-mobile">{{ __("Compras Paraguai") }}</span>
-                                        </a>
-                                        @endif
+    <div class="mr-breadcrumb">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4 class="heading">
+                    {{ __('Products') }}
+                </h4>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <ul class="links">
+                            <li>
+                                <a href="{{ route('admin.dashboard') }}">{{ __("Dashboard") }} </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin-prod-index') }}">{{ __("Products") }} </a>
+                            </li>
+                        </ul>
+                    </div>
+                    @if($gs->ftp_folder)
+                    <div class="col-lg-6 col-offset-6 text-right">
+                        <button class="add-btn" id="generateThumbnails"
+                            href="{{ route('admin-prod-btngeneratethumbnails') }}"><i class="fas fa-sync-alt"></i>
+                            {{__("Update Thumbnails")}}</button>
+                    </div>
+                    @endif
+                </div>
+                <div class="row">
 
-                                        @if ($gs->is_lojaupdate)
-                                        <a class="mybtn1 btn-info btn-comprasparaguai add-btn" data-href="{{route('admin-prod-updateloja')}}">
-                                            <i class="fas fa-sync-alt"></i><span class="remove-mobile">{{ __("Google & Facebook") }}</span>
-                                        </a>
-                                        @endif
-                                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <ul class="links">
+                            <li>
+                                <div class="action-list godropdown">
+                                    <select id="product_filters" class="process select go-dropdown-toggle">
+                                        @foreach ($filters as $filter => $name)
+                                        <option value="{{ route('admin-prod-datatables', $filter) }}">{{$name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                            </div>
-                        </div>
-						<div class="product-area">
-							<div class="row">
-								<div class="col-lg-12">
-                                    <div class="submit-loader">
-                                        <img  src="{{asset('assets/images/'.$gs->admin_loader)}}" alt="">
-                                    </div>
-									<div class="mr-table allproduct">
+                            </li>
+                            <li>
+                                <div class="action-list godropdown">
+                                    <select id="brand_filters" class="process go-dropdown-toggle">
+                                        <option value="">{{ __("All Brands") }}</option>
+                                        @foreach ($brands as $brand)
+                                        <option value='{{$brand->id}}'>{{$brand->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="action-list godropdown">
+                                    <select id="category_filters" class="process go-dropdown-toggle">
+                                        <option value="">{{ __("All Categories") }}</option>
+                                        @foreach ($cats as $category)
+                                        <option value='{{$category->id}}'>{{$category->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="action-list godropdown">
+                                    <select id="store_filters" class="process go-dropdown-toggle">
+                                        <option value="">{{ __("All Stores") }} </option>
+                                        @foreach ($storesList as $store)
+                                        <option value='{{$store->id}}'>{{$store->domain}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </li>
+                            <li>
+                                <a class="mybtn1 bulkeditbtn add-btn" data-href="{{route('admin-prod-bulkedit')}}"
+                                    data-header="{{__('Edit Multiple')}}" data-toggle="modal"
+                                    data-target="#bulk_edit_modal" style="display: none;">
+                                    <i class="fas fa-edit"></i><span class="remove-mobile">{{ __("Edit Multiple")
+                                        }}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="mybtn1 bulkremovebtn add-btn" data-href="{{route('admin-prod-bulkdelete')}}"
+                                    data-toggle="modal" data-target="#confirm-bulkdelete" style="display: none;">
+                                    <i class="fas fa-trash-alt"></i><span class="remove-mobile">{{ __("Remove Multiple")
+                                        }}</span>
+                                </a>
+                            </li>
+                        </ul>
 
-                        @include('includes.admin.form-success')  
-                        @include('includes.admin.form-error')  
+                        @if ($gs->is_comprasparaguai)
+                        <a class="mybtn1 btn-info btn-comprasparaguai add-btn"
+                            data-href="{{route('admin-prod-comprasparaguai')}}">
+                            <i class="fas fa-sync-alt"></i><span class="remove-mobile">{{ __("Compras Paraguai")
+                                }}</span>
+                        </a>
+                        @endif
 
-										<div class="table-responsiv">
+                        @if ($gs->is_lojaupdate)
+                        <a class="mybtn1 btn-info btn-comprasparaguai add-btn"
+                            data-href="{{route('admin-prod-updateloja')}}">
+                            <i class="fas fa-sync-alt"></i><span class="remove-mobile">{{ __("Google & Facebook")
+                                }}</span>
+                        </a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="product-area">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="submit-loader">
+                        <img src="{{asset('storage/images/'.$gs->admin_loader)}}" alt="">
+                    </div>
+                    <div class="mr-table allproduct">
+
+                        @include('includes.admin.form-success')
+                        @include('includes.admin.form-error')
+
+                        <div class="table-responsiv">
                             <table id="geniustable" class="table table-hover dt-responsive" cellspacing="0"
                                 width="100%">
-													<thead>
-														<tr> 
-                                                            <th width="2%">
-                                                                <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" id="bulk_all" name="bulk_all" class="custom-control-input" id="bulk_all">
-                                                                    <label class="custom-control-label" for="bulk_all"></label>
-                                                                </div>
-                                                            </th>
-                                                            <th><i class="icofont-ui-image icofont-lg" data-toggle="tooltip" title='{{ __("Photo") }}'></i></th>
-                                                            <th width="15%"><i class="icofont-options icofont-lg" data-toggle="tooltip" title='{{ __("Options") }}'></i></th>
-									                        <th width="20%">{{ __("Name") }}</th>
-                                                            <th>{{ __("Tags") }}</th>
-                                                            <th><i class="fa fa-th-large fa-lg" data-toggle="tooltip" title='{{ __("Stock") }}'></i></th>
-									                        <th><i class="icofont-dollar icofont-lg" data-toggle="tooltip" title='{{ __("Price") }}'></i></th>
-                                                            <th><i class="icofont-eye icofont-lg" data-toggle="tooltip" title='{{ __("Status") }}'></i></th>
-                                                            <th></th>
-														</tr>
-													</thead>
-												</table>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+                                <thead>
+                                    <tr>
+                                        <th width="2%">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" id="bulk_all" name="bulk_all"
+                                                    class="custom-control-input" id="bulk_all">
+                                                <label class="custom-control-label" for="bulk_all"></label>
+                                            </div>
+                                        </th>
+                                        <th><i class="icofont-ui-image icofont-lg" data-toggle="tooltip"
+                                                title='{{ __("Photo") }}'></i></th>
+                                        <th width="15%"><i class="icofont-options icofont-lg" data-toggle="tooltip"
+                                                title='{{ __("Options") }}'></i></th>
+                                        <th width="20%">{{ __("Name") }}</th>
+                                        <th>{{ __("Tags") }}</th>
+                                        <th><i class="fa fa-th-large fa-lg" data-toggle="tooltip"
+                                                title='{{ __("Stock") }}'></i></th>
+                                        <th><i class="icofont-dollar icofont-lg" data-toggle="tooltip"
+                                                title='{{ __("Price") }}'></i></th>
+                                        <th><i class="icofont-eye icofont-lg" data-toggle="tooltip"
+                                                title='{{ __("Status") }}'></i></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     {{-- HIGHLIGHT MODAL --}}
 
-										<div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="modal2" aria-hidden="true">
-										
-										<div class="modal-dialog highlight" role="document">
-										<div class="modal-content">
-												<div class="submit-loader">
-                    <img src="{{asset('assets/images/'.$admstore->admin_loader)}}" alt="">
-												</div>
-											<div class="modal-header">
-											<h5 class="modal-title"></h5>
-											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-												<span aria-hidden="true">&times;</span>
-											</button>
-											</div>
-											<div class="modal-body">
+    <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="modal2" aria-hidden="true">
 
-											</div>
-											<div class="modal-footer">
-                                                <div id="submit-button">
+        <div class="modal-dialog highlight" role="document">
+            <div class="modal-content">
+                <div class="submit-loader">
+                    <img src="{{asset('storage/images/'.$admstore->admin_loader)}}" alt="">
+                </div>
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
 
-                                                </div>
-											    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __("Close") }}</button>
-											</div>
-										</div>
-										</div>
+                </div>
+                <div class="modal-footer">
+                    <div id="submit-button">
+
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __("Close") }}</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     {{-- HIGHLIGHT ENDS --}}
@@ -198,30 +213,30 @@
     {{-- CATALOG MODAL --}}
 
     <div class="modal fade" id="catalog-modal" tabindex="-1" role="dialog" aria-labelledby="modal1" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
-	<div class="modal-header d-block text-center">
-		<h4 class="modal-title d-inline-block">{{ __("Update Status") }}</h4>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-	</div>
+                <div class="modal-header d-block text-center">
+                    <h4 class="modal-title d-inline-block">{{ __("Update Status") }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
 
-      <!-- Modal body -->
-      <div class="modal-body">
-            <p class="text-center">{{ __("You are about to change the status of this Product.") }}</p>
-            <p class="text-center">{{ __("Do you want to proceed?") }}</p>
-      </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p class="text-center">{{ __("You are about to change the status of this Product.") }}</p>
+                    <p class="text-center">{{ __("Do you want to proceed?") }}</p>
+                </div>
 
-      <!-- Modal footer -->
-      <div class="modal-footer justify-content-center">
-            <button type="button" class="btn btn-default" data-dismiss="modal">{{ __("Cancel") }}</button>
-            <a class="btn btn-success btn-ok">{{ __("Proceed") }}</a>
-      </div>
+                <!-- Modal footer -->
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ __("Cancel") }}</button>
+                    <a class="btn btn-success btn-ok">{{ __("Proceed") }}</a>
+                </div>
 
-    </div>
-  </div>
+            </div>
+        </div>
     </div>
 
     {{-- CATALOG MODAL ENDS --}}
@@ -229,205 +244,209 @@
     {{-- DELETE MODAL --}}
 
     <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="modal1" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
-	<div class="modal-header d-block text-center">
-		<h4 class="modal-title d-inline-block">{{ __("Confirm Delete") }}</h4>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-	</div>
+                <div class="modal-header d-block text-center">
+                    <h4 class="modal-title d-inline-block">{{ __("Confirm Delete") }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
 
-      <!-- Modal body -->
-      <div class="modal-body">
-            <p class="text-center">{{ __("You are about to delete this Product.") }}</p>
-            <p class="text-center">{{ __("Do you want to proceed?") }}</p>
-      </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p class="text-center">{{ __("You are about to delete this Product.") }}</p>
+                    <p class="text-center">{{ __("Do you want to proceed?") }}</p>
+                </div>
 
-      <!-- Modal footer -->
-      <div class="modal-footer justify-content-center">
-            <button type="button" class="btn btn-default" data-dismiss="modal">{{ __("Cancel") }}</button>
-            <a class="btn btn-danger btn-ok">{{ __("Delete") }}</a>
-      </div>
+                <!-- Modal footer -->
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ __("Cancel") }}</button>
+                    <a class="btn btn-danger btn-ok">{{ __("Delete") }}</a>
+                </div>
 
-    </div>
-  </div>
+            </div>
+        </div>
     </div>
 
     {{-- DELETE MODAL ENDS --}}
 
     {{-- BULK DELETE MODAL --}}
 
-    <div class="modal fade" id="confirm-bulkdelete" tabindex="-1" role="dialog" aria-labelledby="bulkdeletemodal" aria-hidden="true">
+    <div class="modal fade" id="confirm-bulkdelete" tabindex="-1" role="dialog" aria-labelledby="bulkdeletemodal"
+        aria-hidden="true">
         <div class="modal-dialog">
-          <div class="modal-content">
-      
-          <div class="modal-header d-block text-center">
-              <h4 class="modal-title d-inline-block">{{ __("Confirm Bulk Delete") }}</h4>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                  </button>
-          </div>
-      
-            <!-- Modal body -->
-            <div class="modal-body">
-                  <p class="text-center">{{ __("You are about to delete these Products.") }}</p>
-                  <p class="text-center">{{ __("Do you want to proceed?") }}</p>
+            <div class="modal-content">
+
+                <div class="modal-header d-block text-center">
+                    <h4 class="modal-title d-inline-block">{{ __("Confirm Bulk Delete") }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p class="text-center">{{ __("You are about to delete these Products.") }}</p>
+                    <p class="text-center">{{ __("Do you want to proceed?") }}</p>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ __("Cancel") }}</button>
+                    <a class="btn btn-danger btn-ok">{{ __("Delete") }}</a>
+                </div>
+
             </div>
-      
-            <!-- Modal footer -->
-            <div class="modal-footer justify-content-center">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">{{ __("Cancel") }}</button>
-                  <a class="btn btn-danger btn-ok">{{ __("Delete") }}</a>
-            </div>
-      
-          </div>
         </div>
-          </div>
-      
-          {{-- BULK DELETE MODAL ENDS --}}
+    </div>
+
+    {{-- BULK DELETE MODAL ENDS --}}
 
     {{-- COPY MODAL --}}
 
     <div class="modal fade" id="confirm-copy" tabindex="-1" role="dialog" aria-labelledby="modal1" aria-hidden="true">
-	<div class="modal-dialog">
-	  <div class="modal-content">
-  
-	  <div class="modal-header d-block text-center">
-		  <h4 class="modal-title d-inline-block">{{ __("Confirm Copy") }}</h4>
-			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				  <span aria-hidden="true">&times;</span>
-			  </button>
-	  </div>
-  
-		<!-- Modal body -->
-		<div class="modal-body">
-			  <p class="text-center">{{ __("You are about to copy this Product.") }}</p>
-			  <p class="text-center">{{ __("Do you want to proceed?") }}</p>
-		</div>
-  
-		<!-- Modal footer -->
-		<div class="modal-footer justify-content-center">
-			  <button type="button" class="btn btn-default" data-dismiss="modal">{{ __("Cancel") }}</button>
-			  <a class="btn btn-success btn-ok copy-ajax">{{ __("Copy") }}</a>
-		</div>
-  
-	  </div>
-	</div>
-  </div>
-  
-  {{-- COPY MODAL ENDS --}}
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header d-block text-center">
+                    <h4 class="modal-title d-inline-block">{{ __("Confirm Copy") }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p class="text-center">{{ __("You are about to copy this Product.") }}</p>
+                    <p class="text-center">{{ __("Do you want to proceed?") }}</p>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ __("Cancel") }}</button>
+                    <a class="btn btn-success btn-ok copy-ajax">{{ __("Copy") }}</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {{-- COPY MODAL ENDS --}}
 
     {{-- GALLERY MODAL --}}
 
-		<div class="modal fade" id="setgallery" tabindex="-1" role="dialog" aria-labelledby="setgallery" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-				<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalCenterTitle">{{ __("Image Gallery") }}</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">×</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<div class="top-area">
-						<div class="row">
-							<div class="col-sm-6 text-right">
-								<div class="upload-img-btn">
-									<form  method="POST" enctype="multipart/form-data" id="form-gallery">
-										{{ csrf_field() }}
-									<input type="hidden" id="pid" name="product_id" value="">
+    <div class="modal fade" id="setgallery" tabindex="-1" role="dialog" aria-labelledby="setgallery" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">{{ __("Image Gallery") }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="top-area">
+                        <div class="row">
+                            <div class="col-sm-6 text-right">
+                                <div class="upload-img-btn">
+                                    <form method="POST" enctype="multipart/form-data" id="form-gallery">
+                                        {{ csrf_field() }}
+                                        <input type="hidden" id="pid" name="product_id" value="">
                                         <input type="file" name="gallery[]" class="hidden" id="uploadgallery"
                                             accept="image/*" multiple>
-                                        <label for="image-upload" id="prod_gallery"><i
-                                                class="icofont-upload-alt"></i>{{ __("Upload File") }}</label>
-									</form>
-								</div>
-							</div>
-							<div class="col-sm-6">
+                                        <label for="image-upload" id="prod_gallery"><i class="icofont-upload-alt"></i>{{
+                                            __("Upload File") }}</label>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
                                 <a href="javascript:;" class="upload-done" data-dismiss="modal"> <i
                                         class="fas fa-check"></i> {{ __("Done") }}</a>
-							</div>
+                            </div>
                             <div class="col-sm-12 text-center">(
-                                <small>{{ __("You can upload multiple Images") }}.</small> )</div>
-						</div>
-					</div>
-					<div class="gallery-images">
-						<div class="selected-image">
-							<div class="row">
+                                <small>{{ __("You can upload multiple Images") }}.</small> )
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-images">
+                        <div class="selected-image">
+                            <div class="row">
 
-							</div>
-						</div>
-					</div>
-				</div>
-				</div>
-			</div>
-		</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     {{-- GALLERY MODAL ENDS --}}
 
-{{-- GALLERY MODAL ENDS --}}
+    {{-- GALLERY MODAL ENDS --}}
 
-{{-- FASTEDIT MODAL --}}
+    {{-- FASTEDIT MODAL --}}
 
-<div class="modal fade" id="fast_edit_modal" tabindex="-1" role="dialog" aria-labelledby="modaledit" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-	<div class="modal-content">
-			<div class="submit-loader">
-					<img  src="{{asset('assets/images/'.$gs->admin_loader)}}" alt="">
-			</div>
-		<div class="modal-header">
-		<h5 class="modal-title"></h5>
-		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-		</button>
-		</div>
-		<div class="modal-body">
-            
-		</div>
-		<div class="modal-footer">
-		<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __("Close") }}</button>
-		</div>
-	</div>
-	</div>
-</div>
+    <div class="modal fade" id="fast_edit_modal" tabindex="-1" role="dialog" aria-labelledby="modaledit"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="submit-loader">
+                    <img src="{{asset('storage/images/'.$gs->admin_loader)}}" alt="">
+                </div>
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
 
-{{-- FASTEDIT ENDS --}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __("Close") }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-{{-- BULKEDIT MODAL --}}
+    {{-- FASTEDIT ENDS --}}
 
-<div class="modal fade" id="bulk_edit_modal" tabindex="-1" role="dialog" aria-labelledby="modaledit" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-	<div class="modal-content">
-			<div class="submit-loader">
-					<img  src="{{asset('assets/images/'.$gs->admin_loader)}}" alt="">
-			</div>
-		<div class="modal-header">
-        <h5 class="modal-title">{{__('Multiple Edit')}}</h5>
-		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-		</button>
-		</div>
-		<div class="modal-body">
-            
-		</div>
-		<div class="modal-footer">
-		<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __("Close") }}</button>
-		</div>
-	</div>
-	</div>
-</div>
+    {{-- BULKEDIT MODAL --}}
 
-{{-- BULKEDIT ENDS --}}
+    <div class="modal fade" id="bulk_edit_modal" tabindex="-1" role="dialog" aria-labelledby="modaledit"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="submit-loader">
+                    <img src="{{asset('storage/images/'.$gs->admin_loader)}}" alt="">
+                </div>
+                <div class="modal-header">
+                    <h5 class="modal-title">{{__('Multiple Edit')}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
 
-@endsection    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __("Close") }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- BULKEDIT ENDS --}}
+
+    @endsection
 
 
 
-@section('scripts')
-<script>
-    $('.btn-comprasparaguai').on('click', function(e) {
+    @section('scripts')
+    <script>
+        $('.btn-comprasparaguai').on('click', function(e) {
         if (admin_loader == 1) {
             $('.submit-loader').show();
         }
@@ -454,9 +473,9 @@
         });
         return false;
     });
-</script>
-<script>
-	// Fast Edit
+    </script>
+    <script>
+        // Fast Edit
 	$(document).on('click', '.fasteditbtn', function() {
 		if (admin_loader == 1) {
 			$('.submit-loader').show();
@@ -471,9 +490,9 @@
 			}
 		});
 	});
-</script>
-<script>
-	// Bulk Edit
+    </script>
+    <script>
+        // Bulk Edit
 	$(document).on('click', '.bulkeditbtn', function() {
         if (admin_loader == 1) {
 			$('.submit-loader').show();
@@ -494,9 +513,9 @@
 			}
 		});
 	});
-</script>
-<script>
-    //--- Bulk Delete
+    </script>
+    <script>
+        //--- Bulk Delete
     $('#confirm-bulkdelete').on('show.bs.modal', function(e) {
         $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
     });
@@ -517,7 +536,7 @@
         $.ajax({
             type: "POST",
             url: $(this).attr('href'),
-            data: { 'array_id': array_id }, 
+            data: { 'array_id': array_id },
             success: function(data) {
                 if ((data.errors)) {
                     $('.alert-success').hide();
@@ -540,23 +559,22 @@
         });
         return false;
     });
-</script>
+    </script>
     {{-- DATA TABLE --}}
-		
 
-<script>
 
-    // Defines hide and show functions, using Bulk Edit Buttons
+    <script>
+        // Defines hide and show functions, using Bulk Edit Buttons
     function hideButtons(){ $(".bulkeditbtn").hide(); $(".bulkremovebtn").hide(); }
     function showButtons(){ $(".bulkeditbtn").show(); $(".bulkremovebtn").show(); }
 
     // Number of rows selected
     var qtde = 0;
-    
+
     // Defined table reset manually
-    function tableRowCountReset(){ 
-        qtde = 0; 
-        $("#bulk_all").prop('checked', false); 
+    function tableRowCountReset(){
+        qtde = 0;
+        $("#bulk_all").prop('checked', false);
         sessionStorage.setItem("CurrentPage", 0);
         hideButtons();
     }
@@ -578,7 +596,7 @@
                     span.text($(this).text());
                     $(this).trigger('click');
                     $(this).parent().parent().removeClass("open").delay(100);
-                    
+
                 } else $(this).removeClass('selected focus');
             });
 
@@ -690,11 +708,11 @@
         ],
         language: {
             url: '{{$datatable_translation}}',
-            processing: '<img src="{{asset("assets/images/".$admstore->admin_loader)}}">'
+            processing: '<img src="{{asset("storage/images/".$admstore->admin_loader)}}">'
         },
         drawCallback: function(settings) {
 
-            /* 
+            /*
             * This function checks whether it has to show or hide "Edit/Remove Many" buttons
             * considering #bulk_all's state.
             * It also updates the row count to the maximum, either 10, 25, 50 or 100.
@@ -711,13 +729,13 @@
                 }
             });
 
-            /* 
-            * This function checks whether it has to show or hide "Edit/Remove Many" buttons 
-            * considering the number of rows selected. If the number is greater than 1, 
-            * the buttons are showed. It also has a verify if-else to detect whether all 
-            * the rows are selected manually or not. 
+            /*
+            * This function checks whether it has to show or hide "Edit/Remove Many" buttons
+            * considering the number of rows selected. If the number is greater than 1,
+            * the buttons are showed. It also has a verify if-else to detect whether all
+            * the rows are selected manually or not.
             * If the row count does not matches maximum row count, #bulkall will be setted to false.
-            * Therefore it covers all of possibilities to row count crash or 
+            * Therefore it covers all of possibilities to row count crash or
             * keep increasing without treatment.
             */
             $(".product-bulk-check").on('click', function(){
@@ -735,7 +753,7 @@
                 }
             });
 
-            /* 
+            /*
             * What happens when Status Switch is changed state.
             * Cannot be moved outta here
             */
@@ -749,10 +767,10 @@
                     type: 'GET',
                     url: '{{ url("admin/products/status") }}' + '/' + id + '/' + statusNovo
                 });
-                
+
             });
 
-            /* 
+            /*
             * What happens when Featured Switch is changed state.
             * Cannot be moved outta here
             */
@@ -769,7 +787,7 @@
                 });
             });
 
-            /* 
+            /*
             * If the table length is changed, it just resets the table.
             */
             $('#geniustable_length').on('change', function(){
@@ -786,7 +804,7 @@
             $(document).ready(function(){
                 table.page(parseInt(sessionStorage.getItem("CurrentPage"))).draw(false);
             });
-            
+
             /*
             * Appending "Add New Product" button
             */
@@ -796,7 +814,7 @@
                 '</a>' +
                 '</div>');
 
-            /* 
+            /*
             * Setando no Cookie a página atual
             */
             $("#geniustable").on('page.dt', function(){
@@ -804,21 +822,21 @@
             });
 
 
-            /* 
-            * If any of the product filters are changed, the table resets completely. 
-            * It also updates current SelectedProductFilter into Session Storage, which is used to 
+            /*
+            * If any of the product filters are changed, the table resets completely.
+            * It also updates current SelectedProductFilter into Session Storage, which is used to
             * keep the selection until user leaves the scope.
             */
             $('#product_filters').on('change', function() {
                 tableRowCountReset();
                 sessionStorage.setItem('SelectedProductFilter', $(this).val());
                 table.ajax.url(sessionStorage.getItem('SelectedProductFilter')).load();
-                
+
             });
 
-            /* 
-            * If any of the brand filters are changed, the table resets completely. 
-            * It also updates current SelectedBrandFilter into Session Storage, which is used to 
+            /*
+            * If any of the brand filters are changed, the table resets completely.
+            * It also updates current SelectedBrandFilter into Session Storage, which is used to
             * keep the selection until user leaves the scope.
             */
             $("#brand_filters").on('change', function(){
@@ -827,9 +845,9 @@
                 sessionStorage.setItem('SelectedBrandFilter', $(this).val());
             });
 
-            /* 
-            * If any of the category filters are changed, the table resets completely. 
-            * It also updates current SelectedCategoryFilter into Session Storage, which is used to 
+            /*
+            * If any of the category filters are changed, the table resets completely.
+            * It also updates current SelectedCategoryFilter into Session Storage, which is used to
             * keep the selection until user leaves the scope.
             */
             $("#category_filters").on('change', function(){
@@ -838,9 +856,9 @@
                 sessionStorage.setItem('SelectedCategoryFilter', $(this).val());
             });
 
-            /* 
-            * If any of the store filters are changed, the table resets completely. 
-            * It also updates current SelectedStoreFilter into Session Storage, which is used to 
+            /*
+            * If any of the store filters are changed, the table resets completely.
+            * It also updates current SelectedStoreFilter into Session Storage, which is used to
             * keep the selection until user leaves the scope.
             */
             $("#store_filters").on('change', function(){
@@ -850,12 +868,12 @@
             });
         }
     });
-</script>
+    </script>
 
     {{-- DATA TABLE ENDS--}}
 
-<script>
-    $(document).ready(function() {
+    <script>
+        $(document).ready(function() {
 
         $("#generateThumbnails").on('click', function(e) {
             e.preventDefault();
@@ -920,14 +938,14 @@
             sessionStorage.setItem('SelectedStoreFilter', $("#store_filters").val());
         } else table.column('store_id:name').search(sessionStorage.getItem("SelectedStoreFilter")).draw();
 
-        
 
-        $(document).on('click', 'a', function(e){ 
+
+        $(document).on('click', 'a', function(e){
             sessionStorage.setItem('SelectedProductFilter', $("#product_filters").val());
             sessionStorage.setItem('SelectedBrandFilter', $("#brand_filters").val());
             sessionStorage.setItem('SelectedCategoryFilter', $("#category_filters").val());
             sessionStorage.setItem('SelectedStoreFilter', $("#store_filters").val());
-            var link = jQuery(this); 
+            var link = jQuery(this);
             var x = '{{ Request::route()->getPrefix() }}';
             y = x.split("/");
             if(!(link.attr("data-href") || link.attr("href").indexOf("#") > -1 || link.attr("href").indexOf("javascript") > -1 || link.attr("href").indexOf(y[1]) > -1)){
@@ -940,8 +958,8 @@
             }
         });
     });
-</script>
-<script>
+    </script>
+    <script>
         // Gallery Section Update
     $(document).on('click', '.set-gallery-product', function() {
         var pid = $(this).find('input[type=hidden]').val();
@@ -960,10 +978,10 @@
                 } else {
                     if (data[2]) {
                         $('.selected-image .row').removeClass('justify-content-center');
-                        $('.selected-image .row h3').remove();      
+                        $('.selected-image .row h3').remove();
                         for (var k in data[2]) {
                             $('.selected-image .row').append('<div class="col-sm-6">' +
-                                '<div class="img gallery-img">'+ 
+                                '<div class="img gallery-img">'+
                                 '<span class="remove-img"><i class="fas fa-times"></i>' +
                                 '<input type="hidden" value="' + data[2][k]['id'] + '">' +
                                 '</span>' +
@@ -975,20 +993,20 @@
                         }
                     } else {
                         $('.selected-image .row').removeClass('justify-content-center');
-                        $('.selected-image .row h3').remove();      
+                        $('.selected-image .row h3').remove();
                         var arr = $.map(data[1], function(el) {
                             return el
                         });
                         for (var k in arr) {
                             $('.selected-image .row').append('<div class="col-sm-6">' +
-                                '<div class="img gallery-img">'+ 
+                                '<div class="img gallery-img">'+
                                 '<span class="remove-img"><i class="fas fa-times"></i>' +
                                 '<input type="hidden" value="' + arr[k]['id'] + '">' +
                                 '</span>' +
-                                '<a href="' + '{{asset("assets/images/galleries")."/"}}' + arr[k][
+                                '<a href="' + '{{asset("storage/images/galleries")."/"}}' + arr[k][
                                     'photo'
                                 ] + '" target="_blank">' +
-                                '<img src="' + '{{asset("assets/images/galleries")."/"}}' + arr[k][
+                                '<img src="' + '{{asset("storage/images/galleries")."/"}}' + arr[k][
                                     'photo'
                                 ] + '" alt="gallery image">' +
                                 '</a>' +
@@ -1029,7 +1047,7 @@
             success: function(data) {
                 if (data != 0) {
 	                    $('.selected-image .row').removeClass('justify-content-center');
-	      				$('.selected-image .row h3').remove();   
+	      				$('.selected-image .row h3').remove();
 		        var arr = $.map(data, function(el) {
                         return el
                     });
@@ -1039,24 +1057,24 @@
                             '<span class="remove-img"><i class="fas fa-times"></i>' +
                             '<input type="hidden" value="' + arr[k]['id'] + '">' +
                             '</span>' +
-                            '<a href="' + '{{asset("assets/images/galleries")."/"}}' + arr[k][
+                            '<a href="' + '{{asset("storage/images/galleries")."/"}}' + arr[k][
                                 'photo'
                             ] + '" target="_blank">' +
-                            '<img src="' + '{{asset("assets/images/galleries")."/"}}' + arr[k][
+                            '<img src="' + '{{asset("storage/images/galleries")."/"}}' + arr[k][
                                 'photo'
                             ] + '" alt="gallery image">' +
                             '</a>' +
                             '</div>' +
                                   	'</div>');
-		            }          
+		            }
 		    }
 		                       }
 		  });
 		  return false;
- }); 
-    // Gallery Section Update Ends	
+ });
+    // Gallery Section Update Ends
     </script>
-        
+
     <script>
         // Fix jquery ui datepicker select month and year not working inside ajax modal.
         // Source: https://stackoverflow.com/a/21088713/2465086
