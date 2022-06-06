@@ -51,7 +51,7 @@
                                         <h4 class="heading">{{ __('Current Icon') }}</h4>
                                         <div class="img-upload">
                                             <div id="image-preview" class="img-preview"
-                                                style="background: url('{{ $data->photo ? asset('storage/images/categories/'.$data->photo):asset('storage/images/noimage.png') }}');">
+                                                style="background: url('{{ $data->photo ? asset('storage/images/categories/'.$data->photo):asset('assets/images/noimage.png') }}');">
                                                 @if ($data->photo)
                                                 <div class="buttons">
                                                     <div class="deleteImage"
@@ -103,7 +103,7 @@
                                             </div>
                                             @endif
                                             <div id="image-preview" class="img-preview"
-                                                style="background: url('{{ $data->image ? asset('storage/images/categories/'.$data->image):asset('storage/images/noimage.png') }}');">
+                                                style="background: url('{{ $data->image ? asset('storage/images/categories/'.$data->image):asset('assets/images/noimage.png') }}');">
                                                 <label for="image-upload" class="img-label"><i
                                                         class="icofont-upload-alt"></i>{{ __('Upload Image') }}</label>
                                                 <input type="file" name="image" class="img-upload">
@@ -126,7 +126,7 @@
                                             </div>
                                             @endif
                                             <div id="image-preview" class="img-preview"
-                                                style="background: url('{{ $data->banner ? asset('storage/images/categories/banners/'.$data->banner):asset('storage/images/noimage.png') }}');">
+                                                style="background: url('{{ $data->banner ? asset('storage/images/categories/banners/'.$data->banner):asset('assets/images/noimage.png') }}');">
                                                 <label for="image-upload" class="img-label" id="image-label"><i
                                                         class="icofont-upload-alt"></i>{{ __('Upload Image') }}</label>
                                                 <input type="file" name="banner" class="img-upload" id="image-upload">

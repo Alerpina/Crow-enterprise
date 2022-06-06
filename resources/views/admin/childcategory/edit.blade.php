@@ -74,7 +74,7 @@
                                         <h4 class="heading">{{ __('Banner') }} *</h4>
                                         <div class="img-upload full-width-img">
                                             <div id="image-preview" class="img-preview"
-                                                style="background: url('{{ $data->banner ? asset('storage/images/childcategories/banners/'.$data->banner):asset('storage/images/noimage.png') }}');">
+                                                style="background: url('{{ $data->banner ? asset('storage/images/childcategories/banners/'.$data->banner):asset('assets/images/noimage.png') }}');">
                                                 <label for="image-upload" class="img-label" id="image-label"><i
                                                         class="icofont-upload-alt"></i>{{ __('Upload Image') }}</label>
                                                 <input type="file" name="banner" class="img-upload" id="image-upload">
