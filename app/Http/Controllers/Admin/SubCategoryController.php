@@ -40,10 +40,12 @@ class SubCategoryController extends Controller
             })
             ->addColumn('products', function (Subcategory $data) {
                 $buttons = __('None');
-                if(config("features.marketplace")){
+                if (config("features.marketplace")) {
                     $products_count = $data->products()->where('user_id', 0)->count();
-                } else $products_count = $data->products()->count();
-                if ($data->products()->where('status',1)->count() > 0) {
+                } else {
+                    $products_count = $data->products()->count();
+                }
+                if ($data->products()->where('status', 1)->count() > 0) {
                     $buttons = '<div class="ml-4">';
                     $buttons .= $products_count;
                     $buttons .= '</div>';
@@ -64,7 +66,7 @@ class SubCategoryController extends Controller
             })
             ->rawColumns(['status', 'attributes', 'products', 'action'])
             ->toJson(); //--- Returning Json Data To Client Side
-            $this->useAdminLocale();
+        $this->useAdminLocale();
     }
 
     //*** GET Request
@@ -76,8 +78,8 @@ class SubCategoryController extends Controller
     //*** GET Request
     public function create()
     {
-      	$cats = Category::all();
-        return view('admin.subcategory.create',compact('cats'));
+        $cats = Category::all();
+        return view('admin.subcategory.create', compact('cats'));
     }
 
     //*** POST Request
@@ -91,7 +93,7 @@ class SubCategoryController extends Controller
             'slug' => 'unique:subcategories|regex:/^[a-zA-Z0-9\s-]+$/'
                  ];
         $customs = [
-            "{$this->lang->locale}.name.required" => __('Subcategory Name in :lang is required',['lang' => $this->lang->language]),
+            "{$this->lang->locale}.name.required" => __('Subcategory Name in :lang is required', ['lang' => $this->lang->language]),
             'slug.unique' => __('This slug has already been taken.'),
             'banner' => __('Banner Type is Invalid.'),
             'slug.regex' => __('Slug Must Not Have Any Special Characters.')
@@ -99,15 +101,15 @@ class SubCategoryController extends Controller
         $validator = Validator::make($request->all(), $rules, $customs);
 
         if ($validator->fails()) {
-            if($request->api) {
-                return response()->json(array('errors' => $validator->getMessageBag()->toArray()),Response::HTTP_BAD_REQUEST);
+            if ($request->api) {
+                return response()->json(array('errors' => $validator->getMessageBag()->toArray()), Response::HTTP_BAD_REQUEST);
             }
             return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
         }
         $category = Category::find($request->category_id);
-        if(empty($category)){
-            if($request->api) {
-                return response()->json(array('errors' => [__('Category not found')]),Response::HTTP_BAD_REQUEST);
+        if (empty($category)) {
+            if ($request->api) {
+                return response()->json(array('errors' => [__('Category not found')]), Response::HTTP_BAD_REQUEST);
             }
             return response()->json(array('errors' => [__('Category not found')]));
         }
@@ -117,10 +119,9 @@ class SubCategoryController extends Controller
         $data = new Subcategory();
         $input = $this->removeEmptyTranslations($request->all());
 
-        if ($banner = $request->file('banner'))
-        {
+        if ($banner = $request->file('banner')) {
             $name = Str::random(8).time().".".$banner->getClientOriginalExtension();
-            $banner->move('assets/images/subcategories/banners',$name);
+            $banner->move('storage/images/subcategories/banners', $name);
             $input['banner'] = $name;
         }
 
@@ -129,11 +130,11 @@ class SubCategoryController extends Controller
 
         //-----Creating automatic slug
         $subcat = Subcategory::find($data->id);
-        $subcat->slug = Str::slug($data->name,'-').'-'.strtolower($data->id);
+        $subcat->slug = Str::slug($data->name, '-').'-'.strtolower($data->id);
         $subcat->update();
 
         //--- Redirect Section
-        if($request->api) {
+        if ($request->api) {
             return response()->json(array('status' => 'ok'), Response::HTTP_CREATED);
         }
 
@@ -145,9 +146,9 @@ class SubCategoryController extends Controller
     //*** GET Request
     public function edit($id)
     {
-    	$cats = Category::all();
+        $cats = Category::all();
         $data = Subcategory::findOrFail($id);
-        return view('admin.subcategory.edit',compact('data','cats'));
+        return view('admin.subcategory.edit', compact('data', 'cats'));
     }
 
     //*** POST Request
@@ -161,7 +162,7 @@ class SubCategoryController extends Controller
             'slug' => 'unique:subcategories,slug,'.$id.'|regex:/^[a-zA-Z0-9\s-]+$/'
                  ];
         $customs = [
-            "{$this->lang->locale}.name.required" => __('Subcategory Name in :lang is required',['lang' => $this->lang->language]),
+            "{$this->lang->locale}.name.required" => __('Subcategory Name in :lang is required', ['lang' => $this->lang->language]),
             'slug.unique' => __('This slug has already been taken.'),
             'banner' => __('Banner Type is Invalid.'),
             'slug.regex' => __('Slug Must Not Have Any Special Characters.')
@@ -169,15 +170,15 @@ class SubCategoryController extends Controller
         $validator = Validator::make($request->all(), $rules, $customs);
 
         if ($validator->fails()) {
-            if($request->api) {
-                return response()->json(array('errors' => $validator->getMessageBag()->toArray()),Response::HTTP_BAD_REQUEST);
+            if ($request->api) {
+                return response()->json(array('errors' => $validator->getMessageBag()->toArray()), Response::HTTP_BAD_REQUEST);
             }
             return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
         }
         $category = Category::find($request->category_id);
-        if(empty($category)){
-            if($request->api) {
-                return response()->json(array('errors' => [__('Category not found')]),Response::HTTP_BAD_REQUEST);
+        if (empty($category)) {
+            if ($request->api) {
+                return response()->json(array('errors' => [__('Category not found')]), Response::HTTP_BAD_REQUEST);
             }
             return response()->json(array('errors' => [__('Category not found')]));
         }
@@ -189,11 +190,10 @@ class SubCategoryController extends Controller
 
         if ($banner = $request->file('banner')) {
             $name = Str::random(8).time().".".$banner->getClientOriginalExtension();
-            $banner->move('assets/images/subcategories/banners',$name);
-            if($data->banner != null)
-            {
-                if (file_exists(public_path().'/assets/images/subcategories/banners/'.$data->banner) && !empty($data->banner)) {
-                    unlink(public_path().'/assets/images/subcategories/banners/'.$data->banner);
+            $banner->move('storage/images/subcategories/banners', $name);
+            if ($data->banner != null) {
+                if (file_exists(public_path().'/storage/images/subcategories/banners/'.$data->banner) && !empty($data->banner)) {
+                    unlink(public_path().'/storage/images/subcategories/banners/'.$data->banner);
                 }
             }
             $input['banner'] = $name;
@@ -201,13 +201,13 @@ class SubCategoryController extends Controller
 
         $data->update($input);
         //--- Logic Section Ends
-         //----Slug automatic
-         $data = Subcategory::findOrFail($id);
-         $data->slug = Str::slug($data->name,'-').'-'.strtolower($data->id);
-         $data->update($input);
+        //----Slug automatic
+        $data = Subcategory::findOrFail($id);
+        $data->slug = Str::slug($data->name, '-').'-'.strtolower($data->id);
+        $data->update($input);
 
         //--- Redirect Section
-        if($request->api) {
+        if ($request->api) {
             return response()->json(array('status' => 'ok'));
         }
         $msg = __('Data Updated Successfully.');
@@ -215,19 +215,19 @@ class SubCategoryController extends Controller
         //--- Redirect Section Ends
     }
 
-      //*** GET Request Status
-      public function status($id1,$id2)
-        {
-            $data = Subcategory::findOrFail($id1);
-            $data->status = $id2;
-            $data->update();
-        }
+    //*** GET Request Status
+    public function status($id1, $id2)
+    {
+        $data = Subcategory::findOrFail($id1);
+        $data->status = $id2;
+        $data->update();
+    }
 
     //*** GET Request
     public function load($id)
     {
         $cat = Category::findOrFail($id);
-        return view('load.subcategory',compact('cat'));
+        return view('load.subcategory', compact('cat'));
     }
 
     //*** GET Request Delete
