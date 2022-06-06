@@ -31,7 +31,7 @@ class Brand extends CachedModel
     public function getImageAttribute($value)
     {
         if (
-            !File::exists(public_path('assets/images/brands/' . $value)) ||
+            !File::exists(public_path('storage/images/brands/' . $value)) ||
             File::isDirectory($value)
         ) {
             return null;
@@ -48,9 +48,9 @@ class Brand extends CachedModel
         if (!$value) {
             return asset('assets/images/noimage.png');
         }
-        if (!File::exists(public_path('assets/images/thumbnails/' . $value)) || File::isDirectory($value)) {
+        if (!File::exists(public_path('storage/images/thumbnails/' . $value)) || File::isDirectory($value)) {
             return asset('assets/images/noimage.png');
         }
-        return asset('assets/images/thumbnails/'.$value);
+        return asset('storage/images/thumbnails/'.$value);
     }
 }
