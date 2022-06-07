@@ -1,309 +1,336 @@
-                    @php
-											if ($gs->switch_highlight_currency) {
-											$highlight = $product->firstCurrencyPrice();
-											$small = $product->showPrice();
-											} else {
-											$highlight = $product->showPrice();
-											$small = $product->firstCurrencyPrice();
-											}
-										@endphp
+@php
+if ($gs->switch_highlight_currency) {
+$highlight = $product->firstCurrencyPrice();
+$small = $product->showPrice();
+} else {
+$highlight = $product->showPrice();
+$small = $product->firstCurrencyPrice();
+}
+@endphp
 
 <div id="quick-details" class="row product-details-page py-0">
-  <div class="col-lg-5">
-<div class="xzoom-container">
-    <img class="quick-zoom" id="xzoom-magnific1" src="{{filter_var($product->photo, FILTER_VALIDATE_URL) ?$product->photo:asset('assets/images/products/'.$product->photo)}}" xoriginal="{{filter_var($product->photo, FILTER_VALIDATE_URL) ?$product->photo:asset('assets/images/products/'.$product->photo)}}" />
-</div>
-@if(!empty($product->whole_sell_qty))
-<div class="table-area wholesell-details-page">
-<h3>{{ __("Wholesell") }}</h3>
-<table class="table">
-<tr>
-  <th>{{ __("Quantity") }}</th>
-  <th>{{ __("Discount") }}</th>
-</tr>
-@foreach($product->whole_sell_qty as $key => $data1)
-<tr>
-  <td>{{ $product->whole_sell_qty[$key] }}+</td>
-  <td>{{ $product->whole_sell_discount[$key] }}% {{ __("Off") }}</td>
-</tr>
-@endforeach
-</table>
-</div>
-@endif
-  </div>
-<div class="col-lg-7">
-<div class="right-area">
-  <div class="product-info">
-      <h4 class="product-name"><a target="_blank" href="{{ route('front.product',$product->slug) }}">{{ $product->name }}</a></h4>
-        @if( $product->ref_code != null && ($admstore->reference_code == 1) )
-          <h4><span class="badge badge-primary" style="background-color: {{$admstore->ref_color}}"> {{ __('Reference Code') }}: {{ $product->ref_code }}</span></h4>
-        @endif
-        <div class="info-meta-1">
-          <ul>
-            @if($product->type == 'Physical')
-            @if($product->emptyStock())
-            <li class="product-outstook">
-              <p>
-                <i class="icofont-close-circled"></i>
-                {{ __("Out of Stock!") }}
-              </p>
-            </li>
-            @else
-            <li class="product-isstook">
-              <p>
-                <i class="icofont-check-circled"></i>
-                {{ $gs->show_stock == 0 ? '' : $product->stock }} {{ __("In Stock") }}
-              </p>
-            </li>
-            @endif
-            @endif
-            @if($gs->is_rating == 1)
-            <li>
-              <div class="ratings">
-                <div class="empty-stars"></div>
-                <div class="full-stars" style="width:{{App\Models\Rating::ratings($product->id)}}%"></div>
-              </div>
-            </li>
-            <li class="review-count">
-              <p>{{count($product->ratings)}} {{ __("Review(s)") }}</p>
-            </li>
-            @endif
-            @if($product->product_condition != 0)
-            <li>
-              <div class="{{ $product->product_condition == 2 ? 'mybadge' : 'mybadge1' }}">
-               {{ $product->product_condition == 2 ? 'New' : 'Used' }}
-              </div>
-            </li>
-         @endif
-          </ul>
+    <div class="col-lg-5">
+        <div class="xzoom-container">
+            <img class="quick-zoom" id="xzoom-magnific1"
+                src="{{filter_var($product->photo, FILTER_VALIDATE_URL) ?$product->photo:asset('storage/images/products/'.$product->photo)}}"
+                xoriginal="{{filter_var($product->photo, FILTER_VALIDATE_URL) ?$product->photo:asset('storage/images/products/'.$product->photo)}}" />
         </div>
-        <div class="info-meta-2">
-          <ul>
-            @if($product->type == 'License')
-            @if($product->platform != null)
-            <li>
-              <p>{{ __("Platform") }}: <b>{{ $product->platform }}</b></p>
-            </li>
-            @endif
-            @if($product->region != null)
-            <li>
-              <p>{{ __("Region") }}: <b>{{ $product->region }}</b></p>
-            </li>
-            @endif
-            @if($product->licence_type != null)
-            <li>
-              <p>{{ __("License Type") }}: <b>{{ $product->licence_type }}</b></p>
-            </li>
-            @endif
-            @endif
-          </ul>
-        </div>
-      @if($product->show_price)
-      <div class="product-price">
-      @if($gs->show_product_prices)
-          <p class="title">{{ __("Price") }} :</p>
-        @endif
-          <p class="price"><span id="msizeprice">{{ $highlight }}</span>
-            @php
-              $size_price_value = $product->vendorPrice() * $curr->value;
-              $previous_price_value = $product->previous_price * $curr->value * (1+($gs->product_percent / 100));
-            @endphp
-            <small><del id="mpreviousprice" style="display:{{($size_price_value >= $previous_price_value)? 'none' : '' }};">{{ $product->showPreviousPrice() }}</del></small>
-            <input type="hidden" id="mprevious_price_value" value="{{ round($previous_price_value,2) }}">
-            @if($curr->id != $first_curr->id)
-            <small><span id="moriginalprice">{{ $small }}</span></small></p>
-            @endif
-            @if($product->youtube != null)
-            <a href="{{ $product->youtube }}" class="video-play-btn mfp-iframe">
-              <i class="fas fa-play"></i>
-            </a> 
-          @endif
-      </div>
-      @endif
-      @if(!empty($product->size))
-          <div class="mproduct-size">
-              <p class="title">{{ __("Size") }} :</p>
-              <ul class="siz-list">
-                  @php
-                      $is_first = true;
-                  @endphp
-                  @foreach($product->size as $key => $data1)
-                      <li class="{{ $is_first ? 'active' : '' }}">
-              <span class="box">{{ $data1 }}
-                  <input type="hidden" class="msize" value="{{ $data1 }}">
-        <input type="hidden" class="msize_qty" value="{{ $product->size_qty[$key] }}">
-        <input type="hidden" class="msize_key" value="{{$key}}">
-        <input type="hidden" class="msize_price" value="{{ round($product->size_price[$key] * $curr->value * (1+($gs->product_percent / 100)),2) }}">
-              </span>
-                      </li>
-                      @php
-                          $is_first = false;
-                      @endphp
-                  @endforeach
-                  <li>
-              </ul>
-          </div>
-      @endif
-      @if(!empty($product->color))
-          <div class="mproduct-color">
-              <p class="title">{{ __("Color") }} :</p>
-              <ul class="color-list">
-                  @php
-                      $is_first = true;
-                  @endphp
-                  @foreach($product->color as $key => $data1)
-                      <li class="{{ $is_first ? 'active' : '' }}">
-                          <span class="box"  data-color="{{ $product->color[$key] }}" style="background-color: {{ $product->color[$key] }}"></span>
-                      </li>
-                      @php
-                          $is_first = false;
-                      @endphp
-                  @endforeach
-              </ul>
-          </div>
-      @endif
-      @if(!empty($product->size))
-          <input type="hidden" class="product-stock" id="stock" value="{{ $product->size_qty[0] }}">
-      @else
-          @php
-              $stck = (string)$product->stock;
-          @endphp
-          @if($stck != null)
-              <input type="hidden" class="product-stock"  value="{{ $stck }}">
-          @elseif($product->type != 'Physical')
-              <input type="hidden" class="product-stock"  value="0">
-          @else
-              <input type="hidden" class="product-stock" value="">
-          @endif
-      @endif
-      <input type="hidden" id="mproduct_price" value="{{ round($product->vendorPrice() * $curr->value,2) }}">
-      <input type="hidden" id="mproduct_id" value="{{ $product->id }}">
-      <input type="hidden" id="mcurr_pos" value="{{ $gs->currency_format }}">
-      <input type="hidden" id="mdec_sep" value="{{ $curr->decimal_separator }}">
-      <input type="hidden" id="mtho_sep" value="{{ $curr->thousands_separator }}">
-      <input type="hidden" id="mdec_dig" value="{{ $curr->decimal_digits }}">
-      <input type="hidden" id="mdec_sep2" value="{{ $first_curr->decimal_separator }}">
-      <input type="hidden" id="mtho_sep2" value="{{ $first_curr->thousands_separator }}">
-      <input type="hidden" id="mdec_dig2" value="{{ $first_curr->decimal_digits }}">
-      <input type="hidden" id="mcurr_sign" value="{{ $curr->sign }}">
-      <input type="hidden" id="mfirst_sign" value="{{ $first_curr->sign }}">
-      <input type="hidden" id="curr_value" value="{{ $curr->value }}">
-      <div class="info-meta-3">
-          <ul class="meta-list">
-            @if (!empty($product->attributes))
-              @php
-                $attrArr = json_decode($product->attributes, true);
-                // dd($attrArr);
-              @endphp
-            @endif
-            @if (!empty($attrArr))
-              <div class="product-attributes my-4">
-                <div class="row">
-                @foreach ($attrArr as $attrKey => $attrVal)
-                  @if (array_key_exists("details_status",$attrVal) && $attrVal['details_status'] == 1)
-                    @if ($attr_search = App\Models\Attribute::where('input_name', $attrKey)->first())
-                <div class="col-lg-6">
-                    <div class="form-group mb-2">
-                      <strong for="" class="text-capitalize">{{ App\Models\Attribute::where('input_name', $attrKey)->first()->name }} :</strong>
-                      <div class="">
-                      @foreach ($attrVal['values'] as $optionKey => $optionVal)
-                      @if (App\Models\AttributeOption::where('id', $optionVal)->first())
-                        <div class="custom-control custom-radio">
-                          <input type="hidden" class="keys" value="">
-                          <input type="hidden" class="values" value="">
-                          
-                          <input type="radio" id="{{$attrKey}}{{ $optionKey }}" name="{{ $attrKey }}" class="custom-control-input mproduct-attr"  data-key="{{ $attrKey }}" data-price = "{{ $attrVal['prices'][$optionKey] * $curr->value * (1+($gs->product_percent / 100)) }}" value="{{ $optionKey }}" {{ $loop->first ? 'checked' : '' }}>
-                          @if($loop->count > 1)
-                            <label class="custom-control-label" for="{{$attrKey}}{{ $optionKey }}">{{ App\Models\AttributeOption::find($optionVal)->name }}
-                            @if (!empty($attrVal['prices'][$optionKey]) && $attr_search->show_price == 1)
-                            @if ($attrVal['prices'][$optionKey] >= 0)
-                            +
-                            @endif
-                              {{$curr->sign}} {{number_format($attrVal['prices'][$optionKey] * $curr->value * (1+($gs->product_percent / 100)), $curr->decimal_digits, $curr->decimal_separator,$curr->thousands_separator) }}
-                            @endif
-                           </label>
-                          @else
-                            <div style="margin-left: -1.5rem">
-                          - {{App\Models\AttributeOption::find($optionVal)->name}}
-                          </div>
-                        @endif
-                      </div>
-                      @endif
-                      @endforeach
-                      </div>
-                    </div>
-                </div>
-                    @endif
-                  @endif 
+        @if(!empty($product->whole_sell_qty))
+        <div class="table-area wholesell-details-page">
+            <h3>{{ __("Wholesell") }}</h3>
+            <table class="table">
+                <tr>
+                    <th>{{ __("Quantity") }}</th>
+                    <th>{{ __("Discount") }}</th>
+                </tr>
+                @foreach($product->whole_sell_qty as $key => $data1)
+                <tr>
+                    <td>{{ $product->whole_sell_qty[$key] }}+</td>
+                    <td>{{ $product->whole_sell_discount[$key] }}% {{ __("Off") }}</td>
+                </tr>
                 @endforeach
-              </div>
-              </div>
-            @endif
-              @if($gs->is_cart)
-                @if($product->product_type == "affiliate")
-                <li class="addtocart">
-                  <a href="{{ route('affiliate.product', $product->slug) }}" target="_blank">
-                  <i class="icofont-shopping-cart"></i> {{ __("Buy Now") }}</a>
-                </li>
-                @else
-                @if($product->stock === 0)
-                <li class="addtocart">
-                  <a href="javascript:;" class="cart-out-of-stock">
-                    <i class="icofont-close-circled"></i> 
-                    {{ __("Out of Stock!") }}</a>
-                </li>                    
-                @else 
-                <li class="addtocart">
-                  <a href="{{ route('front.product', $product->slug)}}">
-                  <i class="icofont-list"></i>{{ __("Details") }}</a>
-                </li>
+            </table>
+        </div>
+        @endif
+    </div>
+    <div class="col-lg-7">
+        <div class="right-area">
+            <div class="product-info">
+                <h4 class="product-name"><a target="_blank" href="{{ route('front.product',$product->slug) }}">{{
+                        $product->name }}</a></h4>
+                @if( $product->ref_code != null && ($admstore->reference_code == 1) )
+                <h4><span class="badge badge-primary" style="background-color: {{$admstore->ref_color}}"> {{
+                        __('Reference Code') }}: {{ $product->ref_code }}</span></h4>
                 @endif
-              @endif
-              @endif
-              @if(Auth::guard('web')->check())
-                  <li class="favorite">
-                      <a href="javascript:;" class="add-to-wish" data-href="{{ route('user-wishlist-add',$product->id) }}"><i class="icofont-ui-love-add"></i></a>
-                  </li>
-              @else
-                  <li class="favorite">
-                      <a href="javascript:;" data-toggle="modal" data-target="#comment-log-reg"><i class="icofont-ui-love-add"></i></a>
-                  </li>
-              @endif
-              <li class="compare">
-                  <a href="javascript:;" class="add-to-compare" data-href="{{ route('product.compare.add',$product->id) }}"><i class="icofont-exchange"></i></a>
-              </li>
-          </ul>
-        @if($product->ship != null)
-          <p class="estimate-time mt-2">{{ __("Estimated Shipping Time") }}: <b> {{ $product->ship }}</b></p>
-        @endif
-        @if( $product->sku != null )
-        <p class="p-sku mt-2">
-          {{ __("Product SKU") }}: <span class="idno">{{ $product->sku }}</span>
-        </p>
-        @endif
-      </div>
-  </div>
-</div>
-</div>
+                <div class="info-meta-1">
+                    <ul>
+                        @if($product->type == 'Physical')
+                        @if($product->emptyStock())
+                        <li class="product-outstook">
+                            <p>
+                                <i class="icofont-close-circled"></i>
+                                {{ __("Out of Stock!") }}
+                            </p>
+                        </li>
+                        @else
+                        <li class="product-isstook">
+                            <p>
+                                <i class="icofont-check-circled"></i>
+                                {{ $gs->show_stock == 0 ? '' : $product->stock }} {{ __("In Stock") }}
+                            </p>
+                        </li>
+                        @endif
+                        @endif
+                        @if($gs->is_rating == 1)
+                        <li>
+                            <div class="ratings">
+                                <div class="empty-stars"></div>
+                                <div class="full-stars" style="width:{{App\Models\Rating::ratings($product->id)}}%">
+                                </div>
+                            </div>
+                        </li>
+                        <li class="review-count">
+                            <p>{{count($product->ratings)}} {{ __("Review(s)") }}</p>
+                        </li>
+                        @endif
+                        @if($product->product_condition != 0)
+                        <li>
+                            <div class="{{ $product->product_condition == 2 ? 'mybadge' : 'mybadge1' }}">
+                                {{ $product->product_condition == 2 ? 'New' : 'Used' }}
+                            </div>
+                        </li>
+                        @endif
+                    </ul>
+                </div>
+                <div class="info-meta-2">
+                    <ul>
+                        @if($product->type == 'License')
+                        @if($product->platform != null)
+                        <li>
+                            <p>{{ __("Platform") }}: <b>{{ $product->platform }}</b></p>
+                        </li>
+                        @endif
+                        @if($product->region != null)
+                        <li>
+                            <p>{{ __("Region") }}: <b>{{ $product->region }}</b></p>
+                        </li>
+                        @endif
+                        @if($product->licence_type != null)
+                        <li>
+                            <p>{{ __("License Type") }}: <b>{{ $product->licence_type }}</b></p>
+                        </li>
+                        @endif
+                        @endif
+                    </ul>
+                </div>
+                @if($product->show_price)
+                <div class="product-price">
+                    @if($gs->show_product_prices)
+                    <p class="title">{{ __("Price") }} :</p>
+                    @endif
+                    <p class="price"><span id="msizeprice">{{ $highlight }}</span>
+                        @php
+                        $size_price_value = $product->vendorPrice() * $curr->value;
+                        $previous_price_value = $product->previous_price * $curr->value * (1+($gs->product_percent /
+                        100));
+                        @endphp
+                        <small><del id="mpreviousprice"
+                                style="display:{{($size_price_value >= $previous_price_value)? 'none' : '' }};">{{
+                                $product->showPreviousPrice() }}</del></small>
+                        <input type="hidden" id="mprevious_price_value" value="{{ round($previous_price_value,2) }}">
+                        @if($curr->id != $first_curr->id)
+                        <small><span id="moriginalprice">{{ $small }}</span></small>
+                    </p>
+                    @endif
+                    @if($product->youtube != null)
+                    <a href="{{ $product->youtube }}" class="video-play-btn mfp-iframe">
+                        <i class="fas fa-play"></i>
+                    </a>
+                    @endif
+                </div>
+                @endif
+                @if(!empty($product->size))
+                <div class="mproduct-size">
+                    <p class="title">{{ __("Size") }} :</p>
+                    <ul class="siz-list">
+                        @php
+                        $is_first = true;
+                        @endphp
+                        @foreach($product->size as $key => $data1)
+                        <li class="{{ $is_first ? 'active' : '' }}">
+                            <span class="box">{{ $data1 }}
+                                <input type="hidden" class="msize" value="{{ $data1 }}">
+                                <input type="hidden" class="msize_qty" value="{{ $product->size_qty[$key] }}">
+                                <input type="hidden" class="msize_key" value="{{$key}}">
+                                <input type="hidden" class="msize_price"
+                                    value="{{ round($product->size_price[$key] * $curr->value * (1+($gs->product_percent / 100)),2) }}">
+                            </span>
+                        </li>
+                        @php
+                        $is_first = false;
+                        @endphp
+                        @endforeach
+                        <li>
+                    </ul>
+                </div>
+                @endif
+                @if(!empty($product->color))
+                <div class="mproduct-color">
+                    <p class="title">{{ __("Color") }} :</p>
+                    <ul class="color-list">
+                        @php
+                        $is_first = true;
+                        @endphp
+                        @foreach($product->color as $key => $data1)
+                        <li class="{{ $is_first ? 'active' : '' }}">
+                            <span class="box" data-color="{{ $product->color[$key] }}"
+                                style="background-color: {{ $product->color[$key] }}"></span>
+                        </li>
+                        @php
+                        $is_first = false;
+                        @endphp
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+                @if(!empty($product->size))
+                <input type="hidden" class="product-stock" id="stock" value="{{ $product->size_qty[0] }}">
+                @else
+                @php
+                $stck = (string)$product->stock;
+                @endphp
+                @if($stck != null)
+                <input type="hidden" class="product-stock" value="{{ $stck }}">
+                @elseif($product->type != 'Physical')
+                <input type="hidden" class="product-stock" value="0">
+                @else
+                <input type="hidden" class="product-stock" value="">
+                @endif
+                @endif
+                <input type="hidden" id="mproduct_price" value="{{ round($product->vendorPrice() * $curr->value,2) }}">
+                <input type="hidden" id="mproduct_id" value="{{ $product->id }}">
+                <input type="hidden" id="mcurr_pos" value="{{ $gs->currency_format }}">
+                <input type="hidden" id="mdec_sep" value="{{ $curr->decimal_separator }}">
+                <input type="hidden" id="mtho_sep" value="{{ $curr->thousands_separator }}">
+                <input type="hidden" id="mdec_dig" value="{{ $curr->decimal_digits }}">
+                <input type="hidden" id="mdec_sep2" value="{{ $first_curr->decimal_separator }}">
+                <input type="hidden" id="mtho_sep2" value="{{ $first_curr->thousands_separator }}">
+                <input type="hidden" id="mdec_dig2" value="{{ $first_curr->decimal_digits }}">
+                <input type="hidden" id="mcurr_sign" value="{{ $curr->sign }}">
+                <input type="hidden" id="mfirst_sign" value="{{ $first_curr->sign }}">
+                <input type="hidden" id="curr_value" value="{{ $curr->value }}">
+                <div class="info-meta-3">
+                    <ul class="meta-list">
+                        @if (!empty($product->attributes))
+                        @php
+                        $attrArr = json_decode($product->attributes, true);
+                        // dd($attrArr);
+                        @endphp
+                        @endif
+                        @if (!empty($attrArr))
+                        <div class="product-attributes my-4">
+                            <div class="row">
+                                @foreach ($attrArr as $attrKey => $attrVal)
+                                @if (array_key_exists("details_status",$attrVal) && $attrVal['details_status'] == 1)
+                                @if ($attr_search = App\Models\Attribute::where('input_name', $attrKey)->first())
+                                <div class="col-lg-6">
+                                    <div class="form-group mb-2">
+                                        <strong for="" class="text-capitalize">{{
+                                            App\Models\Attribute::where('input_name', $attrKey)->first()->name }}
+                                            :</strong>
+                                        <div class="">
+                                            @foreach ($attrVal['values'] as $optionKey => $optionVal)
+                                            @if (App\Models\AttributeOption::where('id', $optionVal)->first())
+                                            <div class="custom-control custom-radio">
+                                                <input type="hidden" class="keys" value="">
+                                                <input type="hidden" class="values" value="">
+
+                                                <input type="radio" id="{{$attrKey}}{{ $optionKey }}"
+                                                    name="{{ $attrKey }}" class="custom-control-input mproduct-attr"
+                                                    data-key="{{ $attrKey }}"
+                                                    data-price="{{ $attrVal['prices'][$optionKey] * $curr->value * (1+($gs->product_percent / 100)) }}"
+                                                    value="{{ $optionKey }}" {{ $loop->first ? 'checked' : '' }}>
+                                                @if($loop->count > 1)
+                                                <label class="custom-control-label"
+                                                    for="{{$attrKey}}{{ $optionKey }}">{{
+                                                    App\Models\AttributeOption::find($optionVal)->name }}
+                                                    @if (!empty($attrVal['prices'][$optionKey]) &&
+                                                    $attr_search->show_price == 1)
+                                                    @if ($attrVal['prices'][$optionKey] >= 0)
+                                                    +
+                                                    @endif
+                                                    {{$curr->sign}} {{number_format($attrVal['prices'][$optionKey] *
+                                                    $curr->value * (1+($gs->product_percent / 100)),
+                                                    $curr->decimal_digits,
+                                                    $curr->decimal_separator,$curr->thousands_separator) }}
+                                                    @endif
+                                                </label>
+                                                @else
+                                                <div style="margin-left: -1.5rem">
+                                                    - {{App\Models\AttributeOption::find($optionVal)->name}}
+                                                </div>
+                                                @endif
+                                            </div>
+                                            @endif
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
+                                @endif
+                                @endforeach
+                            </div>
+                        </div>
+                        @endif
+                        @if($gs->is_cart)
+                        @if($product->product_type == "affiliate")
+                        <li class="addtocart">
+                            <a href="{{ route('affiliate.product', $product->slug) }}" target="_blank">
+                                <i class="icofont-shopping-cart"></i> {{ __("Buy Now") }}</a>
+                        </li>
+                        @else
+                        @if($product->stock === 0)
+                        <li class="addtocart">
+                            <a href="javascript:;" class="cart-out-of-stock">
+                                <i class="icofont-close-circled"></i>
+                                {{ __("Out of Stock!") }}</a>
+                        </li>
+                        @else
+                        <li class="addtocart">
+                            <a href="{{ route('front.product', $product->slug)}}">
+                                <i class="icofont-list"></i>{{ __("Details") }}</a>
+                        </li>
+                        @endif
+                        @endif
+                        @endif
+                        @if(Auth::guard('web')->check())
+                        <li class="favorite">
+                            <a href="javascript:;" class="add-to-wish"
+                                data-href="{{ route('user-wishlist-add',$product->id) }}"><i
+                                    class="icofont-ui-love-add"></i></a>
+                        </li>
+                        @else
+                        <li class="favorite">
+                            <a href="javascript:;" data-toggle="modal" data-target="#comment-log-reg"><i
+                                    class="icofont-ui-love-add"></i></a>
+                        </li>
+                        @endif
+                        <li class="compare">
+                            <a href="javascript:;" class="add-to-compare"
+                                data-href="{{ route('product.compare.add',$product->id) }}"><i
+                                    class="icofont-exchange"></i></a>
+                        </li>
+                    </ul>
+                    @if($product->ship != null)
+                    <p class="estimate-time mt-2">{{ __("Estimated Shipping Time") }}: <b> {{ $product->ship }}</b></p>
+                    @endif
+                    @if( $product->sku != null )
+                    <p class="p-sku mt-2">
+                        {{ __("Product SKU") }}: <span class="idno">{{ $product->sku }}</span>
+                    </p>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <style type="text/css">
-@media (min-width: 1200px) { 
-.xzoom-preview {
-width: 450px !important;
-height: 390px !important;
-background: white;
-position: inherit;
-z-index: 99999;
-@if($slocale->rtl == "1")
-right: 900px;
-@endif
-}
-}
+    @media (min-width: 1200px) {
+        .xzoom-preview {
+            width: 450px !important;
+            height: 390px !important;
+            background: white;
+            position: inherit;
+            z-index: 99999;
+            @if($slocale->rtl=="1") right: 900px;
+            @endif
+        }
+    }
 </style>
 <script type="text/javascript">
     $(document).ready(function() {
     var w = window.innerWidth;
-    if( w > 575) 
+    if( w > 575)
     {
         $('.quick-zoom, .quick-zoom-gallery').xzoom({tint: '#006699', Xoffset: 15});
         //Integration with hammer.js
