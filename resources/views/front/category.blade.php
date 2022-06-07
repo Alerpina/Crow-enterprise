@@ -22,8 +22,8 @@
                     @endif
                     @if (!empty($childcat))
                     <li>
-                        <a
-                            href="{{route('front.category', [$cat->slug, $subcat->slug, $childcat->slug])}}">{{ $childcat->name }}</a>
+                        <a href="{{route('front.category', [$cat->slug, $subcat->slug, $childcat->slug])}}">{{
+                            $childcat->name }}</a>
                     </li>
                     @endif
                     @if (empty($childcat) && empty($subcat) && empty($cat))
@@ -49,32 +49,32 @@
 </div>
 @endif
 <section class="sub-categori">
-  <div class="container">
-      <div class="row">
-          @include('includes.catalog')
-          <div class="col-lg-9 order-first order-lg-last ajax-loader-parent">
-              <div class="right-area" id="app">
+    <div class="container">
+        <div class="row">
+            @include('includes.catalog')
+            <div class="col-lg-9 order-first order-lg-last ajax-loader-parent">
+                <div class="right-area" id="app">
 
-                  @if(!config("features.marketplace"))
+                    @if(!config("features.marketplace"))
                     @include('includes.filter')
-                  @endif
-                  <div class="categori-item-area">
-                      <div class="row" id="ajaxContent">
-                        @if(!config("features.marketplace"))
+                    @endif
+                    <div class="categori-item-area">
+                        <div class="row" id="ajaxContent">
+                            @if(!config("features.marketplace"))
                             @include('includes.product.filtered-products')
-                          @else
+                            @else
                             @include('includes.product.aggregated-products')
-                          @endif
-                      </div>
-                      <div id="ajaxLoader" class="ajax-loader"
-                          style="background: url({{asset('assets/images/'.$gs->loader)}}) no-repeat scroll center center rgba(0,0,0,.6);">
-                      </div>
-                  </div>
+                            @endif
+                        </div>
+                        <div id="ajaxLoader" class="ajax-loader"
+                            style="background: url({{asset('storage/images/'.$gs->loader)}}) no-repeat scroll center center rgba(0,0,0,.6);">
+                        </div>
+                    </div>
 
-              </div>
-          </div>
-      </div>
-  </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 <!-- SubCategori Area End -->
 @endsection
