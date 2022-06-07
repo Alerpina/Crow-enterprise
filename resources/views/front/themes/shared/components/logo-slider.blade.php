@@ -7,9 +7,11 @@
                 <div class="section-top">
                     <h2 class="section-title">
                         {{ __("Brands") }}
-                        @if(env('THEME') == "theme-03" || env('THEME') == "theme-05" || env('THEME') == "theme-06" || env('THEME') == "theme-07")
-                        <div id="post-title"> 
-                            <img src="{{ asset('project/resources/views/front/themes/theme-03/assets/images/post-it.png')}}" class="img-fluid" alt="Post it">
+                        @if(env('THEME') == "theme-03" || env('THEME') == "theme-05" || env('THEME') == "theme-06" ||
+                        env('THEME') == "theme-07")
+                        <div id="post-title">
+                            <img src="{{ asset('project/resources/views/front/themes/theme-03/storage/images/post-it.png')}}"
+                                class="img-fluid" alt="Post it">
                         </div>
                         @endif
                     </h2>
@@ -22,7 +24,7 @@
                     @foreach($partners as $data)
                     <div class="item-slide">
                         <a href="{{ $data->link }}" target="_blank">
-                            <img src="{{asset('assets/images/partner/'.$data->photo)}}" alt="">
+                            <img src="{{asset('storage/images/partner/'.$data->photo)}}" alt="">
                         </a>
                     </div>
                     @endforeach
