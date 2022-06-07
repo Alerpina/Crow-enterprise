@@ -29,7 +29,7 @@ class ReviewController extends Controller
                 $query->whereTranslationLike('subtitle', "%{$keyword}%", $this->lang->locale);
             })
             ->editColumn('photo', function (Review $data) {
-                $photo = $data->photo ? url('assets/images/reviews/' . $data->photo) : url('assets/images/noimage.png');
+                $photo = $data->photo ? url('storage/images/reviews/' . $data->photo) : url('assets/images/noimage.png');
                 return '<img class="review-img" src="' . $photo . '" alt="Image">';
             })
             ->addColumn('action', function (Review $data) {
@@ -37,7 +37,7 @@ class ReviewController extends Controller
                 <div class="godropdown">
                     <button class="go-dropdown-toggle"> ' . __('Actions') . '<i class="fas fa-chevron-down"></i></button>
                     <div class="action-list">
-                        <a data-href="' . route('admin-review-edit', $data->id) . '" data-header="' . __('Edit Review') . '" class="edit" data-toggle="modal" data-target="#modal1"> 
+                        <a data-href="' . route('admin-review-edit', $data->id) . '" data-header="' . __('Edit Review') . '" class="edit" data-toggle="modal" data-target="#modal1">
                             <i class="fas fa-edit"></i> ' . __('Edit') . '
                         </a>
                         <a href="javascript:;" data-href="' . route('admin-review-delete', $data->id) . '" data-toggle="modal" data-target="#confirm-delete" class="delete">
@@ -90,23 +90,23 @@ class ReviewController extends Controller
         $input = $this->removeEmptyTranslations($request->all());
         if ($file = $request->file('photo')) {
             $name = time() . $file->getClientOriginalName();
-            $file->move('assets/images/reviews', $name);
+            $file->move('storage/images/reviews', $name);
             $input['photo'] = $name;
         }
         $data->fill($input)->save();
         //--- Logic Section Ends
 
-        //--- Redirect Section        
+        //--- Redirect Section
         $msg = __('New Data Added Successfully.');
-        return response()->json($msg);      
-        //--- Redirect Section Ends    
+        return response()->json($msg);
+        //--- Redirect Section Ends
     }
 
     //*** GET Request
     public function edit($id)
     {
         $data = Review::findOrFail($id);
-        return view('admin.review.edit',compact('data'));
+        return view('admin.review.edit', compact('data'));
     }
 
     //*** POST Request
@@ -137,10 +137,10 @@ class ReviewController extends Controller
         $input = $this->removeEmptyTranslations($request->all(), $data);
         if ($file = $request->file('photo')) {
             $name = time() . $file->getClientOriginalName();
-            $file->move('assets/images/reviews', $name);
+            $file->move('storage/images/reviews', $name);
             if ($data->photo != null) {
-                if (file_exists(public_path() . '/assets/images/reviews/' . $data->photo)) {
-                    unlink(public_path() . '/assets/images/reviews/' . $data->photo);
+                if (file_exists(public_path() . '/storage/images/reviews/' . $data->photo)) {
+                    unlink(public_path() . '/storage/images/reviews/' . $data->photo);
                 }
             }
             $input['photo'] = $name;
@@ -148,10 +148,10 @@ class ReviewController extends Controller
         $data->update($input);
         //--- Logic Section Ends
 
-        //--- Redirect Section     
+        //--- Redirect Section
         $msg = __('Data Updated Successfully.');
-        return response()->json($msg);      
-        //--- Redirect Section Ends            
+        return response()->json($msg);
+        //--- Redirect Section Ends
     }
 
     //*** GET Request Delete
@@ -159,21 +159,21 @@ class ReviewController extends Controller
     {
         $data = Review::findOrFail($id);
         //If Photo Doesn't Exist
-        if($data->photo == null){
+        if ($data->photo == null) {
             $data->delete();
-            //--- Redirect Section     
+            //--- Redirect Section
             $msg = __('Data Deleted Successfully.');
-            return response()->json($msg);      
-            //--- Redirect Section Ends     
+            return response()->json($msg);
+            //--- Redirect Section Ends
         }
         //If Photo Exist
-        if (file_exists(public_path().'/assets/images/reviews/'.$data->photo)) {
-            unlink(public_path().'/assets/images/reviews/'.$data->photo);
+        if (file_exists(public_path().'/storage/images/reviews/'.$data->photo)) {
+            unlink(public_path().'/storage/images/reviews/'.$data->photo);
         }
         $data->delete();
-        //--- Redirect Section     
+        //--- Redirect Section
         $msg = __('Data Deleted Successfully.');
-        return response()->json($msg);      
-        //--- Redirect Section Ends     
+        return response()->json($msg);
+        //--- Redirect Section Ends
     }
 }
