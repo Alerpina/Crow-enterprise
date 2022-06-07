@@ -702,15 +702,15 @@
                                                                 <input type="number" name="color_qty[]"
                                                                     class="input-field"
                                                                     placeholder="{{ __('Color Qty') }}"
-                                                                    value="{{ isset($data->color_qty[$key]) ? $data->color_qty[$key] : "
-                                                                    0" }}" min="0" required>
+                                                                    value="{{ isset($data->color_qty[$key]) ? $data->color_qty[$key] : '0' }}"
+                                                                    min="0" required>
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <input type="number" step="0.01" name="color_price[]"
                                                                     class="input-field"
                                                                     placeholder="{{ __('Color Price') }}"
-                                                                    value="{{ isset($data->color_price[$key]) ? $data->color_price[$key] : "
-                                                                    0" }}" min="0" required>
+                                                                    value="{{ isset($data->color_price[$key]) ? $data->color_price[$key] : '0' }}"
+                                                                    min="0" required>
                                                             </div>
                                                             <div class="col-md-3">
                                                                 @if(config("features.color_gallery"))

@@ -7,9 +7,11 @@
                 <div class="section-top">
                     <h2 class="section-title">
                         {{ __("Featured") }}
-                        @if(env('THEME') == "theme-03" || env('THEME') == "theme-05" || env('THEME') == "theme-06" || env('THEME') == "theme-07")
-                        <div id="post-title"> 
-                            <img src="{{ asset('project/resources/views/front/themes/theme-03/assets/images/post-it.png')}}" class="img-fluid" alt="Post it">
+                        @if(env('THEME') == "theme-03" || env('THEME') == "theme-05" || env('THEME') == "theme-06" ||
+                        env('THEME') == "theme-07")
+                        <div id="post-title">
+                            <img src="{{ asset('project/resources/views/front/themes/theme-03/assets/images/post-it.png')}}"
+                                class="img-fluid" alt="Post it">
                         </div>
                         @endif
                     </h2>
@@ -20,11 +22,11 @@
             <div class="col-lg-12 remove-padding">
                 <div class="trending-item-slider">
                     @foreach($feature_products as $prod)
-                        @if(env('THEME') == "theme-01" || env('THEME') == "theme-02")
-                            @include('includes.product.slider-product')
-                        @else
-                            @include('front.themes.'.env('THEME', 'theme-01').'.components.slider-product')
-                        @endif
+                    @if(env('THEME', 'theme-01') == "theme-01" || env('THEME') == "theme-02")
+                    @include('includes.product.slider-product')
+                    @else
+                    @include('front.themes.'.env('THEME', 'theme-01').'.components.slider-product')
+                    @endif
                     @endforeach
                 </div>
             </div>
