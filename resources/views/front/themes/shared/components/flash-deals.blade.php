@@ -16,11 +16,11 @@
                 <div class="flash-deals">
                     <div class="flas-deal-slider">
                         @foreach($discount_products as $prod)
-                            @if(env('THEME') == "theme-01" || env('THEME') == "theme-02")
-                                @include('includes.product.flash-product')
-                            @else
-                                @include('front.themes.'.env('THEME', 'theme-01').'.components.flash-product')
-                            @endif
+                        @if(env('THEME','theme-01') == "theme-01" || env('THEME') == "theme-02")
+                        @include('includes.product.flash-product')
+                        @else
+                        @include('front.themes.'.env('THEME', 'theme-01').'.components.flash-product')
+                        @endif
                         @endforeach
                     </div>
                 </div>
