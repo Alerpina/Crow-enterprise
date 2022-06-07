@@ -27,9 +27,9 @@ class BlogController extends Controller
                 $query->whereTranslationLike('title', "%{$keyword}%", $this->lang->locale);
             })
             ->editColumn('photo', function (Blog $data) {
-                if (file_exists(public_path().'/assets/images/blogs/'.$data->photo)) {
-                    return asset('assets/images/blogs/'.$data->photo);
-                } else{
+                if (file_exists(public_path().'/storage/images/blogs/'.$data->photo)) {
+                    return asset('storage/images/blogs/'.$data->photo);
+                } else {
                     return asset('assets/images/noimage.png');
                 }
             })
@@ -38,7 +38,7 @@ class BlogController extends Controller
                 <div class="godropdown">
                     <button class="go-dropdown-toggle"> ' . __('Actions') . '<i class="fas fa-chevron-down"></i></button>
                     <div class="action-list">
-                        <a data-href="' . route('admin-blog-edit', $data->id) . '" data-header="' . __('Edit Blog') . '" class="edit" data-toggle="modal" data-target="#modal1"> 
+                        <a data-href="' . route('admin-blog-edit', $data->id) . '" data-header="' . __('Edit Blog') . '" class="edit" data-toggle="modal" data-target="#modal1">
                             <i class="fas fa-edit"></i> ' . __('Edit') . '
                         </a>
                         <a href="javascript:;" data-href="' . route('admin-blog-delete', $data->id) . '" data-toggle="modal" data-target="#confirm-delete" class="delete">
@@ -61,7 +61,7 @@ class BlogController extends Controller
     public function create()
     {
         $cats = BlogCategory::all();
-        return view('admin.blog.create',compact('cats'));
+        return view('admin.blog.create', compact('cats'));
     }
 
     //*** POST Request
@@ -90,7 +90,7 @@ class BlogController extends Controller
         $input = $this->withRequiredFields($request->all(), ['title', 'details']);
         if ($file = $request->file('photo')) {
             $name = time() . $file->getClientOriginalName();
-            $file->move('assets/images/blogs', $name);
+            $file->move('storage/images/blogs', $name);
             $input['photo'] = $name;
         }
 
@@ -121,10 +121,10 @@ class BlogController extends Controller
         $data->fill($input)->save();
         //--- Logic Section Ends
 
-        //--- Redirect Section        
+        //--- Redirect Section
         $msg = __('New Data Added Successfully.');
-        return response()->json($msg);      
-        //--- Redirect Section Ends    
+        return response()->json($msg);
+        //--- Redirect Section Ends
     }
 
     //*** GET Request
@@ -132,7 +132,7 @@ class BlogController extends Controller
     {
         $cats = BlogCategory::all();
         $data = Blog::findOrFail($id);
-        return view('admin.blog.edit',compact('data','cats'));
+        return view('admin.blog.edit', compact('data', 'cats'));
     }
 
     //*** POST Request
@@ -159,13 +159,13 @@ class BlogController extends Controller
         //--- Logic Section
         $data = Blog::findOrFail($id);
         $input = $this->withRequiredFields($request->all(), ['title', 'details']);
-        
+
         if ($file = $request->file('photo')) {
             $name = time() . $file->getClientOriginalName();
-            $file->move('assets/images/blogs', $name);
+            $file->move('storage/images/blogs', $name);
             if ($data->photo != null) {
-                if (file_exists(public_path() . '/assets/images/blogs/' . $data->photo) && !empty($data->photo)) {
-                    unlink(public_path() . '/assets/images/blogs/' . $data->photo);
+                if (file_exists(public_path() . '/storage/images/blogs/' . $data->photo) && !empty($data->photo)) {
+                    unlink(public_path() . '/storage/images/blogs/' . $data->photo);
                 }
             }
             $input['photo'] = $name;
@@ -194,7 +194,7 @@ class BlogController extends Controller
                 implode(',', $input[$loc->locale]['meta_tag']) :
                 null
             );
-    
+
             $input[$loc->locale]['tags'] = (
                 isset($input[$loc->locale]['tags']) ?
                 implode(',', $input[$loc->locale]['tags']) :
@@ -207,10 +207,10 @@ class BlogController extends Controller
         $data->update($input);
         //--- Logic Section Ends
 
-        //--- Redirect Section     
+        //--- Redirect Section
         $msg = __('Data Updated Successfully.');
-        return response()->json($msg);      
-        //--- Redirect Section Ends            
+        return response()->json($msg);
+        //--- Redirect Section Ends
     }
 
     //*** GET Request Delete
@@ -218,21 +218,21 @@ class BlogController extends Controller
     {
         $data = Blog::findOrFail($id);
         //If Photo Doesn't Exist
-        if($data->photo == null){
+        if ($data->photo == null) {
             $data->delete();
-            //--- Redirect Section     
+            //--- Redirect Section
             $msg = __('Data Deleted Successfully.');
-            return response()->json($msg);      
-            //--- Redirect Section Ends     
+            return response()->json($msg);
+            //--- Redirect Section Ends
         }
         //If Photo Exist
-        if (file_exists(public_path().'/assets/images/blogs/'.$data->photo) && !empty($data->photo)) {
-            unlink(public_path().'/assets/images/blogs/'.$data->photo);
+        if (file_exists(public_path().'/storage/images/blogs/'.$data->photo) && !empty($data->photo)) {
+            unlink(public_path().'/storage/images/blogs/'.$data->photo);
         }
         $data->delete();
-        //--- Redirect Section     
+        //--- Redirect Section
         $msg = __('Data Deleted Successfully.');
-        return response()->json($msg);      
-        //--- Redirect Section Ends     
+        return response()->json($msg);
+        //--- Redirect Section Ends
     }
 }
