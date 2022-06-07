@@ -6,6 +6,7 @@
     .active {
         display: block;
     }
+
     .hidden {
         display: none;
     }
@@ -27,7 +28,7 @@
                     @if(!empty($productt->subcategory->name))
                     <li>
                         <a href="{{ route('front.subcat',[
-                                  'slug1' => $productt->category->slug, 
+                                  'slug1' => $productt->category->slug,
                                   'slug2' => $productt->subcategory->slug]) }}">
                             {{$productt->subcategory->name}}
                         </a>
@@ -35,8 +36,8 @@
                     @if(!empty($productt->childcategory->name))
                     <li>
                         <a href="{{ route('front.childcat',[
-                                    'slug1' => $productt->category->slug, 
-                                    'slug2' => $productt->subcategory->slug, 
+                                    'slug1' => $productt->category->slug,
+                                    'slug2' => $productt->subcategory->slug,
                                     'slug3' => $productt->childcategory->slug]) }}">
                             {{$productt->childcategory->name}}
                         </a>
@@ -79,18 +80,21 @@
         <div class="row">
             <div class="col-lg-10">
                 <div class="row">
-                    @if( ( empty($color_gallery) && empty($material_gallery) ) || ( !empty($color_gallery) && !empty($material_gallery) ) )
+                    @if(empty($color_gallery) && empty($material_gallery) || (!empty($color_gallery) &&
+                    !empty($material_gallery)))
                     <div class="col-lg-5 col-md-12">
                         <div class="xzoom-container">
-                            <img class="xzoom5" id="xzoom-magnific" src="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ? $productt->photo : 
-                                        asset('assets/images/products/'.$productt->photo)}}" xoriginal="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ? $productt->photo : 
-                                        asset('assets/images/products/'.$productt->photo)}}" />
+                            <img class="xzoom5" id="xzoom-magnific" src="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ?
+                                    $productt->photo :
+                                        asset('storage/images/products/'.$productt->photo)}}" xoriginal="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ?
+                                    $productt->photo :
+                                        asset('storage/images/products/'.$productt->photo)}}" />
                             <div class="xzoom-thumbs">
                                 <div class="all-slider">
-                                    <a href="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ? $productt->photo : 
-                                        asset('assets/images/products/'.$productt->photo)}}">
-                                        <img class="xzoom-gallery5" width="80" src="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ? $productt->photo : 
-                                                asset('assets/images/products/'.$productt->photo)}}"
+                                    <a href="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ? $productt->photo :
+                                        asset('storage/images/products/'.$productt->photo)}}">
+                                        <img class="xzoom-gallery5" width="80" src="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ? $productt->photo :
+                                                asset('storage/images/products/'.$productt->photo)}}"
                                             title="The description goes here">
                                     </a>
                                     @if($gs->ftp_folder)
@@ -104,9 +108,9 @@
                                     @endforeach
                                     @else
                                     @foreach($productt->galleries as $gal)
-                                    <a href="{{asset('assets/images/galleries/'.$gal->photo)}}">
+                                    <a href="{{asset('storage/images/galleries/'.$gal->photo)}}">
                                         <img class="xzoom-gallery5" width="80"
-                                            src="{{asset('assets/images/galleries/'.$gal->photo)}}"
+                                            src="{{asset('storage/images/galleries/'.$gal->photo)}}"
                                             title="The description goes here">
                                     </a>
                                     @endforeach
@@ -118,56 +122,57 @@
                     @elseif(!empty($color_gallery) && empty($material_gallery))
                     <div class="col-lg-5 col-md-12">
                         <div class="xzoom-container">
-                            @php 
-                                if(!empty($color_gallery)){
-                                    $first = explode("|", $color_gallery[0])[0];
-                                }
+                            @php
+                            if(!empty($color_gallery)){
+                            $first = explode("|", $color_gallery[0])[0];
+                            }
                             @endphp
                             @if(!empty($color_gallery))
-                                <img class="xzoom5" id="xzoom-magnific" src="{{ asset("assets/images/color_galleries/".$first) }}" />
-                            @else 
-                                <img class="xzoom5" id="xzoom-magnific" src="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ? $productt->photo : 
-                                asset('assets/images/products/'.$productt->photo)}}" xoriginal="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ? $productt->photo : 
-                                asset('assets/images/products/'.$productt->photo)}}" />
+                            <img class="xzoom5" id="xzoom-magnific"
+                                src="{{ asset('storage/images/color_galleries/'.$first) }}" />
+                            @else
+                            <img class="xzoom5" id="xzoom-magnific" src="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ? $productt->photo :
+                                asset('storage/images/products/'.$productt->photo)}}" xoriginal="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ? $productt->photo :
+                                asset('storage/images/products/'.$productt->photo)}}" />
                             @endif
                             <div class="xzoom-thumbs">
                                 <div class="all-slider-color-gallery">
                                     @if(!empty($color_gallery))
-                                        @foreach($color_gallery as $color_gal)
-                                            @php
-                                            $aux_arr = [];
-                                            $color_arr = [];
-                                            foreach($productt->color as $key => $color){
-                                                if(!array_key_exists($key, $color_gallery)){
-                                                    break;
-                                                }
-                                                $aux_arr[$color] = $color_gallery[$key];
-                                                foreach($aux_arr as $aux){
-                                                    $color_arr[$color] = explode("|", $aux);
-                                                }
-                                            }
-                                            @endphp
-                                        @endforeach
-                                        @foreach($productt->color as $arr_key => $color)
-                                        @if(array_key_exists($color, $color_arr))
-                                            @foreach($color_arr[$color] as $key => $gal)
-                                                <a href="{{asset('assets/images/color_galleries/'.$gal)}}" 
-                                                class="color_gallery color-{{ str_replace("#", "", $color) }} {{ $arr_key == 0 ? "active" : "hidden" }}">
-                                                    <img class="xzoom-gallery5" width="80"
-                                                        src="{{asset('assets/images/color_galleries/'.$gal)}}"
-                                                        title="The description goes here">
-                                                </a>
-                                            @endforeach
-                                        @endif
-                                        @endforeach
-                                    @else 
-                                        @foreach($productt->galleries as $gal)
-                                        <a href="{{asset('assets/images/galleries/'.$gal->photo)}}">
-                                            <img class="xzoom-gallery5" width="80"
-                                                src="{{asset('assets/images/galleries/'.$gal->photo)}}"
-                                                title="The description goes here">
-                                        </a>
-                                        @endforeach
+                                    @foreach($color_gallery as $color_gal)
+                                    @php
+                                    $aux_arr = [];
+                                    $color_arr = [];
+                                    foreach($productt->color as $key => $color){
+                                    if(!array_key_exists($key, $color_gallery)){
+                                    break;
+                                    }
+                                    $aux_arr[$color] = $color_gallery[$key];
+                                    foreach($aux_arr as $aux){
+                                    $color_arr[$color] = explode("|", $aux);
+                                    }
+                                    }
+                                    @endphp
+                                    @endforeach
+                                    @foreach($productt->color as $arr_key => $color)
+                                    @if(array_key_exists($color, $color_arr))
+                                    @foreach($color_arr[$color] as $key => $gal)
+                                    <a href="{{asset('storage/images/color_galleries/'.$gal)}}"
+                                        class="color_gallery color-{{ str_replace('#', '' , $color) }} {{ $arr_key==0 ? 'active' : 'hidden' }}">
+                                        <img class="xzoom-gallery5" width="80"
+                                            src="{{asset('storage/images/color_galleries/'.$gal)}}"
+                                            title="The description goes here">
+                                    </a>
+                                    @endforeach
+                                    @endif
+                                    @endforeach
+                                    @else
+                                    @foreach($productt->galleries as $gal)
+                                    <a href="{{asset('storage/images/galleries/'.$gal->photo)}}">
+                                        <img class="xzoom-gallery5" width="80"
+                                            src="{{asset('storage/images/galleries/'.$gal->photo)}}"
+                                            title="The description goes here">
+                                    </a>
+                                    @endforeach
                                     @endif
                                 </div>
                             </div>
@@ -176,48 +181,49 @@
                     @elseif(empty($color_gallery) && !empty($material_gallery))
                     <div class="col-lg-5 col-md-12">
                         <div class="xzoom-container">
-                            @php 
-                                $first = explode("|", $material_gallery[0])[0];
+                            @php
+                            $first = explode("|", $material_gallery[0])[0];
                             @endphp
-                            <img class="xzoom5" id="xzoom-magnific" src="{{ asset("assets/images/material_galleries/".$first) }}" />
+                            <img class="xzoom5" id="xzoom-magnific"
+                                src="{{ asset('storage/images/material_galleries/'.$first) }}" />
                             <div class="xzoom-thumbs">
                                 <div class="all-slider-material-gallery">
                                     @if(!empty($material_gallery))
-                                        @foreach($material_gallery as $material_gal)
-                                            @php
-                                            $aux_arr = [];
-                                            $material_arr = [];
-                                            foreach($productt->material as $key => $material){
-                                                if(!array_key_exists($key, $material_gallery)){
-                                                    break;
-                                                }
-                                                $aux_arr[$material] = $material_gallery[$key];
-                                                foreach($aux_arr as $aux){
-                                                    $material_arr[$material] = explode("|", $aux);
-                                                }
-                                            }
-                                            @endphp
-                                        @endforeach
-                                        @foreach($productt->material as $arr_key => $material)
-                                        @if(array_key_exists($material, $material_arr))
-                                            @foreach($material_arr[$material] as $key => $gal)
-                                                <a href="{{asset('assets/images/material_galleries/'.$gal)}}" 
-                                                class="material_gallery material-{{ $arr_key }} {{ $arr_key == 0 ? "active" : "hidden" }}">
-                                                    <img class="xzoom-gallery5" width="80"
-                                                        src="{{asset('assets/images/material_galleries/'.$gal)}}"
-                                                        title="The description goes here">
-                                                </a>
-                                            @endforeach
-                                        @endif
-                                        @endforeach
-                                    @else 
-                                        @foreach($productt->galleries as $gal)
-                                        <a href="{{asset('assets/images/galleries/'.$gal->photo)}}">
-                                            <img class="xzoom-gallery5" width="80"
-                                                src="{{asset('assets/images/galleries/'.$gal->photo)}}"
-                                                title="The description goes here">
-                                        </a>
-                                        @endforeach
+                                    @foreach($material_gallery as $material_gal)
+                                    @php
+                                    $aux_arr = [];
+                                    $material_arr = [];
+                                    foreach($productt->material as $key => $material){
+                                    if(!array_key_exists($key, $material_gallery)){
+                                    break;
+                                    }
+                                    $aux_arr[$material] = $material_gallery[$key];
+                                    foreach($aux_arr as $aux){
+                                    $material_arr[$material] = explode("|", $aux);
+                                    }
+                                    }
+                                    @endphp
+                                    @endforeach
+                                    @foreach($productt->material as $arr_key => $material)
+                                    @if(array_key_exists($material, $material_arr))
+                                    @foreach($material_arr[$material] as $key => $gal)
+                                    <a href="{{asset('storage/images/material_galleries/'.$gal)}}"
+                                        class="material_gallery material-{{ $arr_key }} {{ $arr_key == 0 ? 'active' : 'hidden' }}">
+                                        <img class="xzoom-gallery5" width="80"
+                                            src="{{asset('storage/images/material_galleries/'.$gal)}}"
+                                            title="The description goes here">
+                                    </a>
+                                    @endforeach
+                                    @endif
+                                    @endforeach
+                                    @else
+                                    @foreach($productt->galleries as $gal)
+                                    <a href="{{asset('storage/images/galleries/'.$gal->photo)}}">
+                                        <img class="xzoom-gallery5" width="80"
+                                            src="{{asset('storage/images/galleries/'.$gal->photo)}}"
+                                            title="The description goes here">
+                                    </a>
+                                    @endforeach
                                     @endif
                                 </div>
                             </div>
@@ -233,10 +239,13 @@
                                 </div>
                                 @endif
                                 <h4 class="product-name">{{ $productt->name }}</h4>
-                                @if( ($productt->ref_code != null) && ($admstore->reference_code == 1) )
-                                <h4><span class="badge badge-primary"
+                                @if(($productt->ref_code != null) && ($admstore->reference_code == 1))
+                                <h4>
+                                    <span class="badge badge-primary"
                                         style="background-color: {{$admstore->ref_color}}">{{ __('Reference Code') }}:
-                                        {{ $productt->ref_code }}</span></h4>
+                                        {{ $productt->ref_code }}
+                                    </span>
+                                </h4>
                                 @endif
                                 <div class="info-meta-1">
                                     <ul>
@@ -252,31 +261,34 @@
                                         <li class="product-isstook">
                                             <p>
                                                 @if($gs->show_stock)
-                                                    @if(empty($productt->size) && empty($productt->color) && empty($productt->material))
-                                                    <i class="icofont-check-circled"></i>
-                                                    {{ $productt->stock }}
-                                                    {{ __("In Stock") }}
-                                                    @endif
+                                                @if(empty($productt->size) && empty($productt->color) &&
+                                                empty($productt->material))
+                                                <i class="icofont-check-circled"></i>
+                                                {{ $productt->stock }}
+                                                {{ __("In Stock") }}
+                                                @endif
 
-                                                    @if(!empty($productt->color))
-                                                    <i class="icofont-check-circled"></i>
-                                                    <span id="stock_qty">{{ isset($productt->color_qty[0]) ? $productt->color_qty[0] : $productt->stock }}</span>
-                                                    {{ __("In Stock") }}
-                                                    @endif
+                                                @if(!empty($productt->color))
+                                                <i class="icofont-check-circled"></i>
+                                                <span id="stock_qty">{{ isset($productt->color_qty[0]) ?
+                                                    $productt->color_qty[0] : $productt->stock }}</span>
+                                                {{ __("In Stock") }}
+                                                @endif
 
-                                                    @if(!empty($productt->material))
-                                                        <i class="icofont-check-circled"></i>
-                                                        <span id="stock_qty">
-                                                            {{$material_stock}}                                                            
-                                                        </span>
-                                                        {{ __("In Stock") }}
-                                                    @endif
+                                                @if(!empty($productt->material))
+                                                <i class="icofont-check-circled"></i>
+                                                <span id="stock_qty">
+                                                    {{$material_stock}}
+                                                </span>
+                                                {{ __("In Stock") }}
+                                                @endif
 
-                                                    @if(!empty($productt->size))
-                                                    <i class="icofont-check-circled"></i>
-                                                    <span id="stock_qty">{{ $gs->show_stock == 0 ? '' : $productt->size_qty[0] }}</span>
-                                                    {{ __("In Stock") }}
-                                                    @endif
+                                                @if(!empty($productt->size))
+                                                <i class="icofont-check-circled"></i>
+                                                <span id="stock_qty">{{ $gs->show_stock == 0 ? '' :
+                                                    $productt->size_qty[0] }}</span>
+                                                {{ __("In Stock") }}
+                                                @endif
                                                 @endif
                                             </p>
                                         </li>
@@ -297,7 +309,7 @@
                                         @endif
                                         @if($productt->product_condition != 0)
                                         <li>
-                                            <div class="{{ $productt->product_condition == 2 ? 'mybadge' : 
+                                            <div class="{{ $productt->product_condition == 2 ? 'mybadge' :
                                                     'mybadge1' }}">
                                                 {{ $productt->product_condition == 2 ? 'New' : 'Used' }}
                                             </div>
@@ -327,8 +339,12 @@
                                         $previous_price_value = $productt->previous_price * $product_curr->value *
                                         (1+($gs->product_percent / 100));
                                         @endphp
-                                        <small><del id="previousprice"
-                                                style="display:{{($size_price_value >= $previous_price_value)? 'none' : '' }};">{{ $productt->showPreviousPrice() }}</del></small>
+                                        <small>
+                                            <del id="previousprice"
+                                                style="display:{{($size_price_value >= $previous_price_value)? 'none' : '' }};">
+                                                {{$productt->showPreviousPrice() }}
+                                            </del>
+                                        </small>
                                         <input type="hidden" id="previous_price_value"
                                             value="{{ round($previous_price_value,2) }}">
                                         @if($curr->id != $scurrency->id)
@@ -336,10 +352,13 @@
                                         @endif
                                     </p>
                                     @else
-                                    <p class="price"><span id="originalprice">{{ $productt->showVendorMinPrice() }} até {{ $productt->showVendorMaxPrice() }}
-                                        @if($curr->id != $scurrency->id)
-                                        <small><span id="originalprice">{{ $small }}</span></small>
-                                        @endif
+                                    <p class="price">
+                                        <span id="originalprice">
+                                            {{ $productt->showVendorMinPrice() }} até {{ $productt->showVendorMaxPrice()
+                                            }}
+                                            @if($curr->id != $scurrency->id)
+                                            <small><span id="originalprice">{{ $small }}</span></small>
+                                            @endif
                                     </p>
                                     @endif
                                     @if($productt->youtube != null)
@@ -378,22 +397,24 @@
                                         $is_selected = false;
                                         @endphp
                                         @foreach($productt->size as $key => $data1)
-                                        <li class="{{ (!$is_selected && (int)$productt->size_qty[$key] > 0) ? 'active' : '' }}">
-                                            <span class="box {{ ($productt->size_qty[$key] == 0) ? 'disabled' : '' }}">{{ $data1 }}
+                                        <li
+                                            class="{{ (!$is_selected && (int)$productt->size_qty[$key] > 0) ? 'active' : '' }}">
+                                            <span class="box {{ ($productt->size_qty[$key] == 0) ? 'disabled' : '' }}">
+                                                {{$data1 }}
                                                 <input type="hidden" class="size" value="{{ $data1 }}">
                                                 <input type="hidden" class="size_qty"
                                                     value="{{ $productt->size_qty[$key] }}">
                                                 <input type="hidden" class="size_key" value="{{$key}}">
                                                 <input type="hidden" class="size_price"
-                                                    value="{{ round($productt->size_price[$key] * 
+                                                    value="{{ round($productt->size_price[$key] *
                                                                 $product_curr->value * (1+($gs->product_percent / 100)),2) }}">
                                             </span>
                                         </li>
                                         @php
                                         if(!$is_selected && $productt->size_qty[$key] > 0){
-                                            $size_qty = $productt->size_qty[$key];
-                                            $is_selected = true;
-                                        }  
+                                        $size_qty = $productt->size_qty[$key];
+                                        $is_selected = true;
+                                        }
                                         @endphp
                                         @endforeach
                                         <li>
@@ -408,20 +429,25 @@
                                         $is_selected = false;
                                         @endphp
                                         @foreach($productt->color as $key => $data1)
-                                        <li class="{{ (!$is_selected && (int)$productt->color_qty[$key] > 0) ? 'active' : '' }}">
-                                            <span class="box {{ ((int)$productt->color_qty[$key] == 0) ? 'disabled' : '' }}" data-color="{{ $productt->color[$key] }}" style="background-color: {{ $productt->color[$key] }}">
+                                        <li
+                                            class="{{ (!$is_selected && (int)$productt->color_qty[$key] > 0) ? 'active' : '' }}">
+                                            <span
+                                                class="box {{ ((int)$productt->color_qty[$key] == 0) ? 'disabled' : '' }}"
+                                                data-color="{{ $productt->color[$key] }}"
+                                                style="background-color: {{ $productt->color[$key] }}">
                                                 <input type="hidden" class="color" value="{{ $data1 }}">
                                                 <input type="hidden" class="color_qty"
-                                                    value="{{ isset($productt->color_qty[$key]) ? $productt->color_qty[$key] : "" }}">
+                                                    value="{{ isset($productt->color_qty[$key]) ? $productt->color_qty[$key] : '' }}">
                                                 <input type="hidden" class="color_key" value="{{$key}}">
-                                                <input type="hidden" class="color_price" value="{{ isset($productt->color_price[$key]) ? round($productt->color_price[$key] * $product_curr->value * (1+($gs->product_percent / 100)),2) : "" }}">
+                                                <input type="hidden" class="color_price"
+                                                    value="{{ isset($productt->color_price[$key]) ? round($productt->color_price[$key] * $product_curr->value * (1+($gs->product_percent / 100)),2) : '' }}">
                                             </span>
                                         </li>
                                         @php
                                         if(!$is_selected && $productt->color_qty[$key] > 0){
-                                            $color_qty = $productt->color_qty[$key];
-                                            $is_selected = true;
-                                        }  
+                                        $color_qty = $productt->color_qty[$key];
+                                        $is_selected = true;
+                                        }
                                         @endphp
                                         @endforeach
                                     </ul>
@@ -435,44 +461,48 @@
                                     <div class="form-group mb-2">
                                         <select id="select-materials" class="form-control">
                                             @foreach($productt->material as $key => $material)
-                                                <option value="{{ $key }}" {{ $productt->material_qty[$key] == 0 ? "disabled" : "" }}
-                                                    @if($productt->material_qty[$key] > 0)
-                                                        id="material-option"
-                                                        data-material-qty="{{ $productt->material_qty[$key]}}"
-                                                        data-material-name="{{ $productt->material[$key]}}"
-                                                        data-material-price="{{$productt->material_price[$key]}}"
-                                                        data-material-key="{{$key}}"
-                                                    @endif
-                                                    >
-                                                    {{ $material }}
-                                                </option>
-                                            @endforeach 
+                                            <option value="{{ $key }}" {{ $productt->material_qty[$key] == 0 ?
+                                                "disabled" : "" }}
+                                                @if($productt->material_qty[$key] > 0)
+                                                id="material-option"
+                                                data-material-qty="{{ $productt->material_qty[$key]}}"
+                                                data-material-name="{{ $productt->material[$key]}}"
+                                                data-material-price="{{$productt->material_price[$key]}}"
+                                                data-material-key="{{$key}}"
+                                                @endif
+                                                >
+                                                {{ $material }}
+                                            </option>
+                                            @endforeach
                                         </select>
                                         <input type="hidden" class="material" id="material_product" value="">
-                                        <input type="hidden" class="material_qty" id="material_qty_product"
-                                            value="">
+                                        <input type="hidden" class="material_qty" id="material_qty_product" value="">
                                         <input type="hidden" class="material_key" id="material_key_product" value="">
-                                        <input type="hidden" class="material_price" id="material_price_product" value="">
+                                        <input type="hidden" class="material_price" id="material_price_product"
+                                            value="">
                                     </div>
                                 </div>
                                 @endif
                                 @if(!empty($productt->size))
-                                <input type="hidden" id="stock" value="{{ isset($productt->size_qty[$key]) ? $productt->size_qty[$key] : "" }}">
+                                <input type="hidden" id="stock"
+                                    value="{{ isset($productt->size_qty[$key]) ? $productt->size_qty[$key] : '' }}">
                                 @elseif(!empty($productt->color))
-                                <input type="hidden" id="stock" value="{{ isset($productt->color_qty[$key]) ? $productt->color_qty[$key] : "" }}">
+                                <input type="hidden" id="stock"
+                                    value="{{ isset($productt->color_qty[$key]) ? $productt->color_qty[$key] : '' }}">
                                 @elseif(!empty($productt->material))
-                                <input type="hidden" id="stock" value="{{ isset($productt->material_qty[$key]) ? $productt->material_qty[$key] : "" }}">
+                                <input type="hidden" id="stock"
+                                    value="{{ isset($productt->material_qty[$key]) ? $productt->material_qty[$key] : '' }}">
                                 @else
-                                    @php
-                                        $stck = (string) $productt->stock;
-                                    @endphp
-                                    @if($stck != null)
-                                        <input type="hidden" id="stock" value="{{ $stck }}">
-                                    @elseif($productt->type != 'Physical')
-                                        <input type="hidden" id="stock" value="0">
-                                    @else
-                                        <input type="hidden" id="stock" value="">
-                                    @endif
+                                @php
+                                $stck = (string) $productt->stock;
+                                @endphp
+                                @if($stck != null)
+                                <input type="hidden" id="stock" value="{{ $stck }}">
+                                @elseif($productt->type != 'Physical')
+                                <input type="hidden" id="stock" value="0">
+                                @else
+                                <input type="hidden" id="stock" value="">
+                                @endif
                                 @endif
                                 <input type="hidden" id="product_price"
                                     value="{{ round($productt->vendorPrice(),2) * $product_curr->value,2 }}">
@@ -494,10 +524,11 @@
 
                                 <div class="info-meta-3">
                                     <ul class="meta-list">
-                                        <!-- Marketplace Disabled && Product is not Affiliate --> 
-                                                            <!-- or -->
-                                        <!-- Marketplace Enabled && Product belongs to Vendor --> 
-                                        @if( ( !config("features.marketplace") && $productt->product_type != "affiliate") || ( config("features.marketplace") && $productt->user->isVendor() ))
+                                        <!-- Marketplace Disabled && Product is not Affiliate -->
+                                        <!-- or -->
+                                        <!-- Marketplace Enabled && Product belongs to Vendor -->
+                                        @if(( !config("features.marketplace") && $productt->product_type != "affiliate")
+                                        || (config("features.marketplace") && $productt->user->isVendor()))
                                         @if(!$productt->emptyStock())
                                         <li class="d-block count {{ $productt->type == 'Physical' ? '' : 'd-none' }}">
                                             <div class="qty">
@@ -528,223 +559,254 @@
                                         @endphp
                                         @endif
                                         @if(!empty($attrArr))
-                                            @if($gs->attribute_clickable)
-                                                <div class="product-attributes my-4">
-                                                    <div class="row">
-                                                        @foreach($attrArr as $attrKey => $attrVal)
-                                                            @if(array_key_exists("details_status",$attrVal) &&
-                                                            $attrVal['details_status'] == 1)
-                                                                @if ($attr_search = App\Models\Attribute::where('input_name',
-                                                                $attrKey)->first())
-                                                                    <div class="col-lg-12">
-                                                                        <div class="form-group mb-2">
-                                                                            <strong for="" class="text-capitalize">
-                                                                                {{ App\Models\Attribute::where('input_name', $attrKey)->first()->name }}:
-                                                                            </strong>
-                                                                            <div class="">
-                                                                                @if($gs->is_attr_cards)
-                                                                                    @foreach ($attrVal['values'] as $optionKey => $optionVal)
-                                                                                    <div class="row">
-                                                                                    <div class="col-lg-12">
-                                                                                    <div class="card border-dark mb-3">
-                                                                                        <div class="card-header">
-                                                                                        <input type="radio" id="{{$attrKey}}{{ $optionKey }}" name="{{ $attrKey }}" class="custom-control-input product-attr" data-key="{{ $attrKey }}" 
-                                                                                            data-price="{{ 
-                                                                                            $attrVal['prices'][$optionKey] * 
-                                                                                            $product_curr->value * 
+                                        @if($gs->attribute_clickable)
+                                        <div class="product-attributes my-4">
+                                            <div class="row">
+                                                @foreach($attrArr as $attrKey => $attrVal)
+                                                @if(array_key_exists("details_status",$attrVal) &&
+                                                $attrVal['details_status'] == 1)
+                                                @if ($attr_search =
+                                                App\Models\Attribute::where('input_name',$attrKey)->first())
+                                                <div class="col-lg-12">
+                                                    <div class="form-group mb-2">
+                                                        <strong for="" class="text-capitalize">
+                                                            {{ App\Models\Attribute::where('input_name',
+                                                            $attrKey)->first()->name }}:
+                                                        </strong>
+                                                        <div class="">
+                                                            @if($gs->is_attr_cards)
+                                                            @foreach ($attrVal['values'] as $optionKey => $optionVal)
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <div class="card border-dark mb-3">
+                                                                        <div class="card-header">
+                                                                            <input type="radio"
+                                                                                id="{{$attrKey}}{{ $optionKey }}"
+                                                                                name="{{ $attrKey }}"
+                                                                                class="custom-control-input product-attr"
+                                                                                data-key="{{ $attrKey }}"
+                                                                                data-price="{{
+                                                                                            $attrVal['prices'][$optionKey] *
+                                                                                            $product_curr->value *
                                                                                             (1+($gs->product_percent / 100))}}"
-                                                                                            value="{{ $optionKey }}"
-                                                                                            {{ $loop->first ? 'checked' : '' }}>
-                                                                                            @if($loop->count > 1)
-                                                                                                <label class="custom-control-label"
-                                                                                                    for="{{$attrKey}}{{ $optionKey }}">
-                                                                                                    {{App\Models\AttributeOption::find($optionVal)->name}}
-                                                                                                    @if (!empty($attrVal['prices'][$optionKey]) &&
-                                                                                                    $attr_search->show_price == 1)
-                                                                                                    {{$product_curr->sign}}
-                                                                                                    {{number_format(
-                                                                                                        $attrVal['prices'][$optionKey] * $product_curr->value * (1+($gs->product_percent / 100)), 
-                                                                                                        $product_curr->decimal_digits, 
-                                                                                                        $product_curr->decimal_separator,
-                                                                                                        $product_curr->thousands_separator)}}
-                                                                                                    @endif
-                                                                                                </label>
-                                                                                            @else
-                                                                                                <div style="margin-left: -1.5rem">
-                                                                                                    -
-                                                                                                    {{App\Models\AttributeOption::find($optionVal)->name}}
-                                                                                                </div>
-                                                                                            @endif
-                                                                                        </div>
-                                                                                        <div class="card-body text-dark">
-                                                                                        <small>{{ App\Models\AttributeOption::find($optionVal)->description }}</small>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    </div>
-                                                                                    </div>
-                                                                                    @endforeach
-                                                                                @else
-                                                                                @foreach ($attrVal['values'] as $optionKey => $optionVal)
-                                                                                    @if (App\Models\AttributeOption::where('id', $optionVal)->first())
-                                                                                    <div class="custom-control custom-radio">
-                                                                                        <input type="hidden" class="keys" value="">
-                                                                                        <input type="hidden" class="values" value="">
-                                                                                        <input type="radio" id="{{$attrKey}}{{ $optionKey }}" name="{{ $attrKey }}" class="custom-control-input product-attr" data-key="{{ $attrKey }}" 
-                                                                                        data-price="{{ 
-                                                                                        $attrVal['prices'][$optionKey] * 
-                                                                                        $product_curr->value * 
+                                                                                value="{{ $optionKey }}" {{ $loop->first
+                                                                            ? 'checked' : '' }}>
+                                                                            @if($loop->count > 1)
+                                                                            <label class="custom-control-label"
+                                                                                for="{{$attrKey}}{{ $optionKey }}">
+                                                                                {{App\Models\AttributeOption::find($optionVal)->name}}
+                                                                                @if
+                                                                                (!empty($attrVal['prices'][$optionKey])
+                                                                                &&
+                                                                                $attr_search->show_price == 1)
+                                                                                {{$product_curr->sign}}
+                                                                                {{number_format(
+                                                                                $attrVal['prices'][$optionKey] *
+                                                                                $product_curr->value *
+                                                                                (1+($gs->product_percent / 100)),
+                                                                                $product_curr->decimal_digits,
+                                                                                $product_curr->decimal_separator,
+                                                                                $product_curr->thousands_separator)}}
+                                                                                @endif
+                                                                            </label>
+                                                                            @else
+                                                                            <div style="margin-left: -1.5rem">
+                                                                                -
+                                                                                {{App\Models\AttributeOption::find($optionVal)->name}}
+                                                                            </div>
+                                                                            @endif
+                                                                        </div>
+                                                                        <div class="card-body text-dark">
+                                                                            <small>{{
+                                                                                App\Models\AttributeOption::find($optionVal)->description
+                                                                                }}</small>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @endforeach
+                                                            @else
+                                                            @foreach ($attrVal['values'] as $optionKey => $optionVal)
+                                                            @if (App\Models\AttributeOption::where('id',
+                                                            $optionVal)->first())
+                                                            <div class="custom-control custom-radio">
+                                                                <input type="hidden" class="keys" value="">
+                                                                <input type="hidden" class="values" value="">
+                                                                <input type="radio" id="{{$attrKey}}{{ $optionKey }}"
+                                                                    name="{{ $attrKey }}"
+                                                                    class="custom-control-input product-attr"
+                                                                    data-key="{{ $attrKey }}"
+                                                                    data-price="{{
+                                                                                        $attrVal['prices'][$optionKey] *
+                                                                                        $product_curr->value *
                                                                                         (1+($gs->product_percent / 100))}}"
-                                                                                        value="{{ $optionKey }}"
-                                                                                        {{ $loop->first ? 'checked' : '' }}>
-                                                                                        @if($loop->count > 1)
-                                                                                            <label class="custom-control-label"
-                                                                                                for="{{$attrKey}}{{ $optionKey }}">
-                                                                                                {{App\Models\AttributeOption::find($optionVal)->name}}
-                                                                                                @if (!empty($attrVal['prices'][$optionKey]) &&
-                                                                                                $attr_search->show_price == 1)
-                                                                                                @if ($attrVal['prices'][$optionKey] >= 0)
-                                                                                                +
-                                                                                                @endif
-                                                                                                {{$product_curr->sign}}
-                                                                                                {{number_format(
-                                                                                                    $attrVal['prices'][$optionKey] * $product_curr->value * (1+($gs->product_percent / 100)), 
-                                                                                                    $product_curr->decimal_digits, 
-                                                                                                    $product_curr->decimal_separator,
-                                                                                                    $product_curr->thousands_separator)}}
-                                                                                                @endif
-                                                                                            </label>
-                                                                                        @else
-                                                                                            <div style="margin-left: -1.5rem">
-                                                                                                -
-                                                                                                {{App\Models\AttributeOption::find($optionVal)->name}}
-                                                                                            </div>
-                                                                                        @endif
-                                                                                    </div>
-                                                                                    @endif
-                                                                                @endforeach
-                                                                                @endif
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
+                                                                    value="{{ $optionKey }}" {{ $loop->first ? 'checked'
+                                                                : '' }}>
+                                                                @if($loop->count > 1)
+                                                                <label class="custom-control-label"
+                                                                    for="{{$attrKey}}{{ $optionKey }}">
+                                                                    {{App\Models\AttributeOption::find($optionVal)->name}}
+                                                                    @if (!empty($attrVal['prices'][$optionKey]) &&
+                                                                    $attr_search->show_price == 1)
+                                                                    @if ($attrVal['prices'][$optionKey] >= 0)
+                                                                    +
+                                                                    @endif
+                                                                    {{$product_curr->sign}}
+                                                                    {{number_format(
+                                                                    $attrVal['prices'][$optionKey] *
+                                                                    $product_curr->value * (1+($gs->product_percent /
+                                                                    100)),
+                                                                    $product_curr->decimal_digits,
+                                                                    $product_curr->decimal_separator,
+                                                                    $product_curr->thousands_separator)}}
+                                                                    @endif
+                                                                </label>
+                                                                @else
+                                                                <div style="margin-left: -1.5rem">
+                                                                    -
+                                                                    {{App\Models\AttributeOption::find($optionVal)->name}}
+                                                                </div>
                                                                 @endif
+                                                            </div>
                                                             @endif
-                                                        @endforeach
+                                                            @endforeach
+                                                            @endif
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            @else
-                                                <div class="product-attributes my-4">
-                                                    <div class="row">
-                                                        @foreach($attrArr as $attrKey => $attrVal)
-                                                            @if(array_key_exists("details_status",$attrVal) &&
-                                                            $attrVal['details_status'] == 1)
-                                                                @if ($attr_search = App\Models\Attribute::where('input_name', $attrKey)->first())
-                                                                    <div class="col-lg-12">
-                                                                        <div class="form-group mb-2">
-                                                                            <strong for="" class="text-capitalize">
-                                                                                {{ App\Models\Attribute::where('input_name', $attrKey)->first()->name }}:
-                                                                            </strong>
-                                                                            <div class="">
-                                                                                @if($gs->is_attr_cards)
-                                                                                    @foreach ($attrVal['values'] as $optionKey => $optionVal)
-                                                                                    <div class="row">
-                                                                                    <div class="col-lg-12">
-                                                                                    <div class="card border-dark mb-3">
-                                                                                        <div class="card-header">
-                                                                                        <input type="radio" id="{{$attrKey}}{{ $optionKey }}" name="{{ $attrKey }}" class="custom-control-input product-attr" data-key="{{ $attrKey }}" 
-                                                                                            data-price="{{ 
-                                                                                            $attrVal['prices'][$optionKey] * 
-                                                                                            $product_curr->value * 
+                                                @endif
+                                                @endif
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                        @else
+                                        <div class="product-attributes my-4">
+                                            <div class="row">
+                                                @foreach($attrArr as $attrKey => $attrVal)
+                                                @if(array_key_exists("details_status",$attrVal) &&
+                                                $attrVal['details_status'] == 1)
+                                                @if ($attr_search = App\Models\Attribute::where('input_name',
+                                                $attrKey)->first())
+                                                <div class="col-lg-12">
+                                                    <div class="form-group mb-2">
+                                                        <strong for="" class="text-capitalize">
+                                                            {{ App\Models\Attribute::where('input_name',
+                                                            $attrKey)->first()->name }}:
+                                                        </strong>
+                                                        <div class="">
+                                                            @if($gs->is_attr_cards)
+                                                            @foreach ($attrVal['values'] as $optionKey => $optionVal)
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <div class="card border-dark mb-3">
+                                                                        <div class="card-header">
+                                                                            <input type="radio"
+                                                                                id="{{$attrKey}}{{ $optionKey }}"
+                                                                                name="{{ $attrKey }}"
+                                                                                class="custom-control-input product-attr"
+                                                                                data-key="{{ $attrKey }}"
+                                                                                data-price="{{
+                                                                                            $attrVal['prices'][$optionKey] *
+                                                                                            $product_curr->value *
                                                                                             (1+($gs->product_percent / 100))}}"
-                                                                                            value="{{ $optionKey }}"
-                                                                                            {{ $loop->first ? 'checked' : '' }}>
-                                                                                            @if($loop->count > 1)
-                                                                                                <label class="custom-control-label"
-                                                                                                    for="{{$attrKey}}{{ $optionKey }}">
-                                                                                                    {{App\Models\AttributeOption::find($optionVal)->name}}
-                                                                                                    @if (!empty($attrVal['prices'][$optionKey]) &&
-                                                                                                    $attr_search->show_price == 1)
-                                                                                                    {{$product_curr->sign}}
-                                                                                                    {{number_format(
-                                                                                                        $attrVal['prices'][$optionKey] * $product_curr->value * (1+($gs->product_percent / 100)), 
-                                                                                                        $product_curr->decimal_digits, 
-                                                                                                        $product_curr->decimal_separator,
-                                                                                                        $product_curr->thousands_separator)}}
-                                                                                                    @endif
-                                                                                                </label>
-                                                                                            @else
-                                                                                                <div style="margin-left: -1.5rem">
-                                                                                                    -
-                                                                                                    {{App\Models\AttributeOption::find($optionVal)->name}}
-                                                                                                </div>
-                                                                                            @endif
-                                                                                        </div>
-                                                                                        <div class="card-body text-dark">
-                                                                                        <small>{{ App\Models\AttributeOption::find($optionVal)->description }}</small>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    </div>
-                                                                                    </div>
-                                                                                    @endforeach
-                                                                                @else
-                                                                                @foreach ($attrVal['values'] as $optionKey => $optionVal)
-                                                                                    @if (App\Models\AttributeOption::where('id',
-                                                                                    $optionVal)->first())
-                                                                                    <div class="custom-control custom-radio">
-                                                                                            <div style="margin-left: -1.5rem">
-                                                                                                -
-                                                                                                {{App\Models\AttributeOption::find($optionVal)->name}}
-                                                                                            </div>
-                                                                                    </div>
-                                                                                    @endif
-                                                                                @endforeach
+                                                                                value="{{ $optionKey }}" {{ $loop->first
+                                                                            ? 'checked' : '' }}>
+                                                                            @if($loop->count > 1)
+                                                                            <label class="custom-control-label"
+                                                                                for="{{$attrKey}}{{ $optionKey }}">
+                                                                                {{App\Models\AttributeOption::find($optionVal)->name}}
+                                                                                @if
+                                                                                (!empty($attrVal['prices'][$optionKey])
+                                                                                &&
+                                                                                $attr_search->show_price == 1)
+                                                                                {{$product_curr->sign}}
+                                                                                {{number_format(
+                                                                                $attrVal['prices'][$optionKey] *
+                                                                                $product_curr->value *
+                                                                                (1+($gs->product_percent / 100)),
+                                                                                $product_curr->decimal_digits,
+                                                                                $product_curr->decimal_separator,
+                                                                                $product_curr->thousands_separator)}}
                                                                                 @endif
+                                                                            </label>
+                                                                            @else
+                                                                            <div style="margin-left: -1.5rem">
+                                                                                -
+                                                                                {{App\Models\AttributeOption::find($optionVal)->name}}
                                                                             </div>
+                                                                            @endif
+                                                                        </div>
+                                                                        <div class="card-body text-dark">
+                                                                            <small>{{
+                                                                                App\Models\AttributeOption::find($optionVal)->description
+                                                                                }}</small>
                                                                         </div>
                                                                     </div>
-                                                                @endif
+                                                                </div>
+                                                            </div>
+                                                            @endforeach
+                                                            @else
+                                                            @foreach ($attrVal['values'] as $optionKey => $optionVal)
+                                                            @if (App\Models\AttributeOption::where('id',
+                                                            $optionVal)->first())
+                                                            <div class="custom-control custom-radio">
+                                                                <div style="margin-left: -1.5rem">
+                                                                    -
+                                                                    {{App\Models\AttributeOption::find($optionVal)->name}}
+                                                                </div>
+                                                            </div>
                                                             @endif
-                                                        @endforeach
+                                                            @endforeach
+                                                            @endif
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            @endif
+                                                @endif
+                                                @endif
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                        @endif
                                         @endif
 
                                         @if(env("ENABLE_CUSTOM_PRODUCT"))
                                         @if($productt->category->is_customizable)
-                                            <h4 class="customize-title" style="text-transform: uppercase;">
-                                                {{__('Customize your product:')}}</h4>
-                                            <div class="mt-4 mb-4 customizable-item">
-                                                <input type="text" class="form-control col-lg-8 mt-2"
-                                                    name="customizable_name" id="customizable_name" value=""
-                                                    style="margin-top: -13px;" placeholder="{{ __('Enter your name') }}">
-                                                <div class="mt-4">
-                                                    @include('includes.admin.form-error')
-                                                    <input type="checkbox" id="customLogo" class="checkclick"
-                                                        onclick="showLogoField()" value="1">
-                                                    <label for="customLogo">{{ __('Upload Logo Image') }}</label>
-                                                </div>
-
-                                                <div class="mt-4" style="display: none;" id="logoField">
-                                                    <form method="POST" enctype="multipart/form-data" id="logoUpload">
-                                                        @csrf
-                                                        <div class="img-upload">
-                                                            <label for="image-upload" class="img-label mt-4"
-                                                                id="image-label"><i
-                                                                    class="icofont-upload-alt"></i>{{ __('Upload Image') }}</label>
-                                                            <input type="file" name="customizable_logo" class="img-upload"
-                                                                id="image-upload">
-                                                            <h4 class="customize-title">{{ __('Accepted formats: png, jpg and svg.') }}</h4><br>
-                                                            <div class="row">
-                                                                <button type="submit" class="btn btn-primary uploadLogoBtn"
-                                                                    style="margin-top: -10px; margin-left: 10px">
-                                                                    <p style="">{{ __('Upload Logo') }}</p>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
+                                        <h4 class="customize-title" style="text-transform: uppercase;">
+                                            {{__('Customize your product:')}}</h4>
+                                        <div class="mt-4 mb-4 customizable-item">
+                                            <input type="text" class="form-control col-lg-8 mt-2"
+                                                name="customizable_name" id="customizable_name" value=""
+                                                style="margin-top: -13px;" placeholder="{{ __('Enter your name') }}">
+                                            <div class="mt-4">
+                                                @include('includes.admin.form-error')
+                                                <input type="checkbox" id="customLogo" class="checkclick"
+                                                    onclick="showLogoField()" value="1">
+                                                <label for="customLogo">{{ __('Upload Logo Image') }}</label>
                                             </div>
-                                        <input type="hidden" name="customizable_gallery_count" id="customizable_gallery_count" value="{{ count($category_gallery) }}">
+
+                                            <div class="mt-4" style="display: none;" id="logoField">
+                                                <form method="POST" enctype="multipart/form-data" id="logoUpload">
+                                                    @csrf
+                                                    <div class="img-upload">
+                                                        <label for="image-upload" class="img-label mt-4"
+                                                            id="image-label"><i class="icofont-upload-alt"></i>{{
+                                                            __('Upload Image') }}</label>
+                                                        <input type="file" name="customizable_logo" class="img-upload"
+                                                            id="image-upload">
+                                                        <h4 class="customize-title">{{ __('Accepted formats: png, jpg
+                                                            and svg.') }}</h4><br>
+                                                        <div class="row">
+                                                            <button type="submit" class="btn btn-primary uploadLogoBtn"
+                                                                style="margin-top: -10px; margin-left: 10px">
+                                                                <p style="">{{ __('Upload Logo') }}</p>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="customizable_gallery_count"
+                                            id="customizable_gallery_count" value="{{ count($category_gallery) }}">
                                         @if(count($category_gallery) > 0)
                                         <div class="row">
                                             <div class="d-flex">
@@ -764,11 +826,11 @@
                                                 <a class="textureIcons" id="textureIcons" onclick=""
                                                     style="cursor: pointer;">
                                                     <img class="textureImages" width="80"
-                                                        src="{{asset('assets/images/thumbnails/' . $cat_gal->customizable_gallery)}}"
+                                                        src="{{asset('storage/images/thumbnails/' . $cat_gal->customizable_gallery)}}"
                                                         style="border-radius: 50px; margin-left: 5px;">
-                                                        <div class="textureOverlay" style="position: relative;"></div>
+                                                    <div class="textureOverlay" style="position: relative;"></div>
                                                     <span class="overlaySpan"><i class="icofont-ui-add icofont-1x"
-                                                        style="color: #fff"></i></span>
+                                                            style="color: #fff"></i></span>
                                                 </a>
 
                                                 @php
@@ -796,30 +858,32 @@
                                         @endif
                                         <div class="row mb-2">
                                             <div class="col-lg-12">
-                                                <input type="checkbox" name="agree_terms" id="agreeCustomTerms" value="" class="checkclick">
-                                                <label for="agreeCustomTerms"
-                                                    style="font-weight:500;">{{ __('I reviewed my choices.') }}</label>
+                                                <input type="checkbox" name="agree_terms" id="agreeCustomTerms" value=""
+                                                    class="checkclick">
+                                                <label for="agreeCustomTerms" style="font-weight:500;">{{ __('I reviewed
+                                                    my choices.') }}</label>
                                             </div>
                                         </div>
                                         @endif
                                         @endif
-                                        
+
                                         @if(env("ENABLE_CUSTOM_PRODUCT_NUMBER"))
-                                            <input type="hidden" id="is_customizable_number" name="is_customizable_number" value="{{ $productt->category->is_customizable_number }}">
-                                            @if($productt->category->is_customizable_number == 1)
-                                                <h4 class="customize-title" style="text-transform: uppercase;">
-                                                    {{__('Customize your product:')}}</h4>
-                                                <div class="mt-4 mb-4 customizable-item">
-                                                    <input type="text" class="form-control col-lg-8 mt-2"
-                                                        name="customizable_name" id="customizable_name" value=""
-                                                        style="margin-top: -13px;" placeholder="{{ __('Enter your name') }}">
-                                                        <input type="number" min="1" max="99" maxlength="2" 
-                                                        oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" 
-                                                        class="form-control col-lg-8 mt-2"
-                                                        name="customizable_number" id="customizable_number" value=""
-                                                        style="margin-top: -13px;" placeholder="{{ __('Enter the number') }}">
-                                                </div>
-                                            @endif
+                                        <input type="hidden" id="is_customizable_number" name="is_customizable_number"
+                                            value="{{ $productt->category->is_customizable_number }}">
+                                        @if($productt->category->is_customizable_number == 1)
+                                        <h4 class="customize-title" style="text-transform: uppercase;">
+                                            {{__('Customize your product:')}}</h4>
+                                        <div class="mt-4 mb-4 customizable-item">
+                                            <input type="text" class="form-control col-lg-8 mt-2"
+                                                name="customizable_name" id="customizable_name" value=""
+                                                style="margin-top: -13px;" placeholder="{{ __('Enter your name') }}">
+                                            <input type="number" min="1" max="99" maxlength="2"
+                                                oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"
+                                                class="form-control col-lg-8 mt-2" name="customizable_number"
+                                                id="customizable_number" value="" style="margin-top: -13px;"
+                                                placeholder="{{ __('Enter the number') }}">
+                                        </div>
+                                        @endif
                                         @endif
 
                                         @if($gs->is_cart)
@@ -834,11 +898,11 @@
                                         </div>
                                         @else
                                         @if($productt->emptyStock())
-                                            <li class="addtocart">
-                                                <a href="javascript:;" class="cart-out-of-stock">
-                                                    <i class="icofont-close-circled"></i>
-                                                    {{ __("Out of Stock!") }}</a>
-                                            </li>
+                                        <li class="addtocart">
+                                            <a href="javascript:;" class="cart-out-of-stock">
+                                                <i class="icofont-close-circled"></i>
+                                                {{ __("Out of Stock!") }}</a>
+                                        </li>
                                         @else
                                         <li class="addtocart">
                                             <a href="javascript:;" id="addcrt">
@@ -876,23 +940,32 @@
                                     </ul>
                                 </div>
                                 @if($gs->is_back_in_stock && $productt->emptyStock())
-                                    @php
-                                        $url = $gs->privacy_policy ? true : false;
-                                        $url_terms = $gs->crow_policy ? true : false;
-                                    @endphp
-                                    <form class="form-group" action="{{ route('product.backinstock', $productt->id) }}" method="POST">
-                                        @csrf
-                                        <label style="font-weight:200;">{{ __('Please enter your e-mail to be notified when the product is back in stock.') }}</label>
-                                        <label for="email">{{ __("Email Address") }}</label>
-                                        <input style="margin-bottom: 1rem;" class="form-control form-backinstock" id="email" type="email" name="email" value="{{ old('email') }}" required>
-                                        <input style="float: right;" type="submit" class="btn btn-primary btn-backinstock" value="{{ __("Notify Me") }}">
-                                        <div class="form-forgot-pass">
-                                            <div class="left">
-                                              <input type="checkbox" name="agree_privacy_policy" id="agree_privacy_policy">
-                                              <label for="agree_privacy_policy">Concordo com a <a target="_blank" href="{{ $url ? route('front.privacypolicy') : ""  }}">Política de Privacidade</a> e os <a target="_blank" href="{{ $url_terms ? route('front.crowpolicy') : ""  }}">Termos de Uso</a>.</label>
-                                            </div>
+                                @php
+                                $url = $gs->privacy_policy ? true : false;
+                                $url_terms = $gs->crow_policy ? true : false;
+                                @endphp
+                                <form class="form-group" action="{{ route('product.backinstock', $productt->id) }}"
+                                    method="POST">
+                                    @csrf
+                                    <label style="font-weight:200;">{{ __('Please enter your e-mail to be notified when
+                                        the product is back in stock.') }}</label>
+                                    <label for="email">{{ __("Email Address") }}</label>
+                                    <input style="margin-bottom: 1rem;" class="form-control form-backinstock" id="email"
+                                        type="email" name="email" value="{{ old('email') }}" required>
+                                    <input style="float: right;" type="submit" class="btn btn-primary btn-backinstock"
+                                        value="{{ __('Notify Me') }}">
+                                    <div class="form-forgot-pass">
+                                        <div class="left">
+                                            <input type="checkbox" name="agree_privacy_policy"
+                                                id="agree_privacy_policy">
+                                            <label for="agree_privacy_policy">Concordo com a <a target="_blank"
+                                                    href="{{ $url ? route('front.privacypolicy') : ''  }}">Política de
+                                                    Privacidade</a> e os <a target="_blank"
+                                                    href="{{ $url_terms ? route('front.crowpolicy') : ''  }}">Termos de
+                                                    Uso</a>.</label>
                                         </div>
-                                    </form>
+                                    </div>
+                                </form>
                                 @endif
                                 <div class="social-links social-sharing a2a_kit a2a_kit_size_32">
                                     {{ __("Share on")}}:
@@ -903,7 +976,7 @@
                                                 <i class="fab fa-facebook-f"></i>
                                             </a>
                                         </li>
-                                         <li>
+                                        <li>
                                             <a class="twitter a2a_button_twitter" href="">
                                                 <i class="fab fa-twitter"></i>
                                             </a>
@@ -925,7 +998,7 @@
                                 <p class="estimate-time">{{ __("Estimated Shipping Time") }}: <b>
                                         {{ $productt->ship }}</b></p>
                                 @endif
-                                @if( $productt->sku != null )
+                                @if($productt->sku != null)
                                 <p class="p-sku">
                                     {{ __("Product SKU") }}: <span class="idno">{{ $productt->sku }}</span>
                                 </p>
@@ -965,16 +1038,16 @@
                         </div>
                         <div class="row">
                             @foreach($productt->category->products()->byStore()
-                                ->where('status','=',1)
-                                ->where('brand_id', '=', $productt->brand_id)
-                                ->where('category_id', '=', $productt->category_id)
-                                ->where('mpn', '=', $productt->mpn)
-                                ->where('id','!=', $productt->id)
-                                ->where('user_id', '!=', 0)
-                                ->orderBy('price', 'ASC')
-                                ->get()
-                                as $prod)
-                                @include('includes.product.slider-vendor')
+                            ->where('status','=',1)
+                            ->where('brand_id', '=', $productt->brand_id)
+                            ->where('category_id', '=', $productt->category_id)
+                            ->where('mpn', '=', $productt->mpn)
+                            ->where('id','!=', $productt->id)
+                            ->where('user_id', '!=', 0)
+                            ->orderBy('price', 'ASC')
+                            ->get()
+                            as $prod)
+                            @include('includes.product.slider-vendor')
                             @endforeach
                         </div>
                     </div>
@@ -1032,15 +1105,15 @@
                                                 <li>
                                                     <div class="single-review">
                                                         <div class="left-area">
-                                                            <img src="{{ $review->user->photo ? 
-                                                                        asset('assets/images/users/'.
-                                                                            $review->user->photo) : 
-                                                                                asset('assets/images/noimage.png') }}"
+                                                            <img src="{{ $review->user->photo ?
+                                                                        asset('storage/images/users/'.
+                                                                            $review->user->photo) :
+                                                                                asset('storage/images/noimage.png') }}"
                                                                 alt="">
                                                             <h5 class="name">{{ $review->user->name }}</h5>
                                                             <p class="date">
                                                                 {{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s',
-                                                                            $review->review_date)->diffForHumans() }}
+                                                                $review->review_date)->diffForHumans() }}
                                                             </p>
                                                         </div>
                                                         <div class="right-area">
@@ -1105,7 +1178,7 @@
                                         </div>
                                         <div class="write-comment-area">
                                             <div class="gocover"
-                                                style="background: url({{ asset('assets/images/'.
+                                                style="background: url({{ asset('storage/images/'.
                                                     $gs->loader) }}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
                                             </div>
                                             <form id="reviewform" action="{{route('front.review.submit')}}"
@@ -1118,7 +1191,7 @@
                                                 <input type="hidden" name="product_id" value="{{$productt->id}}">
                                                 <div class="row">
                                                     <div class="col-lg-12">
-                                                        <textarea name="review" placeholder="{{ __("Your Review") }}"
+                                                        <textarea name="review" placeholder="{{ __(" Your Review") }}"
                                                             required>
                                                             </textarea>
                                                     </div>
@@ -1168,7 +1241,7 @@
                     <div class="content">
                         <div class="title">
                             <a href="{{ route('front.brand', $productt->brand->slug) }}">
-                                <img src="{{$productt->brand->image ? asset('assets/images/brands/'.$productt->brand->image) : asset('assets/images/noimage.png') }}"
+                                <img src="{{$productt->brand->image ? asset('storage/images/brands/'.$productt->brand->image) : asset('storage/images/noimage.png') }}"
                                     alt="{{$productt->brand->name}}">
                         </div>
                         <p class="stor-name">
@@ -1196,11 +1269,11 @@
                 </div>
                 @endif
             </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
         </div>
-    </div>
+        <div class="row">
+            <div class="col-lg-12">
+            </div>
+        </div>
     </div>
     <!-- Trending Item Area Start -->
     @if(!config("features.marketplace"))
@@ -1255,7 +1328,7 @@
                             @foreach($category_gallery as $cat_gal)
                             <a class="textureIconsModal" id="textureIcons" style="cursor: pointer;">
                                 <img class="textureImagesModal ml-2" id="textureImagesModal" width="100"
-                                    src="{{asset('assets/images/thumbnails/' . $cat_gal->customizable_gallery)}}"
+                                    src="{{asset('storage/images/thumbnails/' . $cat_gal->customizable_gallery)}}"
                                     style="border-radius: 50px;">
                                 <div class="textureOverlayModal">
                                     <span class="overlaySpanModal"><i class="icofont-ui-add icofont-2x"
@@ -1296,17 +1369,17 @@
                                         <ul>
                                             <li>
                                                 <input type="text" class="input-field" id="subj1" name="subject"
-                                                    placeholder="{{ __("Subject *") }}" required>
+                                                    placeholder="{{ __(" Subject *") }}" required>
                                             </li>
                                             <li>
                                                 <textarea class="input-field textarea" name="message" id="msg1"
-                                                    placeholder="{{ __("Your Message") }}" required>
+                                                    placeholder="{{ __(" Your Message") }}" required>
                                                     </textarea>
                                             </li>
                                             <input type="hidden" name="type" value="Ticket">
                                         </ul>
-                                        <button class="submit-btn" id="emlsub"
-                                            type="submit">{{ __("Send Message") }}</button>
+                                        <button class="submit-btn" id="emlsub" type="submit">{{ __("Send Message")
+                                            }}</button>
                                     </form>
                                 </div>
                             </div>
@@ -1344,11 +1417,11 @@
                                         </li>
                                         <li>
                                             <input type="text" class="input-field" id="subj" name="subject"
-                                                placeholder="{{ __("Subject *") }}" required>
+                                                placeholder="{{ __(" Subject *") }}" required>
                                         </li>
                                         <li>
                                             <textarea class="input-field textarea" name="message" id="msg"
-                                                placeholder="{{ __("Your Message") }}" required>
+                                                placeholder="{{ __(" Your Message") }}" required>
                                                         </textarea>
                                         </li>
                                         <input type="hidden" name="email"
@@ -1358,8 +1431,8 @@
                                             value="{{ Auth::guard('web')->user()->id }}">
                                         <input type="hidden" name="vendor_id" value="{{ $productt->user->id }}">
                                     </ul>
-                                    <button class="submit-btn" id="emlsub1"
-                                        type="submit">{{ __("Send Message") }}</button>
+                                    <button class="submit-btn" id="emlsub1" type="submit">{{ __("Send Message")
+                                        }}</button>
                                 </form>
                             </div>
                         </div>
@@ -1386,7 +1459,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="gocover" style="background: url({{ asset('assets/images/'.$gs->loader) }}) 
+                <div class="gocover" style="background: url({{ asset('storage/images/'.$gs->loader) }})
                         no-repeat scroll center center rgba(45, 45, 45, 0.5);">
                 </div>
                 <div class="login-area">
@@ -1401,12 +1474,12 @@
                             <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                             <input type="hidden" name="product_id" value="{{ $productt->id }}">
                             <div class="form-input">
-                                <input type="text" name="title" class="User Name"
-                                    placeholder="{{ __("Enter Report Title") }}" required>
+                                <input type="text" name="title" class="User Name" placeholder="{{ __(" Enter Report
+                                    Title") }}" required>
                                 <i class="icofont-notepad"></i>
                             </div>
                             <div class="form-input">
-                                <textarea name="note" class="User Name" placeholder="{{ __("Enter Report Note") }}"
+                                <textarea name="note" class="User Name" placeholder="{{ __(" Enter Report Note") }}"
                                     required>
                                     </textarea>
                             </div>
@@ -1436,7 +1509,7 @@
             $("#stock").val(size_qty);
             $("#stock_qty").html(size_qty);
         }
-    }); 
+    });
     $(document).on('click', '.product-color .color-list .box', function() {
         var show_stock = "{{ $gs->show_stock }}";
         var color_qty = $(this).find('.color_qty').val();
@@ -1571,7 +1644,7 @@
         var currency = "{{ $product_curr->name }}";
         if(typeof fbq != 'undefined'){
             fbq('track', 'ViewContent', {
-                content_name: name, 
+                content_name: name,
                 content_category: category,
                 content_ids: id,
                 content_type: 'Product',
@@ -1664,7 +1737,7 @@
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			}
     });
-    
+
  $(document).on('submit','#logoUpload', (function(e) {
     e.preventDefault();
     $.ajax({
@@ -1689,7 +1762,7 @@
   }
     });
   }));
- 
+
 </script>
 <script type="text/javascript">
     function showLogoField(){
@@ -1712,16 +1785,16 @@
     $("#openBtn").click(function(){
       $("#openOptions").modal("show");
   });
-  
+
 </script>
 <script type="text/javascript">
     $(".checkclick").change(function(){
         $(this).val($(this).is(":checked") ? 1 : 0);
     });
-    
+
 </script>
 <script type="text/javascript">
-    $(".textureIcons, .textureIconsModal").click(function(){  
+    $(".textureIcons, .textureIconsModal").click(function(){
         var imageSrc = $(this).find('img').attr('src');
         $('input[id=customizable_gallery]').val(imageSrc);
         if(imageSrc.indexOf("thumbnails") > -1){
@@ -1737,7 +1810,7 @@
 
 <style>
     .section-top .section-title {
-        font-size:22px; 
+        font-size: 22px;
     }
 </style>
 @endsection
