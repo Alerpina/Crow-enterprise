@@ -6,7 +6,7 @@
             <div class="col-lg-10">
                 <div class="row">
                     @include('front._product-details-photos')
-                    {{-- @include('front._product-details-content') --}}
+                    @include('front._product-details-content')
                 </div>
 
                 @if(config("features.marketplace"))
