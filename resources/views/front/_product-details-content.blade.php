@@ -1,12 +1,15 @@
 <div class="col-lg-7">
     <div class="right-area">
         <div class="product-info">
+
             @if($isAdmin)
             <div class="mybadge1">
                 {{ __('Viewing as Admin')}}
             </div>
             @endif
+
             <h4 class="product-name">{{ $productt->name }}</h4>
+
             @if(($productt->ref_code != null) && ($admstore->reference_code == 1))
             <h4>
                 <span class="badge badge-primary" style="background-color: {{$admstore->ref_color}}">{{ __('Reference
@@ -15,6 +18,7 @@
                 </span>
             </h4>
             @endif
+
             @include('front._product-details-info-meta-1')
 
             @if($productt->show_price)
@@ -56,6 +60,7 @@
             <input type="hidden" id="stock" value="">
             @endif
             @endif
+
             <input type="hidden" id="product_price"
                 value="{{ round($productt->vendorPrice(),2) * $product_curr->value,2 }}">
             <input type="hidden" id="product_id" value="{{ $productt->id }}">
@@ -104,17 +109,22 @@
                     </li>
                 </ul>
             </div>
+
             <script async src="https://static.addtoany.com/menu/page.js"></script>
+
             @if($productt->ship != null)
             <p class="estimate-time">{{ __("Estimated Shipping Time") }}: <b>
                     {{ $productt->ship }}</b></p>
             @endif
+
             @if($productt->sku != null)
             <p class="p-sku">
                 {{ __("Product SKU") }}: <span class="idno">{{ $productt->sku }}</span>
             </p>
             @endif
+
             @if($gs->is_report)
+
             {{-- PRODUCT REPORT SECTION --}}
             @if(Auth::guard('web')->check())
             <div class="report-area">
@@ -129,6 +139,7 @@
                 </a>
             </div>
             @endif
+
             {{-- PRODUCT REPORT SECTION ENDS --}}
             @endif
         </div>
