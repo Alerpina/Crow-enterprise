@@ -60,6 +60,6 @@ class Subcategory extends LocalizedModel
 
     public function getBannerLinkAttribute()
     {
-        return $this->banner ? asset('assets/images/subcategories/banners/'.$this->banner) : null;
+        return $this->banner ? asset('storage/images/subcategories/banners/'.$this->banner) : null;
     }
 }
