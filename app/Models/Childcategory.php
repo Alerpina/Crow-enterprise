@@ -59,6 +59,6 @@ class Childcategory extends LocalizedModel
 
     public function getBannerLinkAttribute()
     {
-        return $this->banner ? asset('assets/images/childcategories/banners/'.$this->banner) : null;
+        return $this->banner ? asset('storage/images/childcategories/banners/'.$this->banner) : null;
     }
 }
