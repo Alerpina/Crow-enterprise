@@ -121,15 +121,6 @@ class CatalogController extends Controller
     }
 
     // -------------------------------- CATEGORY SECTION ----------------------------------------
-    //
-    // public function filteredProducts(Request $request, $slug=null, $slug1=null, $slug2=null)
-    // {
-    //
-    //
-    //   return $products;
-    // }
-
-    // -------------------------------- CATEGORY SECTION ----------------------------------------
 
     public function category(Request $request, $slug = null, $slug1 = null, $slug2 = null)
     {
@@ -179,8 +170,8 @@ class CatalogController extends Controller
         }
         if (config("features.marketplace")) {
             $prods = Product::byStore()
-      ->where('status', 1)
-      ->where('being_sold', 1);
+                        ->where('status', 1)
+                        ->where('being_sold', 1);
         } else {
             $prods = Product::byStore()->where('status', '=', 1);
         }

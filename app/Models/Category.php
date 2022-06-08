@@ -62,6 +62,6 @@ class Category extends LocalizedModel
 
     public function getBannerLinkAttribute()
     {
-        return $this->banner ? asset('assets/images/categories/banners/'.$this->banner) : null;
+        return $this->banner ? asset('storage/images/categories/banners/'.$this->banner) : null;
     }
 }
