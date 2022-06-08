@@ -42,7 +42,7 @@
             <div class="col-lg-8">
                 <div class="blog-content">
                     <div class="feature-image">
-                        <img class="img-fluid" src="{{ asset('assets/images/blogs/'.$blog->photo) }}" alt="">
+                        <img class="img-fluid" src="{{ asset('storage/images/blogs/'.$blog->photo) }}" alt="">
                     </div>
                     <div class="content">
                         <h3 class="title">
@@ -77,7 +77,7 @@
                                 @if(is_array($blog->tags))
                                 @foreach($blog->tags as $key => $tag)
                                 <a href="{{ route('front.blogtags',$tag) }}">
-                                    {{ $tag }}{{ $key != count($blog->tags) - 1  ? ',':''}}
+                                    {{ $tag }}{{ $key != count($blog->tags) - 1 ? ',':''}}
                                 </a>
                                 @endforeach
                                 @endif
@@ -131,7 +131,7 @@
                 <div class="blog-aside">
                     <div class="serch-form">
                         <form action="{{ route('front.blogsearch') }}">
-                            <input type="text" name="search" placeholder="{{ __("Search") }}" required="">
+                            <input type="text" name="search" placeholder="{{ __(" Search") }}" required="">
                             <button type="submit"><i class="icofont-search"></i></button>
                         </form>
                     </div>
@@ -161,12 +161,13 @@
                                 <div class="post">
                                     <div class="post-img">
                                         <img style="width: 73px; height: 59px;"
-                                            src="{{ asset('assets/images/blogs/'.$blog->photo) }}" alt="">
+                                            src="{{ asset('storage/images/blogs/'.$blog->photo) }}" alt="">
                                     </div>
                                     <div class="post-details">
                                         <a href="{{ route('front.blogshow',$blog->id) }}">
                                             <h4 class="post-title">
-                                                {{mb_strlen($blog->title,'utf-8') > 45 ? mb_substr($blog->title,0,45,'utf-8')." .." : $blog->title}}
+                                                {{mb_strlen($blog->title,'utf-8') > 45 ?
+                                                mb_substr($blog->title,0,45,'utf-8')." .." : $blog->title}}
                                             </h4>
                                         </a>
                                         <p class="date">
