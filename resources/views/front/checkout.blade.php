@@ -89,7 +89,7 @@
             </div>
             <div class="col-lg-8">
 
-                <div class="preloader" id="preloader_checkout" style="background: url({{asset('assets/images/'.$gs->loader)}}) no-repeat scroll center center;
+                <div class="preloader" id="preloader_checkout" style="background: url({{asset('storage/images/'.$gs->loader)}}) no-repeat scroll center center;
             background-color: rgba(0,0,0,0.5);
             display: none">
                 </div>
@@ -685,7 +685,7 @@
                                             <div class="product-img">
                                                 <div class="d-flex">
                                                     <img src="{{ filter_var($product['item']['photo'], FILTER_VALIDATE_URL) ? $product['item']['photo'] :
-                                asset('assets/images/products/'.$product['item']['photo']) }}" alt="product"
+                                asset('storage/images/products/'.$product['item']['photo']) }}" alt="product"
                                                         height="80" width="80" class="p-1">
                                                 </div>
                                             </div>
@@ -718,7 +718,7 @@
                                                 @if(!empty($product['customizable_gallery']))
                                                 <div class="unit-price" style="margin-top: 5px;">
                                                     <h5 class="label">{{ __("Photo") }} : </h5>
-                                                    <img src="{{ asset('assets/images/galleries/' . $product['customizable_gallery']) }}"
+                                                    <img src="{{ asset('storage/images/galleries/' . $product['customizable_gallery']) }}"
                                                         style="width: 33px; border-radius: 30px; margin-left: 5px; margin-top: -9px; "></img>
                                                 </div>
                                                 @endif
@@ -726,7 +726,7 @@
                                                 @if(!empty($product['customizable_logo']))
                                                 <div class="unit-price" style="margin-top: 15px; margin-bottom: 5px;">
                                                     <h5 class="label">{{ __("Logo") }} : </h5>
-                                                    <img src="{{ asset('assets/images/custom-logo/' . $product['customizable_logo']) }}"
+                                                    <img src="{{ asset('storage/images/custom-logo/' . $product['customizable_logo']) }}"
                                                         style="width: 33px; margin-left: 5px; margin-top: -9px; "></img>
                                                 </div>
                                                 @endif
@@ -1481,7 +1481,7 @@
                     </div>
                     <div class="cupon-box">
                         <div id="coupon-link">
-                            <img src="{{ asset('assets/front/images/tag.png') }}">
+                            <img src="{{ asset('assets/images/tag.png') }}">
                             {{ __("Have a promotion code?") }}
                         </div>
                         <form id="check-coupon-form" class="coupon">
