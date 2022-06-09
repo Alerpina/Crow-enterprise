@@ -79,7 +79,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
-                <div class="preloader" id="preloader_cart" style="background: url({{asset('assets/images/'.$gs->loader)}}) no-repeat scroll center center;
+                <div class="preloader" id="preloader_cart" style="background: url({{asset('storage/images/'.$gs->loader)}}) no-repeat scroll center center;
             background-color: rgba(0,0,0,0.5);
             display: none">
                 </div>
@@ -109,10 +109,12 @@
                                     class="cremove{{ str_replace('~','',$custom_item_id) }}">
                                     <td class="product-img">
                                         <div class="item">
-                                            <img src="{{filter_var($product['item']['photo'], FILTER_VALIDATE_URL) ? $product['item']['photo'] : 
-                          asset('assets/images/products/'.$product['item']['photo'])}}" alt="product">
+                                            <img src="{{filter_var($product['item']['photo'], FILTER_VALIDATE_URL) ? $product['item']['photo'] :
+                          asset('storage/images/products/'.$product['item']['photo'])}}" alt="product">
                                             <p class="name"><a
-                                                    href="{{ route('front.product', $product['item']['slug']) }}">{{mb_strlen($product['item']->name,'utf-8') > 35 ? mb_substr($product['item']->name,0,35,'utf-8').'...' : $product['item']->name}}</a>
+                                                    href="{{ route('front.product', $product['item']['slug']) }}">{{mb_strlen($product['item']->name,'utf-8')
+                                                    > 35 ? mb_substr($product['item']->name,0,35,'utf-8').'...' :
+                                                    $product['item']->name}}</a>
                                             </p>
                                             @if (!empty($product['item']->ship))
                                             <p>{{ __("Estimated shipping time") }}: {{$product['item']->ship}}</p>
@@ -133,7 +135,8 @@
                                         @if(!empty($product['color']))
                                         <div class="d-flex mt-2">
                                             <b>{{ __("Color") }}</b>: <span id="color-bar"
-                                                style="border: 10px solid #{{$product['color'] == "" ? "white" : $product['color']}};"></span>
+                                                style="border: 10px solid #{{$product['color'] == "" ? " white" :
+                                                $product['color']}};"></span>
                                         </div>
                                         @endif
 
@@ -149,36 +152,36 @@
                                         @endif
 
                                         @if(env("ENABLE_CUSTOM_PRODUCT") || env("ENABLE_CUSTOM_PRODUCT_NUMBER"))
-                                            @if(!empty($product['customizable_name']))
-                                            <b>{{ __('Custom Name') }}</b>:
-                                            <p>{{$product['customizable_name']}}</p>
-                                            @endif
+                                        @if(!empty($product['customizable_name']))
+                                        <b>{{ __('Custom Name') }}</b>:
+                                        <p>{{$product['customizable_name']}}</p>
+                                        @endif
                                         @endif
 
                                         @if(env("ENABLE_CUSTOM_PRODUCT"))
-                                            @if(!empty($product['customizable_gallery']))
-                                            <div class="d-flex mt-2">
-                                                <b>{{ __("Photo") }}</b>:
-                                                <figure>
-                                                <img src="{{ asset('assets/images/galleries/' . $product['customizable_gallery']) }}"
+                                        @if(!empty($product['customizable_gallery']))
+                                        <div class="d-flex mt-2">
+                                            <b>{{ __("Photo") }}</b>:
+                                            <figure>
+                                                <img src="{{ asset('storage/images/galleries/' . $product['customizable_gallery']) }}"
                                                     style="width: 45px; height:auto; border-radius: 30px; margin-left: 5px; margin-top: -10px; "></img>
-                                                </figure>
-                                            </div>
-                                            @endif
+                                            </figure>
+                                        </div>
+                                        @endif
 
-                                            @if(!empty($product['customizable_logo']))
-                                            <div class="d-flex mt-4">
-                                                <b>{{ __("Logo") }}</b>:
-                                                <img src="{{ asset('assets/images/custom-logo/' . $product['customizable_logo']) }}"
-                                                    style="width: 45px; margin-left: 5px; margin-top: -10px; "></img>
-                                            </div>
-                                            @endif
+                                        @if(!empty($product['customizable_logo']))
+                                        <div class="d-flex mt-4">
+                                            <b>{{ __("Logo") }}</b>:
+                                            <img src="{{ asset('storage/images/custom-logo/' . $product['customizable_logo']) }}"
+                                                style="width: 45px; margin-left: 5px; margin-top: -10px; "></img>
+                                        </div>
+                                        @endif
                                         @endif
                                         @if(env("ENABLE_CUSTOM_PRODUCT_NUMBER"))
-                                            @if(!empty($product['customizable_number']))
-                                            <b>{{ __('Custom Number') }}</b>:
-                                            <p>{{$product['customizable_number']}}</p>
-                                            @endif
+                                        @if(!empty($product['customizable_number']))
+                                        <b>{{ __('Custom Number') }}</b>:
+                                        <p>{{$product['customizable_number']}}</p>
+                                        @endif
                                         @endif
                                     </td>
 
@@ -196,14 +199,16 @@
                                                 <input type="hidden" class="prodid" value="{{$product['item']['id']}}">
                                                 <input type="hidden" class="itemid" value="{{$custom_item_id}}">
                                                 <input type="hidden" class="size_qty" value="{{$product['size_qty']}}">
-                                                <input type="hidden" class="color_qty" value="{{$product['color_qty']}}">
-                                                <input type="hidden" class="material_qty" value="{{$product['material_qty']}}">
+                                                <input type="hidden" class="color_qty"
+                                                    value="{{$product['color_qty']}}">
+                                                <input type="hidden" class="material_qty"
+                                                    value="{{$product['material_qty']}}">
                                                 <input type="hidden" class="max_quantity"
                                                     value="{{$product['max_quantity']}}">
 
                                                 <input type="hidden" class="size_price"
                                                     value="{{$product['item']['price']}}">
-                                                    <input type="hidden" class="material_price"
+                                                <input type="hidden" class="material_price"
                                                     value="{{$product['item']['price']}}">
                                                 <input type="hidden" class="color_price"
                                                     value="{{$product['item']['price']}}">
@@ -213,8 +218,8 @@
                                                     </span>
                                                 </li>
                                                 <li>
-                                                    <span class="qttotal1"
-                                                        id="qty{{$custom_item_id}}">{{ $product['qty'] }}</span>
+                                                    <span class="qttotal1" id="qty{{$custom_item_id}}">{{
+                                                        $product['qty'] }}</span>
                                                 </li>
 
                                                 <li>
@@ -226,16 +231,14 @@
                                         </div>
                                         @endif
                                         @if($product['size_qty'])
-                                        <input type="hidden" id="stock{{$custom_item_id}}"
-                                            value="0">
+                                        <input type="hidden" id="stock{{$custom_item_id}}" value="0">
                                         <input type="hidden" id="max_quantity{{$custom_item_id}}"
                                             value="{{$product['max_quantity']}}">
                                         @elseif($product['item']['type'] != 'Physical')
                                         <input type="hidden" id="stock{{$custom_item_id}}" value="1">
 
                                         @else
-                                        <input type="hidden" id="stock{{$custom_item_id}}"
-                                            value="0">
+                                        <input type="hidden" id="stock{{$custom_item_id}}" value="0">
                                         @endif
                                     </td>
 
@@ -270,8 +273,8 @@
                                     {{ __("Total MRP") }}
                                 </p>
                                 <P>
-                                    <b
-                                        class="cart-total">{{ Session::has('cart') ? App\Models\Product::convertPrice($totalPrice) : '0.00' }}</b>
+                                    <b class="cart-total">{{ Session::has('cart') ?
+                                        App\Models\Product::convertPrice($totalPrice) : '0.00' }}</b>
                                 </P>
                             </li>
                             <li>
@@ -297,8 +300,8 @@
                                 {{ __("Total") }}
                             </p>
                             <p style="margin-bottom:0px;">
-                                <span
-                                    class="main-total">{{ Session::has('cart') ? App\Models\Product::convertPrice($mainTotal) : '0.00' }}</span>
+                                <span class="main-total">{{ Session::has('cart') ?
+                                    App\Models\Product::convertPrice($mainTotal) : '0.00' }}</span>
                             </p>
                         </div>
                         <div class="total-price">
@@ -306,8 +309,8 @@
 
                             </p>
                             <p>
-                                <span
-                                    class="main-total2">{{ Session::has('cart') ? App\Models\Product::signFirstPrice($mainTotal) : '0.00' }}</span>
+                                <span class="main-total2">{{ Session::has('cart') ?
+                                    App\Models\Product::signFirstPrice($mainTotal) : '0.00' }}</span>
                             </p>
                         </div>
                         @if($gs->is_standard_checkout)
@@ -320,7 +323,7 @@
                                 </small>
                             </p>
                             <form id="freight-form" class="coupon">
-                                <input type="text" name="zip" id="shippingZip" placeholder="{{ __("Postal Code") }}">
+                                <input type="text" name="zip" id="shippingZip" placeholder="{{ __(" Postal Code") }}">
                                 <button type="submit">{{ __("Calculate") }}</button>
                                 <div class="shipping-area-class text-left mt-4" id="shipping-area"></div>
                             </form>
@@ -344,7 +347,7 @@
                                 {{ __("Have a promotion code?") }}
                             </div>
                             <form id="coupon-form" class="coupon">
-                                <input type="text" placeholder="{{ __("Coupon Code") }}" id="code" required=""
+                                <input type="text" placeholder="{{ __(" Coupon Code") }}" id="code" required=""
                                     autocomplete="off">
                                 <input type="hidden" class="coupon-total" id="grandtotal"
                                     value="{{ Session::has('cart') ? App\Models\Product::convertPrice($mainTotal) : '0.00' }}">
@@ -363,7 +366,7 @@
                         <a href="#" class="order-btn mt-2" data-toggle="modal"
                             data-target="#simplified-checkout-modal">{{ __("Simplified Checkout") }}</a>
                         @endif
-                        
+
 
                     </div>
                 </div>
@@ -378,8 +381,6 @@
 @section('scripts')
 
 <script>
-
-
     $(document).ready(function(){
         var pixel_name = "{{ session('pixel_name') }}";
         var pixel_category = "{{ session('pixel_category') }}";
@@ -391,7 +392,7 @@
         if(pixel_name || pixel_category || pixel_id || pixel_type || pixel_price || pixel_currency){
             if(typeof fbq != 'undefined'){
                 fbq('track', 'AddToCart', {
-                content_name: pixel_name, 
+                content_name: pixel_name,
                 content_category: pixel_category,
                 content_ids: pixel_id,
                 content_type: pixel_type,
@@ -461,11 +462,11 @@
       }
     })
   }
-  
+
   $('#freight-form').on('submit', function(e) {
     e.preventDefault();
     $('#preloader_cart').show();
-    $('#shipping-area').html('');    
+    $('#shipping-area').html('');
     zip_code = $('#shippingZip').val();
     busca_cep(zip_code);
   });
@@ -480,7 +481,7 @@
           codigo_ciudad: codigo_ciudad
         },
         success: function(data) {
-          
+
           if(data.error) {
             html = '<p class="PAC-sheep border rounded p-1"><small>' + data.error + '</small></p>';
           }else{
@@ -497,7 +498,7 @@
           $('.shipping').on('click', function() {
                 calc_ship_pack();
           });
-          
+
           $("input:radio[name=shipping]:not(:disabled):first").prop('checked', 'checked');
         }
     });
@@ -506,7 +507,7 @@
   $('#aex_destination').on('change', function(e) {
     e.preventDefault();
     $('#preloader_cart').show();
-    $('#shipping-area-aex').html('');    
+    $('#shipping-area-aex').html('');
     codigo_ciudad = $('#aex_destination').val();
     busca_aex(codigo_ciudad);
   });
