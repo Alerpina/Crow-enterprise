@@ -49,8 +49,8 @@
                                         @foreach($products as $product)
                                         <td class="product-image-title c{{$product['item']['id']}}">
 
-                                            <img class="img-fluid" src="{{filter_var($product['item']['thumbnail'], FILTER_VALIDATE_URL) ? $product['item']['thumbnail'] : 
-														asset('assets/images/thumbnails/'.$product['item']['thumbnail'])}}" alt="Compare product['item']">
+                                            <img class="img-fluid" src="{{filter_var($product['item']['thumbnail'], FILTER_VALIDATE_URL) ? $product['item']['thumbnail'] :
+														asset('storage/images/thumbnails/'.$product['item']['thumbnail'])}}" alt="Compare product['item']">
 
                                             <a href="{{ route('front.product', $product['item']['slug']) }}">
                                                 <h4 class="title">
