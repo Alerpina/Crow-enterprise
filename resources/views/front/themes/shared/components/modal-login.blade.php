@@ -34,19 +34,19 @@
                                 <form class="mloginform" action="{{ route('user.login.submit') }}" method="POST">
                                     {{ csrf_field() }}
                                     <div class="form-input">
-                                        <input type="email" name="email" placeholder="{{ __("Type Email Address") }}"
+                                        <input type="email" name="email" placeholder="{{ __(" Type Email Address") }}"
                                             required>
                                         <i class="icofont-user-alt-5"></i>
                                     </div>
                                     <div class="form-input">
-                                        <input type="password" class="Password" name="password"
-                                            placeholder="{{ __("Type Password") }}" required>
+                                        <input type="password" class="Password" name="password" placeholder="{{ __("
+                                            Type Password") }}" required>
                                         <i class="icofont-ui-password"></i>
                                     </div>
                                     <div class="form-forgot-pass">
                                         <div class="left">
-                                            <input type="checkbox" name="remember" id="mrp"
-                                                {{ old('remember') ? 'checked' : '' }}>
+                                            <input type="checkbox" name="remember" id="mrp" {{ old('remember')
+                                                ? 'checked' : '' }}>
                                             <label for="mrp">{{ __("Remember Password") }}</label>
                                         </div>
                                         <div class="right">
@@ -56,7 +56,7 @@
                                         </div>
                                     </div>
                                     <input type="hidden" name="modal" value="1">
-                                    <input class="mauthdata" type="hidden" value="{{ __("Authenticating...") }}">
+                                    <input class="mauthdata" type="hidden" value="{{ __(" Authenticating...") }}">
                                     <button type="submit" class="submit-btn">{{ __("Login") }}</button>
 
                                     @if($socials->f_check == 1 ||
@@ -104,32 +104,32 @@
 
                                     <div class="form-input">
                                         <input type="text" class="User Name" name="name" pattern="^(\S*)\s+(.*)$"
-                                            placeholder="{{ __("Full Name") }}" required>
+                                            placeholder="{{ __(" Full Name") }}" required>
                                         <i class="icofont-user-alt-5"></i>
                                     </div>
 
                                     <div class="form-input">
-                                        <input type="email" class="User Name" name="email"
-                                            placeholder="{{ __("Email Address") }}" required>
+                                        <input type="email" class="User Name" name="email" placeholder="{{ __(" Email
+                                            Address") }}" required>
                                         <i class="icofont-email"></i>
                                     </div>
 
                                     <div class="form-input">
-                                        <input type="password" class="Password" name="password"
-                                            placeholder="{{ __("Password") }}" required>
+                                        <input type="password" class="Password" name="password" placeholder="{{ __("
+                                            Password") }}" required>
                                         <i class="icofont-ui-password"></i>
                                     </div>
 
                                     <div class="form-input">
                                         <input type="password" class="Password" name="password_confirmation"
-                                            placeholder="{{ __("Confirm Password") }}" required>
+                                            placeholder="{{ __(" Confirm Password") }}" required>
                                         <i class="icofont-ui-password"></i>
                                     </div>
 
                                     @if($gs->is_capcha == 1)
                                     <ul class="captcha-area">
                                         <li>
-                                            <p><img class="codeimg1" src="{{asset("assets/images/capcha_code.png")}}"
+                                            <p><img class="codeimg1" src="{{asset('storage/images/capcha_code.png')}}"
                                                     alt="">
                                                 <i class="fas fa-sync-alt pointer refresh_code "></i>
                                             </p>
@@ -137,23 +137,26 @@
                                     </ul>
 
                                     <div class="form-input">
-                                        <input type="text" class="Password" name="codes"
-                                            placeholder="{{ __("Enter Code") }}" required>
+                                        <input type="text" class="Password" name="codes" placeholder="{{ __(" Enter
+                                            Code") }}" required>
                                         <i class="icofont-refresh"></i>
                                     </div>
                                     @endif
 
                                     @php
-                                        $url = $gs->privacy_policy ? true : false;
+                                    $url = $gs->privacy_policy ? true : false;
                                     @endphp
                                     <div class="form-forgot-pass">
                                         <div class="left">
-                                        <input type="checkbox" name="agree_privacy_policy" id="agree_privacy_policy">
-                                        <label for="agree_privacy_policy">Concordo com a <a target="_blank" href="{{ $url ? route('front.privacypolicy') : ""  }}">Política de Privacidade</a>.</label>
+                                            <input type="checkbox" name="agree_privacy_policy"
+                                                id="agree_privacy_policy">
+                                            <label for="agree_privacy_policy">Concordo com a <a target="_blank"
+                                                    href="{{ $url ? route('front.privacypolicy') : ""  }}">Política de
+                                                    Privacidade</a>.</label>
                                         </div>
                                     </div>
 
-                                    <input class="mprocessdata" type="hidden" value="{{ __("Processing...") }}">
+                                    <input class="mprocessdata" type="hidden" value="{{ __(" Processing...") }}">
                                     <button type="submit" class="submit-btn">{{ __("Register") }}</button>
                                 </form>
                             </div>

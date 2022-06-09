@@ -7,24 +7,25 @@
         background: #4682b447 !important;
     }
 
-    .button1{
+    .button1 {
         display: flex;
         justify-content: center;
     }
 
-    .center-buttons{
+    .center-buttons {
         display: flex;
         justify-content: center;
     }
 
-    .none{
+    .none {
         display: none;
     }
 
-    .radio-design input[type="radio"] ~ label .punto-option {
+    .radio-design input[type="radio"]~label .punto-option {
         display: none;
     }
-    .radio-design input[type="radio"]:checked ~ label .punto-option {
+
+    .radio-design input[type="radio"]:checked~label .punto-option {
         display: block;
     }
 </style>
@@ -120,14 +121,14 @@
                                                     <div class="col-lg-6">
                                                         <input type="text" pattern="^(\S*)\s+(.*)$" id="personal-name"
                                                             class="form-control" name="personal_name"
-                                                            placeholder="{{ __("Full Name") }}"
-                                                            title="{{  __("Input first name and last name") }}"
+                                                            placeholder="{{ __(" Full Name") }}" title="{{  __(" Input
+                                                            first name and last name") }}"
                                                             value="{{ session()->get('session_order')['customer_name'] }}">
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <input type="email" id="personal-email" class="form-control"
-                                                            name="personal_email"
-                                                            placeholder="{{ __("Enter Your Email") }}"
+                                                            name="personal_email" placeholder="{{ __(" Enter Your
+                                                            Email") }}"
                                                             value="{{ session()->get('session_order')['customer_email'] }}">
                                                     </div>
                                                 </div>
@@ -144,13 +145,13 @@
                                             <div class="row set-account-pass d-none">
                                                 <div class="col-lg-6">
                                                     <input type="password" name="personal_pass" id="personal-pass"
-                                                        class="form-control"
-                                                        placeholder="{{ __("Enter Your Password") }}">
+                                                        class="form-control" placeholder="{{ __(" Enter Your Password")
+                                                        }}">
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <input type="password" name="personal_confirm"
                                                         id="personal-pass-confirm" class="form-control"
-                                                        placeholder="{{ __("Confirm Your Password") }}">
+                                                        placeholder="{{ __(" Confirm Your Password") }}">
                                                 </div>
                                             </div>
                                             @endif
@@ -181,50 +182,50 @@
 
                                                 <div class="col-lg-6">
                                                     <input class="form-control" type="text" name="name" id="billName"
-                                                        placeholder="{{ __("Full Name") }} *" required=""
-                                                        pattern="^(\S*)\s+(.*)$"
-                                                        title="{{  __("Input first name and last name") }}"
+                                                        placeholder="{{ __(" Full Name") }} *" required=""
+                                                        pattern="^(\S*)\s+(.*)$" title="{{  __(" Input first name and
+                                                        last name") }}"
                                                         value="{{ session()->get('session_order')['customer_name'] }}">
                                                 </div>
 
                                                 <div class="col-lg-6">
                                                     <input class="form-control" type="text" name="customer_document"
                                                         id="billCpf" placeholder="{{ $customer_doc_str }} *" required=""
-                                                        pattern="[0-9]+" title="{{ __("Field only accepts numbers") }}"
+                                                        pattern="[0-9]+" title="{{ __(" Field only accepts numbers") }}"
                                                         value="{{ session()->get('session_order')['customer_document'] }}">
                                                 </div>
 
                                                 @if($gs->is_zip_validation)
                                                 <div class="col-lg-6">
                                                     <input class="form-control js-zipcode" type="text" name="zip"
-                                                        data-type="bill" id="billZip"
-                                                        placeholder="{{ __("Postal Code") }}" required=""
+                                                        data-type="bill" id="billZip" placeholder="{{ __(" Postal Code")
+                                                        }}" required=""
                                                         value="{{ session()->get('session_order')['customer_zip'] }}">
                                                 </div>
-                                                @else 
+                                                @else
                                                 <div class="col-lg-6">
-                                                    <input class="form-control" type="text" name="zip"
-                                                        data-type="bill" id="zip"
-                                                        placeholder="{{ __("Postal Code") }}" required=""
+                                                    <input class="form-control" type="text" name="zip" data-type="bill"
+                                                        id="zip" placeholder="{{ __(" Postal Code") }}" required=""
                                                         value="{{ session()->get('session_order')['customer_zip'] }}">
                                                 </div>
                                                 @endif
 
                                                 <div class="col-lg-6">
                                                     <input class="form-control" type="text" name="phone" id="billPhone"
-                                                        placeholder="{{ __("Phone Number") }} *" required=""
+                                                        placeholder="{{ __(" Phone Number") }} *" required=""
                                                         value="{{ session()->get('session_order')['customer_phone'] }}">
                                                 </div>
 
                                                 <div class="col-lg-6">
                                                     <input class="form-control" type="text" name="email" id="billEmail"
-                                                        placeholder="{{ __("Email") }} *" required=""
+                                                        placeholder="{{ __(" Email") }} *" required=""
                                                         value="{{ session()->get('session_order')['customer_email'] }}">
                                                 </div>
 
                                                 <div class="col-lg-6">
                                                     <input class="form-control" type="text" name="address"
-                                                        id="billAddress" placeholder="{{ __("Address") }} *" required=""
+                                                        id="billAddress" placeholder="{{ __(" Address") }} *"
+                                                        required=""
                                                         value="{{ session()->get('session_order')['customer_address'] }}">
                                                 </div>
 
@@ -250,10 +251,12 @@
                                                 <div class="col-lg-6">
                                                     <select class="form-control js-country" name="country"
                                                         data-type="bill" id="billCountry" required="">
-                                                        <option value="" data-code="">{{__('Select Country')}} *</option>
+                                                        <option value="" data-code="">{{__('Select Country')}} *
+                                                        </option>
                                                         @foreach($countries as $country)
-                                                        <option value="{{ $country->id }}"
-                                                            {{ (session()->get('session_order')['customer_country_id'] == $country->id) ? 'selected' : '' }}
+                                                        <option value="{{ $country->id }}" {{ (session()->
+                                                            get('session_order')['customer_country_id'] == $country->id)
+                                                            ? 'selected' : '' }}
                                                             data-code="{{$country->country_code}}">
                                                             {{ $country->country_name }}</option>
                                                         @endforeach
@@ -289,8 +292,8 @@
                                             <div class="col-lg-12 mt-3">
                                                 <input class="styled-checkbox" id="ship-diff-address"
                                                     name="diff_address" type="checkbox" value="value1">
-                                                <label
-                                                    for="ship-diff-address">{{ __("Ship to a Different Address?") }}</label>
+                                                <label for="ship-diff-address">{{ __("Ship to a Different Address?")
+                                                    }}</label>
                                             </div>
                                         </div>
                                         <div class="ship-diff-addres-area d-none">
@@ -300,32 +303,32 @@
                                             <div class="row">
                                                 <div class="col-lg-6">
                                                     <input class="form-control ship_input" pattern="^(\S*)\s+(.*)$"
-                                                        type="text" name="shipping_name" id="shippingName"
-                                                        title={{  __("Input first name and last name") }}
-                                                        placeholder="{{ __("Full Name") }} *"
+                                                        type="text" name="shipping_name" id="shippingName" title={{
+                                                        __("Input first name and last name") }} placeholder="{{ __("
+                                                        Full Name") }} *"
                                                         value="{{ session()->get('session_order')['shipping_name'] }}">
                                                 </div>
                                                 @if($gs->is_zip_validation)
                                                 <div class="col-lg-6">
                                                     <input class="form-control js-zipcode" type="text"
                                                         name="shipping_zip" data-type="shipping" id="shippingZip"
-                                                        placeholder="{{ __("Postal Code") }}">
+                                                        placeholder="{{ __(" Postal Code") }}">
                                                 </div>
-                                                @else 
+                                                @else
                                                 <div class="col-lg-6">
-                                                    <input class="form-control" type="text"
-                                                        name="shipping_zip" data-type="shipping" id="zip"
-                                                        placeholder="{{ __("Postal Code") }}">
+                                                    <input class="form-control" type="text" name="shipping_zip"
+                                                        data-type="shipping" id="zip" placeholder="{{ __(" Postal Code")
+                                                        }}">
                                                 </div>
                                                 @endif
                                                 <div class="col-lg-6">
                                                     <input class="form-control" type="text" name="shipping_phone"
-                                                        id="shippingPhone" placeholder="{{ __("Phone Number") }}"
+                                                        id="shippingPhone" placeholder="{{ __(" Phone Number") }}"
                                                         value="{{ session()->get('session_order')['shipping_phone'] }}">
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <input class="form-control" type="text" name="shipping_address"
-                                                        id="shippingAddress" placeholder="{{ __("Address") }}"
+                                                        id="shippingAddress" placeholder="{{ __(" Address") }}"
                                                         value="{{ session()->get('session_order')['shipping_address'] }}">
                                                 </div>
                                                 <div class="col-lg-6">
@@ -379,24 +382,29 @@
                                         <!-- SE NÃO TEM DADOS DA SESSÃO -->
                                         <!-- SE O CADASTRO ESTIVER INCOMPLETO (CIDADE ESTADO E PAÍS PREENCHE COM BASE NO CEP) HABILITA UM BOTÃO QUE REDIRECIONA PARA A RODA EDIT USER -->
                                         @if(Auth::check())
-                                            @if(Auth::user()->zip == null || Auth::user()->document == null || Auth::user()->address == null || Auth::user()->address_number == null || Auth::user()->phone == null )
-                                            <a href="{{ route("user-profile") }}"><span class="badge badge-primary-checkout">{{ __("Complete your profile information") }}</span></a>
-                                            @endif
+                                        @if(Auth::user()->zip == null || Auth::user()->document == null ||
+                                        Auth::user()->address == null || Auth::user()->address_number == null ||
+                                        Auth::user()->phone == null )
+                                        <a href="{{ route(" user-profile") }}"><span
+                                                class="badge badge-primary-checkout">{{ __("Complete your profile
+                                                information") }}</span></a>
+                                        @endif
                                         @endif
                                         <div class="billing-address">
                                             <!-- CLASSE INSERIDA APENAS PARA FORMATAÇÃO DOS CAMPOS NO FORM -->
                                             <div class="row">
                                                 <div class="col-lg-6">
                                                     <input type="text" pattern="^(\S*)\s+(.*)$" id="personal-name"
-                                                        class="form-control" name="personal_name"
-                                                        title="{{ __("Input first name and last name") }}"
-                                                        placeholder="{{ __("Full Name") }}"
+                                                        class="form-control" name="personal_name" title="{{ __(" Input
+                                                        first name and last name") }}" placeholder="{{ __(" Full Name")
+                                                        }}"
                                                         value="{{ Auth::check() ? Auth::user()->name : old('personal_name') }}"
                                                         {!! Auth::check() ? 'readonly' : '' !!}>
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <input type="email" id="personal-email" class="form-control"
-                                                        name="personal_email" placeholder="{{ __("Enter Your Email") }}"
+                                                        name="personal_email" placeholder="{{ __(" Enter Your Email")
+                                                        }}"
                                                         value="{{ Auth::check() ? Auth::user()->email : old('personal_email') }}"
                                                         {!! Auth::check() ? 'readonly' : '' !!}>
                                                 </div>
@@ -413,12 +421,12 @@
                                         <div class="row set-account-pass d-none">
                                             <div class="col-lg-6">
                                                 <input type="password" name="personal_pass" id="personal-pass"
-                                                    class="form-control" placeholder="{{ __("Enter Your Password") }}">
+                                                    class="form-control" placeholder="{{ __(" Enter Your Password") }}">
                                             </div>
                                             <div class="col-lg-6">
                                                 <input type="password" name="personal_confirm"
-                                                    id="personal-pass-confirm" class="form-control"
-                                                    placeholder="{{ __("Confirm Your Password") }}">
+                                                    id="personal-pass-confirm" class="form-control" placeholder="{{ __("
+                                                    Confirm Your Password") }}">
                                             </div>
                                         </div>
                                         @endif
@@ -446,53 +454,52 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <input class="form-control" type="text" name="name" id="billName"
-                                                    placeholder="{{ __("Full Name") }} *" required=""
-                                                    pattern="^(\S*)\s+(.*)$"
-                                                    title="{{ __("Input first name and last name") }}"
+                                                    placeholder="{{ __(" Full Name") }} *" required=""
+                                                    pattern="^(\S*)\s+(.*)$" title="{{ __(" Input first name and last
+                                                    name") }}"
                                                     value="{{ Auth::guard('web')->check() ? Auth::guard('web')->user()->name : old('name') }}">
                                             </div>
                                             <div class="col-lg-6">
                                                 <input class="form-control" type="text" name="customer_document"
                                                     id="billCpf" placeholder="{{ $customer_doc_str }} *" required=""
-                                                    pattern="[0-9]+" title="{{ __("Field only accepts numbers") }}"
+                                                    pattern="[0-9]+" title="{{ __(" Field only accepts numbers") }}"
                                                     value="{{ Auth::guard('web')->check() ? Auth::guard('web')->user()->document : old('customer_document') }}">
                                             </div>
                                             @if($gs->is_zip_validation)
-                                                @if(empty($state_id && $city_id && $country_id))
-                                                <div class="col-lg-6">
-                                                    <input class="form-control js-zipcode" type="text" name="zip"
-                                                    data-type="bill" id="billZip" placeholder="{{ __("Postal Code") }} *"
-                                                        required="" value="{{ old('zip') }}">
-                                                </div>
-                                                @else
-                                                <div class="col-lg-6">
-                                                    <input class="form-control js-zipcode" type="text" name="zip"
-                                                        data-type="bill" id="billZip" placeholder="{{ __("Postal Code") }} *"
-                                                        required=""
-                                                        value="{{ Auth::guard('web')->check() ? Auth::guard('web')->user()->zip : old('zip') }}">
-                                                </div>
-                                                @endif
+                                            @if(empty($state_id && $city_id && $country_id))
+                                            <div class="col-lg-6">
+                                                <input class="form-control js-zipcode" type="text" name="zip"
+                                                    data-type="bill" id="billZip" placeholder="{{ __(" Postal Code") }}
+                                                    *" required="" value="{{ old('zip') }}">
+                                            </div>
                                             @else
                                             <div class="col-lg-6">
-                                                <input class="form-control" type="text" name="zip"
-                                                    data-type="bill" id="zip" placeholder="{{ __("Postal Code") }} *"
-                                                    required=""
+                                                <input class="form-control js-zipcode" type="text" name="zip"
+                                                    data-type="bill" id="billZip" placeholder="{{ __(" Postal Code") }}
+                                                    *" required=""
+                                                    value="{{ Auth::guard('web')->check() ? Auth::guard('web')->user()->zip : old('zip') }}">
+                                            </div>
+                                            @endif
+                                            @else
+                                            <div class="col-lg-6">
+                                                <input class="form-control" type="text" name="zip" data-type="bill"
+                                                    id="zip" placeholder="{{ __(" Postal Code") }} *" required=""
                                                     value="{{ Auth::guard('web')->check() ? Auth::guard('web')->user()->zip : old('zip') }}">
                                             </div>
                                             @endif
                                             <div class="col-lg-6">
                                                 <input class="form-control" type="text" name="phone" id="billPhone"
-                                                    placeholder="{{ __("Phone Number") }} *" required=""
+                                                    placeholder="{{ __(" Phone Number") }} *" required=""
                                                     value="{{ Auth::guard('web')->check() ? Auth::guard('web')->user()->phone : old('phone') }}">
                                             </div>
                                             <div class="col-lg-6">
                                                 <input class="form-control" type="text" name="email" id="billEmail"
-                                                    placeholder="{{ __("Email") }} *" required=""
+                                                    placeholder="{{ __(" Email") }} *" required=""
                                                     value="{{ Auth::guard('web')->check() ? Auth::guard('web')->user()->email : old('email') }}">
                                             </div>
                                             <div class="col-lg-6">
                                                 <input class="form-control" type="text" name="address" id="billAddress"
-                                                    placeholder="{{ __("Address") }} *" required=""
+                                                    placeholder="{{ __(" Address") }} *" required=""
                                                     value="{{ Auth::guard('web')->check() ? Auth::guard('web')->user()->address : old('address') }}">
                                             </div>
                                             <div class="col-lg-6">
@@ -515,8 +522,9 @@
                                                     data-type="bill" required="">
                                                     <option value="" data-code="">{{__('Select Country')}} *</option>
                                                     @foreach($countries as $country)
-                                                    <option value="{{ $country->id }}"
-                                                        {{ (Auth::guard('web')->check() && Auth::guard('web')->user()->country_id == $country->id) ? 'selected' : '' }}
+                                                    <option value="{{ $country->id }}" {{ (Auth::guard('web')->check()
+                                                        && Auth::guard('web')->user()->country_id == $country->id) ?
+                                                        'selected' : '' }}
                                                         data-code="{{$country->country_code}}">
                                                         {{ $country->country_name }}</option>
                                                     @endforeach
@@ -559,8 +567,8 @@
                                         <div class="col-lg-12 mt-3">
                                             <input class="styled-checkbox" id="ship-diff-address" name="diff_address"
                                                 type="checkbox" value="value1">
-                                            <label
-                                                for="ship-diff-address">{{ __("Ship to a Different Address?") }}</label>
+                                            <label for="ship-diff-address">{{ __("Ship to a Different Address?")
+                                                }}</label>
                                         </div>
                                     </div>
                                     <div class="ship-diff-addres-area d-none">
@@ -570,35 +578,33 @@
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <input class="form-control ship_input" pattern="^(\S*)\s+(.*)$"
-                                                    type="text" name="shipping_name" id="shippingName"
-                                                    title="{{ __("Input first name and last name")}}"
-                                                    placeholder="{{ __("Full Name") }} *">
+                                                    type="text" name="shipping_name" id="shippingName" title="{{ __("
+                                                    Input first name and last name")}}" placeholder="{{ __(" Full Name")
+                                                    }} *">
                                                 <input type="hidden" name="shipping_email"
                                                     value="{{ old('shipping_name') }}">
                                             </div>
                                             @if($gs->is_zip_validation)
                                             <div class="col-lg-6">
                                                 <input class="form-control js-zipcode" type="text" name="shipping_zip"
-                                                    data-type="shipping" id="shippingZip"
-                                                    placeholder="{{ __("Postal Code") }} *"
-                                                    value="{{ old('shipping_zip') }}">
+                                                    data-type="shipping" id="shippingZip" placeholder="{{ __(" Postal
+                                                    Code") }} *" value="{{ old('shipping_zip') }}">
                                             </div>
                                             @else
                                             <div class="col-lg-6">
                                                 <input class="form-control" type="text" name="shipping_zip"
-                                                    data-type="shipping" id="shippingZip"
-                                                    placeholder="{{ __("Postal Code") }}"
-                                                    value="{{ old('shipping_zip') }}">
+                                                    data-type="shipping" id="shippingZip" placeholder="{{ __(" Postal
+                                                    Code") }}" value="{{ old('shipping_zip') }}">
                                             </div>
                                             @endif
                                             <div class="col-lg-6">
                                                 <input class="form-control" type="text" name="shipping_phone"
-                                                    id="shippingPhone" placeholder="{{ __("Phone Number") }} *"
+                                                    id="shippingPhone" placeholder="{{ __(" Phone Number") }} *"
                                                     value="{{ old('shipping_phone') }}">
                                             </div>
                                             <div class="col-lg-6">
                                                 <input class="form-control" type="text" name="shipping_address"
-                                                    id="shippingAddress" placeholder="{{ __("Address") }} *"
+                                                    id="shippingAddress" placeholder="{{ __(" Address") }} *"
                                                     value="{{ old('shipping_address') }}">
                                             </div>
                                             <div class="col-lg-6">
@@ -651,9 +657,8 @@
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <input type="text" id="Order_Note" class="form-control"
-                                                    name="order_note"
-                                                    placeholder="{{ __("Order Note") }} ({{ __("Optional") }})"
-                                                    value="{{ old('order_note')  }}">
+                                                    name="order_note" placeholder="{{ __(" Order Note") }} ({{
+                                                    __("Optional") }})" value="{{ old('order_note')  }}">
                                             </div>
                                         </div>
                                     </div>
@@ -679,7 +684,7 @@
                                         <div class="order-item">
                                             <div class="product-img">
                                                 <div class="d-flex">
-                                                    <img src="{{ filter_var($product['item']['photo'], FILTER_VALIDATE_URL) ? $product['item']['photo'] : 
+                                                    <img src="{{ filter_var($product['item']['photo'], FILTER_VALIDATE_URL) ? $product['item']['photo'] :
                                 asset('assets/images/products/'.$product['item']['photo']) }}" alt="product"
                                                         height="80" width="80" class="p-1">
                                                 </div>
@@ -701,46 +706,47 @@
                                                 @endif
 
                                                 @if(env("ENABLE_CUSTOM_PRODUCT") || env("ENABLE_CUSTOM_PRODUCT_NUMBER"))
-                                                    @if(!empty($product['customizable_name']))
-                                                    <div class="unit-price">
-                                                        <h5 class="label">{{ __('Custom Name') }} : </h5>
-                                                        <p>{{$product['customizable_name']}}</p>
-                                                    </div>
-                                                    @endif
+                                                @if(!empty($product['customizable_name']))
+                                                <div class="unit-price">
+                                                    <h5 class="label">{{ __('Custom Name') }} : </h5>
+                                                    <p>{{$product['customizable_name']}}</p>
+                                                </div>
+                                                @endif
                                                 @endif
 
                                                 @if(env("ENABLE_CUSTOM_PRODUCT"))
-                                                    @if(!empty($product['customizable_gallery']))
-                                                    <div class="unit-price" style="margin-top: 5px;">
-                                                        <h5 class="label">{{ __("Photo") }} : </h5>
-                                                        <img src="{{ asset('assets/images/galleries/' . $product['customizable_gallery']) }}"
-                                                            style="width: 33px; border-radius: 30px; margin-left: 5px; margin-top: -9px; "></img>
-                                                    </div>
-                                                    @endif
+                                                @if(!empty($product['customizable_gallery']))
+                                                <div class="unit-price" style="margin-top: 5px;">
+                                                    <h5 class="label">{{ __("Photo") }} : </h5>
+                                                    <img src="{{ asset('assets/images/galleries/' . $product['customizable_gallery']) }}"
+                                                        style="width: 33px; border-radius: 30px; margin-left: 5px; margin-top: -9px; "></img>
+                                                </div>
+                                                @endif
 
-                                                    @if(!empty($product['customizable_logo']))
-                                                    <div class="unit-price" style="margin-top: 15px; margin-bottom: 5px;">
-                                                        <h5 class="label">{{ __("Logo") }} : </h5>
-                                                        <img src="{{ asset('assets/images/custom-logo/' . $product['customizable_logo']) }}"
-                                                            style="width: 33px; margin-left: 5px; margin-top: -9px; "></img>
-                                                    </div>
-                                                    @endif
+                                                @if(!empty($product['customizable_logo']))
+                                                <div class="unit-price" style="margin-top: 15px; margin-bottom: 5px;">
+                                                    <h5 class="label">{{ __("Logo") }} : </h5>
+                                                    <img src="{{ asset('assets/images/custom-logo/' . $product['customizable_logo']) }}"
+                                                        style="width: 33px; margin-left: 5px; margin-top: -9px; "></img>
+                                                </div>
+                                                @endif
                                                 @endif
 
                                                 @if(env("ENABLE_CUSTOM_PRODUCT_NUMBER"))
-                                                    @if(!empty($product['customizable_number']))
-                                                    <div class="unit-price">
-                                                        <h5 class="label">{{ __('Custom Number') }} : </h5>
-                                                        <p>{{$product['customizable_number']}}</p>
-                                                    </div>
-                                                    @endif
+                                                @if(!empty($product['customizable_number']))
+                                                <div class="unit-price">
+                                                    <h5 class="label">{{ __('Custom Number') }} : </h5>
+                                                    <p>{{$product['customizable_number']}}</p>
+                                                </div>
+                                                @endif
                                                 @endif
 
                                                 @if(!empty($product['color']))
                                                 <div class="unit-price">
                                                     <h5 class="label">{{ __("Color") }} : </h5>
                                                     <span id="color-bar"
-                                                        style="border: 10px solid {{$product['color'] == "" ? "white" : '#'.$product['color']}};"></span>
+                                                        style="border: 10px solid {{$product['color'] == "" ? " white"
+                                                        : '#' .$product['color']}};"></span>
                                                 </div>
                                                 @endif
                                                 @if(!empty($product['keys']))
@@ -748,7 +754,8 @@
                                                 $product['values'])) as $key => $value)
                                                 <div class="quantity">
                                                     <h5 class="label">
-                                                        {{ App\Models\Attribute::where('input_name', $key)->first()->name }}
+                                                        {{ App\Models\Attribute::where('input_name',
+                                                        $key)->first()->name }}
                                                         :
                                                     </h5>
                                                     <span class="qttotal">{{ $value }} </span>
@@ -917,7 +924,8 @@
                                                         </p>
                                                     </a>
                                                     @endif
-                                                    @if(config("gateways.paghiper") && $gs->is_paghiper == 1 && Session::get("cart")->totalPrice >= 3)
+                                                    @if(config("gateways.paghiper") && $gs->is_paghiper == 1 &&
+                                                    Session::get("cart")->totalPrice >= 3)
                                                     <a class="nav-link payment" data-val="" data-show="no"
                                                         data-form="{{route('paghiper.submit')}}"
                                                         data-href="{{ route('front.load.payment',['slug1' => 'paghiper','slug2' => 0]) }}"
@@ -928,15 +936,17 @@
                                                         </div>
                                                         <p>
                                                             @if($gs->paghiper_is_discount)
-                                                            {{__("Bank Slip")}} (PagHiper) - {{ $gs->paghiper_discount }}% {{__("of discount on the amount of the ticket.")}}
-                                                            @else 
+                                                            {{__("Bank Slip")}} (PagHiper) - {{ $gs->paghiper_discount
+                                                            }}% {{__("of discount on the amount of the ticket.")}}
+                                                            @else
                                                             {{__("Bank slip")}} (PagHiper)
                                                             @endif
                                                         </p>
                                                     </a>
                                                     @endif
-                                                    
-                                                    @if(config("gateways.paghiper_pix") && $gs->is_paghiper_pix == 1 && Session::get("cart")->totalPrice >= 3)
+
+                                                    @if(config("gateways.paghiper_pix") && $gs->is_paghiper_pix == 1 &&
+                                                    Session::get("cart")->totalPrice >= 3)
                                                     <a class="nav-link payment" data-val="" data-show="no"
                                                         data-form="{{route('paghiper.pix-submit')}}"
                                                         data-href="{{ route('front.load.payment',['slug1' => 'paghiper-pix','slug2' => 0]) }}"
@@ -946,9 +956,11 @@
                                                             <span class="radio"></span>
                                                         </div>
                                                         <p>
-                                                            @if($gs->paghiper_pix_is_discount && $gs->paghiper_pix_discount > 0)
-                                                            {{__("PIX")}} (PagHiper) - {{ $gs->paghiper_pix_discount }}% {{__("of discount on the amount of the ticket.")}}
-                                                            @else 
+                                                            @if($gs->paghiper_pix_is_discount &&
+                                                            $gs->paghiper_pix_discount > 0)
+                                                            {{__("PIX")}} (PagHiper) - {{ $gs->paghiper_pix_discount }}%
+                                                            {{__("of discount on the amount of the ticket.")}}
+                                                            @else
                                                             {{__("PIX")}} (PagHiper)
                                                             @endif
                                                         </p>
@@ -1327,7 +1339,8 @@
                         </div>
                     </div>
             </div>
-            <input type="hidden" data-type="punto" id="punto-selected" class="puntocontroller" name="puntoentrega" value="">
+            <input type="hidden" data-type="punto" id="punto-selected" class="puntocontroller" name="puntoentrega"
+                value="">
             <input type="hidden" id="punto-id" class="puntoid" name="puntoidvalue" value="">
             <input type="hidden" id="aex-city" name="aex_city" value="0">
             <input type="hidden" id="shipping-cost" name="shipping_cost" value="0">
@@ -1341,10 +1354,10 @@
             <input type="hidden" name="total" id="grandtotal" value="{{ $totalPrice }}">
             <input type="hidden" id="tgrandtotal" value="{{ $totalPrice }}">
             @elseif(Session::has('coupon_total1'))
-            <input type="hidden" name="total" id="grandtotal"
-                value="{{ preg_replace("/[^0-9,.]/", "", Session::get('coupon_total1') ) }}">
-            <input type="hidden" id="tgrandtotal"
-                value="{{ preg_replace("/[^0-9,.]/", "", Session::get('coupon_total1') ) }}">
+            <input type="hidden" name="total" id="grandtotal" value="{{ preg_replace(" /[^0-9,.]/", "" ,
+                Session::get('coupon_total1') ) }}">
+            <input type="hidden" id="tgrandtotal" value="{{ preg_replace(" /[^0-9,.]/", "" ,
+                Session::get('coupon_total1') ) }}">
             @else
             <input type="hidden" name="total" id="grandtotal" value="{{round($totalPrice * $curr_checkout->value,2)}}">
             <input type="hidden" id="tgrandtotal" value="{{round($totalPrice * $curr_checkout->value,2)}}">
@@ -1370,8 +1383,8 @@
                                 {{ __("Total MRP") }}
                             </p>
                             <P>
-                                <b
-                                    class="cart-total">{{ Session::has('cart') ? App\Models\Product::convertPrice(Session::get('cart')->totalPrice) : '0.00' }}</b>
+                                <b class="cart-total">{{ Session::has('cart') ?
+                                    App\Models\Product::convertPrice(Session::get('cart')->totalPrice) : '0.00' }}</b>
                             </P>
                         </li>
                         @if($gs->tax != 0)
@@ -1387,16 +1400,19 @@
                         @if(Session::has('coupon'))
                         <li class="discount-bar">
                             <p>
-                                {{ __("Discount") }} <span
-                                    class="dpercent">{{ Session::get('coupon_percentage') == 0 ? '' : '('.Session::get('coupon_percentage').')' }}</span>
+                                {{ __("Discount") }} <span class="dpercent">{{ Session::get('coupon_percentage') == 0 ?
+                                    '' : '('.Session::get('coupon_percentage').')' }}</span>
                             </p>
                             <P>
                                 @if($gs->currency_format == 0)
-                                <b
-                                    id="discount">{{ $curr_checkout->sign }}{{ number_format(Session::get('coupon'), $curr_checkout->decimal_digits, $curr_checkout->decimal_separator,$curr_checkout->thousands_separator) }}</b>
+                                <b id="discount">{{ $curr_checkout->sign }}{{ number_format(Session::get('coupon'),
+                                    $curr_checkout->decimal_digits,
+                                    $curr_checkout->decimal_separator,$curr_checkout->thousands_separator) }}</b>
                                 @else
-                                <b
-                                    id="discount">{{ number_format(Session::get('coupon'), $curr_checkout->decimal_digits, $curr_checkout->decimal_separator,$curr_checkout->thousands_separator) }}{{ $curr_checkout->sign }}</b>
+                                <b id="discount">{{ number_format(Session::get('coupon'),
+                                    $curr_checkout->decimal_digits,
+                                    $curr_checkout->decimal_separator,$curr_checkout->thousands_separator) }}{{
+                                    $curr_checkout->sign }}</b>
                                 @endif
                             </P>
                         </li>
@@ -1406,8 +1422,9 @@
                                 {{ __("Discount") }} <span class="dpercent"></span>
                             </p>
                             <P>
-                                <b
-                                    id="discount">{{ $curr_checkout->sign }}{{ number_format(Session::get('coupon'), $curr_checkout->decimal_digits, $curr_checkout->decimal_separator,$curr_checkout->thousands_separator) }}</b>
+                                <b id="discount">{{ $curr_checkout->sign }}{{ number_format(Session::get('coupon'),
+                                    $curr_checkout->decimal_digits,
+                                    $curr_checkout->decimal_separator,$curr_checkout->thousands_separator) }}</b>
                             </P>
                         </li>
                         @endif
@@ -1419,11 +1436,13 @@
                         <p style="margin-bottom:0px;">
                             @if(Session::has('coupon_total'))
                             @if($gs->currency_format == 0)
-                            <span
-                                id="total-cost">{{ $curr_checkout->sign }}{{ number_format($totalPrice, $curr_checkout->decimal_digits, $curr_checkout->decimal_separator,$curr_checkout->thousands_separator) }}</span>
+                            <span id="total-cost">{{ $curr_checkout->sign }}{{ number_format($totalPrice,
+                                $curr_checkout->decimal_digits,
+                                $curr_checkout->decimal_separator,$curr_checkout->thousands_separator) }}</span>
                             @else
-                            <span
-                                id="total-cost">{{ number_format($totalPrice, $curr_checkout->decimal_digits, $curr_checkout->decimal_separator,$curr_checkout->thousands_separator) }}{{ $curr_checkout->sign }}</span>
+                            <span id="total-cost">{{ number_format($totalPrice, $curr_checkout->decimal_digits,
+                                $curr_checkout->decimal_separator,$curr_checkout->thousands_separator) }}{{
+                                $curr_checkout->sign }}</span>
                             @endif
                         </p>
                     </div>
@@ -1433,19 +1452,22 @@
                             <span id="total-cost2">{{ App\Models\Product::convertPriceReverse($totalPrice) }}</span>
                             @elseif(Session::has('coupon_total1'))
                             @if($gs->currency_format == 0)
-                            <span
-                                id="total-cost">{{ $curr_checkout->sign }}{{ number_format(Session::get('coupon_total1'), $curr_checkout->decimal_digits, $curr_checkout->decimal_separator,$curr_checkout->thousands_separator) }}</span>
+                            <span id="total-cost">{{ $curr_checkout->sign }}{{
+                                number_format(Session::get('coupon_total1'), $curr_checkout->decimal_digits,
+                                $curr_checkout->decimal_separator,$curr_checkout->thousands_separator) }}</span>
                             @else
-                            <span
-                                id="total-cost">{{ number_format(Session::get('coupon_total1'), $curr_checkout->decimal_digits, $curr_checkout->decimal_separator,$curr_checkout->thousands_separator) }}{{ $curr_checkout->sign }}</span>
+                            <span id="total-cost">{{ number_format(Session::get('coupon_total1'),
+                                $curr_checkout->decimal_digits,
+                                $curr_checkout->decimal_separator,$curr_checkout->thousands_separator) }}{{
+                                $curr_checkout->sign }}</span>
                             @endif
                         </p>
                     </div>
                     <div class="total-price">
                         <p></p>
                         <p>
-                            <span
-                                id="total-cost2">{{ App\Models\Product::convertPriceReverse(Session::get('coupon_total1')) }}</span>
+                            <span id="total-cost2">{{
+                                App\Models\Product::convertPriceReverse(Session::get('coupon_total1')) }}</span>
                             @else
                             <span id="total-cost">{{ App\Models\Product::convertPrice($totalPrice) }}</span>
                         </p>
@@ -1463,7 +1485,7 @@
                             {{ __("Have a promotion code?") }}
                         </div>
                         <form id="check-coupon-form" class="coupon">
-                            <input type="text" placeholder="{{ __("Coupon Code") }} *" id="code" required=""
+                            <input type="text" placeholder="{{ __(" Coupon Code") }} *" id="code" required=""
                                 autocomplete="off">
                             <button type="submit">{{ __("Apply") }}</button>
                         </form>
@@ -1508,7 +1530,9 @@
                                 {{ $data->title }}
                                 @if($data->price != 0)
                                 +
-                                {{ $curr_checkout->sign }}{{ number_format($data->price * $curr_checkout->value, $curr_checkout->decimal_digits, $curr_checkout->decimal_separator,$curr_checkout->thousands_separator) }}
+                                {{ $curr_checkout->sign }}{{ number_format($data->price * $curr_checkout->value,
+                                $curr_checkout->decimal_digits,
+                                $curr_checkout->decimal_separator,$curr_checkout->thousands_separator) }}
                                 @endif
                                 <small>{{ $data->subtitle }}</small>
                             </label>
@@ -1521,11 +1545,13 @@
                         <span>{{ __("Final Price") }} :</span>
                         @if(Session::has('coupon_total'))
                         @if($gs->currency_format == 0)
-                        <span
-                            id="final-cost">{{ $curr_checkout->sign }}{{ number_format($totalPrice, $curr_checkout->decimal_digits, $curr_checkout->decimal_separator,$curr_checkout->thousands_separator) }}</span>
+                        <span id="final-cost">{{ $curr_checkout->sign }}{{ number_format($totalPrice,
+                            $curr_checkout->decimal_digits,
+                            $curr_checkout->decimal_separator,$curr_checkout->thousands_separator) }}</span>
                         @else
-                        <span
-                            id="final-cost">{{ number_format($totalPrice, $curr_checkout->decimal_digits, $curr_checkout->decimal_separator,$curr_checkout->thousands_separator) }}{{ $curr_checkout->sign }}</span>
+                        <span id="final-cost">{{ number_format($totalPrice, $curr_checkout->decimal_digits,
+                            $curr_checkout->decimal_separator,$curr_checkout->thousands_separator) }}{{
+                            $curr_checkout->sign }}</span>
                         @endif
                     </div>
                     <div class="total-price">
@@ -1536,8 +1562,8 @@
                     </div>
                     <div class="total-price">
                         <span></span>
-                        <span
-                            id="final-cost2">{{ App\Models\Product::convertPriceReverse(Session::get('coupon_total1')) }}</span>
+                        <span id="final-cost2">{{ App\Models\Product::convertPriceReverse(Session::get('coupon_total1'))
+                            }}</span>
                         @else
                         <span id="final-cost">{{ App\Models\Product::convertPrice($totalPrice) }}</span>
                     </div>
@@ -1549,12 +1575,13 @@
                     {{-- Final Price Area End --}}
                     @endif
                     {{-- <a href="{{ route('front.checkout') }}" class="order-btn mt-4">
-                    {{ __("Place Order") }}
+                        {{ __("Place Order") }}
                     </a> --}}
                     <div class="row" id="buttons1">
                         <div class="col-lg-12  mt-3">
                             <div class="bottom-area paystack-area-btn button1">
-                                <button type="submit" class="mybtn1 fbPaymentInfo"  onclick="scrolltotop()" id="button1" form="myform">{{ __("Continue") }}</button>
+                                <button type="submit" class="mybtn1 fbPaymentInfo" onclick="scrolltotop()" id="button1"
+                                    form="myform">{{ __("Continue") }}</button>
                             </div>
                         </div>
                     </div>
@@ -1563,33 +1590,33 @@
                         <div class="col-lg-12 mt-3 center-buttons">
                             <div class="bottom-area">
                                 <a href="javascript:;" onclick="back1();scrolltotop()" id="step1-btn"
-                                    class="mybtn1 mr-3" form="myform" >{{ __("Back") }}</a>
-                                    <button href="javascript:;" onclick="continue2();scrolltotop()" id="step3-btn"
+                                    class="mybtn1 mr-3" form="myform">{{ __("Back") }}</a>
+                                <button href="javascript:;" onclick="continue2();scrolltotop()" id="step3-btn"
                                     class="mybtn1">{{ __("Continue") }}</a>
                             </div>
                         </div>
                     </div>
 
-                    <div class="row none" id="buttons3">            
+                    <div class="row none" id="buttons3">
                         <div class="col-lg-12 mt-3">
 
                             <div class="alert alert-danger validation alert-ajax" style="display:none;">
-                                <button type="button" class="close" data-dismiss="alert"
-                                    aria-label="Close"><span aria-hidden="true">×</span></button>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                        aria-hidden="true">×</span></button>
                                 <p class="left-text">x</p>
                             </div>
 
                             <div class="bottom-area center-buttons">
                                 <a href="javascript:;" onclick="back2();scrolltotop()" id="step2-btn"
                                     class="mybtn1 mr-3" form="myform">{{ __("Back") }}</a>
-                                <button type="submit" id="final-btn"
-                                    class="mybtn1" form="myform">{{ __("Continue") }}</button>
+                                <button type="submit" id="final-btn" class="mybtn1" form="myform">{{ __("Continue")
+                                    }}</button>
                             </div>
                         </div>
                     </div>
                     @if($gs->is_simplified_checkout && $gs->simplified_checkout_number)
-                        <a href="#" id="whatsapp-modal" class="order-btn mt-2 d-none" data-toggle="modal"
-                        data-target="#simplified-checkout-modal" >{{ __("Simplified Checkout") }}</a>
+                    <a href="#" id="whatsapp-modal" class="order-btn mt-2 d-none" data-toggle="modal"
+                        data-target="#simplified-checkout-modal">{{ __("Simplified Checkout") }}</a>
                     @endif
                 </div>
             </div>
@@ -1634,20 +1661,20 @@
                                 <form id="loginform" action="{{ route('user.login.submit') }}" method="POST">
                                     {{ csrf_field() }}
                                     <div class="form-input">
-                                        <input type="email" name="email" placeholder="{{ __("Type Email Address") }} *"
+                                        <input type="email" name="email" placeholder="{{ __(" Type Email Address") }} *"
                                             required="">
                                         <i class="icofont-user-alt-5"></i>
                                     </div>
                                     <div class="form-input">
-                                        <input type="password" class="Password" name="password"
-                                            placeholder="{{ __("Type Password") }} *" required="">
+                                        <input type="password" class="Password" name="password" placeholder="{{ __("
+                                            Type Password") }} *" required="">
                                         <i class="icofont-ui-password"></i>
                                     </div>
                                     <div class="form-forgot-pass">
                                         <div class="left">
                                             <input type="hidden" name="modal" value="1">
-                                            <input type="checkbox" name="remember" id="mrp"
-                                                {{ old('remember') ? 'checked' : '' }}>
+                                            <input type="checkbox" name="remember" id="mrp" {{ old('remember')
+                                                ? 'checked' : '' }}>
                                             <label for="mrp">{{ __("Remember Password") }}</label>
                                         </div>
                                         <div class="right">
@@ -1656,7 +1683,7 @@
                                             </a>
                                         </div>
                                     </div>
-                                    <input id="authdata" type="hidden" value="{{ __("Authenticating...") }}">
+                                    <input id="authdata" type="hidden" value="{{ __(" Authenticating...") }}">
                                     <button type="submit" class="submit-btn">{{ __("Login") }}</button>
                                     @if(App\Models\Socialsetting::find(1)->f_check == 1 ||
                                     App\Models\Socialsetting::find(1)->g_check == 1)
@@ -1695,59 +1722,62 @@
                                 <form id="registerform" action="{{route('user-register-submit')}}" method="POST">
                                     {{ csrf_field() }}
                                     <div class="form-input">
-                                        <input type="text" class="User Name" name="name"
-                                            title="{{ __("Input first name and last name") }}"
-                                            placeholder="{{ __("Full Name") }} *" required="" pattern="^(\S*)\s+(.*)$">
+                                        <input type="text" class="User Name" name="name" title="{{ __(" Input first name
+                                            and last name") }}" placeholder="{{ __(" Full Name") }} *" required=""
+                                            pattern="^(\S*)\s+(.*)$">
                                         <i class="icofont-user-alt-5"></i>
                                     </div>
                                     <div class="form-input">
-                                        <input type="email" class="User Name" name="email"
-                                            placeholder="{{ __("Email Address") }} *" required="">
+                                        <input type="email" class="User Name" name="email" placeholder="{{ __(" Email
+                                            Address") }} *" required="">
                                         <i class="icofont-email"></i>
                                     </div>
                                     <div class="form-input">
-                                        <input type="text" class="User Name" name="phone"
-                                            placeholder="{{ __("Phone Number") }} *" required="">
+                                        <input type="text" class="User Name" name="phone" placeholder="{{ __(" Phone
+                                            Number") }} *" required="">
                                         <i class="icofont-phone"></i>
                                     </div>
                                     <div class="form-input">
-                                        <input type="text" class="User Name" name="address"
-                                            placeholder="{{ __("Address") }} *" required="">
+                                        <input type="text" class="User Name" name="address" placeholder="{{ __("
+                                            Address") }} *" required="">
                                         <i class="icofont-location-pin"></i>
                                     </div>
                                     <div class="form-input">
-                                        <input type="password" class="Password" name="password"
-                                            placeholder="{{ __("Password") }} *" required="">
+                                        <input type="password" class="Password" name="password" placeholder="{{ __("
+                                            Password") }} *" required="">
                                         <i class="icofont-ui-password"></i>
                                     </div>
                                     <div class="form-input">
                                         <input type="password" class="Password" name="password_confirmation"
-                                            placeholder="{{ __("Confirm Password") }} *" required="">
+                                            placeholder="{{ __(" Confirm Password") }} *" required="">
                                         <i class="icofont-ui-password"></i>
                                     </div>
                                     @if($gs->is_capcha == 1)
                                     <ul class="captcha-area">
                                         <li>
-                                            <p><img class="codeimg1" src="{{asset("assets/images/capcha_code.png")}}"
+                                            <p><img class="codeimg1" src="{{asset(" storage/images/capcha_code.png")}}"
                                                     alt=""> <i class="fas fa-sync-alt pointer refresh_code "></i></p>
                                         </li>
                                     </ul>
                                     <div class="form-input">
-                                        <input type="text" class="Password" name="codes"
-                                            placeholder="{{ __("Enter Code") }} *" required="">
+                                        <input type="text" class="Password" name="codes" placeholder="{{ __(" Enter
+                                            Code") }} *" required="">
                                         <i class="icofont-refresh"></i>
                                     </div>
                                     @endif
                                     @php
-                                        $url = $gs->privacy_policy ? true : false;
+                                    $url = $gs->privacy_policy ? true : false;
                                     @endphp
                                     <div class="form-forgot-pass">
                                         <div class="left">
-                                        <input type="checkbox" name="agree_privacy_policy" id="agree_privacy_policy">
-                                        <label for="agree_privacy_policy">Concordo com a <a target="_blank" href="{{ $url ? route('front.privacypolicy') : ""  }}">Política de Privacidade</a>.</label>
+                                            <input type="checkbox" name="agree_privacy_policy"
+                                                id="agree_privacy_policy">
+                                            <label for="agree_privacy_policy">Concordo com a <a target="_blank"
+                                                    href="{{ $url ? route('front.privacypolicy') : ""  }}">Política de
+                                                    Privacidade</a>.</label>
                                         </div>
                                     </div>
-                                    <input id="processdata" type="hidden" value="{{ __("Processing...") }}">
+                                    <input id="processdata" type="hidden" value="{{ __(" Processing...") }}">
                                     <button type="submit" class="submit-btn">{{ __("Register") }}</button>
                                 </form>
                             </div>
@@ -1782,7 +1812,7 @@
         document.getElementById("customer_name").value = document.getElementById("billName").value;
         document.getElementById("customer_phone").value = document.getElementById("billPhone").value;
     }
-    
+
     var billName = document.getElementById("billName");
 
     billName.addEventListener("change", function () {
@@ -1857,12 +1887,12 @@
     $('#shipping-cost').val(shipid);
     $('#packing-cost').val(packid);
     $('#aex-city').val($('#aex_destination').val());
-    
+
     var ftotal = parseFloat($('#grandtotal').val()) + mship + mpack;
     ftotal = parseFloat(ftotal);
     var curr_checkout_value = parseFloat('{{$curr_checkout->value}}');
     var ftotal2 = ftotal / curr_checkout_value;
-    
+
     if (pos == 0) {
       $('#final-cost').html('{{ $curr_checkout->sign }}' + $.number(ftotal, dec_dig, dec_sep, tho_sep));
       $('#final-cost2').html('{{ $first_curr->sign }}' + $.number(ftotal2, dec_dig2, dec_sep2, tho_sep2));
@@ -1873,7 +1903,7 @@
   }
   // End Calculate Shipping and Package in frontend
 </script>
-<script>    
+<script>
     function gerarPonto(id) {
         var pontoselecionado = document.querySelector('input[name="puntoentrega"]:checked').value;
         document.getElementById("punto-selected").value = pontoselecionado;
@@ -2088,13 +2118,13 @@
           zip_code: $('#'+zip_field).val(),
           codigo_ciudad: $('#aex_destination').val()
         },
-        
+
         success: function(data) {
           $('#empty-ship').html('');
 
           $('#button1, .checkout-process').show();
           $('#whatsapp-modal').addClass('d-none');
-          
+
           if (data.success == false) {
             $('#button1, .checkout-process').hide();
             $('#whatsapp-modal').removeClass('d-none');
