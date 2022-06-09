@@ -26,7 +26,7 @@
 <div class="row">
     <div class="col-lg-12 text-center">
         <div class="intro-content ">
-            <img src="{{asset('assets/images/brands/banners/'.$brand->banner)}}">
+            <img src="{{asset('storage/images/brands/banners/'.$brand->banner)}}">
         </div>
     </div>
 </div>
@@ -41,7 +41,7 @@
                             <h4 class="title">{{ $brand->name }}</h4>
                         </div>
                         <div class="body-area">
-                            <img src="{{$brand->image ? asset('assets/images/brands/'.$brand->image) : asset('assets/images/noimage.png') }}"
+                            <img src="{{$brand->image ? asset('storage/images/brands/'.$brand->image) : asset('assets/images/noimage.png') }}"
                                 alt="{{$brand->name}}">
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                             @include('includes.product.filtered-products')
                         </div>
                         <div id="ajaxLoader" class="ajax-loader"
-                            style="background: url({{asset('assets/images/'.$gs->loader)}}) no-repeat scroll center center rgba(0,0,0,.6);">
+                            style="background: url({{asset('storage/images/'.$gs->loader)}}) no-repeat scroll center center rgba(0,0,0,.6);">
                         </div>
                     </div>
 
@@ -100,7 +100,7 @@ $(".filter-btn").on('click', function(e) {
         filterlink += '&'+$("#qty").attr('name')+'='+$("#qty").val();
       }
     }
-    
+
     if ($("#sortby").val() != '') {
       if (filterlink == '') {
         filterlink += '{{route('front.brand', $brand->slug)}}' + '?'+$("#sortby").attr('name')+'='+$("#sortby").val();
