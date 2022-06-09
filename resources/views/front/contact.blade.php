@@ -42,39 +42,40 @@
                 <div class="left-area">
                     <div class="contact-form">
                         <div class="gocover"
-                            style="background: url({{ asset('assets/images/'.$gs->loader) }}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
+                            style="background: url({{ asset('storage/images/'.$gs->loader) }}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
                         </div>
                         <form id="contactform" action="{{route('front.contact.submit')}}" method="POST">
                             {{csrf_field()}}
                             @include('includes.admin.form-both')
 
                             <div class="form-input">
-                                <input type="text" name="name" placeholder="{{ __("Name") }} *" required="">
+                                <input type="text" name="name" placeholder="{{ __(" Name") }} *" required="">
                                 <i class="icofont-user-alt-5"></i>
                             </div>
                             <div class="form-input">
-                                <input type="text" name="phone" placeholder="{{ __("Phone Number") }} *">
+                                <input type="text" name="phone" placeholder="{{ __(" Phone Number") }} *">
                                 <i class="icofont-ui-call"></i>
                             </div>
                             <div class="form-input">
-                                <input type="email" name="email" placeholder="{{ __("Email Address") }} *" required="">
+                                <input type="email" name="email" placeholder="{{ __(" Email Address") }} *" required="">
                                 <i class="icofont-email"></i>
                             </div>
                             <div class="form-input">
-                                <textarea name="text" placeholder="{{ __("Your Message") }} *" required=""></textarea>
+                                <textarea name="text" placeholder="{{ __(" Your Message") }} *" required=""></textarea>
                             </div>
 
                             @if($gs->is_capcha == 1)
 
                             <ul class="captcha-area">
                                 <li>
-                                    <p><img class="codeimg1" src="{{asset("assets/images/capcha_code.png")}}" alt=""> <i
-                                            class="fas fa-sync-alt pointer refresh_code"></i></p>
+                                    <p><img class="codeimg1" src="{{asset('assets/images/capcha_code.png')}}" alt="">
+                                        <i class="fas fa-sync-alt pointer refresh_code"></i>
+                                    </p>
 
                                 </li>
                                 <li>
-                                    <input name="codes" type="text" class="input-field"
-                                        placeholder="{{ __("Enter Code") }}" required="">
+                                    <input name="codes" type="text" class="input-field" placeholder="{{ __(" Enter
+                                        Code") }}" required="">
 
                                 </li>
                             </ul>
