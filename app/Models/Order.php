@@ -59,6 +59,10 @@ class Order extends CachedModel
         'puntoid'
     ];
 
+    protected $casts = [
+        'cart' => 'array'
+    ];
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()

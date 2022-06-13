@@ -42,10 +42,10 @@ class GeniusMailer
 
         try {
             $order = Order::findOrFail($id);
-            $cart = unserialize(bzdecompress(utf8_decode($order->cart)));
+            $cart = $order->cart;
             $first_curr = Currency::where('id', '=', 1)->first();
             $order_curr = Currency::where('sign', '=', $order->currency_sign)->first();
-            $bankAccounts =  BankAccount::where('status','=',1)->get();
+            $bankAccounts =  BankAccount::where('status', '=', 1)->get();
 
             if (empty($order_curr)) {
                 $order_curr = $first_curr;
@@ -58,9 +58,9 @@ class GeniusMailer
                 "first_curr" => $first_curr,
                 "order_curr" => $order_curr,
                 "bank_accounts" => $bankAccounts,
-                'to_email' => $objDemo->to, 
-                'from_email' => $objDemo->from_email, 
-                'from_name' => $objDemo->from_name, 
+                'to_email' => $objDemo->to,
+                'from_email' => $objDemo->from_email,
+                'from_name' => $objDemo->from_name,
                 'reply' => $objDemo->reply
             ];
 
@@ -81,7 +81,7 @@ class GeniusMailer
         $body = preg_replace("/{order_number}/", $mailData['onumber'], $body);
         $body = preg_replace("/{website_title}/", $this->storeSettings->title, $body);
 
-        if($this->storeSettings->is_back_in_stock && array_key_exists('product', $mailData)) {
+        if ($this->storeSettings->is_back_in_stock && array_key_exists('product', $mailData)) {
             $body = preg_replace("/{product}/", $mailData['product'], $body);
         }
 
@@ -121,7 +121,7 @@ class GeniusMailer
             $ca = CartAbandonment::find($id);
             $cart = unserialize(bzdecompress(utf8_decode($ca->temp_cart)));
             $first_curr = Currency::where('id', '=', 1)->first();
-            $bankAccounts =  BankAccount::where('status','=',1)->get();
+            $bankAccounts =  BankAccount::where('status', '=', 1)->get();
 
             $cartData = [
                 "view" => "print.cart",
@@ -129,12 +129,12 @@ class GeniusMailer
                 "first_curr" => $first_curr,
                 "order_curr" => $first_curr,
                 "bank_accounts" => $bankAccounts,
-                'to_email' => $objDemo->to, 
-                'from_email' => $objDemo->from_email, 
-                'from_name' => $objDemo->from_name, 
+                'to_email' => $objDemo->to,
+                'from_email' => $objDemo->from_email,
+                'from_name' => $objDemo->from_name,
                 'reply' => $objDemo->reply
             ];
-            
+
             Mail::to($objDemo->to)->queue(new AdminEmail($body, $objDemo->subject, $cartData));
         } catch (\Exception $e) {
             Log::debug('genius_mailer_auto_mail', [$e->getMessage()]);
@@ -152,10 +152,10 @@ class GeniusMailer
 
         try {
             $order = Order::findOrFail($id);
-            $cart = unserialize(bzdecompress(utf8_decode($order->cart)));
+            $cart = $order->cart;
             $first_curr = Currency::where('id', '=', 1)->first();
             $order_curr = Currency::where('sign', '=', $order->currency_sign)->first();
-            $bankAccounts =  BankAccount::where('status','=',1)->get();
+            $bankAccounts =  BankAccount::where('status', '=', 1)->get();
 
             if (empty($order_curr)) {
                 $order_curr = $first_curr;
@@ -168,9 +168,9 @@ class GeniusMailer
                 "first_curr" => $first_curr,
                 "order_curr" => $order_curr,
                 "bank_accounts" => $bankAccounts,
-                'to_email' => $objDemo->to, 
-                'from_email' => $objDemo->from_email, 
-                'from_name' => $objDemo->from_name, 
+                'to_email' => $objDemo->to,
+                'from_email' => $objDemo->from_email,
+                'from_name' => $objDemo->from_name,
                 'reply' => $objDemo->reply
             ];
 
@@ -183,7 +183,7 @@ class GeniusMailer
 
         return true;
     }
-    
+
     public function sendCustomMail(array $mailData)
     {
         $objDemo = new \stdClass();

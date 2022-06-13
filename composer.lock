@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3b2143383ad178876cfc96a05641d716",
+    "content-hash": "1f6892aac8c87e2397410e2a4e6a1749",
     "packages": [
         {
             "name": "astrotomic/laravel-translatable",
@@ -6880,6 +6880,67 @@
             "time": "2020-07-09T08:09:16+00:00"
         },
         {
+            "name": "laradumps/laradumps",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laradumps/laradumps.git",
+                "reference": "c3628454daa08fdcc1ed11639a4d8c3103d24b67"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laradumps/laradumps/zipball/c3628454daa08fdcc1ed11639a4d8c3103d24b67",
+                "reference": "c3628454daa08fdcc1ed11639a4d8c3103d24b67",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.8",
+                "illuminate/support": "^8.18 | ^9.0",
+                "nunomaduro/larastan": "^1.0 | ^2.1",
+                "orchestra/testbench": "^6.17 | ^7.0",
+                "pestphp/pest": "^1.21",
+                "symfony/var-dumper": "^5.4 | ^6.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "LaraDumps\\LaraDumps\\LaraDumpsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/functions.php"
+                ],
+                "psr-4": {
+                    "LaraDumps\\LaraDumps\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Luan Freitas",
+                    "email": "luanfreitas10@protonmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A Dump Component for Laravel.",
+            "homepage": "https://github.com/laradumps/laradumps",
+            "support": {
+                "issues": "https://github.com/laradumps/laradumps/issues",
+                "source": "https://github.com/laradumps/laradumps/tree/main"
+            },
+            "time": "2022-06-11T18:15:23+00:00"
+        },
+        {
             "name": "laravel/sail",
             "version": "v1.14.8",
             "source": {
@@ -9229,7 +9290,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "laradumps/laradumps": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
