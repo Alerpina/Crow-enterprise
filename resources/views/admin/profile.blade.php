@@ -1,110 +1,122 @@
 @extends('layouts.admin')
 @section('content')
 
-						<div class="content-area">
-							<div class="mr-breadcrumb">
-								<div class="row">
-									<div class="col-lg-12">
-											<h4 class="heading">{{ __('Edit Profile') }}</h4>
-											<ul class="links">
-												<li>
-													<a href="{{ route('admin.dashboard') }}">{{ __('Dashboard') }} </a>
-												</li>
-												<li>
-													<a href="{{ route('admin.profile') }}">{{ __('Edit Profile') }} </a>
-												</li>
-											</ul>
-									</div>
-								</div>
-							</div>
-							<div class="add-product-content">
-								<div class="row">
-									<div class="col-lg-12">
-										<div class="product-description">
-											<div class="body-area">
+<div class="content-area">
+    <div class="mr-breadcrumb">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4 class="heading">{{ __('Edit Profile') }}</h4>
+                <ul class="links">
+                    <li>
+                        <a href="{{ route('admin.dashboard') }}">{{ __('Dashboard') }} </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.profile') }}">{{ __('Edit Profile') }} </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="add-product-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="product-description">
+                    <div class="body-area">
 
-				                        <div class="gocover" style="background: url({{asset('assets/images/'.$gs->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);"></div>
-											<form id="geniusform" action="{{ route('admin.profile.update') }}" method="POST" enctype="multipart/form-data">
-												{{csrf_field()}}
+                        <div class="gocover"
+                            style="background: url({{asset('storage/images/'.$gs->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
+                        </div>
+                        <form id="geniusform" action="{{ route('admin.profile.update') }}" method="POST"
+                            enctype="multipart/form-data">
+                            {{csrf_field()}}
 
-                        @include('includes.admin.form-both')  
+                            @include('includes.admin.form-both')
 
-						                        <div class="row">
+                            <div class="row">
 
-						                            <div class="col-xl-6">
-														<div class="input-form">
-															<h4 class="heading">{{ __('Current Profile Image') }} *</h4>
-															<div class="img-upload">
-																<div id="image-preview" class="img-preview" style="background: url('{{ $data->photo ? asset('assets/images/admins/'.$data->photo):asset('assets/images/noimage.png') }}');">
-																	<label for="image-upload" class="img-label" id="image-label"><i class="icofont-upload-alt"></i>{{ __('Upload Image') }}</label>
-																	<input type="file" name="photo" class="img-upload" id="image-upload">
-																	@if ($data->photo)
-																	<div class="buttons">
-																		<div class="deleteImage" onclick="deleteImage()"></div>
-																	</div>
-																	@endif
-																</div>
-															</div>
-														</div>
-						                            </div>
+                                <div class="col-xl-6">
+                                    <div class="input-form">
+                                        <h4 class="heading">{{ __('Current Profile Image') }} *</h4>
+                                        <div class="img-upload">
+                                            <div id="image-preview" class="img-preview"
+                                                style="background: url('{{ $data->photo ? asset('storage/images/admins/'.$data->photo):asset('assets/images/noimage.png') }}');">
+                                                <label for="image-upload" class="img-label" id="image-label"><i
+                                                        class="icofont-upload-alt"></i>{{ __('Upload Image') }}</label>
+                                                <input type="file" name="photo" class="img-upload" id="image-upload">
+                                                @if ($data->photo)
+                                                <div class="buttons">
+                                                    <div class="deleteImage" onclick="deleteImage()"></div>
+                                                </div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-												    <div class="col-xl-6">
-														<div class="input-form">
-																<h4 class="heading">{{ __('Name') }} *</h4>
-																<input type="text" class="input-field" name="name" placeholder="{{ __('User Name') }}" required="" value="{{$data->name}}">
-														</div>
+                                <div class="col-xl-6">
+                                    <div class="input-form">
+                                        <h4 class="heading">{{ __('Name') }} *</h4>
+                                        <input type="text" class="input-field" name="name"
+                                            placeholder="{{ __('User Name') }}" required="" value="{{$data->name}}">
+                                    </div>
 
-														<div class="input-form">
-																<h4 class="heading">{{ __('Email') }} *</h4>
-																<input type="email" class="input-field" name="email" placeholder="{{ __('Email Address') }}" required="" value="{{$data->email}}">
-														</div>
+                                    <div class="input-form">
+                                        <h4 class="heading">{{ __('Email') }} *</h4>
+                                        <input type="email" class="input-field" name="email"
+                                            placeholder="{{ __('Email Address') }}" required=""
+                                            value="{{$data->email}}">
+                                    </div>
 
-													</div>
+                                </div>
 
-													<div class="col-xl-6">
-														<div class="input-form">
-																<h4 class="heading">{{ __('Phone') }} *</h4>
-																<input type="text" class="input-field" name="phone" placeholder="{{ __('Phone Number') }}" required="" value="{{$data->phone}}">
-														</div>
-													</div>
+                                <div class="col-xl-6">
+                                    <div class="input-form">
+                                        <h4 class="heading">{{ __('Phone') }} *</h4>
+                                        <input type="text" class="input-field" name="phone"
+                                            placeholder="{{ __('Phone Number') }}" required="" value="{{$data->phone}}">
+                                    </div>
+                                </div>
 
-													@if(Auth::guard('admin')->user()->role_id == 0)
-														<div class="col-xl-6">
-															<div class="input-form">
-																<h4 class="heading">{{ __('Shop Name') }} *</h4>
-																<input type="text" class="input-field" name="shop_name" placeholder="{{ __('Shop Name') }}" required="" value="{{$data->shop_name}}">
-															</div>
-														</div>
-													@endif
-						        
-
-						                        </div> <!--FECHAMENTO TAG ROW-->
-
-											
-
-
-
-						                        <div class="row justify-content-center">
-						                      
-						                            <button class="addProductSubmit-btn" type="submit">{{ __('Save') }}</button>
-						                   
-						                        </div>
-
-											</form>
+                                @if(Auth::guard('admin')->user()->role_id == 0)
+                                <div class="col-xl-6">
+                                    <div class="input-form">
+                                        <h4 class="heading">{{ __('Shop Name') }} *</h4>
+                                        <input type="text" class="input-field" name="shop_name"
+                                            placeholder="{{ __('Shop Name') }}" required=""
+                                            value="{{$data->shop_name}}">
+                                    </div>
+                                </div>
+                                @endif
 
 
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+                            </div>
+                            <!--FECHAMENTO TAG ROW-->
+
+
+
+
+
+                            <div class="row justify-content-center">
+
+                                <button class="addProductSubmit-btn" type="submit">{{ __('Save') }}</button>
+
+                            </div>
+
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @endsection
 
 @section('scripts')
-	<script>
-		$(document).ready(function(){
+<script>
+    $(document).ready(function(){
 			$.ajaxSetup({
 				headers: {
 					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -130,5 +142,5 @@
 				}
 			});
 		}
-	</script>
+</script>
 @endsection

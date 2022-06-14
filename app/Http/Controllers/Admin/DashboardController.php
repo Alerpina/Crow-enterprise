@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Auth;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use InvalidArgumentException;
-use Validator;
-use Illuminate\Support\Facades\Hash;
-use App\Models\Order;
 use App\Models\Blog;
 use App\Models\User;
-use App\Models\Product;
+use App\Models\Order;
 use App\Models\Counter;
+use App\Models\Product;
+use Illuminate\Http\Request;
+use InvalidArgumentException;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class DashboardController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth:admin');
@@ -25,35 +24,35 @@ class DashboardController extends Controller
 
     public function index()
     {
-        $pending = Order::where('status','=','pending')->count();
-        $processing = Order::where('status','=','processing')->count();
-        $completed = Order::where('status','=','completed')->count();
+        $pending = Order::where('status', '=', 'pending')->count();
+        $processing = Order::where('status', '=', 'processing')->count();
+        $completed = Order::where('status', '=', 'completed')->count();
         $days = "";
         $sales = "";
-        for($i = 0; $i < 30; $i++) {
+        for ($i = 0; $i < 30; $i++) {
             $days .= "'".date("d M", strtotime('-'. $i .' days'))."',";
 
-            $sales .=  "'".Order::where('status','=','completed')->whereDate('created_at', '=', date("Y-m-d", strtotime('-'. $i .' days')))->count()."',";
+            $sales .=  "'".Order::where('status', '=', 'completed')->whereDate('created_at', '=', date("Y-m-d", strtotime('-'. $i .' days')))->count()."',";
         }
         $users_total = User::count();
         $products_total = Product::count();
         $blogs_total = Blog::count();
-        $pproducts = Product::orderBy('id','desc')->take(5)->get();
-        $rorders = Order::orderBy('id','desc')->take(5)->get();
-        $poproducts = Product::orderBy('views','desc')->take(5)->get();
-        $rusers = User::orderBy('id','desc')->take(5)->get();
-        $referrals = Counter::where('type','referral')->orderBy('total_count','desc')->take(5)->get();
-        $browsers = Counter::where('type','browser')->orderBy('total_count','desc')->take(5)->get();
+        $pproducts = Product::orderBy('id', 'desc')->take(5)->get();
+        $rorders = Order::orderBy('id', 'desc')->take(5)->get();
+        $poproducts = Product::orderBy('views', 'desc')->take(5)->get();
+        $rusers = User::orderBy('id', 'desc')->take(5)->get();
+        $referrals = Counter::where('type', 'referral')->orderBy('total_count', 'desc')->take(5)->get();
+        $browsers = Counter::where('type', 'browser')->orderBy('total_count', 'desc')->take(5)->get();
 
 
 
-        return view('admin.dashboard',compact('pending','processing','completed','products_total','users_total','blogs_total','days','sales','pproducts','rorders','poproducts','rusers','referrals','browsers'));
+        return view('admin.dashboard', compact('pending', 'processing', 'completed', 'products_total', 'users_total', 'blogs_total', 'days', 'sales', 'pproducts', 'rorders', 'poproducts', 'rusers', 'referrals', 'browsers'));
     }
 
     public function profile()
     {
         $data = Auth::guard('admin')->user();
-        return view('admin.profile',compact('data'));
+        return view('admin.profile', compact('data'));
     }
 
     public function profileupdate(Request $request)
@@ -70,23 +69,22 @@ class DashboardController extends Controller
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-          return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
+            return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
         }
         //--- Validation Section Ends
         $input = $request->all();
+        /** @var User $data */
         $data = Auth::guard('admin')->user();
-            if ($file = $request->file('photo'))
-            {
-                $name = time().$file->getClientOriginalName();
-                $file->move('assets/images/admins/',$name);
-                if($data->photo != null)
-                {
-                    if (file_exists(public_path().'/assets/images/admins/'.$data->photo)) {
-                        unlink(public_path().'/assets/images/admins/'.$data->photo);
-                    }
+        if ($file = $request->file('photo')) {
+            $name = time().$file->getClientOriginalName();
+            $file->move('storage/images/admins/', $name);
+            if ($data->photo != null) {
+                if (file_exists(public_path().'/storage/images/admins/'.$data->photo)) {
+                    unlink(public_path().'/storage/images/admins/'.$data->photo);
                 }
-            $input['photo'] = $name;
             }
+            $input['photo'] = $name;
+        }
         $data->update($input);
         $msg = __('Successfully updated your profile');
         return response()->json($msg);
@@ -95,20 +93,20 @@ class DashboardController extends Controller
     public function passwordreset()
     {
         $data = Auth::guard('admin')->user();
-        return view('admin.password',compact('data'));
+        return view('admin.password', compact('data'));
     }
 
     public function changepass(Request $request)
     {
         $admin = Auth::guard('admin')->user();
-        if ($request->cpass){
-            if (Hash::check($request->cpass, $admin->password)){
-                if ($request->newpass == $request->renewpass){
+        if ($request->cpass) {
+            if (Hash::check($request->cpass, $admin->password)) {
+                if ($request->newpass == $request->renewpass) {
                     $input['password'] = Hash::make($request->newpass);
-                }else{
+                } else {
                     return response()->json(array('errors' => [ 0 => __('Confirm password does not match.') ]));
                 }
-            }else{
+            } else {
                 return response()->json(array('errors' => [ 0 => __('Current password Does not match.') ]));
             }
         }
@@ -123,10 +121,10 @@ class DashboardController extends Controller
     {
         $bkuplink = "";
         $chk = file_get_contents('backup.txt');
-        if ($chk != ""){
+        if ($chk != "") {
             $bkuplink = url($chk);
         }
-        return view('admin.movetoserver',compact('bkuplink','chk'));
+        return view('admin.movetoserver', compact('bkuplink', 'chk'));
     }
 
 
@@ -135,22 +133,23 @@ class DashboardController extends Controller
         $destination  = public_path().'/install';
         $bkuplink = "";
         $chk = file_get_contents('backup.txt');
-        if ($chk != ""){
+        if ($chk != "") {
             unlink(public_path($chk));
         }
 
         if (is_dir($destination)) {
             $this->deleteDir($destination);
         }
-        $handle = fopen('backup.txt','w+');
-        fwrite($handle,"");
+        $handle = fopen('backup.txt', 'w+');
+        fwrite($handle, "");
         fclose($handle);
         //return "No Backup File Generated.";
-        return redirect()->back()->with('success',__('Backup file Deleted Successfully!'));
+        return redirect()->back()->with('success', __('Backup file Deleted Successfully!'));
     }
 
 
-    function setUp($mtFile,$goFileData){
+    public function setUp($mtFile, $goFileData)
+    {
         $fpa = fopen(public_path().$mtFile, 'w');
         fwrite($fpa, $goFileData);
         fclose($fpa);
@@ -158,12 +157,13 @@ class DashboardController extends Controller
 
 
 
-    public function movescript(){
+    public function movescript()
+    {
         ini_set('max_execution_time', 3000);
 
         $destination  = public_path().'/install';
         $chk = file_get_contents('backup.txt');
-        if ($chk != ""){
+        if ($chk != "") {
             unlink(public_path($chk));
         }
 
@@ -172,7 +172,7 @@ class DashboardController extends Controller
         }
 
         $src = base_path().'/vendor/update';
-        $this->recurse_copy($src,$destination);
+        $this->recurse_copy($src, $destination);
         $files = public_path();
         $bkupname = 'bkcup_crow-'.date('Y-m-d').'.zip';
 
@@ -184,33 +184,34 @@ class DashboardController extends Controller
 
         $zipper->close();
 
-        $handle = fopen('backup.txt','w+');
-        fwrite($handle,$bkupname);
+        $handle = fopen('backup.txt', 'w+');
+        fwrite($handle, $bkupname);
         fclose($handle);
 
         if (is_dir($destination)) {
             $this->deleteDir($destination);
         }
-        return response()->json(['status' => 'success','backupfile' => url($bkupname),'filename' => $bkupname],200);
+        return response()->json(['status' => 'success','backupfile' => url($bkupname),'filename' => $bkupname], 200);
     }
 
-    public function recurse_copy($src,$dst) {
+    public function recurse_copy($src, $dst)
+    {
         $dir = opendir($src);
         @mkdir($dst);
-        while(false !== ( $file = readdir($dir)) ) {
-            if (( $file != '.' ) && ( $file != '..' )) {
-                if ( is_dir($src . '/' . $file) ) {
-                    $this->recurse_copy($src . '/' . $file,$dst . '/' . $file);
-                }
-                else {
-                    copy($src . '/' . $file,$dst . '/' . $file);
+        while (false !== ($file = readdir($dir))) {
+            if (($file != '.') && ($file != '..')) {
+                if (is_dir($src . '/' . $file)) {
+                    $this->recurse_copy($src . '/' . $file, $dst . '/' . $file);
+                } else {
+                    copy($src . '/' . $file, $dst . '/' . $file);
                 }
             }
         }
         closedir($dir);
     }
 
-    public function deleteDir($dirPath) {
+    public function deleteDir($dirPath)
+    {
         if (! is_dir($dirPath)) {
             throw new InvalidArgumentException("$dirPath ".__('must be a directory'));
         }
@@ -231,9 +232,9 @@ class DashboardController extends Controller
     public function deleteImage()
     {
         $data = Auth::guard('admin')->user();
-        if($data->photo != null) {
-            if (file_exists(public_path().'/assets/images/admins/'.$data->photo)) {
-                unlink(public_path().'/assets/images/admins/'.$data->photo);
+        if ($data->photo != null) {
+            if (file_exists(public_path().'/storage/images/admins/'.$data->photo)) {
+                unlink(public_path().'/storage/images/admins/'.$data->photo);
                 $input['photo'] = '';
                 $data->update($input);
                 $msg = __('Image Deleted Successfully');
@@ -244,5 +245,4 @@ class DashboardController extends Controller
             }
         }
     }
-
 }
