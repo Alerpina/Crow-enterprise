@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers\User;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use App\Http\Controllers\Controller;
-use App\Models\BankAccount;
-use Auth;
 use Image;
 use Validator;
 use App\Models\Order;
 use App\Models\Product;
-use App\Models\Currency;
 use App\Models\Seotool;
-use App\Models\PaymentGateway;
+use App\Models\Currency;
+use App\Models\BankAccount;
+use Illuminate\Support\Str;
 use App\Models\Notification;
+use Illuminate\Http\Request;
+use App\Models\PaymentGateway;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -57,7 +57,7 @@ class OrderController extends Controller
     {
         $user = Auth::guard('web')->user();
         $order = Order::findOrfail($id);
-        $cart = unserialize(bzdecompress(utf8_decode($order->cart)));
+        $cart =$order->cart;
         $first_curr = Currency::where('id', '=', 1)->first();
         $order_curr = Currency::where('sign', '=', $order->currency_sign)->first();
         if (empty($order_curr)) {
