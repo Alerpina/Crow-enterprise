@@ -84,7 +84,7 @@ class OrderController extends Controller
     {
         $user = Auth::guard('web')->user();
         $order = Order::findOrfail($id);
-        $cart = unserialize(bzdecompress(utf8_decode($order->cart)));
+        $cart = $order->cart;
         $first_curr = Currency::where('id', '=', 1)->first();
         $order_curr = Currency::where('sign', '=', $order->currency_sign)->first();
         $seos = Seotool::all();
