@@ -17,25 +17,29 @@
 
                             <div class="body">
                                 <div class="edit-info-area-form">
-                                    <div class="gocover" style="background: url({{ asset('assets/images/'.$gs->loader) }}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
+                                    <div class="gocover"
+                                        style="background: url({{ asset('storage/images/'.$gs->loader) }}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
                                     </div>
                                     @if(session('unsuccess'))
                                     <div class="alert alert-danger validation">
-                                          <button type="button" class="close alert-close"><span>×</span></button>
-                                                <p class="text-left">{{ session('unsuccess') }}</p> 
-                                          </div>
+                                        <button type="button" class="close alert-close"><span>×</span></button>
+                                        <p class="text-left">{{ session('unsuccess') }}</p>
+                                    </div>
                                     @endif
-                                    <form id="userform" action="{{route('user-profile-update')}}" method="POST" enctype="multipart/form-data">
+                                    <form id="userform" action="{{route('user-profile-update')}}" method="POST"
+                                        enctype="multipart/form-data">
 
                                         {{ csrf_field() }}
 
                                         @include('includes.admin.form-both')
                                         <div class="upload-img">
                                             @if($user->is_provider == 1)
-                                            <div class="img"><img src="{{ $user->photo ? asset($user->photo):asset('assets/images/'.$gs->user_image) }}">
+                                            <div class="img"><img
+                                                    src="{{ $user->photo ? asset($user->photo):asset('storage/images/'.$gs->user_image) }}">
                                             </div>
                                             @else
-                                            <div class="img"><img src="{{ $user->photo ? asset('assets/images/users/'.$user->photo):asset('assets/images/'.$gs->user_image) }}">
+                                            <div class="img"><img
+                                                    src="{{ $user->photo ? asset('storage/images/users/'.$user->photo):asset('storage/images/'.$gs->user_image) }}">
                                             </div>
                                             @endif
                                             @if($user->is_provider != 1)
@@ -48,43 +52,55 @@
                                             @endif
                                         </div>
                                         <div class="alert alert-warning" id="errorMsg" style="display:none;">
-                                      {{__('Invalid Zip Code. Please fill the fields manually!')}}
+                                            {{__('Invalid Zip Code. Please fill the fields manually!')}}
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-6">
-                                                <input name="name" type="text" class="input-field" placeholder="{{ __("User Name") }}" required="" value="{{ $user->name }}">
+                                                <input name="name" type="text" class="input-field"
+                                                    placeholder="{{ __('User Name') }}" required=""
+                                                    value="{{ $user->name }}">
                                             </div>
                                             <div class="col-lg-6">
-                                                <input name="email" type="email" class="input-field" placeholder="{{ __("Email Address") }}" required="" value="{{ $user->email }}" disabled>
+                                                <input name="email" type="email" class="input-field"
+                                                    placeholder="{{ __('Email Address') }}" required=""
+                                                    value="{{ $user->email }}" disabled>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-6">
-                                                <input name="document" type="text" class="input-field" placeholder="{{ $customer_doc_str }}" required="" value="{{ $user->document }}">
+                                                <input name="document" type="text" class="input-field"
+                                                    placeholder="{{ $customer_doc_str }}" required=""
+                                                    value="{{ $user->document }}">
                                             </div>
                                             @if ($gs->country_ship == "PY")
-                                              <div class="col-lg-6">
-                                                <input class="input-field" type="hidden" name="zip" id="billZip" placeholder="{{ __("Postal Code") }}" value="">
-                                              </div>
+                                            <div class="col-lg-6">
+                                                <input class="input-field" type="hidden" name="zip" id="billZip"
+                                                    placeholder="{{ __('Postal Code') }}" value="">
+                                            </div>
                                             @else
                                             @if($gs->is_zip_validation)
-                                              @if(empty($user->city_id && $user->state_id && $user->country_id))
-                                              <div class="col-lg-6">
-                                                  <input class="input-field" type="text" name="zip" id="billZip" placeholder="{{ __("Postal Code") }}" required="" value="">
-                                              </div>
-                                              @else
-                                              <div class="col-lg-6">
-                                                  <input class="input-field" type="text" name="zip" id="billZip" placeholder="{{ __("Postal Code") }}" required="" value="{{ $user->zip }}">
-                                              </div>
-                                              @endif
-                                            @else 
+                                            @if(empty($user->city_id && $user->state_id && $user->country_id))
+                                            <div class="col-lg-6">
+                                                <input class="input-field" type="text" name="zip" id="billZip"
+                                                    placeholder="{{ __('Postal Code') }}" required="" value="">
+                                            </div>
+                                            @else
+                                            <div class="col-lg-6">
+                                                <input class="input-field" type="text" name="zip" id="billZip"
+                                                    placeholder="{{ __('Postal Code') }}" required=""
+                                                    value="{{ $user->zip }}">
+                                            </div>
+                                            @endif
+                                            @else
                                             @if(!empty($user->zip))
                                             <div class="col-lg-6">
-                                              <input class="input-field" type="text" name="zip" id="zip" placeholder="{{ __("Postal Code") }}" value="{{ $user->zip }}">
+                                                <input class="input-field" type="text" name="zip" id="zip"
+                                                    placeholder="{{ __('Postal Code') }}" value="{{ $user->zip }}">
                                             </div>
-                                            @else 
+                                            @else
                                             <div class="col-lg-6">
-                                              <input class="input-field" type="text" name="zip" id="zip" placeholder="{{ __("Postal Code") }}" value="">
+                                                <input class="input-field" type="text" name="zip" id="zip"
+                                                    placeholder="{{ __('Postal Code') }}" value="">
                                             </div>
                                             @endif
                                             @endif
@@ -92,61 +108,76 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-6">
-                                                <input name="phone" type="text" class="input-field" placeholder="{{ __("Phone Number") }}" required="" value="{{ $user->phone }}">
+                                                <input name="phone" type="text" class="input-field"
+                                                    placeholder="{{ __('Phone Number') }}" required=""
+                                                    value="{{ $user->phone }}">
                                             </div>
                                             <div class="col-lg-6">
-                                                <input class="input-field" type="text" name="address" id="billAddress" placeholder="{{ __("Address") }}" required="" value="{{ $user->address }}">
+                                                <input class="input-field" type="text" name="address" id="billAddress"
+                                                    placeholder="{{ __('Address') }}" required=""
+                                                    value="{{ $user->address }}">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-6">
-                                                <input class="input-field" type="text" name="address_number" id="billAdressNumber" placeholder="{{ __('Number') }}" required="" value="{{ $user->address_number }}">
+                                                <input class="input-field" type="text" name="address_number"
+                                                    id="billAdressNumber" placeholder="{{ __('Number') }}" required=""
+                                                    value="{{ $user->address_number }}">
                                             </div>
                                             <div class="col-lg-6">
-                                                <input type="text" class="input-field" name="complement" placeholder="{{ __('Complement') }}" value="{{ $user->complement }}">
+                                                <input type="text" class="input-field" name="complement"
+                                                    placeholder="{{ __('Complement') }}"
+                                                    value="{{ $user->complement }}">
                                             </div>
                                         </div>
                                         <div class="row">
-                                        <div class="col-lg-6">
-                                                <input class="input-field" type="text" name="district" id="billDistrict" placeholder="{{ __("District") }}" required="" value="{{ $user->district }}">
+                                            <div class="col-lg-6">
+                                                <input class="input-field" type="text" name="district" id="billDistrict"
+                                                    placeholder="{{ __('District') }}" required=""
+                                                    value="{{ $user->district }}">
                                             </div>
 
                                             <div class="col-lg-6">
-                                                <select class="form-control" name="country_id" id="billCountry" required="" >
+                                                <select class="form-control" name="country_id" id="billCountry"
+                                                    required="">
                                                     @if($countries->count() > 1))
                                                     <option value="" data-code="">{{__('Select Country')}}</option>
                                                     @endif
                                                     @foreach($countries as $country)
-                                                    <option value="{{$country->id}}" {{ $user->country == $country->country_name ? 'selected' : ''}} data-code="{{$country->country_code}}">{{$country->country_name}}
+                                                    <option value="{{$country->id}}" {{ $user->country ==
+                                                        $country->country_name ? 'selected' : ''}}
+                                                        data-code="{{$country->country_code}}">{{$country->country_name}}
                                                     </option>
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            
-                                            
+
+
                                         </div>
-                                       
+
                                         <div class="row">
-                                        <div class="col-lg-6">
-                                                <select class="form-control" name="state_id" id="billState" required="" readonly>
+                                            <div class="col-lg-6">
+                                                <select class="form-control" name="state_id" id="billState" required=""
+                                                    readonly>
                                                     <option value="{{ $user->state_id }}">{{ $user->state }}</option>
                                                 </select>
                                             </div>
 
                                             <div class="col-lg-6">
-                                                <select class="form-control" name="city_id" id="billCity" required="" readonly>
+                                                <select class="form-control" name="city_id" id="billCity" required=""
+                                                    readonly>
                                                     <option value="{{ $user->city_id }}">{{ $user->city }}</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="form-links">
                                             <button class="submit-btn" type="submit">{{ __("Save") }}</button>
                                         </div>
                                     </form>
-                                    
-                                     
-                                    
+
+
+
                                 </div>
                             </div>
                         </div>

@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\User;
 
-use Auth;
-use Validator;
 use Carbon\Carbon;
 use App\Models\City;
 use App\Models\State;
@@ -17,7 +15,10 @@ use App\Models\FavoriteSeller;
 use App\Models\Generalsetting;
 use App\Models\UserSubscription;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -29,8 +30,8 @@ class UserController extends Controller
 
     public function index()
     {
-        $user = Auth::user();  
-        if(Auth::user()->IsVendor()){
+        $user = Auth::user();
+        if (Auth::user()->IsVendor()) {
             return redirect()->route('vendor-dashboard');
         }
         return view('user.dashboard', compact('user'));
@@ -38,15 +39,15 @@ class UserController extends Controller
 
     public function profile()
     {
-        $user = Auth::user();  
+        $user = Auth::user();
         $countries = Country::all();
-        if(Auth::user()->IsVendor()){
+        if (Auth::user()->IsVendor()) {
             return redirect()->route('front.index');
         }
-        return view('user.profile',compact('user'))->with(['countries' => $countries]);
+        return view('user.profile', compact('user'))->with(['countries' => $countries]);
     }
 
-    
+
 
     public function profileupdate(Request $request)
     {
@@ -61,9 +62,9 @@ class UserController extends Controller
 
 
         $validator = Validator::make($request->all(), $rules);
-        
+
         if ($validator->fails()) {
-          return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
+            return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
         }
         //--- Validation Section Ends
         $input = $request->all();
@@ -82,43 +83,44 @@ class UserController extends Controller
             $input['zip'] = '0123';
         }
 
-        $data = Auth::user();        
-            if ($file = $request->file('photo')) 
-            {              
-                $name = time().$file->getClientOriginalName();
-                $file->move('assets/images/users/',$name);
-                if($data->photo != null)
-                {
-                    if (file_exists(public_path().'/assets/images/users/'.$data->photo)) {
-                        unlink(public_path().'/assets/images/users/'.$data->photo);
-                    }
-                }            
+        /** @var User $data */
+        $data = Auth::user();
+        if ($file = $request->file('photo')) {
+            $name = time().$file->getClientOriginalName();
+            $file->move('storage/images/users/', $name);
+            if ($data->photo != null) {
+                if (file_exists(public_path().'/storage/images/users/'.$data->photo)) {
+                    unlink(public_path().'/storage/images/users/'.$data->photo);
+                }
+            }
             $input['photo'] = $name;
-            } 
+        }
         $data->update($input);
 
         $msg = __('Successfully updated your profile');
-        return response()->json($msg); 
+        return response()->json($msg);
     }
 
     public function resetform()
     {
-        if(Auth::user()->IsVendor()) return view('vendor.reset');
+        if (Auth::user()->IsVendor()) {
+            return view('vendor.reset');
+        }
         return view('user.reset');
     }
 
     public function reset(Request $request)
     {
         $user = Auth::user();
-        if ($request->cpass){
-            if (Hash::check($request->cpass, $user->password)){
-                if ($request->newpass == $request->renewpass){
+        if ($request->cpass) {
+            if (Hash::check($request->cpass, $user->password)) {
+                if ($request->newpass == $request->renewpass) {
                     $input['password'] = Hash::make($request->newpass);
-                }else{
-                    return response()->json(array('errors' => [ 0 => __('Confirm password does not match.') ]));     
+                } else {
+                    return response()->json(array('errors' => [ 0 => __('Confirm password does not match.') ]));
                 }
-            }else{
-                return response()->json(array('errors' => [ 0 => __('Current password Does not match.') ]));   
+            } else {
+                return response()->json(array('errors' => [ 0 => __('Current password Does not match.') ]));
             }
         }
         $user->update($input);
@@ -129,14 +131,14 @@ class UserController extends Controller
 
     public function package()
     {
-        if(!config("features.marketplace")) {
+        if (!config("features.marketplace")) {
             return redirect()->route("user-dashboard")->withErrors("Marketplace not enabled");
         }
 
         $user = Auth::user();
         $subs = Subscription::all();
-        $package = $user->subscribes()->where('status',1)->orderBy('id','desc')->first();
-        return view('user.package.index',compact('user','subs','package'));
+        $package = $user->subscribes()->where('status', 1)->orderBy('id', 'desc')->first();
+        return view('user.package.index', compact('user', 'subs', 'package'));
     }
 
 
@@ -145,12 +147,11 @@ class UserController extends Controller
         $subs = Subscription::findOrFail($id);
         $gs = Generalsetting::findOrfail(1);
         $user = Auth::user();
-        $package = $user->subscribes()->where('status',1)->orderBy('id','desc')->first();
-        if($gs->reg_vendor != 1)
-        {
+        $package = $user->subscribes()->where('status', 1)->orderBy('id', 'desc')->first();
+        if ($gs->reg_vendor != 1) {
             return redirect()->back();
         }
-        return view('user.package.details',compact('user','subs','package'));
+        return view('user.package.details', compact('user', 'subs', 'package'));
     }
 
     public function vendorrequestsub(Request $request)
@@ -220,7 +221,7 @@ class UserController extends Controller
     }
 
 
-    public function favorite($id1,$id2)
+    public function favorite($id1, $id2)
     {
         $fav = new FavoriteSeller();
         $fav->user_id = $id1;
@@ -231,8 +232,8 @@ class UserController extends Controller
     public function favorites()
     {
         $user = Auth::guard('web')->user();
-        $favorites = FavoriteSeller::where('user_id','=',$user->id)->get();
-        return view('user.favorite',compact('user','favorites'));
+        $favorites = FavoriteSeller::where('user_id', '=', $user->id)->get();
+        return view('user.favorite', compact('user', 'favorites'));
     }
 
 
@@ -240,8 +241,6 @@ class UserController extends Controller
     {
         $wish = FavoriteSeller::findOrFail($id);
         $wish->delete();
-        return redirect()->route('user-favorites')->with('success','Successfully Removed The Seller.');
+        return redirect()->route('user-favorites')->with('success', 'Successfully Removed The Seller.');
     }
-
-
 }
