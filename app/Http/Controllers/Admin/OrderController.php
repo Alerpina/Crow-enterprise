@@ -56,10 +56,10 @@ class OrderController extends Controller
                 ['method', '<>', 'Simplified']
             ]);
         } else {
-            $datas = Order::where('method', '<>', 'Simplified')->select('id','currency_sign','order_number','pay_amount','status','method','payment_status','customer_email','customer_name','totalQty','shipping_cost','shipping_type','shipping_country','shipping_city','shipping_state','shipping_document');
+            $datas = Order::where('method', '<>', 'Simplified')->select('id', 'currency_sign', 'currency_value', 'order_number', 'pay_amount', 'status', 'method', 'payment_status', 'customer_email', 'customer_name', 'totalQty', 'shipping_cost', 'shipping_type', 'shipping_country', 'shipping_city', 'shipping_state', 'shipping_document');
         }
         $datas = $datas->orderBy('id', 'desc');
-        
+
         //--- Integrating This Collection Into Datatables
         return Datatables::of($datas)
             ->editColumn('order_number', function (Order $data) {
@@ -72,10 +72,11 @@ class OrderController extends Controller
                 if (empty($order_curr)) {
                     $order_curr = $first_curr;
                 }
+                ds($data->pay_amount, $data->currency_value);
                 return $data->currency_sign . number_format($data->pay_amount * $data->currency_value, $order_curr->decimal_digits, $order_curr->decimal_separator, $order_curr->thousands_separator);
             })
-            ->editColumn('status', function (Order $data){
-                switch($data->status){
+            ->editColumn('status', function (Order $data) {
+                switch ($data->status) {
                      case "pending":
                          $type = "secondary";
                          $status = "Pending";
@@ -97,16 +98,16 @@ class OrderController extends Controller
                          $status = "Declined";
                      break;
                  }
-                 return '<span class="badge badge-'.$type.'">'.__($status).'</span>';
-             })
-
-             ->editColumn('method', function(Order $data){
-                $method = __($data->method);
-                $type = ($method == __("Simplified")) ? "success" : "info";
-                return '<span class="badge badge-'.$type.'">'.__(ucwords($method)).'</span>';
+                return '<span class="badge badge-'.$type.'">'.__($status).'</span>';
             })
 
-            ->editColumn('payment_status', function(Order $data){
+             ->editColumn('method', function (Order $data) {
+                 $method = __($data->method);
+                 $type = ($method == __("Simplified")) ? "success" : "info";
+                 return '<span class="badge badge-'.$type.'">'.__(ucwords($method)).'</span>';
+             })
+
+            ->editColumn('payment_status', function (Order $data) {
                 $type = $data->payment_status != 'Pending' ? "success" : "danger";
                 $status = $data->payment_status != 'Pending' ? "Paid" : "Unpaid";
                 return '<span class="badge badge-'.$type.'">'.__(ucfirst($status)).'</span>';
@@ -131,7 +132,7 @@ class OrderController extends Controller
                 ['status', '=', 'processing'],
                 ['method', '=', 'Simplified']
             ]);
-        } elseif ($status == 'delivery'){
+        } elseif ($status == 'delivery') {
             $datas = Order::where([
                 ['status', '=', 'on delivery'],
                 ['method', '=', 'Simplified']
@@ -153,11 +154,11 @@ class OrderController extends Controller
 
         //--- Integrating This Collection Into Datatables
         return Datatables::of($datas)
-            ->editColumn('customer_name', function(Order $data){
+            ->editColumn('customer_name', function (Order $data) {
                 $customer_name = $data->customer_name;
                 return $customer_name;
             })
-            ->editColumn('customer_phone', function(Order $data){
+            ->editColumn('customer_phone', function (Order $data) {
                 $customer_phone = $data->customer_phone;
                 return $customer_phone;
             })
@@ -173,8 +174,8 @@ class OrderController extends Controller
                 }
                 return $data->currency_sign . number_format($data->pay_amount * $data->currency_value, $order_curr->decimal_digits, $order_curr->decimal_separator, $order_curr->thousands_separator);
             })
-            ->editColumn('status', function (Order $data){
-                switch($data->status){
+            ->editColumn('status', function (Order $data) {
+                switch ($data->status) {
                      case "pending":
                          $type = "secondary";
                          $status = "Pending";
@@ -196,9 +197,9 @@ class OrderController extends Controller
                          $status = "Declined";
                      break;
                  }
-                 return '<span class="badge badge-'.$type.'">'.__($status).'</span>';
-             })
-             ->editColumn('payment_status', function(Order $data){
+                return '<span class="badge badge-'.$type.'">'.__($status).'</span>';
+            })
+             ->editColumn('payment_status', function (Order $data) {
                  $type = $data->payment_status != 'Pending' ? "success" : "danger";
                  $status = $data->payment_status != 'Pending' ? "Paid" : "Unpaid";
                  return '<span class="badge badge-'.$type.'">'.__(ucfirst($status)).'</span>';
@@ -217,7 +218,7 @@ class OrderController extends Controller
             $datas = Order::where('status', '=', 'pending');
         } elseif ($status == 'processing') {
             $datas = Order::where('status', '=', 'processing');
-        } elseif ($status == 'delivery'){
+        } elseif ($status == 'delivery') {
             $datas = Order::where('status', '=', 'on delivery');
         } elseif ($status == 'completed') {
             $datas = Order::where('status', '=', 'completed');
@@ -227,15 +228,15 @@ class OrderController extends Controller
         $datas = $datas->orderBy('id', 'desc');
 
         return Datatables::of($datas)
-        ->editColumn('customer_name', function(Order $data){
+        ->editColumn('customer_name', function (Order $data) {
             $customer_name = $data->customer_name;
             return $customer_name;
         })
-        ->editColumn('customer_phone', function(Order $data){
+        ->editColumn('customer_phone', function (Order $data) {
             $customer_phone = $data->customer_phone;
             return $customer_phone;
         })
-        ->editColumn('method', function(Order $data){
+        ->editColumn('method', function (Order $data) {
             $method = __($data->method);
             $type = ($method == __("Simplified")) ? "success" : "info";
             return '<span class="badge badge-'.$type.'">'.__(ucwords($method)).'</span>';
@@ -252,8 +253,8 @@ class OrderController extends Controller
             }
             return $data->currency_sign . number_format($data->pay_amount * $data->currency_value, $order_curr->decimal_digits, $order_curr->decimal_separator, $order_curr->thousands_separator);
         })
-        ->editColumn('status', function (Order $data){
-            switch($data->status){
+        ->editColumn('status', function (Order $data) {
+            switch ($data->status) {
                  case "pending":
                      $type = "secondary";
                      $status = "Pending";
@@ -275,17 +276,17 @@ class OrderController extends Controller
                      $status = "Declined";
                  break;
              }
-             return '<span class="badge badge-'.$type.'">'.__($status).'</span>';
-         })
-         ->editColumn('payment_status', function(Order $data){
+            return '<span class="badge badge-'.$type.'">'.__($status).'</span>';
+        })
+         ->editColumn('payment_status', function (Order $data) {
              $type = $data->payment_status != 'Pending' ? "success" : "danger";
              $status = $data->payment_status != 'Pending' ? "Paid" : "Unpaid";
              return '<span class="badge badge-'.$type.'">'.__(ucfirst($status)).'</span>';
          })
          ->addColumn('action', function (Order $data) {
-            $orders = '<a href="javascript:;" data-href="' . route('admin-order-edit', $data->id) . '" data-header="' . __('Delivery Status') . '" class="delivery" data-toggle="modal" data-target="#modal1"><i class="fas fa-dollar-sign"></i> ' . __('Delivery Status') . '</a>';
-            return '<div class="godropdown"><button class="go-dropdown-toggle"> ' . __('Actions') . '<i class="fas fa-chevron-down"></i></button><div class="action-list"><a href="' . route('admin-order-show', $data->id) . '" > <i class="fas fa-eye"></i> ' . __('Details') . '</a><form method="POST"><a href="'. route('admin-order-send-order', $data->id) .'" class="send" data-email="' . $data->customer_email . '"><i class="fas fa-envelope"></i> ' . __('Send Order') . '</a></form><a href="javascript:;" data-href="' . route('admin-order-track', $data->id) . '" data-header="' . __('Track Order') . '" class="track" data-toggle="modal" data-target="#modal1"><i class="fas fa-truck"></i> ' . __('Track Order') . '</a>' . $orders . '</div></div>';
-        })
+             $orders = '<a href="javascript:;" data-href="' . route('admin-order-edit', $data->id) . '" data-header="' . __('Delivery Status') . '" class="delivery" data-toggle="modal" data-target="#modal1"><i class="fas fa-dollar-sign"></i> ' . __('Delivery Status') . '</a>';
+             return '<div class="godropdown"><button class="go-dropdown-toggle"> ' . __('Actions') . '<i class="fas fa-chevron-down"></i></button><div class="action-list"><a href="' . route('admin-order-show', $data->id) . '" > <i class="fas fa-eye"></i> ' . __('Details') . '</a><form method="POST"><a href="'. route('admin-order-send-order', $data->id) .'" class="send" data-email="' . $data->customer_email . '"><i class="fas fa-envelope"></i> ' . __('Send Order') . '</a></form><a href="javascript:;" data-href="' . route('admin-order-track', $data->id) . '" data-header="' . __('Track Order') . '" class="track" data-toggle="modal" data-target="#modal1"><i class="fas fa-truck"></i> ' . __('Track Order') . '</a>' . $orders . '</div></div>';
+         })
         ->rawColumns(['customer_name', 'customer_phone' ,'order_number', 'action', 'status', 'payment_status', 'method'])
         ->toJson(); //--- Returning Json Data To Client Side
     }
@@ -306,7 +307,7 @@ class OrderController extends Controller
     public function edit($id)
     {
         $data = Order::find($id);
-        return view('admin.order.delivery',compact('data'));
+        return view('admin.order.delivery', compact('data'));
     }
 
     //*** POST Request
@@ -325,16 +326,14 @@ class OrderController extends Controller
             //--- Logic Section Ends
 
 
-            //--- Redirect Section          
+            //--- Redirect Section
             $msg = __('Status Updated Successfully.');
             return response()->json($msg);
-            //--- Redirect Section Ends     
-
+        //--- Redirect Section Ends
         } else {
 
             // processing -- em andamento
             if ($input['status'] == "processing") {
-
                 foreach ($data->vendororders as $vorder) {
                     $uprice = User::findOrFail($vorder->user_id);
                     $uprice->current_balance = $uprice->current_balance + $vorder->price;
@@ -363,7 +362,6 @@ class OrderController extends Controller
 
             //on delivery
             if ($input['status'] == "on delivery") {
-
                 foreach ($data->vendororders as $vorder) {
                     $uprice = User::findOrFail($vorder->user_id);
                     $uprice->current_balance = $uprice->current_balance + $vorder->price;
@@ -392,7 +390,6 @@ class OrderController extends Controller
 
 
             if ($input['status'] == "completed") {
-
                 foreach ($data->vendororders as $vorder) {
                     $uprice = User::findOrFail($vorder->user_id);
                     $uprice->current_balance = $uprice->current_balance + $vorder->price;
@@ -418,7 +415,7 @@ class OrderController extends Controller
                 }
             }
             if ($input['status'] == "declined") {
-                if($data->status !== "declined") {
+                if ($data->status !== "declined") {
                     # Send declined order e-mail
                     $gs = Generalsetting::findOrFail(1);
                     if ($gs->is_smtp == 1) {
@@ -439,15 +436,14 @@ class OrderController extends Controller
 
                     # Rollback Products stock
                     $cart = unserialize(bzdecompress(utf8_decode($data->cart)));
-                    foreach($cart->items as $item)
-                    {
+                    foreach ($cart->items as $item) {
                         $soldQuantity = $item['qty'];
 
                         $product = Product::find($item['item']->id);
                         $product->stock += $soldQuantity;
 
-                        if(isset($item['color_key'])){
-                            if(!empty($item['color'])){
+                        if (isset($item['color_key'])) {
+                            if (!empty($item['color'])) {
                                 $key = $item['color_key'];
                                 $quantity = $item['qty'];
                                 $color_qty = $product->color_qty;
@@ -457,8 +453,8 @@ class OrderController extends Controller
                             }
                         }
 
-                        if(isset($item['size_key'])){
-                            if(!empty($item['size'])){
+                        if (isset($item['size_key'])) {
+                            if (!empty($item['size'])) {
                                 $key = $item['size_key'];
                                 $quantity = $item['qty'];
                                 $size_qty = $product->size_qty;
@@ -468,8 +464,8 @@ class OrderController extends Controller
                             }
                         }
 
-                        if(isset($item['material_key'])){
-                            if(!empty($item['material'])){
+                        if (isset($item['material_key'])) {
+                            if (!empty($item['material'])) {
                                 $key = $item['material_key'];
                                 $quantity = $item['qty'];
                                 $material_qty = $product->material_qty;
@@ -508,18 +504,16 @@ class OrderController extends Controller
 
             $order = VendorOrder::where('order_id', '=', $id)->update(['status' => $input['status']]);
 
-            //--- Redirect Section          
+            //--- Redirect Section
             $msg = __('Status Updated Successfully.');
             return response()->json($msg);
-            //--- Redirect Section Ends    
-
+            //--- Redirect Section Ends
         }
 
-        //--- Redirect Section          
+        //--- Redirect Section
         $msg = __('Status Updated Successfully.');
         return response()->json($msg);
-        //--- Redirect Section Ends  
-
+        //--- Redirect Section Ends
     }
 
     public function pending()
@@ -550,7 +544,7 @@ class OrderController extends Controller
         ];
         return view('admin.order.simplifiedCheckout', compact('filters'));
     }
-    
+
     public function show($id)
     {
         if (!Order::where('id', $id)->exists()) {
@@ -575,24 +569,30 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($id);
         $cart = unserialize(bzdecompress(utf8_decode($order->cart)));
-        $first_curr = Currency::where('id','=',1)->first();
-        $order_curr = Currency::where('sign','=',$order->currency_sign)->first();
-        if(empty($order_curr)){ $order_curr = $first_curr; }
-        return view('admin.order.invoice',compact('order','cart','first_curr','order_curr'));
+        $first_curr = Currency::where('id', '=', 1)->first();
+        $order_curr = Currency::where('sign', '=', $order->currency_sign)->first();
+        if (empty($order_curr)) {
+            $order_curr = $first_curr;
+        }
+        return view('admin.order.invoice', compact('order', 'cart', 'first_curr', 'order_curr'));
     }
 
-    public function receipt($id){
+    public function receipt($id)
+    {
         $order = Order::findOrFail($id);
         $cart = unserialize(bzdecompress(utf8_decode($order->cart)));
-        $first_curr = Currency::where('id','=',1)->first();
-        $order_curr = Currency::where('sign','=',$order->currency_sign)->first();
-        if(empty($order_curr)){ $order_curr = $first_curr; }
-        return view('admin.order.receipt',compact('order', 'cart', 'first_curr', 'order_curr'));
+        $first_curr = Currency::where('id', '=', 1)->first();
+        $order_curr = Currency::where('sign', '=', $order->currency_sign)->first();
+        if (empty($order_curr)) {
+            $order_curr = $first_curr;
+        }
+        return view('admin.order.receipt', compact('order', 'cart', 'first_curr', 'order_curr'));
     }
 
-    public function manageReceipt($id, $action){
+    public function manageReceipt($id, $action)
+    {
         $data = Order::findOrFail($id);
-        switch($action){
+        switch ($action) {
             case "accept":
                 Order::where('id', $id)->update(['payment_status' => "Completed"]);
                 $msg = __('The receipt has been accepted. Order status changed to Completed.');
@@ -601,7 +601,7 @@ class OrderController extends Controller
             break;
             case "reject":
                 Order::where('id', $id)->update(['receipt' => null]);
-                if(file_exists(public_path().'/assets/images/receipts/'.$data->receipt)) {
+                if (file_exists(public_path().'/assets/images/receipts/'.$data->receipt)) {
                     unlink(public_path().'/assets/images/receipts/'.$data->receipt);
                 }
                 $msg = __('The receipt has been rejected.');
@@ -611,14 +611,15 @@ class OrderController extends Controller
         }
     }
 
-    public function billetStatus($id){
+    public function billetStatus($id)
+    {
         $order = Order::findOrFail($id);
         $transaction_id = $order->txnid;
         $token = $this->storeSettings->paghiper_token;
         $api_key = $this->storeSettings->paghiper_api_key;
 
-        $first_curr = Currency::where('id','=',1)->first();
-        $order_curr = Currency::where('sign','=',$order->currency_sign)->first();
+        $first_curr = Currency::where('id', '=', 1)->first();
+        $order_curr = Currency::where('sign', '=', $order->currency_sign)->first();
 
         $data = array(
             "token" => $token,
@@ -629,7 +630,7 @@ class OrderController extends Controller
 
         $mediaType = "application/json";
         $charSet = "UTF-8";
-        
+
         $headers = array();
         $headers[] = "Accept: ".$mediaType;
         $headers[] = "Accept-Charset: ".$charSet;
@@ -643,25 +644,25 @@ class OrderController extends Controller
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        if($result = curl_exec($ch)){
+        if ($result = curl_exec($ch)) {
             $billet = json_decode($result, true);
-            switch($billet['status_request']['status']){
+            switch ($billet['status_request']['status']) {
                 case "canceled":
                     $order->update(['payment_status' => "Pending", 'status' => "declined"]);
                 break;
-                case "completed": 
+                case "completed":
                     $order->update(['payment_status' => "Completed", 'status' => "processing"]);
                 break;
-                case "paid": 
+                case "paid":
                     $order->update(['payment_status' => "Completed", 'status' => "processing"]);
                 break;
             }
 
             $ddi = strlen($order->customer_phone) == "11" ? "55" : "595";
             $msg = "Olá ".$order->customer_name."! Estamos reenviando seu boleto no valor de ".
-            $order->currency_sign.number_format($order->pay_amount * $order->currency_value , $order_curr->decimal_digits, $order_curr->decimal_separator,$order_curr->thousands_separator).": ".$billet["status_request"]["bank_slip"]["url_slip"];
-            return view('admin.order.billet',compact('order', 'data', 'order_curr', 'billet', 'msg', 'ddi'));
-        } else{
+            $order->currency_sign.number_format($order->pay_amount * $order->currency_value, $order_curr->decimal_digits, $order_curr->decimal_separator, $order_curr->thousands_separator).": ".$billet["status_request"]["bank_slip"]["url_slip"];
+            return view('admin.order.billet', compact('order', 'data', 'order_curr', 'billet', 'msg', 'ddi'));
+        } else {
             Log::debug('paghiper_curl_response', [$ch]);
             return redirect()->back();
         }
@@ -670,8 +671,7 @@ class OrderController extends Controller
     public function emailsub(Request $request)
     {
         $gs = Generalsetting::findOrFail(1);
-        if($gs->is_smtp == 1)
-        {
+        if ($gs->is_smtp == 1) {
             $data = 0;
             $datas = [
                     'to' => $request->to,
@@ -681,16 +681,14 @@ class OrderController extends Controller
 
             $mailer = new GeniusMailer();
             $mail = $mailer->sendCustomMail($datas);
-            if($mail) {
+            if ($mail) {
                 $data = 1;
             }
-        }
-        else
-        {
+        } else {
             $data = 0;
             $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
-            $mail = mail($request->to,$request->subject,$request->message,$headers);
-            if($mail) {
+            $mail = mail($request->to, $request->subject, $request->message, $headers);
+            if ($mail) {
                 $data = 1;
             }
         }
@@ -702,11 +700,13 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($id);
         $cart = unserialize(bzdecompress(utf8_decode($order->cart)));
-        $first_curr = Currency::where('id','=',1)->first();
-        $order_curr = Currency::where('sign','=',$order->currency_sign)->first();
+        $first_curr = Currency::where('id', '=', 1)->first();
+        $order_curr = Currency::where('sign', '=', $order->currency_sign)->first();
         $seos = Seotool::all();
-        if(empty($order_curr)){ $order_curr = $first_curr; }
-        return view('admin.order.print',compact('order','cart','first_curr','order_curr', 'seos'));
+        if (empty($order_curr)) {
+            $order_curr = $first_curr;
+        }
+        return view('admin.order.print', compact('order', 'cart', 'first_curr', 'order_curr', 'seos'));
     }
 
     public function license(Request $request, $id)
@@ -715,12 +715,13 @@ class OrderController extends Controller
         $cart = unserialize(bzdecompress(utf8_decode($order->cart)));
         $cart->items[$request->license_key]['license'] = $request->license;
         $order->cart = utf8_encode(bzcompress(serialize($cart), 9));
-        $order->update();       
+        $order->update();
         $msg = __('Successfully Changed The License Key.');
         return response()->json($msg);
     }
 
-    public function sendOrder($id){
+    public function sendOrder($id)
+    {
         $order = Order::findOrFail($id);
         if ($this->storeSettings->is_smtp == 1) {
             $data = [
@@ -745,17 +746,18 @@ class OrderController extends Controller
             $headers = "From: " . $this->storeSettings->from_name . "<" . $this->storeSettings->from_email . ">";
             mail($to, $subject, $msg, $headers);
         }
-        
+
         Session::flash('success', __('Order :order sent by e-mail!', ['order' => $order->order_number]));
         return back();
     }
 
-    public function sendReceiptUpdate($id, $status){
+    public function sendReceiptUpdate($id, $status)
+    {
         $order = Order::findOrFail($id);
         $subject = "Pedido ".$order->order_number." - Seu Comprovante foi ";
         $subject .= $status ? "aceito" : "recusado";
         $link = route('front.receipt-number', $order->order_number);
-        $msgAccepted = 'Olá '.$order->customer_name.'! Seu comprovante de pagamento foi recebido e seu pedido será encaminhado para entrega.'; 
+        $msgAccepted = 'Olá '.$order->customer_name.'! Seu comprovante de pagamento foi recebido e seu pedido será encaminhado para entrega.';
         $msgRejected = 'Olá '.$order->customer_name.'! Seu comprovante de pagamento foi recusado. Por favor, acesse seu pedido e envie um comprovante válido. <br><br><a href='.$link.'>Clique aqui para enviar o comprovante.</a>';
         $body = $status ? $msgAccepted : $msgRejected;
         if ($this->storeSettings->is_smtp == 1) {
@@ -769,17 +771,17 @@ class OrderController extends Controller
         } else {
             $to = $order->customer_email;
             $headers = "From: ".$this->storeSettings->from_name."<".$this->storeSettings->from_email.">";
-            mail($to,$subject,$msg,$headers);
-        }  
+            mail($to, $subject, $msg, $headers);
+        }
     }
 
     public function updateMelhorenvioTrackings(Request $request)
     {
-        Order::chunk(10, function($orders) {
+        Order::chunk(10, function ($orders) {
             foreach ($orders as $order) {
-                try{
+                try {
                     $order->melhorenvio_requests();
-                } catch(\Exception $e){
+                } catch (\Exception $e) {
                     return response()->json(array('errors' => [ 0 => __('Trackings not updated') ]));
                 }
             }
