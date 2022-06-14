@@ -28,7 +28,7 @@
 
 <div class="content-area">
     <div class="submit-loader">
-        <img  src="{{asset('assets/images/'.$gs->admin_loader)}}" alt="">
+        <img src="{{asset('storage/images/'.$gs->admin_loader)}}" alt="">
     </div>
     @include('includes.admin.form-both')
     <div class="mr-breadcrumb">
@@ -48,7 +48,8 @@
                                 <div class="action-list godropdown">
                                     <select id="order_filters" class="process select go-dropdown-toggle">
                                         @foreach ($filters as $filter => $name)
-                                        <option value="{{ route('admin-order-datatables', $filter) }}">{{$name}}</option>
+                                        <option value="{{ route('admin-order-datatables', $filter) }}">{{$name}}
+                                        </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -57,8 +58,10 @@
                     </div>
                     <div class="col-lg-6 col-offset-6 text-right">
                         @if ($admstore->is_melhorenvio && config("features.melhorenvio_shipping"))
-                        <a class="mybtn1 btn-info btn-melhorenvio add-btn" data-href="{{route('admin-order-update-melhorenvio-trackings')}}">
-                            <i class="fas fa-sync-alt"></i><span class="remove-mobile">{{ __("Update Melhor Envio Trackings") }}</span>
+                        <a class="mybtn1 btn-info btn-melhorenvio add-btn"
+                            data-href="{{route('admin-order-update-melhorenvio-trackings')}}">
+                            <i class="fas fa-sync-alt"></i><span class="remove-mobile">{{ __("Update Melhor Envio
+                                Trackings") }}</span>
                         </a>
                         @endif
                     </div>
@@ -71,31 +74,37 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="mr-table allproduct">
-                @if (session()->has('success'))
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                      {{ session('success') }}
-                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
+                    @if (session()->has('success'))
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {{ session('success') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                </div>
-                @endif
+                    @endif
                     <div class="table-responsiv">
                         <div class="gocover"
-                            style="background: url({{asset('assets/images/'.$admstore->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
+                            style="background: url({{asset('storage/images/'.$admstore->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
                         </div>
                         <table id="geniustable" class="table table-hover dt-responsive" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
-                                    <th><i class="icofont-options icofont-lg" data-toggle="tooltip" title='{{ __("Options") }}'></i></th>
-                                    <th><i class="icofont-email icofont-lg" data-toggle="tooltip" title='{{ __("Customer Email") }}'></i></th>
-                                    <th><i class="icofont-user icofont-lg" data-toggle="tooltip" title='{{ __("Customer Name") }}'></i></th>
-                                    <th><i class="icofont-numbered icofont-lg" data-toggle="tooltip" title='{{ __("Order Number") }}'></i></th>
-                                    <th><i class="icofont-cart icofont-lg" data-toggle="tooltip" title='{{ __("Total Qty") }}'></i></th>
-                                    <th><i class="icofont-dollar icofont-lg" data-toggle="tooltip" title='{{ __("Total Cost") }}'></i></th>
+                                    <th><i class="icofont-options icofont-lg" data-toggle="tooltip"
+                                            title='{{ __("Options") }}'></i></th>
+                                    <th><i class="icofont-email icofont-lg" data-toggle="tooltip"
+                                            title='{{ __("Customer Email") }}'></i></th>
+                                    <th><i class="icofont-user icofont-lg" data-toggle="tooltip"
+                                            title='{{ __("Customer Name") }}'></i></th>
+                                    <th><i class="icofont-numbered icofont-lg" data-toggle="tooltip"
+                                            title='{{ __("Order Number") }}'></i></th>
+                                    <th><i class="icofont-cart icofont-lg" data-toggle="tooltip"
+                                            title='{{ __("Total Qty") }}'></i></th>
+                                    <th><i class="icofont-dollar icofont-lg" data-toggle="tooltip"
+                                            title='{{ __("Total Cost") }}'></i></th>
                                     <th>{{ __("Payment Status") }}</th>
                                     <th>{{ __("Delivery Status") }}</th>
                                 </tr>
@@ -114,7 +123,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="submit-loader">
-                <img src="{{asset('assets/images/'.$admstore->admin_loader)}}" alt="">
+                <img src="{{asset('storage/images/'.$admstore->admin_loader)}}" alt="">
             </div>
             <div class="modal-header d-block text-center">
                 <h4 class="modal-title d-inline-block">{{ __('Update Status') }}</h4>
@@ -177,8 +186,8 @@
                                                     placeholder="{{ __('Your Message') }} *" required=""></textarea>
                                             </li>
                                         </ul>
-                                        <button class="submit-btn" id="emlsub"
-                                            type="submit">{{ __('Send Email') }}</button>
+                                        <button class="submit-btn" id="emlsub" type="submit">{{ __('Send Email')
+                                            }}</button>
                                     </form>
                                 </div>
                             </div>
@@ -199,7 +208,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="submit-loader">
-                <img src="{{asset('assets/images/'.$admstore->admin_loader)}}" alt="">
+                <img src="{{asset('storage/images/'.$admstore->admin_loader)}}" alt="">
             </div>
             <div class="modal-header">
                 <h5 class="modal-title"></h5>
@@ -242,7 +251,7 @@
                     span.text($(this).text());
                     $(this).trigger('click');
                     $(this).parent().parent().removeClass("open").delay(100);
-                    
+
                 } else $(this).removeClass('selected focus');
             });
             },
@@ -289,13 +298,13 @@
         ],
         language: {
             url: '{{$datatable_translation}}',
-            processing: '<img src="{{asset("assets/images/".$admstore->admin_loader)}}">'
+            processing: '<img src="{{asset("storage/images/".$admstore->admin_loader)}}">'
         },
         drawCallback: function(settings) {
             $(this).find('.select').niceSelect();
-            /* 
-            * If any of the filters are changed, the table resets completely. 
-            * It also adds current SelectedOrderFilter to Session Storage, with is used to 
+            /*
+            * If any of the filters are changed, the table resets completely.
+            * It also adds current SelectedOrderFilter to Session Storage, with is used to
             * keep the selection until user leaves the scope.
             */
             $('#order_filters').on('change', function() {
@@ -303,7 +312,7 @@
                 table.ajax.url(sessionStorage.getItem('SelectedOrderFilter')).load();
                 sessionStorage.setItem("CurrentPage", 0);
             });
-        }, 
+        },
         initComplete: function(settings, json){
             /*
             * Restoring current page via Session Storage
@@ -311,7 +320,7 @@
             $(document).ready(function(){
                 table.page(parseInt(sessionStorage.getItem("CurrentPage"))).draw(false);
             });
-            /* 
+            /*
             * Setando no Cookie a página atual
             */
             $("#geniustable").on('page.dt', function(){
@@ -367,7 +376,7 @@
         table.ajax.url($(this).val()).load();
     });
     $(document).on('click', 'a', function(e){
-        var link = jQuery(this); 
+        var link = jQuery(this);
         var x = '{{ Request::route()->getPrefix() }}';
         y = x.split("/");
         if(!(link.attr("data-href") || link.attr("href").indexOf("#") > -1 || link.attr("href").indexOf("javascript") > -1 || link.attr("href").indexOf("orders") > -1 || link.attr("href").indexOf("order") > -1)){
