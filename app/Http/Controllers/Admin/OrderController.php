@@ -72,7 +72,6 @@ class OrderController extends Controller
                 if (empty($order_curr)) {
                     $order_curr = $first_curr;
                 }
-                ds($data->pay_amount, $data->currency_value);
                 return $data->currency_sign . number_format($data->pay_amount * $data->currency_value, $order_curr->decimal_digits, $order_curr->decimal_separator, $order_curr->thousands_separator);
             })
             ->editColumn('status', function (Order $data) {
