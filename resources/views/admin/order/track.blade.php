@@ -9,7 +9,7 @@
             <div class="product-description">
                 <div class="body-area">
                     <div class="gocover"
-                        style="background: url({{asset('assets/images/'.$gs->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
+                        style="background: url({{asset('storage/images/'.$gs->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
                     </div>
                     <input type="hidden" id="track-store" value="{{route('admin-order-track-store')}}">
                     <form id="trackform" action="{{route('admin-order-track-store')}}" method="POST"
@@ -22,14 +22,15 @@
                         <div class="row">
                             <div class="col-xl-12">
                                 <div class="input-form">
-                                    @component('admin.components.input-localized',["required" => true, "type" => "textarea"])
-                                        @slot('name')
-                                        title
-                                        @endslot
-                                        @slot('placeholder')
-                                        {{ __('Title') }}
-                                        @endslot
-                                        {{ __('Title') }} *
+                                    @component('admin.components.input-localized',["required" => true, "type" =>
+                                    "textarea"])
+                                    @slot('name')
+                                    title
+                                    @endslot
+                                    @slot('placeholder')
+                                    {{ __('Title') }}
+                                    @endslot
+                                    {{ __('Title') }} *
                                     @endcomponent
                                 </div>
                             </div>
@@ -37,28 +38,27 @@
                             <div class="col-xl-12">
                                 <div class="input-form">
                                     @component('admin.components.input-localized',["type" => "textarea"])
-                                        @slot('name')
-                                        text
-                                        @endslot
-                                        @slot('placeholder')
-                                        {{ __('Details') }}
-                                        @endslot
-                                        {{ __('Details') }}
+                                    @slot('name')
+                                    text
+                                    @endslot
+                                    @slot('placeholder')
+                                    {{ __('Details') }}
+                                    @endslot
+                                    {{ __('Details') }}
                                     @endcomponent
                                 </div>
                             </div>
 
                         </div>
 
-                        
+
 
                         <div class="row justify-content-center">
-                                <button class="addProductSubmit-btn" id="track-btn"
-                                    type="submit">{{ __('ADD') }}</button>
-                                <button class="addProductSubmit-btn ml=3 d-none" id="cancel-btn"
-                                    type="button">{{ __('Cancel') }}</button>
-                                <input type="hidden" id="add-text" value="{{ __('ADD') }}">
-                                <input type="hidden" id="edit-text" value="{{ __('UPDATE') }}">
+                            <button class="addProductSubmit-btn" id="track-btn" type="submit">{{ __('ADD') }}</button>
+                            <button class="addProductSubmit-btn ml=3 d-none" id="cancel-btn" type="button">{{
+                                __('Cancel') }}</button>
+                            <input type="hidden" id="add-text" value="{{ __('ADD') }}">
+                            <input type="hidden" id="edit-text" value="{{ __('UPDATE') }}">
                         </div>
                     </form>
                 </div>
@@ -83,8 +83,8 @@
                     <div class="body-area">
 
                         <div class="table-responsive show-table ml-3 mr-3">
-                            <table class="table" id="track-load"
-                                data-href={{ route('admin-order-track-load',$order->id) }}>
+                            <table class="table" id="track-load" data-href={{ route('admin-order-track-load',$order->id)
+                                }}>
                                 <tr>
                                     <th>{{ __("Title") }}</th>
                                     <th>{{ __("Details") }}</th>
@@ -98,23 +98,27 @@
                                     <td width="30%" class="t-title">
                                         <span data-locale="{{$lang->locale}}">{{ $track->title }}</span>
                                         @foreach($locales as $loc)
-                                            @if($loc->locale === $lang->locale)
-                                                @continue
-                                            @endif
-                                            <span data-locale="{{$loc->locale}}" class="d-none">{{$track->translate($loc->locale)->title ?? $track->title}}</span>
+                                        @if($loc->locale === $lang->locale)
+                                        @continue
+                                        @endif
+                                        <span data-locale="{{$loc->locale}}"
+                                            class="d-none">{{$track->translate($loc->locale)->title ??
+                                            $track->title}}</span>
                                         @endforeach
                                     </td>
                                     <td width="30%" class="t-text">
                                         <span data-locale="{{$lang->locale}}">{{$track->text ?? ''}}</span>
                                         @foreach($locales as $loc)
-                                            @if($loc->locale === $lang->locale)
-                                                @continue
-                                            @endif
-                                            <span data-locale="{{$loc->locale}}" class="d-none">{{$track->translate($loc->locale)->text ?? $track->text}}</span>
+                                        @if($loc->locale === $lang->locale)
+                                        @continue
+                                        @endif
+                                        <span data-locale="{{$loc->locale}}"
+                                            class="d-none">{{$track->translate($loc->locale)->text ??
+                                            $track->text}}</span>
                                         @endforeach
                                     </td>
-                                    <td>{{  date('Y-m-d',strtotime($track->created_at)) }}</td>
-                                    <td>{{  date('h:i:s:a',strtotime($track->created_at)) }}</td>
+                                    <td>{{ date('Y-m-d',strtotime($track->created_at)) }}</td>
+                                    <td>{{ date('h:i:s:a',strtotime($track->created_at)) }}</td>
                                     <td>
                                         <div class="action-list">
                                             <a data-href="{{ route('admin-order-track-update',$track->id) }}"
@@ -140,7 +144,7 @@
 
 @section('scripts')
 <script>
-// ORDER TRACKING STARTS
+    // ORDER TRACKING STARTS
 
 $(document).on('click','.track-edit',function(){
 $('[name="{{$lang->locale}}[title]"]').focus();
