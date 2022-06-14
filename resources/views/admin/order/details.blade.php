@@ -50,7 +50,9 @@
                                     <th width="45%">{{ $order->shipping_type }}</th>
                                     <td width="10%">:</td>
                                     <td width="45%">
-                                        {{ $order->currency_sign }}{{ number_format($order->shipping_cost * $order->currency_value, $order_curr->decimal_digits, $order_curr->decimal_separator,$order_curr->thousands_separator) }}
+                                        {{ $order->currency_sign }}{{ number_format($order->shipping_cost *
+                                        $order->currency_value, $order_curr->decimal_digits,
+                                        $order_curr->decimal_separator,$order_curr->thousands_separator) }}
                                     </td>
                                 </tr>
                                 @endif
@@ -59,7 +61,9 @@
                                     <th width="45%">{{ $order->packing_type }}</th>
                                     <td width="10%">:</td>
                                     <td width="45%">
-                                        {{ $order->currency_sign }}{{ number_format($order->packing_cost * $order->currency_value, $order_curr->decimal_digits, $order_curr->decimal_separator,$order_curr->thousands_separator) }}
+                                        {{ $order->currency_sign }}{{ number_format($order->packing_cost *
+                                        $order->currency_value, $order_curr->decimal_digits,
+                                        $order_curr->decimal_separator,$order_curr->thousands_separator) }}
                                     </td>
                                 </tr>
                                 @endif
@@ -67,14 +71,18 @@
                                     <th width="45%">{{ __('Total Cost') }}</th>
                                     <td width="10%">:</td>
                                     <td width="45%">
-                                        {{$order->currency_sign}}{{ number_format($order->pay_amount * $order->currency_value, $order_curr->decimal_digits, $order_curr->decimal_separator,$order_curr->thousands_separator) }}
+                                        {{$order->currency_sign}}{{ number_format($order->pay_amount *
+                                        $order->currency_value, $order_curr->decimal_digits,
+                                        $order_curr->decimal_separator,$order_curr->thousands_separator) }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th width="45%">{{ $first_curr->sign.' '.__('Total:') }}</th>
                                     <td width="10%">:</td>
                                     <td width="45%">
-                                        {{ $first_curr->sign }}{{ number_format($order->pay_amount, $first_curr->decimal_digits, $first_curr->decimal_separator,$first_curr->thousands_separator) }}
+                                        {{ $first_curr->sign }}{{ number_format($order->pay_amount,
+                                        $first_curr->decimal_digits,
+                                        $first_curr->decimal_separator,$first_curr->thousands_separator) }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -132,28 +140,26 @@
                     </div>
                     <div class="footer-area">
                         <a href="{{ route('admin-order-invoice',$order->id) }}" class="mybtn1"><i
-                            class="fas fa-eye"></i> {{ __('View Invoice') }}</a>
+                                class="fas fa-eye"></i> {{ __('View Invoice') }}</a>
 
                         @if($order->method == "Bank Deposit" && $order->receipt != null)
                         <br><a href="{{ route('admin-order-receipt',$order->id) }}" class="mybtn1"><i
-                            class="fas fa-search-dollar"></i> {{ __('View Receipt') }}</a>
+                                class="fas fa-search-dollar"></i> {{ __('View Receipt') }}</a>
                         @elseif($order->method == "Paghiper")
                         <br><a href="{{ route('admin-order-billet-status',$order->id) }}" class="mybtn1"><i
-                            class="fas fa-search-dollar"></i> {{ __('Check Billet Status') }}</a>
+                                class="fas fa-search-dollar"></i> {{ __('Check Billet Status') }}</a>
                         @endif
 
                         @if ($admstore->is_melhorenvio && config("features.melhorenvio_shipping"))
                         <a id="request-melhorenvio"
-                            href="{{route('admin-order-confirm-melhorenvio-package',$order->id) }}"
-                            class="mybtn1 ml-5">
+                            href="{{route('admin-order-confirm-melhorenvio-package',$order->id) }}" class="mybtn1 ml-5">
                             <i class="fas fa-shipping-fast"></i>
                             {{ __('Request Melhor Envio') }}
                         </a>
                         @endif
 
                         @if ($admstore->is_aex && config("features.aex_shipping"))
-                        <a id="request-aex"
-                            href="{{route('admin-order-select-aex-city',$order->id) }}"
+                        <a id="request-aex" href="{{route('admin-order-select-aex-city',$order->id) }}"
                             class="mybtn1 ml-5">
                             <i class="fas fa-shipping-fast"></i>
                             {{ __('Request AEX') }}
@@ -253,11 +259,16 @@
                                     <th width="10%">:</th>
                                     @if($admstore->currency_format == 0)
                                     <td width="45%">
-                                        {{ $order->currency_sign }}{{ number_format($order->coupon_discount * $order->currency_value, $order_curr->decimal_digits, $order_curr->decimal_separator,$order_curr->thousands_separator) }}
+                                        {{ $order->currency_sign }}{{ number_format($order->coupon_discount *
+                                        $order->currency_value, $order_curr->decimal_digits,
+                                        $order_curr->decimal_separator,$order_curr->thousands_separator) }}
                                     </td>
                                     @else
                                     <td width="45%">
-                                        {{ number_format($order->coupon_discount * $order->currency_value, $order_curr->decimal_digits, $order_curr->decimal_separator,$order_curr->thousands_separator) }}{{ $order->currency_sign }}
+                                        {{ number_format($order->coupon_discount * $order->currency_value,
+                                        $order_curr->decimal_digits,
+                                        $order_curr->decimal_separator,$order_curr->thousands_separator) }}{{
+                                        $order->currency_sign }}
                                     </td>
                                     @endif
                                 </tr>
@@ -323,49 +334,57 @@
                                 <tr>
                                     <th width="45%"><strong>{{ __('Name') }}:</strong></th>
                                     <th width="10%">:</th>
-                                    <td>{{$order->shipping_name == null ? $order->customer_name : $order->shipping_name}}
+                                    <td>{{$order->shipping_name == null ? $order->customer_name :
+                                        $order->shipping_name}}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th width="45%"><strong>{{ __('Phone') }}:</strong></th>
                                     <th width="10%">:</th>
                                     <td width="45%">
-                                        {{$order->shipping_phone == null ? $order->customer_phone : $order->shipping_phone}}
+                                        {{$order->shipping_phone == null ? $order->customer_phone :
+                                        $order->shipping_phone}}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th width="45%"><strong>{{ __('Address') }}:</strong></th>
                                     <th width="10%">:</th>
                                     <td width="45%">
-                                        {{$order->shipping_address == null ? $order->customer_address : $order->shipping_address}}
+                                        {{$order->shipping_address == null ? $order->customer_address :
+                                        $order->shipping_address}}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th width="45%"><strong>{{ __('Number') }}:</strong></th>
                                     <th width="10%">:</th>
                                     <td width="45%">
-                                        {{$order->shipping_address_number == null ? $order->customer_address_number." ".$order->customer_complement : $order->shipping_address_number." ".$order->shipping_complement}}
+                                        {{$order->shipping_address_number == null ? $order->customer_address_number."
+                                        ".$order->customer_complement : $order->shipping_address_number."
+                                        ".$order->shipping_complement}}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th width="45%"><strong>{{ __('City') }}:</strong></th>
                                     <th width="10%">:</th>
                                     <td width="45%">
-                                        {{$order->shipping_city == null ? $order->customer_city : $order->shipping_city}}
+                                        {{$order->shipping_city == null ? $order->customer_city :
+                                        $order->shipping_city}}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th width="45%"><strong>{{ __('State') }}:</strong></th>
                                     <th width="10%">:</th>
                                     <td width="45%">
-                                        {{$order->shipping_state == null ? $order->customer_state : $order->shipping_state}}
+                                        {{$order->shipping_state == null ? $order->customer_state :
+                                        $order->shipping_state}}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th width="45%"><strong>{{ __('Country') }}:</strong></th>
                                     <th width="10%">:</th>
                                     <td width="45%">
-                                        {{$order->shipping_country == null ? $order->customer_country : $order->shipping_country}}
+                                        {{$order->shipping_country == null ? $order->customer_country :
+                                        $order->shipping_country}}
                                     </td>
                                 </tr>
                                 <tr>
@@ -383,92 +402,100 @@
             </div>
             @endif
 
-            @foreach($cart->items as $key => $product)
-                @if(!empty($product['customizable_name']) || !empty($product['customizable_number']) || !empty($product['customizable_logo']) || !empty($product['customizable_gallery']))
-                    <div class="col-lg-6">
-                        <div class="special-box">
-                            <div class="heading-area">
-                            <h4 class="title">
-                                    {{ __('Custom Products') }}
-                                </h4>
-                            </div>
-                            <div class="table-responsive-sm">
-                                <table class="table">
-                                    <tbody>
-                                        <tr>
-                                            <th width="45%"><strong>{{ __('Product Title') }}:</strong></th>
-                                            <th width="10%">:</th>
-                                            <td><a target="_blank"
-                                                    href="{{ route('front.product', $product['item']['slug']) }}">{{mb_strlen($product['item']->name,'utf-8') > 30 ? mb_substr($product['item']->name,0,30,'utf-8').'...' : $product['item']->name}}</a></td>
-                                        </tr>
-                                        <tr>
-                                            <th width="45%"><strong>{{ __('Product SKU') }}:</strong></th>
-                                            <th width="10%">:</th>
-                                            @php $prod = App\Models\Product::find($product['item']['id']); @endphp
-                                            @if(isset($prod))
-                                            <td>{{$prod->sku}}</td>
-                                            @endif
-                                        </tr>
-                                        @if(env("ENABLE_CUSTOM_PRODUCT") || env("ENABLE_CUSTOM_PRODUCT_NUMBER"))
-                                            @if(!empty($product['customizable_name']))
-                                            <tr>
-                                                <th width="45%"><strong>{{ __('Custom Name') }}:</strong></th>
-                                                <th width="10%">:</th>
-                                                <td>{{$product['customizable_name']}}</td>
-                                            </tr>
-                                            @endif
-                                        @endif
-                                        @if(env("ENABLE_CUSTOM_PRODUCT_NUMBER"))
-                                            @if(!empty($product['customizable_number']))
-                                            <tr>
-                                                <th width="45%"><strong>{{ __('Custom Number') }}:</strong></th>
-                                                <th width="10%">:</th>
-                                                <td>{{$product['customizable_number']}}</td>
-                                            </tr>
-                                            @endif
-                                        @endif
-                                        @if(env("ENABLE_CUSTOM_PRODUCT"))
-                                            @if(!empty($product['customizable_logo']))
-                                            <tr class="mb-2">
-                                                <th width="45%"><strong>{{ __('Custom Logo') }}:</strong></th>
-                                                <th width="10%">:</th>
-                                                <td width="45%"> 
-                                                <a href="{{ route('admin-customprod-download', $product['customizable_logo']) }}" class="{{isset($product['customizable_logo']) ? '': 'collapse'}}">
-                                                <button class="btn btn uploadLogoBtn">
-                                                    <p>
+            @foreach($cart['items'] as $key => $product)
+            @if(!empty($product['customizable_name']) || !empty($product['customizable_number']) ||
+            !empty($product['customizable_logo']) || !empty($product['customizable_gallery']))
+            <div class="col-lg-6">
+                <div class="special-box">
+                    <div class="heading-area">
+                        <h4 class="title">
+                            {{ __('Custom Products') }}
+                        </h4>
+                    </div>
+                    <div class="table-responsive-sm">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th width="45%"><strong>{{ __('Product Title') }}:</strong></th>
+                                    <th width="10%">:</th>
+                                    <td><a target="_blank"
+                                            href="{{ route('front.product', $product['item']['slug']) }}">{{mb_strlen($product['item']['name'],'utf-8')
+                                            > 30 ? mb_substr($product['item']['name'],0,30,'utf-8').'...' :
+                                            $product['item']['name']}}</a></td>
+                                </tr>
+                                <tr>
+                                    <th width="45%"><strong>{{ __('Product SKU') }}:</strong></th>
+                                    <th width="10%">:</th>
+                                    @php $prod = App\Models\Product::find($product['item']['id']); @endphp
+                                    @if(isset($prod))
+                                    <td>{{$prod->sku}}</td>
+                                    @endif
+                                </tr>
+                                @if(env("ENABLE_CUSTOM_PRODUCT") || env("ENABLE_CUSTOM_PRODUCT_NUMBER"))
+                                @if(!empty($product['customizable_name']))
+                                <tr>
+                                    <th width="45%"><strong>{{ __('Custom Name') }}:</strong></th>
+                                    <th width="10%">:</th>
+                                    <td>{{$product['customizable_name']}}</td>
+                                </tr>
+                                @endif
+                                @endif
+                                @if(env("ENABLE_CUSTOM_PRODUCT_NUMBER"))
+                                @if(!empty($product['customizable_number']))
+                                <tr>
+                                    <th width="45%"><strong>{{ __('Custom Number') }}:</strong></th>
+                                    <th width="10%">:</th>
+                                    <td>{{$product['customizable_number']}}</td>
+                                </tr>
+                                @endif
+                                @endif
+                                @if(env("ENABLE_CUSTOM_PRODUCT"))
+                                @if(!empty($product['customizable_logo']))
+                                <tr class="mb-2">
+                                    <th width="45%"><strong>{{ __('Custom Logo') }}:</strong></th>
+                                    <th width="10%">:</th>
+                                    <td width="45%">
+                                        <a href="{{ route('admin-customprod-download', $product['customizable_logo']) }}"
+                                            class="{{isset($product['customizable_logo']) ? '': 'collapse'}}">
+                                            <button class="btn btn uploadLogoBtn">
+                                                <p>
                                                     <i class="fa fa-download"></i>
                                                     {{ __('Download File')}}
-                                                    </p>
-                                                </button>  
-                                                </a></td>
-                                            </tr>
-                                            @endif
-                                            @if(!empty($product['customizable_gallery']))
-                                                <tr>
-                                                    <th width="45%"><strong>{{ __('Custom Gallery Image') }}:</strong></th>
-                                                    <th width="10%">:</th>
-                                                    @php $gal = App\Models\CategoryGallery::where('customizable_gallery', $product['customizable_gallery'])->first(); @endphp
-                                                    <td>
-                                                        <div style="display:inline-block;">
-                                                            <div style="position:relative;display:flex;justify-content:center;align-items:center;">
-                                                                @if(isset($gal))
-                                                                <span class="galleryId">{{ ($gal->id) }}</span>
-                                                                @endif
-                                                                <img src="{{ asset('assets/images/galleries/' . $product['customizable_gallery']) }}" style="width:60px;border-radius:30px;" alt="">
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    
-                                                </tr>
-                                            @endif
-                                        @endif
-                                        
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                                                </p>
+                                            </button>
+                                        </a>
+                                    </td>
+                                </tr>
+                                @endif
+                                @if(!empty($product['customizable_gallery']))
+                                <tr>
+                                    <th width="45%"><strong>{{ __('Custom Gallery Image') }}:</strong></th>
+                                    <th width="10%">:</th>
+                                    @php $gal = App\Models\CategoryGallery::where('customizable_gallery',
+                                    $product['customizable_gallery'])->first(); @endphp
+                                    <td>
+                                        <div style="display:inline-block;">
+                                            <div
+                                                style="position:relative;display:flex;justify-content:center;align-items:center;">
+                                                @if(isset($gal))
+                                                <span class="galleryId">{{ ($gal->id) }}</span>
+                                                @endif
+                                                <img src="{{ asset('storage/images/galleries/' . $product['customizable_gallery']) }}"
+                                                    style="width:60px;border-radius:30px;" alt="">
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                                @endif
+                                @endif
+
+                            </tbody>
+                        </table>
                     </div>
-                @endif
+                </div>
+            </div>
+            @endif
             @endforeach
         </div>
         <div class="row">
@@ -488,13 +515,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($cart->items as $key => $product)
+                                @foreach($cart['items'] as $key => $product)
+                                @ds($product)
                                 <tr>
-                                    <td><input type="hidden" value="{{$key}}" style="text-align: center">{{ $product['item']['id'] }}</td>
+                                    <td><input type="hidden" value="{{$key}}" style="text-align: center">{{
+                                        $product['item']['id'] }}</td>
                                     <td>
                                         <input type="hidden" value="{{ $product['license'] }}">
                                         <a target="_blank"
-                                            href="{{ route('front.product', $product['item']['slug']) }}">{{mb_strlen($product['item']->name,'utf-8') > 30 ? mb_substr($product['item']->name,0,30,'utf-8').'...' : $product['item']->name}}</a>
+                                            href="{{ route('front.product', $product['item']['slug']) }}">{{mb_strlen($product['item']['name'],'utf-8')
+                                            > 30 ? mb_substr($product['item']['name'],0,30,'utf-8').'...' :
+                                            $product['item']['name']}}</a>
                                         @if($product['license'] != '')
                                         <a href="javascript:;" data-toggle="modal" data-target="#confirm-delete"
                                             class="btn btn-info product-btn" id="license" style="padding: 5px 12px;"><i
@@ -530,9 +561,14 @@
                                         @endif
                                         <p>
                                             <strong>{{ __('Price') }} :</strong>
-                                            {{$order->currency_sign}}{{ number_format($product['item']['price'] * $order->currency_value, $order_curr->decimal_digits, $order_curr->decimal_separator,$order_curr->thousands_separator) }}
+                                            {{$order->currency_sign}}{{ number_format($product['item']['price'] *
+                                            $order->currency_value, $order_curr->decimal_digits,
+                                            $order_curr->decimal_separator,$order_curr->thousands_separator) }}
                                             <small><br>{{ $first_curr->sign.' '.__('Price') }} :
-                                                {{$first_curr->sign}}{{ number_format($product['item']['price'], $first_curr->decimal_digits, $first_curr->decimal_separator,$first_curr->thousands_separator) }}</small>
+                                                {{$first_curr->sign}}{{ number_format($product['item']['price'],
+                                                $first_curr->decimal_digits,
+                                                $first_curr->decimal_separator,$first_curr->thousands_separator)
+                                                }}</small>
                                         </p>
                                         <p>
                                             <strong>{{ __('Qty') }} :</strong> {{$product['qty']}}
@@ -542,14 +578,19 @@
                                         @foreach( array_combine(explode(',', $product['keys']), explode('~',
                                         $product['values'])) as $key => $value)
                                         <p>
-                                            <b>{{ App\Models\Attribute::where('input_name', $key)->first()->name }} : </b> {{ $value }}
+                                            <b>{{ App\Models\Attribute::where('input_name', $key)->first()->name }} :
+                                            </b> {{ $value }}
                                         </p>
                                         @endforeach
                                         @endif
                                     </td>
                                     <td style="text-align: left;">
-                                        {{$order->currency_sign}}{{ number_format($product['price'] * $order->currency_value, $order_curr->decimal_digits, $order_curr->decimal_separator,$order_curr->thousands_separator) }}
-                                        <br><small>{{$first_curr->sign}}{{ number_format($product['price'], $first_curr->decimal_digits, $first_curr->decimal_separator,$first_curr->thousands_separator) }}</small>
+                                        {{$order->currency_sign}}{{ number_format($product['price'] *
+                                        $order->currency_value, $order_curr->decimal_digits,
+                                        $order_curr->decimal_separator,$order_curr->thousands_separator) }}
+                                        <br><small>{{$first_curr->sign}}{{ number_format($product['price'],
+                                            $first_curr->decimal_digits,
+                                            $first_curr->decimal_separator,$first_curr->thousands_separator) }}</small>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -566,7 +607,8 @@
                 <div class="mr-table">
                     <h4 class="title">{{ __('Melhor Envio Requests') }}</h4>
                     <div class="table-responsiv">
-                        <table id="melhorenvio_table" class="table table-hover dt-responsive" cellspacing="0" width="100%">
+                        <table id="melhorenvio_table" class="table table-hover dt-responsive" cellspacing="0"
+                            width="100%">
                             <thead>
                                 <tr>
                                 <tr>
@@ -588,7 +630,8 @@
                                         <br><small>{{ $request->service->name }}</small>
                                     </td>
                                     <td>R${{ number_format($request->price, 2, ',', '.') }}</td>
-                                    <td><a href="https://www.melhorrastreio.com.br/meu-rastreio/{{$request->tracking}}" target="_blank">{{ $request->tracking }}</a></td>
+                                    <td><a href="https://www.melhorrastreio.com.br/meu-rastreio/{{$request->tracking}}"
+                                            target="_blank">{{ $request->tracking }}</a></td>
                                     <td style="text-align: center;">
                                         @if($request->status == 'pending')
                                         <span class="badge badge-secondary">{{__('Pending')}}</span>
@@ -607,21 +650,26 @@
                                     <td style="text-align: center;">
                                         <div class="">
                                             @php
-                                                $disable = (!empty($request->posted_at) || !empty($request->canceled_at) || !empty($request->expired_at) || !empty($request->delivered_at));
+                                            $disable = (!empty($request->posted_at) || !empty($request->canceled_at) ||
+                                            !empty($request->expired_at) || !empty($request->delivered_at));
                                             @endphp
-                                            <a class="btn {{empty($request->preview_url)? "disabled": ""}}" href="{{$request->preview_url}}" target="_blank"
-                                                data-toggle="tooltip" title="{{__('Preview')}}">
+                                            <a class="btn {{empty($request->preview_url)? " disabled": "" }}"
+                                                href="{{$request->preview_url}}" target="_blank" data-toggle="tooltip"
+                                                title="{{__('Preview')}}">
                                                 <i class="fas fa-eye h5"></i>
                                             </a>
-                                            <a class="btn {{!empty($request->generated_at) || $disable ? "disabled": ""}}" href="{{route('admin-order-generate-melhorenvio',$request->id)}}"
+                                            <a class="btn {{!empty($request->generated_at) || $disable ? " disabled": ""
+                                                }}" href="{{route('admin-order-generate-melhorenvio',$request->id)}}"
                                                 data-toggle="tooltip" title="{{__('Generate')}}">
                                                 <i class="fas fa-check-circle h5"></i>
                                             </a>
-                                            <a class="btn {{empty($request->generated_at) || empty($request->print_url) || $disable ? "disabled": ""}}" href="{{$request->print_url}}" target="_blank"
+                                            <a class="btn {{empty($request->generated_at) || empty($request->print_url) || $disable ? "
+                                                disabled": "" }}" href="{{$request->print_url}}" target="_blank"
                                                 data-toggle="tooltip" title="{{__('Print')}}">
                                                 <i class="fas fa-print h5"></i>
                                             </a>
-                                            <a class="btn {{$disable? "disabled": ""}}" href="{{route('admin-order-cancel-melhorenvio',$request->id)}}"
+                                            <a class="btn {{$disable? " disabled": "" }}"
+                                                href="{{route('admin-order-cancel-melhorenvio',$request->id)}}"
                                                 data-toggle="tooltip" title="{{__('Cancel')}}">
                                                 <i class="fas fa-trash-alt h5"></i>
                                             </a>
@@ -636,14 +684,15 @@
             </div>
         </div>
         @endif
-        
+
         <div class="row">
-            
+
             @if($order->method != "Simplified")
             <div class="col-lg-12 text-center mt-2">
-                <a class="btn sendEmail send" href="{{ route('admin-order-send-order', $order->id)}}" class="send" data-email="{{ $order->customer_email }}">
+                <a class="btn sendEmail send" href="{{ route('admin-order-send-order', $order->id)}}" class="send"
+                    data-email="{{ $order->customer_email }}">
                     <i class="fa fa-paper-plane"></i> {{ __('Send Order') }}
-                </a>       
+                </a>
             </div>
             @endif
         </div>
@@ -717,8 +766,8 @@
                                                     placeholder="{{ __('Your Message') }} *" required=""></textarea>
                                             </li>
                                         </ul>
-                                        <button class="submit-btn" id="emlsub"
-                                            type="submit">{{ __('Send Email') }}</button>
+                                        <button class="submit-btn" id="emlsub" type="submit">{{ __('Send Email')
+                                            }}</button>
                                     </form>
                                 </div>
                             </div>
@@ -736,7 +785,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="submit-loader">
-                <img src="{{asset('assets/images/'.$admstore->admin_loader)}}" alt="">
+                <img src="{{asset('storage/images/'.$admstore->admin_loader)}}" alt="">
             </div>
             <div class="modal-header d-block text-center">
                 <h4 class="modal-title d-inline-block">{{ __('Update Status') }}</h4>
@@ -767,7 +816,7 @@
     $('#example2').dataTable({
         language: {
             url: '{{$datatable_translation}}',
-            processing: '<img src="{{asset("assets/images/".$admstore->admin_loader)}}">'
+            processing: '<img src="{{asset("storage/images/".$admstore->admin_loader)}}">'
         },
         "ordering": false,
         'lengthChange': false,
@@ -784,7 +833,7 @@
     $('#melhorenvio_table').dataTable({
         language: {
             url: '{{$datatable_translation}}',
-            processing: '<img src="{{asset("assets/images/".$admstore->admin_loader)}}">'
+            processing: '<img src="{{asset("storage/images/".$admstore->admin_loader)}}">'
         },
         "ordering": false,
         'lengthChange': false,

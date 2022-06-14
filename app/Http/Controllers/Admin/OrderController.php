@@ -552,7 +552,7 @@ class OrderController extends Controller
         }
 
         $order = Order::findOrFail($id);
-        $cart = unserialize(bzdecompress(utf8_decode($order->cart)));
+        $cart = $order->cart;
         $first_curr = Currency::where('id', '=', 1)->first();
         $order_curr = Currency::where('sign', '=', $order->currency_sign)->first();
 
