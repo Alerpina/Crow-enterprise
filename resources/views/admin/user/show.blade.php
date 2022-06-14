@@ -45,10 +45,10 @@
                             <div class="col-md-4">
                                 <div class="user-image">
                                     @if($data->is_provider == 1)
-                                    <img src="{{ $data->photo ? asset($data->photo):asset('assets/images/'.$admstore->user_image)}}"
+                                    <img src="{{ $data->photo ? asset($data->photo):asset('storage/images/'.$admstore->user_image)}}"
                                         alt="No Image">
                                     @else
-                                    <img src="{{ $data->photo ? asset('assets/images/users/'.$data->photo):asset('assets/images/'.$admstore->user_image)}}"
+                                    <img src="{{ $data->photo ? asset('storage/images/users/'.$data->photo):asset('storage/images/'.$admstore->user_image)}}"
                                         alt="No Image">
                                     @endif
                                     <a href="javascript:;" class="mybtn1 send" data-email="{{ $data->email }}"
@@ -137,15 +137,17 @@
                                         <tbody>
                                             @foreach($data->orders as $order)
                                             <tr>
-                                                <td><a
-                                                        href="{{ route('admin-order-invoice',$order->id) }}">{{sprintf("%'.08d", $order->id)}}</a>
+                                                <td><a href="{{ route('admin-order-invoice',$order->id) }}">{{sprintf("%'.08d",
+                                                        $order->id)}}</a>
                                                 </td>
                                                 <td>{{ date('d-m-Y h:i:s a',strtotime($order->created_at)) }}</td>
                                                 @php
                                                 $order_curr = $currencies->firstWhere('sign', $order->currency_sign);
                                                 if(empty($order_curr)){ $order_curr = $currencies->first(); }
                                                 @endphp
-                                                <td>{{ $order->currency_sign . number_format($order->pay_amount * $order->currency_value, $order_curr->decimal_digits, $order_curr->decimal_separator,$order_curr->thousands_separator) }}
+                                                <td>{{ $order->currency_sign . number_format($order->pay_amount *
+                                                    $order->currency_value, $order_curr->decimal_digits,
+                                                    $order_curr->decimal_separator,$order_curr->thousands_separator) }}
                                                 </td>
                                                 <td>{{ __($order->status) }}</td>
                                                 <td>
@@ -190,19 +192,19 @@
                                         <ul>
                                             <li>
                                                 <input type="email" class="input-field eml-val" id="eml1" name="to"
-                                                    placeholder="{{ __("Email") }} *" value="" required="">
+                                                    placeholder="{{ __(" Email") }} *" value="" required="">
                                             </li>
                                             <li>
                                                 <input type="text" class="input-field" id="subj1" name="subject"
-                                                    placeholder="{{ __("Subject") }} *" required="">
+                                                    placeholder="{{ __(" Subject") }} *" required="">
                                             </li>
                                             <li>
                                                 <textarea class="input-field textarea" name="message" id="msg1"
-                                                    placeholder="{{ __("Your Message") }} *" required=""></textarea>
+                                                    placeholder="{{ __(" Your Message") }} *" required=""></textarea>
                                             </li>
                                         </ul>
-                                        <button class="submit-btn" id="emlsub1"
-                                            type="submit">{{ __("Send Message") }}</button>
+                                        <button class="submit-btn" id="emlsub1" type="submit">{{ __("Send Message")
+                                            }}</button>
                                     </form>
                                 </div>
                             </div>
@@ -224,7 +226,7 @@
     $('#example2').dataTable({
         language: {
             url: '{{$datatable_translation}}',
-            processing: '<img src="{{asset("assets/images/".$admstore->admin_loader)}}">'
+            processing: '<img src="{{asset("storage/images/".$admstore->admin_loader)}}">'
         },
         "ordering": false,
         'paging': false,
