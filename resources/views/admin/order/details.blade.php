@@ -516,7 +516,6 @@
                             </thead>
                             <tbody>
                                 @foreach($cart['items'] as $key => $product)
-                                @ds($product)
                                 <tr>
                                     <td><input type="hidden" value="{{$key}}" style="text-align: center">{{
                                         $product['item']['id'] }}</td>
