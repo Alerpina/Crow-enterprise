@@ -29,13 +29,13 @@
                                 <form class="mloginform" action="{{ route('user.login.submit') }}" method="POST">
                                     {{ csrf_field() }}
                                     <div class="form-input">
-                                        <input type="email" name="email" placeholder="{{ __(" Type Email Address") }}"
+                                        <input type="email" name="email" placeholder="{{ __('Type Email Address') }}"
                                             required="">
                                         <i class="icofont-user-alt-5"></i>
                                     </div>
                                     <div class="form-input">
                                         <input type="password" id="passw" class="Password" name="password"
-                                            placeholder="{{ __(" Type Password") }}" required="">
+                                            placeholder="{{ __('Type Password') }}" required="">
                                         <span toggle="#passw" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                         <i class="icofont-ui-password"></i>
                                     </div>
@@ -52,7 +52,7 @@
                                         </div>
                                     </div>
                                     <input type="hidden" name="modal" value="1">
-                                    <input class="mauthdata" type="hidden" value="{{ __(" Authenticating...") }}">
+                                    <input class="mauthdata" type="hidden" value="{{ __('Authenticating...') }}">
                                     <button type="submit" class="submit-btn">{{ __("Login") }}</button>
                                     @if(App\Models\Socialsetting::find(1)->f_check == 1 ||
                                     App\Models\Socialsetting::find(1)->g_check ==
@@ -93,20 +93,20 @@
                                     {{ csrf_field() }}
 
                                     <div class="form-input">
-                                        <input type="text" class="User Name" name="name" placeholder="{{ __(" Full
-                                            Name") }}" required="" pattern="^(\S*)\s+(.*)$">
+                                        <input type="text" class="User Name" name="name"
+                                            placeholder="{{ __('Full Name') }}" required="" pattern="^(\S*)\s+(.*)$">
                                         <i class="icofont-user-alt-5"></i>
                                     </div>
 
                                     <div class="form-input">
-                                        <input type="email" class="User Name" name="email" placeholder="{{ __(" Email
-                                            Address") }}" required="">
+                                        <input type="email" class="User Name" name="email"
+                                            placeholder="{{ __('Email Address') }}" required="">
                                         <i class="icofont-email"></i>
                                     </div>
 
                                     <div class="form-input">
                                         <input type="password" id="register_password" class="Password" name="password"
-                                            placeholder="{{ __(" Password") }}" required="">
+                                            placeholder="{{ __(' Password') }}" required="">
                                         <span toggle="#register_password"
                                             class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                         <i class="icofont-ui-password"></i>
@@ -114,7 +114,7 @@
 
                                     <div class="form-input">
                                         <input type="password" id="confirmation_password" class="Password"
-                                            name="password_confirmation" placeholder="{{ __(" Confirm Password") }}"
+                                            name="password_confirmation" placeholder="{{ __('Confirm Password') }}"
                                             required="">
                                         <span toggle="#confirmation_password"
                                             class="fa fa-fw fa-eye field-icon toggle-password"></span>
@@ -131,8 +131,8 @@
                                     </ul>
 
                                     <div class="form-input">
-                                        <input type="text" class="Password" name="codes" placeholder="{{ __(" Enter
-                                            Code") }}" required="">
+                                        <input type="text" class="Password" name="codes"
+                                            placeholder="{{ __('Enter Code') }}" required="">
                                         <i class="icofont-refresh"></i>
                                     </div>
 
@@ -153,7 +153,7 @@
                                         </div>
                                     </div>
 
-                                    <input class="mprocessdata" type="hidden" value="{{ __(" Processing...") }}">
+                                    <input class="mprocessdata" type="hidden" value="{{ __(' Processing...') }}">
                                     <button type="submit" class="submit-btn">{{ __("Register") }}</button>
 
                                 </form>
