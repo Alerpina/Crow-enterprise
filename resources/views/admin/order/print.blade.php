@@ -21,8 +21,9 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('assets/print/css/style.css')}}">
     <link href="{{asset('assets/print/css/print.css')}}" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-    <link rel="icon" type="image/png" href="{{asset('assets/images/'.$gs->favicon)}}">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="icon" type="image/png" href="{{asset('storage/images/'.$gs->favicon)}}">
     <style type="text/css">
         @page {
             size: auto;
@@ -36,10 +37,11 @@
 
         @media print {
 
-            .no-print, .no-print *
-            {
+            .no-print,
+            .no-print * {
                 display: none !important;
             }
+
             html,
             body {
                 width: 210mm;
@@ -64,20 +66,23 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="text-left">
-                        <img src="{{ asset('assets/images/'.$gs->invoice_logo) }}" style="height:80px;" alt="woo commerce logo">
+                        <img src="{{ asset('storage/images/'.$gs->invoice_logo) }}" style="height:80px;"
+                            alt="woo commerce logo">
                     </div>
                 </div>
             </div>
         </div>
         <br>
-        <button class="btn btn-success no-print" onclick="window.print()" style="margin-left:15px; background: rgb(0, 177, 0);">Imprimir</button>
+        <button class="btn btn-success no-print" onclick="window.print()"
+            style="margin-left:15px; background: rgb(0, 177, 0);">Imprimir</button>
         <br>
         <div class="invoice__metaInfo">
             <div class="col-lg-6">
                 <div class="invoice__orderDetails">
                     <p><strong>{{ __('Order Details') }} </strong></p>
                     <span><strong>{{ __('Invoice Number') }} :</strong> {{ sprintf("%'.08d", $order->id) }}</span><br>
-                    <span><strong>{{ __('Order Date') }} :</strong> {{ date('d-M-Y',strtotime($order->created_at)) }}</span><br>
+                    <span><strong>{{ __('Order Date') }} :</strong> {{ date('d-M-Y',strtotime($order->created_at))
+                        }}</span><br>
                     <span><strong>{{ __('Order ID')}} :</strong> {{ $order->order_number }}</span><br>
                     @if($order->dp == 0)
                     <span> <strong>{{ __('Shipping Method') }} :</strong>
@@ -89,11 +94,11 @@
                     </span><br>
                     @endif
                     @if($order->shipping != "pickup")
-                        <span> <strong>{{ __('Shipping Type') }} :</strong> {{$order->shipping_type}}</span><br>
-                        @if($order->puntoentrega != null)
-                            <span> <strong>{{ __("Delivery Point") }} :</strong>{{$order->puntoentrega}}<br></span><br>
-                        @endif
-                        <span> <strong>{{ __('Packing Type') }} :</strong> {{$order->packing_type}}</span><br>
+                    <span> <strong>{{ __('Shipping Type') }} :</strong> {{$order->shipping_type}}</span><br>
+                    @if($order->puntoentrega != null)
+                    <span> <strong>{{ __("Delivery Point") }} :</strong>{{$order->puntoentrega}}<br></span><br>
+                    @endif
+                    <span> <strong>{{ __('Packing Type') }} :</strong> {{$order->packing_type}}</span><br>
                     @endif
                     <span> <strong>{{ __('Payment Method') }} :</strong> {{$order->method}}</span>
                     @if(!empty($order->order_note))
@@ -107,14 +112,23 @@
             <div class="col-lg-6">
                 <div class="invoice__orderDetails" style="margin-top:5px;">
                     <p><strong>{{ __('Shipping Details') }}</strong></p>
-                    <span><strong>{{ __('Customer Name') }}</strong>: {{ $order->shipping_name == null ? $order->customer_name : $order->shipping_name}}</span><br>
-                    <span><strong>{{ __('Address') }}</strong>: {{ $order->shipping_address == null ? $order->customer_address : $order->shipping_address }}</span><br>
-                    <span><strong>{{ __('Number') }}</strong>: {{ $order->shipping_address_number == null ? $order->customer_address_number." ".$order->customer_complement : $order->shipping_address_number." ".$order->shipping_complement }}</span><br>
-                    <span><strong>{{ __('District') }}</strong>: {{ $order->shipping_district == null ? $order->customer_district : $order->shipping_district }}</span><br>
-                    <span><strong>{{ __('City') }}</strong>: {{ $order->shipping_city == null ? $order->customer_city : $order->shipping_city }}</span><br>
-                    <span><strong>{{ __('State') }}</strong>: {{ $order->shipping_state == null ? $order->customer_state : $order->shipping_state }}</span><br>
-                    <span><strong>{{ __('Country') }}</strong>: {{ $order->shipping_country == null ? $order->customer_country : $order->shipping_country }}</span><br>
-                    <span><strong>{{ __('Postal Code') }}</strong>: {{ $order->shipping_zip == null ? $order->customer_zip : $order->shipping_zip }}</span>
+                    <span><strong>{{ __('Customer Name') }}</strong>: {{ $order->shipping_name == null ?
+                        $order->customer_name : $order->shipping_name}}</span><br>
+                    <span><strong>{{ __('Address') }}</strong>: {{ $order->shipping_address == null ?
+                        $order->customer_address : $order->shipping_address }}</span><br>
+                    <span><strong>{{ __('Number') }}</strong>: {{ $order->shipping_address_number == null ?
+                        $order->customer_address_number." ".$order->customer_complement :
+                        $order->shipping_address_number." ".$order->shipping_complement }}</span><br>
+                    <span><strong>{{ __('District') }}</strong>: {{ $order->shipping_district == null ?
+                        $order->customer_district : $order->shipping_district }}</span><br>
+                    <span><strong>{{ __('City') }}</strong>: {{ $order->shipping_city == null ? $order->customer_city :
+                        $order->shipping_city }}</span><br>
+                    <span><strong>{{ __('State') }}</strong>: {{ $order->shipping_state == null ? $order->customer_state
+                        : $order->shipping_state }}</span><br>
+                    <span><strong>{{ __('Country') }}</strong>: {{ $order->shipping_country == null ?
+                        $order->customer_country : $order->shipping_country }}</span><br>
+                    <span><strong>{{ __('Postal Code') }}</strong>: {{ $order->shipping_zip == null ?
+                        $order->customer_zip : $order->shipping_zip }}</span>
                 </div>
             </div>
             @endif
@@ -123,7 +137,8 @@
                     <p><strong>{{ __('Billing Details') }}</strong></p>
                     <span><strong>{{ __('Customer Name') }}</strong>: {{ $order->customer_name}}</span><br>
                     <span><strong>{{ __('Customer Email') }}</strong>: {{ $order->customer_email}}</span><br>
-                    <span><strong>{{ __('Customer') . ' ' . $customer_doc_str }}</strong>: {{ $order->customer_document}}</span><br>
+                    <span><strong>{{ __('Customer') . ' ' . $customer_doc_str }}</strong>: {{
+                        $order->customer_document}}</span><br>
                     <span><strong>{{ __('Customer Phone') }}</strong>: {{ $order->customer_phone}}</span><br>
                     <span><strong>{{ __('Address') }}</strong>: {{ $order->customer_address }}</span><br>
                     <span><strong>{{ __('Number') }}</strong>: {{ $order->customer_address_number }} </span><br>
@@ -153,7 +168,7 @@
                                 $subtotal = 0;
                                 $tax = 0;
                                 @endphp
-                                @foreach($cart->items as $product)
+                                @foreach($cart['items'] as $product)
                                 <tr>
                                     <td width="50%">
                                         @if($product['item']['user_id'] != 0)
@@ -170,69 +185,94 @@
                                         @endif
                                         @php $prod = App\Models\Product::find($product['item']['id']); @endphp
                                         @if(isset($prod))
-                                        <p>{!! $product['item']->details !!}</p>
-                                        <p style="margin-bottom: 0; font-size: 10px"> {{ __('Product SKU') }} - {{$prod->sku}}</p>
+                                        <p>{!! $product['item']['details'] !!}</p>
+                                        <p style="margin-bottom: 0; font-size: 10px"> {{ __('Product SKU') }} -
+                                            {{$prod->sku}}</p>
                                         <p style="font-size: 10px"> {{ __('Reference Code') }} - {{$prod->ref_code}}</p>
                                         @if($gs->is_invoice_photo)
-                                        <p><img src="{{asset("assets/images/products")."/".$prod->photo}}" width="200" alt=""></p>
+                                        <p><img src="{{asset(" storage/images/products")."/".$prod->photo}}" width="200"
+                                            alt=""></p>
                                         @endif
                                         @endif
                                     </td>
                                     <td>
                                         @if($product['size'])
                                         <p>
-                                            <strong>{{ __('Size') }}: </strong> {{str_replace('-',' ',$product['size'])}}
+                                            <strong>{{ __('Size') }}: </strong> {{str_replace('-','
+                                            ',$product['size'])}}
                                         </p>
                                         @endif
                                         @if($product['color'])
                                         <p>
-                                            <strong>{{ __('color') }} :</strong> <span style="width: 20px; height: 5px; display: block; border: 10px solid {{$product['color'] == "" ? "white" : '#'.$product['color']}};"></span>
+                                            <strong>{{ __('color') }} :</strong> <span
+                                                style="width: 20px; height: 5px; display: block; border: 10px solid {{$product['color'] == "" ? "
+                                                white" : '#' .$product['color']}};"></span>
                                         </p>
                                         @endif
                                         <p>
-                                            <strong>{{ __('Price') }} :</strong> {{$order->currency_sign}}{{ number_format($product['item']['price'] * $order->currency_value, $order_curr->decimal_digits, $order_curr->decimal_separator,$order_curr->thousands_separator) }}
+                                            <strong>{{ __('Price') }} :</strong> {{$order->currency_sign}}{{
+                                            number_format($product['item']['price'] * $order->currency_value,
+                                            $order_curr->decimal_digits,
+                                            $order_curr->decimal_separator,$order_curr->thousands_separator) }}
                                         </p>
                                         <p>
-                                            <small>{{ $first_curr->sign.' '.__('Price') }} : {{$first_curr->sign}}{{ number_format($product['item']['price'], $first_curr->decimal_digits, $first_curr->decimal_separator,$first_curr->thousands_separator) }}</small>
+                                            <small>{{ $first_curr->sign.' '.__('Price') }} : {{$first_curr->sign}}{{
+                                                number_format($product['item']['price'], $first_curr->decimal_digits,
+                                                $first_curr->decimal_separator,$first_curr->thousands_separator)
+                                                }}</small>
                                         </p>
                                         <p>
-                                            <strong>{{ __('Qty') }} :</strong> {{$product['qty']}} {{ $product['item']['measure'] }}
+                                            <strong>{{ __('Qty') }} :</strong> {{$product['qty']}} {{
+                                            $product['item']['measure'] }}
                                         </p>
                                         @if(!empty($product['customizable_gallery']))
-                                            <p>
-                                                <strong>{{ __('Custom Gallery Image') }}:</strong>
-                                                
-                                                @php $gal = App\Models\CategoryGallery::where('customizable_gallery', $product['customizable_gallery'])->first(); @endphp
-                                                
-                                                @if(isset($gal))
-                                                <div style="background-color: #fff; border-radius: 30px;"><span class="galleryId"><strong>{{ __('Texture cod.:') }}</strong>   {{ ($gal->id) }}</span></div>
-                                                @endif
-                                                <img src="{{ asset('assets/images/galleries/' . $product['customizable_gallery']) }}" style="width: 100px; border-radius:10px; margin-left: 5px; margin-top: -1px; " alt="" />
-                                                
-                                            </p>
+                                        <p>
+                                            <strong>{{ __('Custom Gallery Image') }}:</strong>
+
+                                            @php $gal = App\Models\CategoryGallery::where('customizable_gallery',
+                                            $product['customizable_gallery'])->first(); @endphp
+
+                                            @if(isset($gal))
+                                        <div style="background-color: #fff; border-radius: 30px;"><span
+                                                class="galleryId"><strong>{{ __('Texture cod.:') }}</strong> {{
+                                                ($gal->id) }}</span></div>
+                                        @endif
+                                        <img src="{{ asset('storage/images/galleries/' . $product['customizable_gallery']) }}"
+                                            style="width: 100px; border-radius:10px; margin-left: 5px; margin-top: -1px; "
+                                            alt="" />
+
+                                        </p>
                                         @endif
                                         @if(!empty($product['customizable_name']))
-                                            <p>
-                                                <strong>{{ __('Custom Name') }}: {{$product['customizable_name']}}</strong>
-                                            </p>
+                                        <p>
+                                            <strong>{{ __('Custom Name') }}: {{$product['customizable_name']}}</strong>
+                                        </p>
                                         @endif
 
                                         @if(!empty($product['customizable_number']))
-                                            <p>
-                                                <strong>{{ __('Custom Number') }}: {{$product['customizable_number']}}</strong>
-                                            </p>
+                                        <p>
+                                            <strong>{{ __('Custom Number') }}:
+                                                {{$product['customizable_number']}}</strong>
+                                        </p>
                                         @endif
 
                                         @if(!empty($product['keys']))
-                                        @foreach( array_combine(explode(',', $product['keys']), explode('~', $product['values'])) as $key => $value)
+                                        @foreach( array_combine(explode(',', $product['keys']), explode('~',
+                                        $product['values'])) as $key => $value)
                                         <p>
-                                            <b>{{ App\Models\Attribute::where('input_name', $key)->first()->name }}:&nbsp;</b>{{ $value }}
+                                            <b>{{ App\Models\Attribute::where('input_name', $key)->first()->name
+                                                }}:&nbsp;</b>{{ $value }}
                                         </p>
                                         @endforeach
                                         @endif
                                     </td>
-                                    <td style="text-align: center;">{{$order->currency_sign}}{{ number_format($product['price'] * $order->currency_value, $order_curr->decimal_digits, $order_curr->decimal_separator,$order_curr->thousands_separator) }}
-                                        <br><small>{{$first_curr->sign}}{{ number_format($product['price'], $first_curr->decimal_digits, $first_curr->decimal_separator,$first_curr->thousands_separator) }}</small>
+                                    <td style="text-align: center;">{{$order->currency_sign}}{{
+                                        number_format($product['price'] * $order->currency_value,
+                                        $order_curr->decimal_digits,
+                                        $order_curr->decimal_separator,$order_curr->thousands_separator) }}
+                                        <br><small>{{$first_curr->sign}}{{ number_format($product['price'],
+                                            $first_curr->decimal_digits,
+                                            $first_curr->decimal_separator,$first_curr->thousands_separator) }}</small>
                                     </td>
                                     @php
                                     $subtotal += round($product['price'] * $order->currency_value, 2);
@@ -242,20 +282,26 @@
                                 <tr class="semi-border">
                                     <td colspan="1"></td>
                                     <td><strong>{{ __('Subtotal') }}</strong></td>
-                                    <td>{{$order->currency_sign}}{{ number_format($subtotal, $order_curr->decimal_digits, $order_curr->decimal_separator,$order_curr->thousands_separator) }}</td>
+                                    <td>{{$order->currency_sign}}{{ number_format($subtotal,
+                                        $order_curr->decimal_digits,
+                                        $order_curr->decimal_separator,$order_curr->thousands_separator) }}</td>
                                 </tr>
                                 @if($order->shipping_cost != 0)
                                 <tr class="no-border">
                                     <td colspan="1"></td>
                                     <td><strong>{{ __('Shipping') }}</strong></td>
-                                    <td>{{$order->currency_sign}}{{ number_format($order->shipping_cost * $order->currency_value, $order_curr->decimal_digits, $order_curr->decimal_separator,$order_curr->thousands_separator) }}</td>
+                                    <td>{{$order->currency_sign}}{{ number_format($order->shipping_cost *
+                                        $order->currency_value, $order_curr->decimal_digits,
+                                        $order_curr->decimal_separator,$order_curr->thousands_separator) }}</td>
                                 </tr>
                                 @endif
                                 @if($order->packing_cost != 0)
                                 <tr class="no-border">
                                     <td colspan="1"></td>
                                     <td><strong>{{ __('Packaging') }}</strong></td>
-                                    <td>{{$order->currency_sign}}{{ number_format($order->packing_cost * $order->currency_value, $order_curr->decimal_digits, $order_curr->decimal_separator,$order_curr->thousands_separator) }}</td>
+                                    <td>{{$order->currency_sign}}{{ number_format($order->packing_cost *
+                                        $order->currency_value, $order_curr->decimal_digits,
+                                        $order_curr->decimal_separator,$order_curr->thousands_separator) }}</td>
                                 </tr>
                                 @endif
                                 @if($order->tax != 0)
@@ -265,21 +311,28 @@
                                     @php
                                     $tax = ($subtotal / 100) * $order->tax;
                                     @endphp
-                                    <td>{{$order->currency_sign}}{{number_format($tax, $order_curr->decimal_digits, $order_curr->decimal_separator,$order_curr->thousands_separator)}}</td>
+                                    <td>{{$order->currency_sign}}{{number_format($tax, $order_curr->decimal_digits,
+                                        $order_curr->decimal_separator,$order_curr->thousands_separator)}}</td>
                                 </tr>
                                 @endif
                                 @if($order->coupon_discount != null)
                                 <tr class="no-border">
                                     <td colspan="1"></td>
                                     <td><strong>{{ __('Coupon Discount') }}</strong></td>
-                                    <td>{{$order->currency_sign}}{{ number_format($order->coupon_discount * $order->currency_value, $order_curr->decimal_digits, $order_curr->decimal_separator,$order_curr->thousands_separator) }}</td>
+                                    <td>{{$order->currency_sign}}{{ number_format($order->coupon_discount *
+                                        $order->currency_value, $order_curr->decimal_digits,
+                                        $order_curr->decimal_separator,$order_curr->thousands_separator) }}</td>
                                 </tr>
                                 @endif
                                 <tr class="final-border">
                                     <td colspan="1"></td>
                                     <td><strong>{{ __('Total') }}</strong></td>
-                                    <td>{{$order->currency_sign}}{{ number_format($order->pay_amount * $order->currency_value, $order_curr->decimal_digits, $order_curr->decimal_separator,$order_curr->thousands_separator) }}
-                                        <br><small>{{$first_curr->sign}}{{ number_format($order->pay_amount, $first_curr->decimal_digits, $first_curr->decimal_separator,$first_curr->thousands_separator) }}</small>
+                                    <td>{{$order->currency_sign}}{{ number_format($order->pay_amount *
+                                        $order->currency_value, $order_curr->decimal_digits,
+                                        $order_curr->decimal_separator,$order_curr->thousands_separator) }}
+                                        <br><small>{{$first_curr->sign}}{{ number_format($order->pay_amount,
+                                            $first_curr->decimal_digits,
+                                            $first_curr->decimal_separator,$first_curr->thousands_separator) }}</small>
                                     </td>
                                 </tr>
                             </tbody>
@@ -291,11 +344,11 @@
     </div>
     <!-- ./wrapper -->
 </body>
+
 </html>
 @section('scripts')
 <script type="text/javascript">
-
-$(window).load(function () {
+    $(window).load(function () {
     window.print();
 });
 
