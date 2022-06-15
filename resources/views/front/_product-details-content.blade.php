@@ -39,26 +39,16 @@
             @include('front._product-details-material')
             @endif
 
-            @if(!empty($productt->size))
-            <input type="hidden" id="stock"
-                value="{{ isset($productt->size_qty[$key]) ? $productt->size_qty[$key] : '' }}">
-            @elseif(!empty($productt->color))
-            <input type="hidden" id="stock"
-                value="{{ isset($productt->color_qty[$key]) ? $productt->color_qty[$key] : '' }}">
-            @elseif(!empty($productt->material))
-            <input type="hidden" id="stock"
-                value="{{ isset($productt->material_qty[$key]) ? $productt->material_qty[$key] : '' }}">
-            @else
             @php
             $stck = (string) $productt->stock;
             @endphp
+
             @if($stck != null)
             <input type="hidden" id="stock" value="{{ $stck }}">
             @elseif($productt->type != 'Physical')
             <input type="hidden" id="stock" value="0">
             @else
             <input type="hidden" id="stock" value="">
-            @endif
             @endif
 
             <input type="hidden" id="product_price"

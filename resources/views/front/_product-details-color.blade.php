@@ -22,6 +22,8 @@
         $is_selected = true;
         }
         @endphp
+        <input type="hidden" id="stock"
+            value="{{ isset($productt->color_qty[$key]) ? $productt->color_qty[$key] : '' }}">
         @endforeach
     </ul>
 </div>

@@ -17,6 +17,8 @@
                 >
                 {{ $material }}
             </option>
+            <input type="hidden" id="stock"
+                value="{{ isset($productt->material_qty[$key]) ? $productt->material_qty[$key] : '' }}">
             @endforeach
         </select>
         <input type="hidden" class="material" id="material_product" value="">
