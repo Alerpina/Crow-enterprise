@@ -38,7 +38,7 @@
     @endforeach
     <div>
         <a target="_blank" class="floating_button_seller main" id="wppHov"><img
-                src="{{asset('assets/front/images/icon/wpp_mini.png')}}"></a>
+                src="{{asset('assets/images/icon/wpp_mini.png')}}"></a>
     </div>
 </div>
 
@@ -47,7 +47,7 @@
 <div>
     <a href="https://api.whatsapp.com/send?1=pt_BR&phone={!!$gs->whatsapp_number!!}&text=" target="_blank">
         <img class="whatsapp-widget" id="whatsapp-widget" style="cursor:pointer"
-            src="{{asset('assets/front/images/icon/wpp_mini.png')}}">
+            src="{{asset('assets/images/icon/wpp_mini.png')}}">
     </a>
 </div>
 
@@ -59,7 +59,7 @@
          $('.floating_button_seller:not(:last-child)').css({
              'display': 'block',
              '-webkit-animation' : 'fadeIn 0.7s',
-             'animation': 'fadeIn 0.7s', 
+             'animation': 'fadeIn 0.7s',
              'width': '80px',
              'margin': '20px auto 0',
          });
