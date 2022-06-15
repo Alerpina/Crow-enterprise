@@ -22,16 +22,12 @@
                                         class="custom-control-input product-attr" data-key="{{ $attrKey }}" data-price="{{
                                                     $attrVal['prices'][$optionKey] *
                                                     $product_curr->value *
-                                                    (1+($gs->product_percent / 100))}}" value="{{ $optionKey }}" {{
-                                        $loop->first
-                                    ? 'checked' : '' }}>
+                                                    (1+($gs->product_percent / 100))}}" value="{{ $optionKey }}"
+                                        {{$loop->first ? "checked" : "" }}>
                                     @if($loop->count > 1)
                                     <label class="custom-control-label" for="{{$attrKey}}{{ $optionKey }}">
                                         {{App\Models\AttributeOption::find($optionVal)->name}}
-                                        @if
-                                        (!empty($attrVal['prices'][$optionKey])
-                                        &&
-                                        $attr_search->show_price == 1)
+                                        @if(!empty($attrVal['prices'][$optionKey]) && $attr_search->show_price == 1)
                                         {{$product_curr->sign}}
                                         {{number_format(
                                         $attrVal['prices'][$optionKey] *

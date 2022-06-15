@@ -19,19 +19,13 @@
                             <div class="card border-dark mb-3">
                                 <div class="card-header">
                                     <input type="radio" id="{{$attrKey}}{{ $optionKey }}" name="{{ $attrKey }}"
-                                        class="custom-control-input product-attr" data-key="{{ $attrKey }}" data-price="{{
-                                                    $attrVal['prices'][$optionKey] *
-                                                    $product_curr->value *
-                                                    (1+($gs->product_percent / 100))}}" value="{{ $optionKey }}" {{
-                                        $loop->first
-                                    ? 'checked' : '' }}>
+                                        class="custom-control-input product-attr" data-key="{{ $attrKey }}"
+                                        data-price="{{$attrVal['prices'][$optionKey] * $product_curr->value * (1+($gs->product_percent / 100))}}"
+                                        value="{{ $optionKey }}" {{ $loop->first ? "checked" : "" }}>
                                     @if($loop->count > 1)
                                     <label class="custom-control-label" for="{{$attrKey}}{{ $optionKey }}">
                                         {{App\Models\AttributeOption::find($optionVal)->name}}
-                                        @if
-                                        (!empty($attrVal['prices'][$optionKey])
-                                        &&
-                                        $attr_search->show_price == 1)
+                                        @if(!empty($attrVal['prices'][$optionKey]) && $attr_search->show_price == 1)
                                         {{$product_curr->sign}}
                                         {{number_format(
                                         $attrVal['prices'][$optionKey] *
@@ -66,12 +60,9 @@
                         <input type="hidden" class="keys" value="">
                         <input type="hidden" class="values" value="">
                         <input type="radio" id="{{$attrKey}}{{ $optionKey }}" name="{{ $attrKey }}"
-                            class="custom-control-input product-attr" data-key="{{ $attrKey }}" data-price="{{
-                                                $attrVal['prices'][$optionKey] *
-                                                $product_curr->value *
-                                                (1+($gs->product_percent / 100))}}" value="{{ $optionKey }}" {{
-                            $loop->first ? 'checked'
-                        : '' }}>
+                            class="custom-control-input product-attr" data-key="{{ $attrKey }}"
+                            data-price="{{ $attrVal['prices'][$optionKey] * $product_curr->value * (1+($gs->product_percent / 100))}}"
+                            value="{{ $optionKey }}" {{$loop->first ? "checked" : "" }}>
                         @if($loop->count > 1)
                         <label class="custom-control-label" for="{{$attrKey}}{{ $optionKey }}">
                             {{App\Models\AttributeOption::find($optionVal)->name}}
