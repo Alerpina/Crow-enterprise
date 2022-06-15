@@ -24,10 +24,10 @@ class TeamMemberController extends Controller
         //--- Integrating This Collection Into Datatables
         return Datatables::of($datas)
             ->editColumn('photo', function (TeamMember $data) {
-                if (file_exists(public_path().'/assets/images/team_member/'.$data->photo)) {
-                    return asset('assets/images/team_member/'.$data->photo);
-                } else{
-                    return asset('assets/images/noimage.png');
+                if (file_exists(public_path().'/storage/images/team_member/'.$data->photo)) {
+                    return asset('storage/images/team_member/'.$data->photo);
+                } else {
+                    return asset('storage/images/noimage.png');
                 }
             })
             ->editColumn('category_id', function (TeamMember $data) {
@@ -39,7 +39,7 @@ class TeamMemberController extends Controller
                 <div class="godropdown">
                     <button class="go-dropdown-toggle"> ' . __('Actions') . '<i class="fas fa-chevron-down"></i></button>
                     <div class="action-list">
-                        <a data-href="' . route('admin-team_member-edit', $data->id) . '" data-header="' . __('Edit Team Member') . '" class="edit" data-toggle="modal" data-target="#modal1"> 
+                        <a data-href="' . route('admin-team_member-edit', $data->id) . '" data-header="' . __('Edit Team Member') . '" class="edit" data-toggle="modal" data-target="#modal1">
                             <i class="fas fa-edit"></i> ' . __('Edit') . '
                         </a>
                         <a href="javascript:;" data-href="' . route('admin-team_member-delete', $data->id) . '" data-toggle="modal" data-target="#confirm-delete" class="delete">
@@ -82,7 +82,7 @@ class TeamMemberController extends Controller
         $input = $request->all();
         if ($file = $request->file('photo')) {
             $name = time() . $file->getClientOriginalName();
-            $file->move('assets/images/team_member', $name);
+            $file->move('storage/images/team_member', $name);
             $input['photo'] = $name;
         }
         $data->fill($input)->save();
@@ -118,10 +118,10 @@ class TeamMemberController extends Controller
         $input = $request->all();
         if ($file = $request->file('photo')) {
             $name = time() . $file->getClientOriginalName();
-            $file->move('assets/images/team_member', $name);
+            $file->move('storage/images/team_member', $name);
             if ($data->photo != null) {
-                if (file_exists(public_path() . 'assets/images/team_member' . $data->photo) && !empty($data->photo)) {
-                    unlink(public_path() . 'assets/images/team_member' . $data->photo);
+                if (file_exists(public_path() . 'storage/images/team_member' . $data->photo) && !empty($data->photo)) {
+                    unlink(public_path() . 'storage/images/team_member' . $data->photo);
                 }
             }
             $input['photo'] = $name;
@@ -146,8 +146,8 @@ class TeamMemberController extends Controller
             //--- Redirect Section Ends
         }
         //If Photo Exist
-        if (file_exists(public_path() . '/assets/images/blogs/' . $data->photo) && !empty($data->photo)) {
-            unlink(public_path() . '/assets/images/blogs/' . $data->photo);
+        if (file_exists(public_path() . '/storage/images/blogs/' . $data->photo) && !empty($data->photo)) {
+            unlink(public_path() . '/storage/images/blogs/' . $data->photo);
         }
         $data->delete();
         //--- Redirect Section
