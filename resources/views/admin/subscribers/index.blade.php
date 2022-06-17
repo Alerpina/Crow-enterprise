@@ -28,7 +28,8 @@
                             <thead>
                                 <tr>
                                     <th>{{ __("#Sl") }}</th>
-                                    <th><i class="icofont-envelope icofont-lg" data-toggle="tooltip" title='{{ __("Email") }}'></i></th>
+                                    <th><i class="icofont-envelope icofont-lg" data-toggle="tooltip"
+                                            title='{{ __("Email") }}'></i></th>
                                 </tr>
                             </thead>
                         </table>
@@ -62,7 +63,7 @@
         ],
         language: {
             url: '{{$datatable_translation}}',
-            processing: '<img src="{{asset("assets/images/".$admstore->admin_loader)}}">'
+            processing: '<img src="{{asset("storage/images/".$admstore->admin_loader)}}">'
         },
         drawCallback: function(settings) {
             $(this).find('.select').niceSelect();
@@ -73,7 +74,7 @@
                 '<i class="fa fa-download"></i> {{ __("Download") }}' +
                 '</a>' +
                 '</div>');
-            /* 
+            /*
             * Setando no Cookie a página atual
             */
             $("#example").on('page.dt', function(){
@@ -88,8 +89,8 @@
         if(sessionStorage.getItem("CurrentPage") == undefined){
             sessionStorage.setItem("CurrentPage", 0);
         }
-        $(document).on('click', 'a', function(e){ 
-            var link = jQuery(this); 
+        $(document).on('click', 'a', function(e){
+            var link = jQuery(this);
             var x = '{{ Request::route()->getPrefix() }}';
             y = x.split("/");
             if(!(link.attr("data-href") || link.attr("href").indexOf("#") > -1 || link.attr("href").indexOf("javascript") > -1 || !(link.attr("href").indexOf("page")))){
@@ -98,6 +99,6 @@
             }
         });
     });
-    
-    </script>
+
+</script>
 @endsection
