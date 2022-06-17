@@ -40,7 +40,7 @@ class RoleController extends Controller
                 <div class="godropdown">
                     <button class="go-dropdown-toggle"> ' . __('Actions') . '<i class="fas fa-chevron-down"></i></button>
                     <div class="action-list">
-                        <a href="' . route('admin-role-edit', $data->id) . '"> 
+                        <a href="' . route('admin-role-edit', $data->id) . '">
                             <i class="fas fa-edit"></i> ' . __('Edit') . '
                         </a>
                         <a href="javascript:;" data-href="' . route('admin-role-delete', $data->id) . '" data-toggle="modal" data-target="#confirm-delete" class="delete">
@@ -97,17 +97,16 @@ class RoleController extends Controller
         //--- Logic Section Ends
 
         //--- Redirect Section
-        $msg = __('New Data Added Successfully.') . '<a href="' . route('admin-role-index') . '">' . __('View Role Lists.') . '</a>';
+        $msg = __('New Data Added Successfully.');
         return response()->json($msg);
-        //--- Redirect Section Ends    
-
+        //--- Redirect Section Ends
     }
 
     //*** GET Request
     public function edit($id)
     {
         $data = Role::findOrFail($id);
-        return view('admin.role.edit',compact('data'));
+        return view('admin.role.edit', compact('data'));
     }
 
     //*** POST Request
@@ -141,10 +140,9 @@ class RoleController extends Controller
         //--- Logic Section Ends
 
         //--- Redirect Section
-        $msg = __('Data Updated Successfully.') . '<a href="' . route('admin-role-index') . '">' . __('View Role Lists.') . '</a>';
+        $msg = __('Data Updated Successfully.');
         return response()->json($msg);
-        //--- Redirect Section Ends    
-
+        //--- Redirect Section Ends
     }
 
     //*** GET Request Delete
@@ -152,9 +150,9 @@ class RoleController extends Controller
     {
         $data = Role::findOrFail($id);
         $data->delete();
-        //--- Redirect Section     
+        //--- Redirect Section
         $msg = __('Data Deleted Successfully.');
-        return response()->json($msg);      
-        //--- Redirect Section Ends     
+        return response()->json($msg);
+        //--- Redirect Section Ends
     }
 }

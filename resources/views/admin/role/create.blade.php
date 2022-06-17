@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h4 class="heading">{{ __('Add Role') }} <a class="add-btn" href="{{route('admin-role-index')}}">
-                    <i class="fas fa-arrow-left"></i> {{ __('Back') }}</a>
+                        <i class="fas fa-arrow-left"></i> {{ __('Back') }}</a>
                 </h4>
                 <ul class="links">
                     <li>
@@ -31,7 +31,7 @@
             <div class="col-lg-12">
                 <div class="product-description">
                     <div class="body-area">
-                        <div class="gocover" style="background: url({{asset('assets/images/'.$admstore->admin_loader)}})
+                        <div class="gocover" style="background: url({{asset('storage/images/'.$admstore->admin_loader)}})
                             no-repeat scroll center center rgba(45, 45, 45, 0.5);">
                         </div>
                         <form id="geniusform" action="{{route('admin-role-create')}}" method="POST"
@@ -53,13 +53,13 @@
                                 <div class="col-xl-12">
                                     <div class="input-form">
                                         @component('admin.components.input-localized',["required" => true])
-                                            @slot('name')
-                                                name
-                                            @endslot
-                                            @slot('placeholder')
-                                            {{ __('Name') }}
-                                            @endslot
-                                            {{ __("Name") }} *
+                                        @slot('name')
+                                        name
+                                        @endslot
+                                        @slot('placeholder')
+                                        {{ __('Name') }}
+                                        @endslot
+                                        {{ __("Name") }} *
                                         @endcomponent
                                     </div>
                                 </div>
@@ -78,7 +78,8 @@
                                             <span class="slider round"></span>
                                         </label>
                                     </div>
-                                </div> <!--FECHAMENTO TAG COL-XL-2 -->
+                                </div>
+                                <!--FECHAMENTO TAG COL-XL-2 -->
 
                                 <div class="col-lg-3">
                                     <div class="input-form input-form-center">
@@ -88,7 +89,8 @@
                                             <span class="slider round"></span>
                                         </label>
                                     </div>
-                                </div> <!--FECHAMENTO TAG COL-XL-2 -->
+                                </div>
+                                <!--FECHAMENTO TAG COL-XL-2 -->
 
                                 <div class="col-lg-3">
                                     <div class="input-form input-form-center">
@@ -98,7 +100,8 @@
                                             <span class="slider round"></span>
                                         </label>
                                     </div>
-                                </div> <!--FECHAMENTO TAG COL-XL-2 -->
+                                </div>
+                                <!--FECHAMENTO TAG COL-XL-2 -->
 
                                 <div class="col-lg-3">
                                     <div class="input-form input-form-center">
@@ -108,7 +111,8 @@
                                             <span class="slider round"></span>
                                         </label>
                                     </div>
-                                </div> <!--FECHAMENTO TAG COL-XL-2 -->
+                                </div>
+                                <!--FECHAMENTO TAG COL-XL-2 -->
 
                                 <div class="col-lg-3">
                                     <div class="input-form input-form-center">
@@ -118,7 +122,8 @@
                                             <span class="slider round"></span>
                                         </label>
                                     </div>
-                                </div> <!--FECHAMENTO TAG COL-XL-2 -->
+                                </div>
+                                <!--FECHAMENTO TAG COL-XL-2 -->
 
                                 <div class="col-lg-3">
                                     <div class="input-form input-form-center">
@@ -128,7 +133,8 @@
                                             <span class="slider round"></span>
                                         </label>
                                     </div>
-                                </div> <!--FECHAMENTO TAG COL-XL-2 -->
+                                </div>
+                                <!--FECHAMENTO TAG COL-XL-2 -->
 
                                 @if(config('features.marketplace'))
                                 <div class="col-lg-3">
@@ -139,7 +145,8 @@
                                             <span class="slider round"></span>
                                         </label>
                                     </div>
-                                </div> <!--FECHAMENTO TAG COL-XL-2 -->
+                                </div>
+                                <!--FECHAMENTO TAG COL-XL-2 -->
                                 @endif
 
                                 <div class="col-lg-3">
@@ -150,7 +157,8 @@
                                             <span class="slider round"></span>
                                         </label>
                                     </div>
-                                </div> <!--FECHAMENTO TAG COL-XL-2 -->
+                                </div>
+                                <!--FECHAMENTO TAG COL-XL-2 -->
 
                                 <div class="col-lg-3">
                                     <div class="input-form input-form-center">
@@ -160,7 +168,8 @@
                                             <span class="slider round"></span>
                                         </label>
                                     </div>
-                                </div> <!--FECHAMENTO TAG COL-XL-2 -->
+                                </div>
+                                <!--FECHAMENTO TAG COL-XL-2 -->
 
                                 @if(config('features.api'))
                                 <div class="col-lg-3">
@@ -171,15 +180,17 @@
                                             <span class="slider round"></span>
                                         </label>
                                     </div>
-                                </div> <!--FECHAMENTO TAG COL-XL-2 -->
+                                </div>
+                                <!--FECHAMENTO TAG COL-XL-2 -->
                                 @endif
 
-                            </div> <!--FECHAMENTO TAG ROW-->
+                            </div>
+                            <!--FECHAMENTO TAG ROW-->
 
                             <div class="row justify-content-center">
-                                
-                                    <button class="addProductSubmit-btn" type="submit">{{ __('Create Role') }}</button>
-                                
+
+                                <button class="addProductSubmit-btn" type="submit">{{ __('Create Role') }}</button>
+
                             </div>
                         </form>
                     </div>
