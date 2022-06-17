@@ -29,9 +29,9 @@ class ServiceController extends Controller
                 $query->whereTranslationLike('details', "%{$keyword}%", $this->lang->locale);
             })
             ->editColumn('photo', function (Service $data) {
-                if (file_exists(public_path().'/assets/images/services/'.$data->photo)) {
-                    return asset('assets/images/services/'.$data->photo);
-                } else{
+                if (file_exists(public_path().'/storage/images/services/'.$data->photo)) {
+                    return asset('storage/images/services/'.$data->photo);
+                } else {
                     return asset('assets/images/noimage.png');
                 }
             })
@@ -48,7 +48,7 @@ class ServiceController extends Controller
                 <div class="godropdown">
                     <button class="go-dropdown-toggle"> ' . __('Actions') . '<i class="fas fa-chevron-down"></i></button>
                     <div class="action-list">
-                        <a data-href="' . route('admin-service-edit', $data->id) . '" data-header="' . __('Edit Service') . '" class="edit" data-toggle="modal" data-target="#modal1"> 
+                        <a data-href="' . route('admin-service-edit', $data->id) . '" data-header="' . __('Edit Service') . '" class="edit" data-toggle="modal" data-target="#modal1">
                             <i class="fas fa-edit"></i> ' . __('Edit') . '
                         </a>
                         <a href="javascript:;" data-href="' . route('admin-service-delete', $data->id) . '" data-toggle="modal" data-target="#confirm-delete" class="delete">
@@ -99,23 +99,23 @@ class ServiceController extends Controller
         $input = $this->removeEmptyTranslations($request->all());
         if ($file = $request->file('photo')) {
             $name = time() . $file->getClientOriginalName();
-            $file->move('assets/images/services', $name);
+            $file->move('storage/images/services', $name);
             $input['photo'] = $name;
         }
         $data->fill($input)->save();
         //--- Logic Section Ends
 
-        //--- Redirect Section        
+        //--- Redirect Section
         $msg = __('New Data Added Successfully.');
-        return response()->json($msg);      
-        //--- Redirect Section Ends    
+        return response()->json($msg);
+        //--- Redirect Section Ends
     }
 
     //*** GET Request
     public function edit($id)
     {
         $data = Service::findOrFail($id);
-        return view('admin.service.edit',compact('data'));
+        return view('admin.service.edit', compact('data'));
     }
 
     //*** POST Request
@@ -144,10 +144,10 @@ class ServiceController extends Controller
         $input = $this->removeEmptyTranslations($request->all(), $data);
         if ($file = $request->file('photo')) {
             $name = time() . $file->getClientOriginalName();
-            $file->move('assets/images/services', $name);
+            $file->move('storage/images/services', $name);
             if ($data->photo != null) {
-                if (file_exists(public_path() . '/assets/images/services/' . $data->photo)) {
-                    unlink(public_path() . '/assets/images/services/' . $data->photo);
+                if (file_exists(public_path() . '/storage/images/services/' . $data->photo)) {
+                    unlink(public_path() . '/storage/images/services/' . $data->photo);
                 }
             }
             $input['photo'] = $name;
@@ -155,10 +155,10 @@ class ServiceController extends Controller
         $data->update($input);
         //--- Logic Section Ends
 
-        //--- Redirect Section     
+        //--- Redirect Section
         $msg = __('Data Updated Successfully.');
-        return response()->json($msg);      
-        //--- Redirect Section Ends            
+        return response()->json($msg);
+        //--- Redirect Section Ends
     }
 
     //*** GET Request Delete
@@ -166,21 +166,21 @@ class ServiceController extends Controller
     {
         $data = Service::findOrFail($id);
         //If Photo Doesn't Exist
-        if($data->photo == null){
+        if ($data->photo == null) {
             $data->delete();
-            //--- Redirect Section     
+            //--- Redirect Section
             $msg = __('Data Deleted Successfully.');
-            return response()->json($msg);      
-            //--- Redirect Section Ends     
+            return response()->json($msg);
+            //--- Redirect Section Ends
         }
         //If Photo Exist
-        if (file_exists(public_path().'/assets/images/services/'.$data->photo)) {
-            unlink(public_path().'/assets/images/services/'.$data->photo);
+        if (file_exists(public_path().'/storage/images/services/'.$data->photo)) {
+            unlink(public_path().'/storage/images/services/'.$data->photo);
         }
         $data->delete();
-        //--- Redirect Section     
+        //--- Redirect Section
         $msg = __('Data Deleted Successfully.');
-        return response()->json($msg);      
-        //--- Redirect Section Ends     
+        return response()->json($msg);
+        //--- Redirect Section Ends
     }
 }
