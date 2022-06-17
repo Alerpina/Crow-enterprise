@@ -6,15 +6,19 @@
         font-weight: normal;
         color: #333;
     }
+
     .mr-table .badge-danger {
         background-color: #ffbbc2;
     }
+
     .mr-table .badge-success {
         background-color: #99d5a7;
     }
+
     .mr-table .badge-info {
         background-color: #97d5df;
     }
+
     .mr-table .badge-secondary {
         background-color: #d0d0d0;
     }
@@ -47,7 +51,8 @@
                         <table id="geniustable" class="table table-hover dt-responsive" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
-                                    <th><i class="icofont-calendar icofont-lg" data-toggle="tooltip" title='{{ __("Date") }}'></i></th>
+                                    <th><i class="icofont-calendar icofont-lg" data-toggle="tooltip"
+                                            title='{{ __("Date") }}'></i></th>
                                     <th>{{ __('Type') }}</th>
                                     <th>{{ __('Action') }}</th>
                                     <th>{{ __('Changed') }}</th>
@@ -97,7 +102,7 @@
         ],
         language: {
             url: '{{$datatable_translation}}',
-            processing: '<img src="{{asset("assets/images/".$admstore->admin_loader)}}">'
+            processing: '<img src="{{asset("storage/images/".$admstore->admin_loader)}}">'
         }
     });
 </script>

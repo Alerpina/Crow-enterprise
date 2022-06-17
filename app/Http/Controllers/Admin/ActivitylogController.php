@@ -19,24 +19,28 @@ class ActivitylogController extends Controller
     //*** JSON Request
     public function datatables()
     {
-        $datas = Activity::orderBy('id','desc');
+        $datas = Activity::orderBy('id', 'desc');
         //--- Integrating This Collection Into Datatables
         return Datatables::of($datas)
+        ->editColumn('created_at', function (Activity $data) {
+            setlocale(LC_ALL, \App\Helpers\Helper::strLocaleVariations($this->lang->locale));
+            return $data->created_at->formatLocalized('%d/%m/%Y, %T');
+        })
         ->editColumn('description', function (Activity $data) {
-            if(strtolower($data->description) === 'deleted') {
+            if (strtolower($data->description) === 'deleted') {
                 return '<span class="badge badge-danger">deleted</span>';
             }
-            if(strtolower($data->description) === 'created') {
+            if (strtolower($data->description) === 'created') {
                 return '<span class="badge badge-success">created</span>';
             }
-            if(strtolower($data->description) === 'updated') {
+            if (strtolower($data->description) === 'updated') {
                 return '<span class="badge badge-info">updated</span>';
             }
             return $data->description;
         })
         ->editColumn('subject_id', function (Activity $data) {
             $line1 = 'nothing';
-            if($data->subject_id) {
+            if ($data->subject_id) {
                 $id = $data->subject_id;
                 $subject = $data->subject_type;
                 $line1 = '<span class="badge badge-secondary">ID: '.$id.'</span> ' . $subject;
@@ -48,12 +52,12 @@ class ActivitylogController extends Controller
         ->editColumn('causer_id', function (Activity $data) {
             $line1 = '-';
             $line2 = '';
-            if($data->causer_id) {
+            if ($data->causer_id) {
                 $id = $data->causer_id;
                 $subject = $data->causer_type;
                 $line1 = '<span class="badge badge-secondary">ID: '.$id.'</span> ' . $subject;
                 $line2 = Admin::find($id);
-                if(!$line2) {
+                if (!$line2) {
                     $line2 = User::find($id);
                 }
             }
@@ -64,7 +68,7 @@ class ActivitylogController extends Controller
     }
 
     //*** GET Request
-  	public function index()
+    public function index()
     {
         return view('admin.activitylog.index');
     }
@@ -73,5 +77,4 @@ class ActivitylogController extends Controller
     {
         return Activity::find($id)->properties;
     }
-
 }
