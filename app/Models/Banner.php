@@ -47,11 +47,4 @@ class Banner extends CachedModel
     {
         return $query->where('status', 1);
     }
-
-    public function getUpdatedAtAttribute($value)
-    {
-        if (!empty($value)) {
-            return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $value)->formatLocalized('%d/%m/%Y, %T');
-        }
-    }
 }

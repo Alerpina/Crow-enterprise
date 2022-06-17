@@ -9,7 +9,7 @@
             <div class="col-lg-6">
                 <div class="left">
                     <a class="banner-effect" href="{{ $img->link }}" target="_blank">
-                        <img src="{{asset('assets/images/banners/'.$img->photo)}}" alt="">
+                        <img src="{{asset('storage/images/banners/'.$img->photo)}}" alt="">
                     </a>
                 </div>
             </div>

@@ -24,13 +24,17 @@ class BannerController extends Controller
         //--- Integrating This Collection Into Datatables
         return Datatables::of($datas)
             ->editColumn('photo', function (Banner $data) {
-                $photo = $data->photo ? url('assets/images/banners/' . $data->photo) : url('assets/images/noimage.png');
+                $photo = $data->photo ? url('storage/images/banners/' . $data->photo) : url('assets/images/noimage.png');
                 return '<img src="' . $photo . '" alt="Image">';
             })
-            ->editColumn('store', function(Banner $data){
-                foreach($data->stores as $store){
+            ->editColumn('store', function (Banner $data) {
+                foreach ($data->stores as $store) {
                     return $store->domain;
                 }
+            })
+            ->editColumn('updated_at', function (Banner $data) {
+                setlocale(LC_ALL, \App\Helpers\Helper::strLocaleVariations($this->lang->locale));
+                return $data->updated_at->formatLocalized('%d/%m/%Y, %T');
             })
             ->addColumn('action', function (Banner $data) {
                 return '
@@ -42,7 +46,7 @@ class BannerController extends Controller
                     </div>
                 </div>';
             })
-            ->filterColumn('store_id', function($query, $keyword){
+            ->filterColumn('store_id', function ($query, $keyword) {
                 $this->store_id = $keyword;
                 $query->whereHas('stores', function ($query) {
                     $query->where('store_id', $this->store_id);
@@ -103,34 +107,33 @@ class BannerController extends Controller
                 ];
 
         $validator = Validator::make($request->all(), $rules);
-        
+
         if ($validator->fails()) {
-          return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
+            return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
         }
         //--- Validation Section Ends
 
         //--- Logic Section
         $data = new Banner();
         $input = $request->all();
-        if ($file = $request->file('photo')) 
-         {      
+        if ($file = $request->file('photo')) {
             $name = time().$file->getClientOriginalName();
-            $file->move('assets/images/banners',$name);           
+            $file->move('storage/images/banners', $name);
             $input['photo'] = $name;
-        } 
+        }
         $data->fill($input)->save();
         //--- Logic Section Ends
 
         $banner = Banner::find($data->id);
 
-        if($request->has('stores')) {
+        if ($request->has('stores')) {
             $banner->stores()->sync($input['stores']);
         }
 
-        //--- Redirect Section        
+        //--- Redirect Section
         $msg = __('New Data Added Successfully.');
-        return response()->json($msg);      
-        //--- Redirect Section Ends    
+        return response()->json($msg);
+        //--- Redirect Section Ends
     }
 
     //*** GET Request
@@ -139,7 +142,7 @@ class BannerController extends Controller
         $data = Banner::findOrFail($id);
         $storesList = Generalsetting::all();
         $currentStores = $data->stores()->pluck('id')->toArray();
-        return view('admin.banner.edit',compact('data', 'storesList', 'currentStores'));
+        return view('admin.banner.edit', compact('data', 'storesList', 'currentStores'));
     }
 
     //*** POST Request
@@ -151,40 +154,38 @@ class BannerController extends Controller
                 ];
 
         $validator = Validator::make($request->all(), $rules);
-        
+
         if ($validator->fails()) {
-          return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
+            return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
         }
         //--- Validation Section Ends
 
         //--- Logic Section
         $data = Banner::findOrFail($id);
         $input = $request->all();
-            if ($file = $request->file('photo')) 
-            {              
-                $name = time().$file->getClientOriginalName();
-                $file->move('assets/images/banners',$name);
-                if($data->photo != null)
-                {
-                    if (file_exists(public_path().'/assets/images/banners/'.$data->photo) && !empty($data->photo)) {
-                        unlink(public_path().'/assets/images/banners/'.$data->photo);
-                    }
-                }            
+        if ($file = $request->file('photo')) {
+            $name = time().$file->getClientOriginalName();
+            $file->move('storage/images/banners', $name);
+            if ($data->photo != null) {
+                if (file_exists(public_path().'/storage/images/banners/'.$data->photo) && !empty($data->photo)) {
+                    unlink(public_path().'/storage/images/banners/'.$data->photo);
+                }
+            }
             $input['photo'] = $name;
-            } 
+        }
         $data->update($input);
         //--- Logic Section Ends
 
         //associates with stores
         $data->stores()->detach();
-        if($request->has('stores')) {
+        if ($request->has('stores')) {
             $data->stores()->sync($input['stores']);
         }
 
-        //--- Redirect Section     
+        //--- Redirect Section
         $msg = __('Data Updated Successfully.');
-        return response()->json($msg);      
-        //--- Redirect Section Ends            
+        return response()->json($msg);
+        //--- Redirect Section Ends
     }
 
     //*** GET Request Delete
@@ -192,25 +193,25 @@ class BannerController extends Controller
     {
         $data = Banner::findOrFail($id);
         //If Photo Doesn't Exist
-        if($data->photo == null){
+        if ($data->photo == null) {
             $data->delete();
-            //--- Redirect Section     
+            //--- Redirect Section
             $msg = __('Data Deleted Successfully.');
-            return response()->json($msg);      
-            //--- Redirect Section Ends     
+            return response()->json($msg);
+            //--- Redirect Section Ends
         }
         //If Photo Exist
-        if (file_exists(public_path().'/assets/images/banners/'.$data->photo) && !empty($data->photo)) {
-            unlink(public_path().'/assets/images/banners/'.$data->photo);
+        if (file_exists(public_path().'/storage/images/banners/'.$data->photo) && !empty($data->photo)) {
+            unlink(public_path().'/storage/images/banners/'.$data->photo);
         }
 
         //remove from any store
         $data->stores()->detach();
-        
+
         $data->delete();
-        //--- Redirect Section     
+        //--- Redirect Section
         $msg = __('Data Deleted Successfully.');
-        return response()->json($msg);      
-        //--- Redirect Section Ends     
+        return response()->json($msg);
+        //--- Redirect Section Ends
     }
 }
