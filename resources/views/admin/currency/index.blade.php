@@ -16,9 +16,12 @@
         padding-right: 30px;
     }
 
-    #geniustableBase_filter, #geniustableBase_length, #geniustableBase_info, #geniustableBase_paginate {
-            display: none;
-        }
+    #geniustableBase_filter,
+    #geniustableBase_length,
+    #geniustableBase_info,
+    #geniustableBase_paginate {
+        display: none;
+    }
 </style>
 @endsection
 
@@ -42,7 +45,7 @@
                                 @foreach ($stores as $store)
                                 <option
                                     value="{{ route('admin-stores-isconfig',['id' => $store['id'], 'redirect' => true]) }}"
-                                    {{$store['id'] == $admstore->id ? 'selected' : ''}}>{{$store['domain']}}</option>
+                                    {{$store['id']==$admstore->id ? 'selected' : ''}}>{{$store['domain']}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -62,13 +65,16 @@
                     <h4 class="heading">{{ __('Base Currency') }}</h4>
                     <p class="sub-heading">({{ __('Base currency for all calculations made in the store') }})</p>
                     <div class="table-responsiv">
-                        <table id="geniustableBase" class="table table-hover dt-responsive" cellspacing="0" width="100%">
+                        <table id="geniustableBase" class="table table-hover dt-responsive" cellspacing="0"
+                            width="100%">
                             <thead>
                                 <tr>
-                                    <th><i class="icofont-options icofont-lg" data-toggle="tooltip" title='{{ __("Options") }}'></i></th>
+                                    <th><i class="icofont-options icofont-lg" data-toggle="tooltip"
+                                            title='{{ __("Options") }}'></i></th>
                                     <th>{{ __('Name') }}</th>
                                     <th>{{ __('Description') }}</th>
-                                    <th><i class="icofont-dollar-true icofont-lg" data-toggle="tooltip" title='{{ __("Sign") }}'></i></th>
+                                    <th><i class="icofont-dollar-true icofont-lg" data-toggle="tooltip"
+                                            title='{{ __("Sign") }}'></i></th>
                                     <th>{{ __('Value') }}</th>
                                 </tr>
                             </thead>
@@ -86,90 +92,94 @@
                     <h4 class="heading">{{ __('Other Currencies') }}</h4>
                     <p class="sub-heading">({{ __('Currencies used for quotation and conversions') }})</p>
                     <div class="table-responsiv">
-                    <div class="table-responsiv">
-                        <table id="geniustable" class="table table-hover dt-responsive" cellspacing="0" width="100%">
-                            <thead>
-                                <tr>
-                                    <th><i class="icofont-options icofont-lg" data-toggle="tooltip" title='{{ __("Options") }}'></i></th>
-                                    <th>{{ __('Name') }} <span class="small">({{ __('ISO Currency Code') }})</span></th>
-                                    <th>{{ __('Description') }}</th>
-                                    <th><i class="icofont-dollar-true icofont-lg" data-toggle="tooltip" title='{{ __("Sign") }}'></i></th>
-                                    <th>{{ __('Quotation') }}</th>
-                                    <th>{{ __('Parity') }}</th>
-                                </tr>
-                            </thead>
-                        </table>
+                        <div class="table-responsiv">
+                            <table id="geniustable" class="table table-hover dt-responsive" cellspacing="0"
+                                width="100%">
+                                <thead>
+                                    <tr>
+                                        <th><i class="icofont-options icofont-lg" data-toggle="tooltip"
+                                                title='{{ __("Options") }}'></i></th>
+                                        <th>{{ __('Name') }} <span class="small">({{ __('ISO Currency Code') }})</span>
+                                        </th>
+                                        <th>{{ __('Description') }}</th>
+                                        <th><i class="icofont-dollar-true icofont-lg" data-toggle="tooltip"
+                                                title='{{ __("Sign") }}'></i></th>
+                                        <th>{{ __('Quotation') }}</th>
+                                        <th>{{ __('Parity') }}</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-{{-- ADD / EDIT MODAL --}}
+    {{-- ADD / EDIT MODAL --}}
 
-<div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="modal1" aria-hidden="true">
+    <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="modal1" aria-hidden="true">
 
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="submit-loader">
-                <img src="{{asset('assets/images/'.$admstore->admin_loader)}}" alt="">
-            </div>
-            <div class="modal-header">
-                <h5 class="modal-title"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="submit-loader">
+                    <img src="{{asset('storage/images/'.$admstore->admin_loader)}}" alt="">
+                </div>
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Close') }}</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Close') }}</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-{{-- ADD / EDIT MODAL ENDS --}}
+    {{-- ADD / EDIT MODAL ENDS --}}
 
-{{-- DELETE MODAL --}}
+    {{-- DELETE MODAL --}}
 
-<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="modal1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
+    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="modal1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
-            <div class="modal-header d-block text-center">
-                <h4 class="modal-title d-inline-block">{{ __('Confirm Delete') }}</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <div class="modal-header d-block text-center">
+                    <h4 class="modal-title d-inline-block">{{ __('Confirm Delete') }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p class="text-center">{{ __('You are about to delete this Currency.') }}</p>
+                    <p class="text-center">{{ __('Do you want to proceed?') }}</p>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('Cancel') }}</button>
+                    <a class="btn btn-danger btn-ok">{{ __('Delete') }}</a>
+                </div>
+
             </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                <p class="text-center">{{ __('You are about to delete this Currency.') }}</p>
-                <p class="text-center">{{ __('Do you want to proceed?') }}</p>
-            </div>
-
-            <!-- Modal footer -->
-            <div class="modal-footer justify-content-center">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('Cancel') }}</button>
-                <a class="btn btn-danger btn-ok">{{ __('Delete') }}</a>
-            </div>
-
         </div>
     </div>
-</div>
 
-{{-- DELETE MODAL ENDS --}}
+    {{-- DELETE MODAL ENDS --}}
 
-@endsection
+    @endsection
 
-@section('scripts')
+    @section('scripts')
 
-<script type="text/javascript">
-    var table = $('#geniustableBase').DataTable({
+    <script type="text/javascript">
+        var table = $('#geniustableBase').DataTable({
         ordering: false,
         processing: false,
         serverSide: false,
@@ -193,13 +203,13 @@
         }],
         language: {
             url: '{{$datatable_translation}}',
-            processing: '<img src="{{asset("assets/images/".$admstore->admin_loader)}}">'
+            processing: '<img src="{{asset("storage/images/".$admstore->admin_loader)}}">'
         },
         drawCallback: function(settings) {
             $(this).find('.select').niceSelect();
         },
     });
-    
+
     var table = $('#geniustable').DataTable({
         stateSave: true,
         stateDuration: -1,
@@ -230,7 +240,7 @@
         }],
         language: {
             url: '{{$datatable_translation}}',
-            processing: '<img src="{{asset("assets/images/".$admstore->admin_loader)}}">'
+            processing: '<img src="{{asset("storage/images/".$admstore->admin_loader)}}">'
         },
         drawCallback: function(settings) {
             $(this).find('.select').niceSelect();
@@ -241,7 +251,7 @@
                 '<i class="fas fa-plus"></i> {{ __("Add New Currency") }}' +
                 '</a>' +
                 '</div>');
-            /* 
+            /*
             * Setando no Cookie a página atual
             */
             $("#geniustable").on('page.dt', function(){
@@ -249,10 +259,10 @@
             });
         }
     });
-</script>
+    </script>
 
-<script>
-    $('document').ready(function() {
+    <script>
+        $('document').ready(function() {
         $("#store_filter").niceSelect('update');
     });
     $("#store_filter").on('change', function() {
@@ -263,8 +273,8 @@
         if(sessionStorage.getItem("CurrentPage") == undefined){
             sessionStorage.setItem("CurrentPage", 0);
         }
-        $(document).on('click', 'a', function(e){ 
-            var link = jQuery(this); 
+        $(document).on('click', 'a', function(e){
+            var link = jQuery(this);
             var x = '{{ Request::route()->getPrefix() }}';
             y = x.split("/");
             if(!(link.attr("data-href") || link.attr("href").indexOf("#") > -1 || link.attr("href").indexOf("javascript") > -1 || link.attr("href").indexOf(y[1]) > -1)){
@@ -273,6 +283,6 @@
             }
         });
     });
-  
-</script>
-@endsection
+
+    </script>
+    @endsection
