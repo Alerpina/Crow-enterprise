@@ -6,7 +6,8 @@
     <div class="mr-breadcrumb">
         <div class="row">
             <div class="col-lg-12">
-                <h4 class="heading">{{ __('Edit Language') }} <a class="add-btn" href="{{route('admin-lang-index')}}"><i class="fas fa-arrow-left"></i> {{ __('Back') }}</a></h4>
+                <h4 class="heading">{{ __('Edit Language') }} <a class="add-btn" href="{{route('admin-lang-index')}}"><i
+                            class="fas fa-arrow-left"></i> {{ __('Back') }}</a></h4>
                 <ul class="links">
                     <li>
                         <a href="{{ route('admin.dashboard') }}">{{ __('Dashboard') }} </a>
@@ -26,9 +27,11 @@
             <div class="col-lg-12">
                 <div class="product-description">
                     <div class="body-area">
-                        <div class="gocover" style="background: url({{asset('assets/images/'.$admstore->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
+                        <div class="gocover"
+                            style="background: url({{asset('storage/images/'.$admstore->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
                         </div>
-                        <form id="geniusform" action="{{route('admin-lang-update',$data->id)}}" method="POST" enctype="multipart/form-data">
+                        <form id="geniusform" action="{{route('admin-lang-update',$data->id)}}" method="POST"
+                            enctype="multipart/form-data">
                             {{csrf_field()}}
                             <div class="row">
                                 <div class="col-xl-12">
@@ -44,7 +47,8 @@
                                 <div class="col-xl-4">
                                     <div class="input-form">
                                         <h4 class="heading">{{ __('Language') }} *</h4>
-                                        <input type="text" class="input-field" name="language" placeholder="{{ __('English') }}" value="{{$data->language}}" required>
+                                        <input type="text" class="input-field" name="language"
+                                            placeholder="{{ __('English') }}" value="{{$data->language}}" required>
                                     </div>
                                 </div>
 
@@ -53,7 +57,8 @@
                                         <h4 class="heading">{{ __('Locale') }} *
                                             <span>{{ __('Ex: en, pt-br, es') }}</span>
                                         </h4>
-                                        <input type="text" class="input-field" name="locale" placeholder="{{ __('en') }}" value="{{$data->locale}}" required>
+                                        <input type="text" class="input-field" name="locale"
+                                            placeholder="{{ __('en') }}" value="{{$data->locale}}" required>
                                     </div>
                                 </div>
 
@@ -61,14 +66,14 @@
                                     <div class="input-form">
                                         <h4 class="heading">{{ __('Language Direction') }} *</h4>
                                         <select name="rtl" class="input-field" required="">
-                                            <option value="0" {{ $data->rtl == '0'  ? 'selected' : '' }}>
+                                            <option value="0" {{ $data->rtl == '0' ? 'selected' : '' }}>
                                                 {{ __('Left To Right') }}</option>
-                                            <option value="1" {{ $data->rtl == '1'  ? 'selected' : '' }}>
+                                            <option value="1" {{ $data->rtl == '1' ? 'selected' : '' }}>
                                                 {{ __('Right To Left') }}</option>
                                         </select>
                                     </div>
                                 </div>
-                               
+
                             </div>
 
 
@@ -86,9 +91,11 @@
                                         <hr>
                                         <div class="mr-table allproduct">
                                             <div class="table-responsiv">
-                                                <div class="gocover" style="background: url({{asset('assets/images/'.$admstore->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
+                                                <div class="gocover"
+                                                    style="background: url({{asset('storage/images/'.$admstore->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
                                                 </div>
-                                                <table id="geniustable" class="table table-hover dt-responsive" cellspacing="0" width="100%">
+                                                <table id="geniustable" class="table table-hover dt-responsive"
+                                                    cellspacing="0" width="100%">
                                                     <thead>
                                                         <tr>
                                                             <th style="width:50%;">{{ __('Original') }}</th>
@@ -106,13 +113,16 @@
                                                         <tr>
                                                             <td>
                                                                 {{$key}}
-                                                                <input type="hidden" name="fields[{{$key}}][key]" value="{{$key}}">
+                                                                <input type="hidden" name="fields[{{$key}}][key]"
+                                                                    value="{{$key}}">
                                                             </td>
                                                             <td>
-                                                                <input type="text" class="input-field" name="fields[{{$key}}][translation]" value="{{!is_numeric($translation) ? $translation : ""}}">
+                                                                <input type="text" class="input-field"
+                                                                    name="fields[{{$key}}][translation]"
+                                                                    value="{{!is_numeric($translation) ? $translation : ""}}">
                                                             </td>
                                                             <td>
-                                                            {{!is_numeric($translation) ? $translation : ""}}
+                                                                {{!is_numeric($translation) ? $translation : ""}}
                                                             </td>
                                                         </tr>
                                                         @endforeach
@@ -128,8 +138,8 @@
 
                             <div class="row justify-content-center">
 
-                                    <button class="addProductSubmit-btn" type="submit">{{__('Save')}}</button>
-                          
+                                <button class="addProductSubmit-btn" type="submit">{{__('Save')}}</button>
+
                             </div>
                         </form>
                     </div>
@@ -161,7 +171,7 @@
         ],
         language: {
             url: '{{$datatable_translation}}',
-            processing: '<img src="{{asset('assets/images/'.$admstore->admin_loader)}}">'
+            processing: '<img src="{{asset('storage/images/'.$admstore->admin_loader)}}">'
         },
         initComplete: function(settings, json) {
             $(".btn-area").append('<div class="col-sm-4 table-contents">'+
@@ -182,7 +192,7 @@
             });
         }
     });
-    
+
 </script>
 
 {{-- DATA TABLE --}}
