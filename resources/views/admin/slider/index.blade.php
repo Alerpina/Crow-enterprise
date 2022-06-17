@@ -3,15 +3,15 @@
 @section('styles')
 <style>
     .presentation-pos {
-        color:white; 
-        background-color:black; 
-        text-align:center; 
-        width:30%; 
-        height:100%;
-        border: 1px solid black; 
-        border-radius:30px;
-        margin-left:30%; 
-        float:left;
+        color: white;
+        background-color: black;
+        text-align: center;
+        width: 30%;
+        height: 100%;
+        border: 1px solid black;
+        border-radius: 30px;
+        margin-left: 30%;
+        float: left;
     }
 </style>
 @endsection
@@ -44,12 +44,15 @@
                         <table id="geniustable" class="table table-hover dt-responsive" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
-                                    <th><i class="icofont-options icofont-lg" data-toggle="tooltip" title='{{ __("Options") }}'></i></th>
-                                    <th><i class="icofont-ui-image icofont-lg" data-toggle="tooltip" title='{{ __("Featured Image") }}'></i></th>
-                                    <th>            {{ __('Name')     }}</th>
-                                    <th>            {{ __('Updated at')     }}</th>
-                                    <th>{{ __("Presentation Position")     }}</th>
-                                    <th><i class="fa fa-eye fa-lg" data-toggle="tooltip" title='{{ __("Status") }}'></i></th>
+                                    <th><i class="icofont-options icofont-lg" data-toggle="tooltip"
+                                            title='{{ __("Options") }}'></i></th>
+                                    <th><i class="icofont-ui-image icofont-lg" data-toggle="tooltip"
+                                            title='{{ __("Featured Image") }}'></i></th>
+                                    <th> {{ __('Name') }}</th>
+                                    <th> {{ __('Updated at') }}</th>
+                                    <th>{{ __("Presentation Position") }}</th>
+                                    <th><i class="fa fa-eye fa-lg" data-toggle="tooltip" title='{{ __("Status") }}'></i>
+                                    </th>
                                 </tr>
                             </thead>
                         </table>
@@ -66,7 +69,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="submit-loader">
-                <img src="{{asset('assets/images/'.$admstore->admin_loader)}}" alt="">
+                <img src="{{asset('storage/images/'.$admstore->admin_loader)}}" alt="">
             </div>
             <div class="modal-header">
                 <h5 class="modal-title"></h5>
@@ -120,8 +123,8 @@
 
 @section('scripts')
 {{-- DATA TABLE --}}
-    <script type="text/javascript">
-        var table = $('#geniustable').DataTable({
+<script type="text/javascript">
+    var table = $('#geniustable').DataTable({
             stateSave: true,
             stateDuration: -1,
             ordering: false,
@@ -133,7 +136,7 @@
                     data: 'action',
                     searchable: false,
                     orderable: false
-                }, 
+                },
                 {
                     data: 'photo',
                     name: 'photo',
@@ -167,7 +170,7 @@
             ],
             language: {
                 url: '{{$datatable_translation}}',
-                processing: '<img src="{{asset("assets/images/".$admstore->admin_loader)}}">'
+                processing: '<img src="{{asset("storage/images/".$admstore->admin_loader)}}">'
             },
             drawCallback: function(settings) {
                 $(this).find('.select').niceSelect();
@@ -186,7 +189,7 @@
                     $(this).val(Math.abs($(this).val()));
                     var id = $(this).attr('data-slide');
                     var pos = $(this).val();
-                    $.ajax({                        
+                    $.ajax({
                         type: 'GET',
                         url: '{{url("admin/slider/changeSliderPos") }}' + '/' + id + '/' +  pos
                     });
@@ -199,7 +202,7 @@
                     '<i class="fas fa-plus"></i> {{ __("Add New Slider") }}' +
                     '</a>' +
                     '</div>');
-                /* 
+                /*
                 * Setando no Cookie a página atual
                 */
                 $("#geniustable").on('page.dt', function(){
@@ -207,15 +210,15 @@
                 });
             }
         });
-    </script>
-    <script>
-        $(document).ready(function(){
+</script>
+<script>
+    $(document).ready(function(){
             // First access - CurrentPage
             if(sessionStorage.getItem("CurrentPage") == undefined){
                 sessionStorage.setItem("CurrentPage", 0);
             }
-            $(document).on('click', 'a', function(e){ 
-                var link = jQuery(this); 
+            $(document).on('click', 'a', function(e){
+                var link = jQuery(this);
                 var x = '{{ Request::route()->getPrefix() }}';
                 y = x.split("/");
                 if(!(link.attr("data-href") || link.attr("href").indexOf("#") > -1 || link.attr("href").indexOf("javascript") > -1 || link.attr("href").indexOf(y[1]) > -1)){
@@ -224,5 +227,5 @@
                 }
             });
         });
-    </script>
+</script>
 @endsection

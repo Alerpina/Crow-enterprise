@@ -12,6 +12,8 @@ class Slider extends LocalizedModel
 
     protected $storeSettings;
 
+    protected $with = ['translations'];
+
     protected $translatedAttributes = ['subtitle_text', 'title_text', 'details_text', 'name'];
     protected $fillable = ['subtitle_size', 'subtitle_color', 'subtitle_anime', 'title_size', 'title_color', 'title_anime', 'details_size', 'details_color', 'details_anime', 'photo', 'position', 'link','status'];
 
@@ -45,12 +47,5 @@ class Slider extends LocalizedModel
     public function scopeIsActive($query)
     {
         return $query->where('status', 1);
-    }
-
-    public function getUpdatedAtAttribute($value)
-    {
-        if (!empty($value)) {
-            return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $value)->formatLocalized('%d/%m/%Y, %T');
-        }
     }
 }
