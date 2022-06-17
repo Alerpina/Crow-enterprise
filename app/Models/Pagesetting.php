@@ -60,10 +60,10 @@ class Pagesetting extends LocalizedModel
 
     public function upload($name, $file, $oldname)
     {
-        $file->move('assets/images', $name);
+        $file->move('storage/images/banners', $name);
         if ($oldname != null) {
-            if (file_exists(public_path() . '/assets/images/' . $oldname)) {
-                unlink(public_path() . '/assets/images/' . $oldname);
+            if (file_exists(public_path() . '/storage/images/banners/' . $oldname)) {
+                unlink(public_path() . '/storage/images/banners/' . $oldname);
             }
         }
     }

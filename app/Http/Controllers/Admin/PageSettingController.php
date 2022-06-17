@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Models\Pagesetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use Validator;
-
 
 class PageSettingController extends Controller
 {
@@ -32,7 +32,7 @@ class PageSettingController extends Controller
         'big_save_banner.mimes'     => 'Photo type must be in jpeg, jpg, png, svg.',
         'best_seller_banner1.mimes' => 'Photo type must be in jpeg, jpg, png, svg.',
         'big_save_banner1.mimes'    => 'Photo type must be in jpeg, jpg, png, svg.'
-      
+
     ];
 
 
@@ -40,50 +40,45 @@ class PageSettingController extends Controller
     public function update(Request $request)
     {
         //--- Validation Section
-        $validator = Validator::make($request->all(), $this->rules,$this->customs);
+        $validator = Validator::make($request->all(), $this->rules, $this->customs);
 
         if ($validator->fails()) {
-          return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
+            return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
         }
         //--- Validation Section Ends
         $ps = Pagesetting::find(1);
         $data = Session::has('admstore') ? Session::get('admstore') : $ps;
-        if($data != $ps)
-        {
+        if ($data != $ps) {
             $data = $data->pagesettings;
         }
         $input = $request->all();
-        
-            if ($file = $request->file('best_seller_banner')) 
-            {              
-                $name = time().$data->id.$file->getClientOriginalName();
-                $data->upload($name,$file,$data->best_seller_banner);
-                $input['best_seller_banner'] = $name;
-            }    
-            if ($file = $request->file('big_save_banner')) 
-            {              
-                $name = time().$data->id.$file->getClientOriginalName();
-                $data->upload($name,$file,$data->big_save_banner);           
-                $input['big_save_banner'] = $name;
-            } 
 
-            if ($file = $request->file('best_seller_banner1')) 
-            {              
-                $name = time().$data->id.$file->getClientOriginalName();
-                $data->upload($name,$file,$data->best_seller_banner1);
-                $input['best_seller_banner1'] = $name;
-            }    
-            if ($file = $request->file('big_save_banner1')) 
-            {              
-                $name = time().$data->id.$file->getClientOriginalName();
-                $data->upload($name,$file,$data->big_save_banner1);           
-                $input['big_save_banner1'] = $name;
-            } 
+        if ($file = $request->file('best_seller_banner')) {
+            $name = time().$data->id.$file->getClientOriginalName();
+            $data->upload($name, $file, $data->best_seller_banner);
+            $input['best_seller_banner'] = $name;
+        }
+        if ($file = $request->file('big_save_banner')) {
+            $name = time().$data->id.$file->getClientOriginalName();
+            $data->upload($name, $file, $data->big_save_banner);
+            $input['big_save_banner'] = $name;
+        }
+
+        if ($file = $request->file('best_seller_banner1')) {
+            $name = time().$data->id.$file->getClientOriginalName();
+            $data->upload($name, $file, $data->best_seller_banner1);
+            $input['best_seller_banner1'] = $name;
+        }
+        if ($file = $request->file('big_save_banner1')) {
+            $name = time().$data->id.$file->getClientOriginalName();
+            $data->upload($name, $file, $data->big_save_banner1);
+            $input['big_save_banner1'] = $name;
+        }
 
 
         $data->update($input);
         $msg = __('Data Updated Successfully.');
-        return response()->json($msg);      
+        return response()->json($msg);
     }
 
 
@@ -91,8 +86,7 @@ class PageSettingController extends Controller
     {
         $ps = Pagesetting::where('store_id', $this->storeSettings->id)->first();
         $data = Session::has('admstore') ? Session::get('admstore') : $ps;
-        if($data != $ps)
-        {
+        if ($data != $ps) {
             $data = $data->pagesettings;
         }
         $input = $request->all();
@@ -133,11 +127,11 @@ class PageSettingController extends Controller
             $input['hot_sale'] = 0;
         }
 
-        if($request->blog_posts == ""){
+        if ($request->blog_posts == "") {
             $input['blog_posts'] = 0;
         }
 
-        if($request->reviews_store == ""){
+        if ($request->reviews_store == "") {
             $input['reviews_store'] = 0;
         }
 
@@ -163,66 +157,61 @@ class PageSettingController extends Controller
 
         $data->update($input);
         $msg = __('Data Updated Successfully.');
-        
+
         return response()->json($msg);
     }
 
     public function unlink(Request $request)
-    {   
-   //--- Validation Section Ends
+    {
+        //--- Validation Section Ends
         $ps = Pagesetting::find(1);
         $data = Session::has('admstore') ? Session::get('admstore') : $ps;
-        if($data != $ps)
-        {
-                 $data = $data->pagesettings;
+        if ($data != $ps) {
+            $data = $data->pagesettings;
         }
         $input = $request->all();
-        if ($request->type == "best_seller_banner") 
-        {  
-            $input['best_seller_banner'] = null;  
-            if (file_exists(public_path().'/assets/images/'.$data->best_seller_banner) && !empty($data->best_seller_banner)) {
-                unlink(public_path().'/assets/images/'.$data->best_seller_banner);
+        if ($request->type == "best_seller_banner") {
+            $input['best_seller_banner'] = null;
+            if (file_exists(public_path().'/storage/images/banners/'.$data->best_seller_banner) && !empty($data->best_seller_banner)) {
+                unlink(public_path().'/storage/images/banners/'.$data->best_seller_banner);
             }
         }
-        if ($request->type == "big_save_banner") 
-        {              
+        if ($request->type == "big_save_banner") {
             $input['big_save_banner'] = null;
-            if (file_exists(public_path().'/assets/images/'.$data->big_save_banner) && !empty($data->big_save_banner)) {
-                unlink(public_path().'/assets/images/'.$data->big_save_banner);
+            if (file_exists(public_path().'/storage/images/banners/'.$data->big_save_banner) && !empty($data->big_save_banner)) {
+                unlink(public_path().'/storage/images/banners/'.$data->big_save_banner);
             }
-        } 
+        }
 
-        if ($request->type == "best_seller_banner1") 
-        {              
+        if ($request->type == "best_seller_banner1") {
             $input['best_seller_banner1'] = null;
-            if (file_exists(public_path().'/assets/images/'.$data->best_seller_banner1) && !empty($data->best_seller_banner1)) {
-                unlink(public_path().'/assets/images/'.$data->best_seller_banner1);
+            if (file_exists(public_path().'/storage/images/banners/'.$data->best_seller_banner1) && !empty($data->best_seller_banner1)) {
+                unlink(public_path().'/storage/images/banners/'.$data->best_seller_banner1);
             }
-        }    
-        if ($request->type == "big_save_banner1") 
-        {                        
+        }
+        if ($request->type == "big_save_banner1") {
             $input['big_save_banner1'] = null;
-            if (file_exists(public_path().'/assets/images/'.$data->big_save_banner1) && !empty($data->big_save_banner1)) {
-                unlink(public_path().'/assets/images/'.$data->big_save_banner1);
+            if (file_exists(public_path().'/storage/images/banners/'.$data->big_save_banner1) && !empty($data->big_save_banner1)) {
+                unlink(public_path().'/storage/images/banners/'.$data->big_save_banner1);
             }
-        } 
-       
+        }
+
         $data->update($input);
-        //--- Redirect Section     
+        //--- Redirect Section
         $msg = __('Data Updated Successfully.');
-        return response()->json($msg);      
-        //--- Redirect Section Ends            
+        return response()->json($msg);
+        //--- Redirect Section Ends
     }
 
 
 
     public function contact()
-    {   
+    {
         return view('admin.pagesetting.contact');
     }
 
     public function customize()
-    {  
+    {
         return view('admin.pagesetting.customize');
     }
 
@@ -233,8 +222,6 @@ class PageSettingController extends Controller
 
     public function big_save()
     {
-          
         return view('admin.pagesetting.big_save');
     }
-
 }
