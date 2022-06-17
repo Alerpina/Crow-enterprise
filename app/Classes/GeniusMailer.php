@@ -186,7 +186,6 @@ class GeniusMailer
 
     public function sendCustomMail(array $mailData)
     {
-        ds($mailData)->label('custom mail');
         $objDemo = new \stdClass();
         $objDemo->to = $mailData['to'];
         $objDemo->subject = $mailData['subject'];
