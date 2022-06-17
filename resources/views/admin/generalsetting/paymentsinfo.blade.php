@@ -48,7 +48,7 @@
                                 @foreach ($stores as $store)
                                 <option
                                     value="{{ route('admin-stores-isconfig',['id' => $store['id'], 'redirect' => true]) }}"
-                                    {{$store['id'] == $admstore->id ? 'selected' : ''}}>{{$store['domain']}}</option>
+                                    {{$store['id']==$admstore->id ? 'selected' : ''}}>{{$store['domain']}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -64,7 +64,7 @@
             <div class="col-lg-12">
                 <div class="product-description">
                     <div class="body-area">
-                        <div class="gocover" style="background: url({{asset('assets/images/'.$admstore->admin_loader)}}) 
+                        <div class="gocover" style="background: url({{asset('storage/images/'.$admstore->admin_loader)}})
                                 no-repeat scroll center center rgba(45, 45, 45, 0.5);">
                         </div>
                         <form action="{{ route('admin-gs-update-payment') }}" id="geniusform" method="POST"
@@ -83,11 +83,11 @@
                                         <div class="action-list">
                                             <select
                                                 class="process select droplinks {{ $admstore->cod_check == 1 ? 'drop-success' : 'drop-danger' }}">
-                                                <option data-val="1" value="{{route('admin-gs-cod',1)}}"
-                                                    {{ $admstore->cod_check == 1 ? 'selected' : '' }}>{{ __('Activated') }}
+                                                <option data-val="1" value="{{route('admin-gs-cod',1)}}" {{ $admstore->
+                                                    cod_check == 1 ? 'selected' : '' }}>{{ __('Activated') }}
                                                 </option>
-                                                <option data-val="0" value="{{route('admin-gs-cod',0)}}"
-                                                    {{ $admstore->cod_check == 0 ? 'selected' : '' }}>
+                                                <option data-val="0" value="{{route('admin-gs-cod',0)}}" {{ $admstore->
+                                                    cod_check == 0 ? 'selected' : '' }}>
                                                     {{ __('Deactivated') }}
                                                 </option>
                                             </select>
@@ -96,7 +96,8 @@
                                 </div>
                                 <div class="col-xl-8">
                                     <div class="input-form">
-                                        @component('admin.components.input-localized',["from" => $admstore, "type" => "textarea"])
+                                        @component('admin.components.input-localized',["from" => $admstore, "type" =>
+                                        "textarea"])
                                         @slot('name')
                                         cod_text
                                         @endslot
@@ -108,10 +109,10 @@
                                     </div>
                                 </div>
 
-                          
+
                             </div>
 
-                            
+
 
                             <div class="row">
                                 <div class="col-lg-4">
