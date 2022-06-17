@@ -21,7 +21,6 @@ use Illuminate\Support\Facades\Validator;
 
 class GeneralSettingController extends Controller
 {
-
     protected $rules =
     [
         'logo'              => 'mimes:jpeg,jpg,png,svg',
@@ -107,7 +106,7 @@ class GeneralSettingController extends Controller
                 $input['error_banner'] = $name;
                 $data->update($field);
             }
-                  
+
             if ($file = $request->file('invoice_logo')) {
                 $name = time() . $file->getClientOriginalName();
                 $oldName = (GeneralSetting::where('invoice_logo', $data->invoice_logo)->count() > 1 ? null : $data->invoice_logo);
@@ -218,15 +217,15 @@ class GeneralSettingController extends Controller
     public function generalupdateMelhorenvio(Request $request)
     {
         //--- Validation Section
-        
+
         //--- Validation Section Ends
 
         //--- Logic Section
-        
+
         $generalSettings = Session::has('admstore') ? Session::get('admstore') : $this->storeSettings;
         $input = $request->all();
-        
-        if(!MelhorenvioConf::find($generalSettings->melhorenvio_id)){
+
+        if (!MelhorenvioConf::find($generalSettings->melhorenvio_id)) {
             $melhorenvio = MelhorenvioConf::create(['selected_services' => []]);
             $generalSettings->melhorenvio_id = $melhorenvio->id;
             $generalSettings->update();
@@ -243,18 +242,18 @@ class GeneralSettingController extends Controller
     {
         $data = Session::has('admstore') ? Session::get('admstore') : $this->storeSettings;
         $input = $this->withRequiredFields($request->all(), ['title'], $data);
-        
-        if (!empty($request['popup_background']) && $request['popup_background'] != $data->popup_background){
+
+        if (!empty($request['popup_background']) && $request['popup_background'] != $data->popup_background) {
             $image = $request->popup_background;
             list($type, $image) = explode(';', $image);
             list(, $image)      = explode(',', $image);
             $image = base64_decode($image);
             $image_name = time().Str::random(8).'.jpg';
-            $path = 'assets/images/' . $image_name;
+            $path = 'storage/images/' . $image_name;
             file_put_contents($path, $image);
             if ($data->popup_background != null) {
-                if (file_exists(public_path() . '/assets/images/' . $data->popup_background)) {
-                    unlink(public_path() . '/assets/images/' . $data->popup_background);
+                if (file_exists(public_path() . '/storage/images/' . $data->popup_background)) {
+                    unlink(public_path() . '/storage/images/' . $data->popup_background);
                 }
             }
             $input['popup_background'] = $image_name;
@@ -263,7 +262,6 @@ class GeneralSettingController extends Controller
 
         $msg = __('Data Updated Successfully.');
         return response()->json($msg);
-        
     }
 
     public function logo()
@@ -332,13 +330,13 @@ class GeneralSettingController extends Controller
     {
         $generalSettings = Session::has('admstore') ? Session::get('admstore') : $this->storeSettings;
 
-        if(!MelhorenvioConf::find($generalSettings->melhorenvio_id)){
+        if (!MelhorenvioConf::find($generalSettings->melhorenvio_id)) {
             $melhorenvio = MelhorenvioConf::create(['selected_services' => []]);
             $generalSettings->melhorenvio_id = $melhorenvio->id;
             $generalSettings->update();
-        }              
+        }
 
-        $states = State::whereHas('country', function($query){
+        $states = State::whereHas('country', function ($query) {
             $query->where('country_code', 'BR');
         })->get();
 
@@ -349,10 +347,10 @@ class GeneralSettingController extends Controller
     public function loadMelhorenvioCompanies()
     {
         $melhorenvio_companies = MelhorenvioCompany::with('services')->orderBy('id')->get();
-        return view('load.melhorenvio-companies',compact('melhorenvio_companies'));
+        return view('load.melhorenvio-companies', compact('melhorenvio_companies'));
     }
-    
-    
+
+
 
     public function contents()
     {
@@ -446,20 +444,24 @@ class GeneralSettingController extends Controller
     {
         return view('admin.generalsetting.error_banner');
     }
-    
-    public function policy(){
+
+    public function policy()
+    {
         return view('admin.generalsetting.policy');
     }
 
-    public function crowpolicy(){
+    public function crowpolicy()
+    {
         return view('admin.generalsetting.crowpolicy');
     }
 
-    public function vendorpolicy(){
+    public function vendorpolicy()
+    {
         return view('admin.generalsetting.vendorpolicy');
     }
 
-    public function privacypolicy(){
+    public function privacypolicy()
+    {
         return view('admin.generalsetting.privacypolicy');
     }
 
@@ -481,19 +483,18 @@ class GeneralSettingController extends Controller
     public function integrationsJivochat()
     {
         return view('admin.generalsetting.integrations-jivochat');
-    
     }
 
     public function integrationsDisqus()
     {
         return view('admin.generalsetting.integrations-disqus');
-    
     }
 
     public function integrationsCronjob()
     {
-        if(!config('features.marketplace'))
+        if (!config('features.marketplace')) {
             return redirect()->route('admin.dashboard')->with('unsuccess', 'Você não tem acesso a esta página.');
+        }
         return view('admin.generalsetting.integrations-cronjob');
     }
 
@@ -509,14 +510,12 @@ class GeneralSettingController extends Controller
 
     public function ispopup($status)
     {
-
         $data = Session::has('admstore') ? Session::get('admstore') : $this->storeSettings;
         $data->is_popup = $status;
         $data->update();
     }
     public function isnewsletterpopup($status)
     {
-
         $data = Session::has('admstore') ? Session::get('admstore') : $this->storeSettings;
         $data->is_newsletter_popup = $status;
         $data->update();
@@ -529,13 +528,15 @@ class GeneralSettingController extends Controller
         $data->update();
     }
 
-    public function iszipvalidation($status){
+    public function iszipvalidation($status)
+    {
         $data = Session::has('admstore') ? Session::get('admstore') : $this->storeSettings;
         $data->is_zip_validation = $status;
         $data->update();
     }
 
-    public function isattrcards($status){
+    public function isattrcards($status)
+    {
         $data = Session::has('admstore') ? Session::get('admstore') : $this->storeSettings;
         $data->is_attr_cards = $status;
         $data->update();
@@ -543,7 +544,6 @@ class GeneralSettingController extends Controller
 
     public function mship($status)
     {
-
         $data = Session::has('admstore') ? Session::get('admstore') : $this->storeSettings;
         $data->multiple_shipping = $status;
         $data->update();
@@ -552,7 +552,6 @@ class GeneralSettingController extends Controller
 
     public function mpackage($status)
     {
-
         $data = Session::has('admstore') ? Session::get('admstore') : $this->storeSettings;
         $data->multiple_packaging = $status;
         $data->update();
@@ -560,7 +559,6 @@ class GeneralSettingController extends Controller
 
     public function instamojo($status)
     {
-
         $data = Session::has('admstore') ? Session::get('admstore') : $this->storeSettings;
         $data->is_instamojo = $status;
         $data->update();
@@ -569,7 +567,6 @@ class GeneralSettingController extends Controller
 
     public function paystack($status)
     {
-
         $data = Session::has('admstore') ? Session::get('admstore') : $this->storeSettings;
         $data->is_paystack = $status;
         $data->update();
@@ -654,14 +651,14 @@ class GeneralSettingController extends Controller
         $data->is_rede = $status;
         $data->update();
     }
-    
+
     public function rede_sandbox($sandbox)
     {
         $data = Session::has('admstore') ? Session::get('admstore') : $this->storeSettings;
         $data->is_rede_sandbox = $sandbox;
         $data->update();
     }
-    
+
     public function paypal($status)
     {
         $data = Session::has('admstore') ? Session::get('admstore') : $this->storeSettings;
@@ -676,31 +673,36 @@ class GeneralSettingController extends Controller
         $data->update();
     }
 
-    public function paghiper($status){
+    public function paghiper($status)
+    {
         $data = Session::has('admstore') ? Session::get('admstore') : $this->storeSettings;
         $data->is_paghiper = $status;
         $data->update();
     }
 
-    public function paghiperIsDiscount($status){
+    public function paghiperIsDiscount($status)
+    {
         $data = Session::has('admstore') ? Session::get('admstore') : $this->storeSettings;
         $data->paghiper_is_discount = $status;
         $data->update();
     }
 
-    public function paghiperPix($status){
+    public function paghiperPix($status)
+    {
         $data = Session::has('admstore') ? Session::get('admstore') : $this->storeSettings;
         $data->is_paghiper_pix = $status;
         $data->update();
     }
 
-    public function pay42_pix($status){
+    public function pay42_pix($status)
+    {
         $data = Session::has('admstore') ? Session::get('admstore') : $this->storeSettings;
         $data->is_pay42_pix = $status;
         $data->update();
     }
 
-    public function pay42Currency($currency){
+    public function pay42Currency($currency)
+    {
         $data = Session::has('admstore') ? Session::get('admstore') : $this->storeSettings;
         $data->pay42_currency = $currency;
         $data->update();
@@ -727,7 +729,8 @@ class GeneralSettingController extends Controller
         $data->update();
     }
 
-    public function paghiperPixIsDiscount($status){
+    public function paghiperPixIsDiscount($status)
+    {
         $data = Session::has('admstore') ? Session::get('admstore') : $this->storeSettings;
         $data->paghiper_pix_is_discount = $status;
         $data->update();
@@ -735,7 +738,6 @@ class GeneralSettingController extends Controller
 
     public function stripe($status)
     {
-
         $data = Session::has('admstore') ? Session::get('admstore') : $this->storeSettings;
         $data->stripe_check = $status;
         $data->update();
@@ -744,7 +746,7 @@ class GeneralSettingController extends Controller
     public function guest($status)
     {
         $data = Session::has('admstore') ? Session::get('admstore') : $this->storeSettings;
-        if($status == true) {
+        if ($status == true) {
             $data->is_cart_abandonment = false;
             $data->is_complete_profile = false;
         }
@@ -755,7 +757,7 @@ class GeneralSettingController extends Controller
     public function completeProfile($status)
     {
         $data = Session::has('admstore') ? Session::get('admstore') : $this->storeSettings;
-        if($status) {
+        if ($status) {
             $data->guest_checkout = false;
         }
         $data->is_complete_profile = $status;
@@ -772,7 +774,6 @@ class GeneralSettingController extends Controller
 
     public function cod($status)
     {
-
         $data = Session::has('admstore') ? Session::get('admstore') : $this->storeSettings;
         $data->cod_check = $status;
         $data->update();
@@ -780,7 +781,6 @@ class GeneralSettingController extends Controller
 
     public function bankdeposit($status)
     {
-
         $data = Session::has('admstore') ? Session::get('admstore') : $this->storeSettings;
         $data->bank_check = $status;
         $data->update();
@@ -882,19 +882,22 @@ class GeneralSettingController extends Controller
         $data->update();
     }
 
-    public function iscartandbuyavailable($status){
+    public function iscartandbuyavailable($status)
+    {
         $data = Session::has('admstore') ? Session::get('admstore') : $this->storeSettings;
         $data->is_cart_and_buy_available = $status;
         $data->update();
     }
 
-    public function showproductswithoutstock($status){
+    public function showproductswithoutstock($status)
+    {
         $data = Session::has('admstore') ? Session::get('admstore') : $this->storeSettings;
         $data->show_products_without_stock = $status;
         $data->update();
     }
 
-    public function showproductswithoutstockbaw($status){
+    public function showproductswithoutstockbaw($status)
+    {
         $data = Session::has('admstore') ? Session::get('admstore') : $this->storeSettings;
         $data->show_products_without_stock_baw = $status;
         $data->update();
@@ -1022,7 +1025,7 @@ class GeneralSettingController extends Controller
     public function iscomprasparaguai($status)
     {
         $stores = Generalsetting::All();
-        foreach($stores as $data){
+        foreach ($stores as $data) {
             $data->is_comprasparaguai = $status;
             $data->update();
         }
@@ -1031,7 +1034,7 @@ class GeneralSettingController extends Controller
     public function storecomprasparaguai($id)
     {
         $stores = Generalsetting::All();
-        foreach($stores as $data){
+        foreach ($stores as $data) {
             $data->store_comprasparaguai = $id;
             $data->update();
         }
@@ -1040,7 +1043,7 @@ class GeneralSettingController extends Controller
     public function islojaupdate($status)
     {
         $stores = Generalsetting::All();
-        foreach($stores as $data){
+        foreach ($stores as $data) {
             $data->is_lojaupdate = $status;
             $data->update();
         }
@@ -1049,7 +1052,7 @@ class GeneralSettingController extends Controller
     public function storelojaupdate($id)
     {
         $stores = Generalsetting::All();
-        foreach($stores as $data){
+        foreach ($stores as $data) {
             $data->store_lojaupdate = $id;
             $data->update();
         }
@@ -1156,9 +1159,9 @@ class GeneralSettingController extends Controller
     public function iscartabandonment($status)
     {
         $data = Session::has('admstore') ? Session::get('admstore') : $this->storeSettings;
-        if($data->guest_checkout == true){
+        if ($data->guest_checkout == true) {
             $data->is_cart_abandonment = false;
-        } else{
+        } else {
             $data->is_cart_abandonment = $status;
         }
         $data->update();
@@ -1175,44 +1178,40 @@ class GeneralSettingController extends Controller
     {
         $pop_up = Generalsetting::all();
 
-        foreach($pop_up as $data){
-            if($data->popup_background != null){
+        foreach ($pop_up as $data) {
+            if ($data->popup_background != null) {
+                if (file_exists(public_path().'/storage/images/'.$data->popup_background)) {
+                    unlink(public_path().'/storage/images/'.$data->popup_background);
 
-            if (file_exists(public_path().'/assets/images/'.$data->popup_background)) {
-                unlink(public_path().'/assets/images/'.$data->popup_background);
-
-                $input['popup_background'] = null;
-                $data->update($input);
-                $msg = __('Image Deleted Successfully');
-                return response()->json([
+                    $input['popup_background'] = null;
+                    $data->update($input);
+                    $msg = __('Image Deleted Successfully');
+                    return response()->json([
                     'status'=>true,
                     'message' => $msg
                 ]);
-             }
+                }
             }
-     
         }
     }
     public function removemaintenanceBanner()
     {
         $maintenance_banner = Generalsetting::all();
 
-        foreach($maintenance_banner as $data){
-            if($data->maintenance_banner != null){
+        foreach ($maintenance_banner as $data) {
+            if ($data->maintenance_banner != null) {
+                if (file_exists(public_path().'/storage/images/'.$data->maintenance_banner)) {
+                    unlink(public_path().'/storage/images/'.$data->maintenance_banner);
 
-            if (file_exists(public_path().'/assets/images/'.$data->maintenance_banner)) {
-                unlink(public_path().'/assets/images/'.$data->maintenance_banner);
-
-                $input['maintenance_banner'] = null;
-                $data->update($input);
-                $msg = __('Image Deleted Successfully');
-                return response()->json([
+                    $input['maintenance_banner'] = null;
+                    $data->update($input);
+                    $msg = __('Image Deleted Successfully');
+                    return response()->json([
                     'status'=>true,
                     'message' => $msg
                 ]);
-             }
+                }
             }
-     
         }
     }
 
@@ -1220,23 +1219,20 @@ class GeneralSettingController extends Controller
     {
         $error_banner = Generalsetting::all();
 
-        foreach($error_banner as $data){
-            if($data->error_banner != null){
+        foreach ($error_banner as $data) {
+            if ($data->error_banner != null) {
+                if (file_exists(public_path().'/storage/images/'.$data->error_banner)) {
+                    unlink(public_path().'/storage/images/'.$data->error_banner);
 
-            if (file_exists(public_path().'/assets/images/'.$data->error_banner)) {
-                unlink(public_path().'/assets/images/'.$data->error_banner);
-
-                $input['error_banner'] = null;
-                $data->update($input);
-                $msg = __('Image Deleted Successfully');
-                return response()->json([
+                    $input['error_banner'] = null;
+                    $data->update($input);
+                    $msg = __('Image Deleted Successfully');
+                    return response()->json([
                     'status'=>true,
                     'message' => $msg
                 ]);
-             }
+                }
             }
-     
         }
     }
-
 }
