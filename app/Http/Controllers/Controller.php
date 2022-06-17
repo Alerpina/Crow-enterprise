@@ -156,11 +156,11 @@ class Controller extends BaseController
 
         if ($file = $request->file('image')) {
             $name = Str::random(8).time().".".$file->getClientOriginalExtension();
-            $file->move('assets/images/trumbowyg/', $name);
+            $file->move('storage/images/trumbowyg/', $name);
         }
         return response()->json([
             'success' => true,
-            'file' => asset('assets/images/trumbowyg/'.$name)
+            'file' => asset('storage/images/trumbowyg/'.$name)
         ]);
     }
 

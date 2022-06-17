@@ -39,127 +39,135 @@
 					<div class="body-area">
 
 						<div class="gocover"
-							style="background: url({{asset('assets/images/'.$gs->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
+							style="background: url({{asset('storage/images/'.$gs->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
 						</div>
 						<form id="geniusform" action="{{route('admin-import-update',$data->id)}}" method="POST"
 							enctype="multipart/form-data">
-                            {{csrf_field()}}
+							{{csrf_field()}}
 
-                            @include('includes.admin.form-both')
+							@include('includes.admin.form-both')
 
-                            <div class="title-section-form">
-                                <span>1</span>
-                                <h3>
-                                    {{ __('Mandatory Data') }}
-                                </h3>
-                            </div>
+							<div class="title-section-form">
+								<span>1</span>
+								<h3>
+									{{ __('Mandatory Data') }}
+								</h3>
+							</div>
 
-                            <div class="row border-sep"> <!--COMEÇO DA ROW DE DADOS OBRIGATORIOS-->
+							<div class="row border-sep">
+								<!--COMEÇO DA ROW DE DADOS OBRIGATORIOS-->
 
-                                <div class="col-12">
-                                    <div class="input-form">
-										@component('admin.components.input-localized',["required" => true, "from" => $data])
-											@slot('name')
-												name
-											@endslot
-											@slot('placeholder')
-												{{ __('Enter Product Name') }}
-											@endslot
-											@slot('value')
-												name
-											@endslot
-											{{ __('Product Name') }}*
-										@endcomponent
-                                    </div>
-                                </div>
-
-								<div class="col-xl-6">
+								<div class="col-12">
 									<div class="input-form">
-										<h4 class="heading">{{ __("Product Affiliate Link") }}* 
-											<span>{{ __("(External Link)") }}</span>
-										</h4>
-                                        <input type="text" class="input-field" placeholder="{{ __("Enter Product Link") }}"
-										name="affiliate_link" required="" value="{{ $data->affiliate_link }}">
+										@component('admin.components.input-localized',["required" => true, "from" =>
+										$data])
+										@slot('name')
+										name
+										@endslot
+										@slot('placeholder')
+										{{ __('Enter Product Name') }}
+										@endslot
+										@slot('value')
+										name
+										@endslot
+										{{ __('Product Name') }}*
+										@endcomponent
 									</div>
 								</div>
 
-                                <div class="col-xl-6">
-                                    <div class="input-form">
-                                        <h4 class="heading">{{ __('Category') }}*</h4>
-                                        <select id="cat" name="category_id" required="">
+								<div class="col-xl-6">
+									<div class="input-form">
+										<h4 class="heading">{{ __("Product Affiliate Link") }}*
+											<span>{{ __("(External Link)") }}</span>
+										</h4>
+										<input type="text" class="input-field" placeholder="{{ __(" Enter Product Link")
+											}}" name="affiliate_link" required="" value="{{ $data->affiliate_link }}">
+									</div>
+								</div>
+
+								<div class="col-xl-6">
+									<div class="input-form">
+										<h4 class="heading">{{ __('Category') }}*</h4>
+										<select id="cat" name="category_id" required="">
 											<option value="">{{ __("Select Category") }}</option>
 											@foreach($cats as $cat)
 											<option data-href="{{ route('admin-subcat-load',$cat->id) }}"
-											value="{{$cat->id}}" {{$cat->id == $data->category_id ? "selected":""}}>
-											{{$cat->name}}</option>
+												value="{{$cat->id}}" {{$cat->id == $data->category_id ? "selected":""}}>
+												{{$cat->name}}</option>
 											@endforeach
 										</select>
-                                    </div>
-                                </div>
+									</div>
+								</div>
 
-                                <div class="col-xl-6">
-                                    <div class="input-form">
-                                        <div class="d-flex">
-                                            <h4 class="heading">
-                                                {{ __('Product Current Price') }}*
-                                                <span>
-                                                    ({{ __('In') }} {{$sign->name}})
-                                                </span>
-                                            </h4>
-                                        </div>
-                                        <input name="price" step="0.01" type="number" class="input-field"
-										placeholder="{{ __("e.g 20") }}"
-										value="{{round($data->price * $sign->value , 2)}}" required="" min="0">
-                                    </div>
-                                </div>
+								<div class="col-xl-6">
+									<div class="input-form">
+										<div class="d-flex">
+											<h4 class="heading">
+												{{ __('Product Current Price') }}*
+												<span>
+													({{ __('In') }} {{$sign->name}})
+												</span>
+											</h4>
+										</div>
+										<input name="price" step="0.01" type="number" class="input-field"
+											placeholder="{{ __(" e.g 20") }}"
+											value="{{round($data->price * $sign->value , 2)}}" required="" min="0">
+									</div>
+								</div>
 
-                                <div class="col-xl-6">
-                                    <div class="input-form">
-                                        <h4 class="heading">{{ __('Product Sku') }}* </h4>
-										<input type="text" class="input-field" placeholder="{{ __('Enter Product Sku') }}"
-										name="sku" required="" value="{{ $data->sku }}">
-                                    </div>
+								<div class="col-xl-6">
+									<div class="input-form">
+										<h4 class="heading">{{ __('Product Sku') }}* </h4>
+										<input type="text" class="input-field"
+											placeholder="{{ __('Enter Product Sku') }}" name="sku" required=""
+											value="{{ $data->sku }}">
+									</div>
 
-                                </div>
+								</div>
 
-                                <div class="col-xl-6">
-                                    <div class="input-form">
-                                        <h4 class="heading">{{ __('Display in Stores') }}* </h4>
-                                        @foreach($stores as $store)
+								<div class="col-xl-6">
+									<div class="input-form">
+										<h4 class="heading">{{ __('Display in Stores') }}* </h4>
+										@foreach($stores as $store)
 										<div class="row justify-content-left">
 											<div class="col-lg-12 d-flex justify-content-between">
-												<label class="control-label" for="store{{$store->id}}">{{$store->title}} | {{$store->domain}}</label>
+												<label class="control-label" for="store{{$store->id}}">{{$store->title}}
+													| {{$store->domain}}</label>
 												<label class="switch">
-												<input type="checkbox" name="stores[]" id="store{{$store->id}}" value="{{$store->id}}" {{in_array($store->id, $currentStores) ? "checked":""}}>
+													<input type="checkbox" name="stores[]" id="store{{$store->id}}"
+														value="{{$store->id}}" {{in_array($store->id, $currentStores) ?
+													"checked":""}}>
 													<span class="slider round"></span>
 												</label>
 											</div>
 										</div>
 										@endforeach
-                                    </div>
-                                </div>
+									</div>
+								</div>
 
-                                <div class="col-xl-6">
-                                    <div id="catAttributes"></div>
-                                    <div id="subcatAttributes"></div>
-                                    <div id="childcatAttributes"></div>
-                                </div>
+								<div class="col-xl-6">
+									<div id="catAttributes"></div>
+									<div id="subcatAttributes"></div>
+									<div id="childcatAttributes"></div>
+								</div>
 
-                            </div> <!--FINAL DA ROW DE DADOS OBRIGATORIOS-->
+							</div>
+							<!--FINAL DA ROW DE DADOS OBRIGATORIOS-->
 
-                            <div class="title-section-form">
-                                <span>2</span>
-                                <h3>
-                                    {{ __('Important Data') }}
-                                </h3>
-                            </div>
+							<div class="title-section-form">
+								<span>2</span>
+								<h3>
+									{{ __('Important Data') }}
+								</h3>
+							</div>
 
-                            <div class="row border-sep"> <!--COMEÇO DA ROW DE DADOS OPCIONAIS IMPORTANTES-->
+							<div class="row border-sep">
+								<!--COMEÇO DA ROW DE DADOS OPCIONAIS IMPORTANTES-->
 
-                                <div class="col-xl-6">
-                                    <div class="input-form">
-                                        <h4 class="heading">{{ __('Sub Category') }}</h4>
-                                        <select id="subcat" name="subcategory_id">
+								<div class="col-xl-6">
+									<div class="input-form">
+										<h4 class="heading">{{ __('Sub Category') }}</h4>
+										<select id="subcat" name="subcategory_id">
 											<option value="">{{ __("Select Sub Category") }}</option>
 											@if($data->subcategory_id == null)
 											@foreach($data->category->subs as $sub)
@@ -169,20 +177,21 @@
 											@else
 											@foreach($data->category->subs as $sub)
 											<option data-href="{{ route('admin-childcat-load',$sub->id) }}"
-												value="{{$sub->id}}" {{$sub->id == $data->subcategory_id ? "selected":""}}>
+												value="{{$sub->id}}" {{$sub->id == $data->subcategory_id ?
+												"selected":""}}>
 												{{$sub->name}}</option>
 											@endforeach
 											@endif
 
-									</select>
-                                    </div>
-                                </div>
+										</select>
+									</div>
+								</div>
 
-                                <div class="col-xl-6">
-                                    <div class="input-form">
-                                        <h4 class="heading">{{ __('Child Category') }}</h4>
-                                        <select id="childcat" name="childcategory_id"
-											{{$data->subcategory_id == null ? "disabled":""}}>
+								<div class="col-xl-6">
+									<div class="input-form">
+										<h4 class="heading">{{ __('Child Category') }}</h4>
+										<select id="childcat" name="childcategory_id" {{$data->subcategory_id == null ?
+											"disabled":""}}>
 											<option value="">{{ __("Select Child Category") }}</option>
 											@if($data->subcategory_id != null)
 											@if($data->childcategory_id == null)
@@ -191,171 +200,182 @@
 											@endforeach
 											@else
 											@foreach($data->subcategory->childs as $child)
-											<option value="{{$child->id}} "
-												{{$child->id == $data->childcategory_id ? "selected":""}}>{{$child->name}}
+											<option value="{{$child->id}} " {{$child->id == $data->childcategory_id ?
+												"selected":""}}>{{$child->name}}
 											</option>
 											@endforeach
 											@endif
 											@endif
 										</select>
-                                    </div>
-                                </div>
+									</div>
+								</div>
 
 								<div class="col-xl-6">
 									<div class="input-form">
 										<h4 class="heading">{{ __("Feature Image Source") }}*</h4>
 										<select id="imageSource" name="image_source">
-											<option value="file"
-												{{ !filter_var($data->photo,FILTER_VALIDATE_URL) ? 'selected' : '' }}>
+											<option value="file" {{ !filter_var($data->photo,FILTER_VALIDATE_URL) ?
+												'selected' : '' }}>
 												{{ __("File") }}</option>
-											<option value="link"
-												{{ filter_var($data->photo,FILTER_VALIDATE_URL) ? 'selected' : '' }}>
+											<option value="link" {{ filter_var($data->photo,FILTER_VALIDATE_URL) ?
+												'selected' : '' }}>
 												{{ __("Link") }}</option>
 										</select>
 									</div>
 
 									<div class="input-form">
-                                        <h4 class="heading">
-                                            {{ __('Product Gallery Images') }}
-                                        </h4>
-                                        <a href="#" class="set-gallery-product" data-toggle="modal" data-target="#setgallery">
+										<h4 class="heading">
+											{{ __('Product Gallery Images') }}
+										</h4>
+										<a href="#" class="set-gallery-product" data-toggle="modal"
+											data-target="#setgallery">
 											<input type="hidden" value="{{$data->id}}">
-                                            <i class="icofont-plus"></i> {{ __('Set Gallery') }}
-                                        </a>
-                                    </div>
+											<i class="icofont-plus"></i> {{ __('Set Gallery') }}
+										</a>
+									</div>
 
-                                    <div class="checkbox-wrapper list list-personalizada">
+									<div class="checkbox-wrapper list list-personalizada">
 										<input type="checkbox" name="product_condition_check" class="checkclick1"
-											id="conditionCheck" value="1"
-											{{ $data->product_condition != 0 ? "checked":"" }}>
-                                        <label for="conditionCheck">{{ __('Allow Product Condition') }}</label>
-                                    </div>
+											id="conditionCheck" value="1" {{ $data->product_condition != 0 ?
+										"checked":"" }}>
+										<label for="conditionCheck">{{ __('Allow Product Condition') }}</label>
+									</div>
 
-                                    <div class='{{ $data->product_condition == 0 ? "showbox":"" }}" input-form'>
-                                        <h4 class="heading">{{ __('Product Condition') }}*</h4>
-                                        <select name="product_condition">
-											<option value="2" {{$data->product_condition == 2 
-                                                    ? "selected":""}}>{{ __("New") }}</option>
-											<option value="1" {{$data->product_condition == 1 
-                                                    ? "selected":""}}>{{ __("Used") }}</option>
+									<div class='{{ $data->product_condition == 0 ? "showbox":"" }}" input-form'>
+										<h4 class="heading">{{ __('Product Condition') }}*</h4>
+										<select name="product_condition">
+											<option value="2" {{$data->product_condition == 2
+												? "selected":""}}>{{ __("New") }}</option>
+											<option value="1" {{$data->product_condition == 1
+												? "selected":""}}>{{ __("Used") }}</option>
 										</select>
-                                    </div>
-									
+									</div>
+
 								</div>
 
-                                <div class="col-xl-6">
+								<div class="col-xl-6">
 
-                                    <div class="input-form" id="f-file" style="display:flex;flex-direction:column;align-items:center;" {!! filter_var($data->photo,FILTER_VALIDATE_URL) ? 'style="display:none"' :
-								'' !!}>
-                                        <h4 class="heading">{{ __('Feature Image') }} </h4>
-                                        <div class="row">
-                                            <div class="panel panel-body">
-                                                <div class="span4 cropme text-center img-form-product" id="landscape">
-                                                </div>
-                                            </div>
-                                        </div>
+									<div class="input-form" id="f-file"
+										style="display:flex;flex-direction:column;align-items:center;" {!!
+										filter_var($data->photo,FILTER_VALIDATE_URL) ? 'style="display:none"' :
+										'' !!}>
+										<h4 class="heading">{{ __('Feature Image') }} </h4>
+										<div class="row">
+											<div class="panel panel-body">
+												<div class="span4 cropme text-center img-form-product" id="landscape">
+												</div>
+											</div>
+										</div>
 
-                                        <a href="javascript:;" id="crop-image" class="d-inline-block mybtn1">
-                                            <i class="icofont-upload-alt"></i> {{ __('Upload Image Here') }}
-                                        </a>
-                                    </div>
+										<a href="javascript:;" id="crop-image" class="d-inline-block mybtn1">
+											<i class="icofont-upload-alt"></i> {{ __('Upload Image Here') }}
+										</a>
+									</div>
 
-									<div id="f-link" class="input-form" {!! !filter_var($data->photo,FILTER_VALIDATE_URL) ? 'style="display:none"'
-								: '' !!}>
+									<div id="f-link" class="input-form" {!! !filter_var($data->
+										photo,FILTER_VALIDATE_URL) ? 'style="display:none"'
+										: '' !!}>
 										<h4 class="heading">{{ __("Feature Image Link") }}*</h4>
 										<input type="text" name="photolink" value="{{ $data->photo }}"
 											class="input-field">
 									</div>
 
-                                </div>
+								</div>
 
 
-                                <div class="col-xl-12">
-                                    <div class="input-form">
-										@component('admin.components.input-localized',["from" => $data, "type" => "richtext"])
-											@slot('name')
-												details
-											@endslot
-											@slot('value')
-												details
-											@endslot
-											{{ __('Product Description') }}
+								<div class="col-xl-12">
+									<div class="input-form">
+										@component('admin.components.input-localized',["from" => $data, "type" =>
+										"richtext"])
+										@slot('name')
+										details
+										@endslot
+										@slot('value')
+										details
+										@endslot
+										{{ __('Product Description') }}
 										@endcomponent
-                                    </div>
-                                </div>
+									</div>
+								</div>
 
-                                <div class="col-xl-12">
-                                    <div class="input-form">
-										@component('admin.components.input-localized',["from" => $data, "type" => "richtext"])
-											@slot('name')
-												policy
-											@endslot
-											@slot('value')
-												policy
-											@endslot
-											{{ __('Product Buy/Return Policy') }}
+								<div class="col-xl-12">
+									<div class="input-form">
+										@component('admin.components.input-localized',["from" => $data, "type" =>
+										"richtext"])
+										@slot('name')
+										policy
+										@endslot
+										@slot('value')
+										policy
+										@endslot
+										{{ __('Product Buy/Return Policy') }}
 										@endcomponent
-                                    </div>
-                                </div>
+									</div>
+								</div>
 
-                            </div> <!--FINAL DA ROW DE DADOS OPCIONAIS IMPORTANTES-->
+							</div>
+							<!--FINAL DA ROW DE DADOS OPCIONAIS IMPORTANTES-->
 
-                            <div class="title-section-form">
-                                <span>3</span>
-                                <h3>
-                                    {{ __('Extra Data') }}
-                                </h3>
-                            </div>
+							<div class="title-section-form">
+								<span>3</span>
+								<h3>
+									{{ __('Extra Data') }}
+								</h3>
+							</div>
 
-                            <div class="row"> <!--COMEÇO DA ROW DE DADOS EXTRAS-->
+							<div class="row">
+								<!--COMEÇO DA ROW DE DADOS EXTRAS-->
 
-                                <div class="col-xl-6">
-                                    <div class="form-list">
-                                        <ul class="list list-personalizada">
-                                            <li>
-                                                <input class="checkclick" name="shipping_time_check" type="checkbox"
-                                                    id="check1" value="1" {{$data->ship != null ? "checked":""}}>
-                                                <label for="check1">{{ __('Allow Estimated Shipping Time') }}</label>
-                                            </li>
-                                        </ul>
-                                        
-                                        <div class='{{ $data->ship != null ? "":"showbox" }} input-form'>
-                                            
-                                    
+								<div class="col-xl-6">
+									<div class="form-list">
+										<ul class="list list-personalizada">
+											<li>
+												<input class="checkclick" name="shipping_time_check" type="checkbox"
+													id="check1" value="1" {{$data->ship != null ? "checked":""}}>
+												<label for="check1">{{ __('Allow Estimated Shipping Time') }}</label>
+											</li>
+										</ul>
+
+										<div class='{{ $data->ship != null ? "":"showbox" }} input-form'>
+
+
 											@component('admin.components.input-localized',["from" => $data])
-												@slot('name')
-												ship
-												@endslot
-												@slot('placeholder')
-												{{ __('Estimated Shipping Time') }}
-												@endslot
-												@slot('value')
-												ship
-												@endslot
-												{{ __('Product Estimated Shipping Time') }}
+											@slot('name')
+											ship
+											@endslot
+											@slot('placeholder')
+											{{ __('Estimated Shipping Time') }}
+											@endslot
+											@slot('value')
+											ship
+											@endslot
+											{{ __('Product Estimated Shipping Time') }}
 											@endcomponent
-                        
 
-                                        </div>
-                                    </div>
-                                </div><!--FECHAMENTO COL-XL-6-->
 
-                                <div class="col-xl-6">
-                                    <ul class="list list-personalizada">
-                                        <li>
-                                            <input name="size_check" type="checkbox" id="size-check" value="1" {{ !empty($data->size) ? "checked":"" }}>
-                                            <label for="size-check">{{ __('Allow Product Sizes') }}</label>
-                                        </li>
-                                    </ul>
+										</div>
+									</div>
+								</div>
+								<!--FECHAMENTO COL-XL-6-->
 
-                                    <div class='{{ !empty($data->size) ? "":"showbox" }} input-form' id="size-display">
-                                        <div class="row">
-                                            <div class="col-xl-12">
-											<div class="product-size-details" id="size-section">
+								<div class="col-xl-6">
+									<ul class="list list-personalizada">
+										<li>
+											<input name="size_check" type="checkbox" id="size-check" value="1" {{
+												!empty($data->size) ? "checked":"" }}>
+											<label for="size-check">{{ __('Allow Product Sizes') }}</label>
+										</li>
+									</ul>
+
+									<div class='{{ !empty($data->size) ? "":"showbox" }} input-form' id="size-display">
+										<div class="row">
+											<div class="col-xl-12">
+												<div class="product-size-details" id="size-section">
 													@if(!empty($data->size))
 													@foreach($data->size as $key => $data1)
 													<div class="size-area">
-														<span class="remove size-remove"><i class="fas fa-times"></i></span>
+														<span class="remove size-remove"><i
+																class="fas fa-times"></i></span>
 														<div class="row">
 															<div class="col-md-4 col-sm-6">
 																<label>
@@ -375,18 +395,20 @@
 																		{{ __("(Number of quantity of this size)") }}
 																	</span>
 																</label>
-																<input type="number" name="size_qty[]" class="input-field"
-																	placeholder="{{__('Size Qty')}}" min="1"
-																	value="{{ $data->size_qty[$key] }}">
+																<input type="number" name="size_qty[]"
+																	class="input-field" placeholder="{{__('Size Qty')}}"
+																	min="1" value="{{ $data->size_qty[$key] }}">
 															</div>
 															<div class="col-md-4 col-sm-6">
 																<label>
 																	{{ __("Size Price") }} :
 																	<span>
-																		{{ __("(This price will be added with base price)") }}
+																		{{ __("(This price will be added with base
+																		price)") }}
 																	</span>
 																</label>
-																<input type="number" step="0.01" name="size_price[]" class="input-field"
+																<input type="number" step="0.01" name="size_price[]"
+																	class="input-field"
 																	placeholder="{{__('Size Price')}}" min="0"
 																	value="{{ $data->size_price[$key] }}">
 															</div>
@@ -395,7 +417,8 @@
 													@endforeach
 													@else
 													<div class="size-area">
-														<span class="remove size-remove"><i class="fas fa-times"></i></span>
+														<span class="remove size-remove"><i
+																class="fas fa-times"></i></span>
 														<div class="row">
 															<div class="col-md-4 col-sm-6">
 																<label>
@@ -414,109 +437,122 @@
 																		{{ __("(Number of quantity of this size)") }}
 																	</span>
 																</label>
-																<input type="number" name="size_qty[]" class="input-field"
-																	placeholder="{{ __('Size Qty') }}" value="1" min="1">
+																<input type="number" name="size_qty[]"
+																	class="input-field"
+																	placeholder="{{ __('Size Qty') }}" value="1"
+																	min="1">
 															</div>
 															<div class="col-md-4 col-sm-6">
 																<label>
 																	{{ __("Size Price") }} :
 																	<span>
-																		{{ __("(This price will be added with base price)") }}
+																		{{ __("(This price will be added with base
+																		price)") }}
 																	</span>
 																</label>
-																<input type="number" step="0.01" name="size_price[]" class="input-field"
-																	placeholder="{{ __('Size Price') }}" value="0" min="0">
+																<input type="number" step="0.01" name="size_price[]"
+																	class="input-field"
+																	placeholder="{{ __('Size Price') }}" value="0"
+																	min="0">
 															</div>
 														</div>
 													</div>
 													@endif
 												</div>
 
-                                                <a href="javascript:;" id="size-btn" class="add-more"><i
-                                                        class="fas fa-plus"></i>{{ __('Add More Size') }} </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                </div> <!--FECHAMENTO COL-XL-6-->
+												<a href="javascript:;" id="size-btn" class="add-more"><i
+														class="fas fa-plus"></i>{{ __('Add More Size') }} </a>
+											</div>
+										</div>
+									</div>
 
-                                <div class="col-xl-6">
-                                    <ul class="list list-personalizada">
-                                        <li>
-                                            <input class="checkclick" name="color_check" type="checkbox" id="check3"
-                                                value="1" {{ !empty($data->color) ? "checked":"" }}>
-                                            <label for="check3">{{ __('Allow Product Colors') }}</label>
-                                        </li>
-                                    </ul>
-                                    <div class='{{ !empty($data->color) ? "":"showbox" }}'>
+								</div>
+								<!--FECHAMENTO COL-XL-6-->
 
-                                        <div class="row">
+								<div class="col-xl-6">
+									<ul class="list list-personalizada">
+										<li>
+											<input class="checkclick" name="color_check" type="checkbox" id="check3"
+												value="1" {{ !empty($data->color) ? "checked":"" }}>
+											<label for="check3">{{ __('Allow Product Colors') }}</label>
+										</li>
+									</ul>
+									<div class='{{ !empty($data->color) ? "":"showbox" }}'>
+
+										<div class="row">
 
 											@if(!empty($data->color))
 											<div class="col-12">
-                                                <div class="input-form">
-                                                    <h4 class="heading">
-                                                        {{ __('Product Colors') }}
-                                                    </h4>
-                                                    <p class="sub-heading">
-                                                        {{ __('(Choose Your Favorite Colors)') }}
-                                                    </p>
-                                                    <div class="select-input-color" id="color-section">
-                                                        @foreach($data->color as $key => $data1)
+												<div class="input-form">
+													<h4 class="heading">
+														{{ __('Product Colors') }}
+													</h4>
+													<p class="sub-heading">
+														{{ __('(Choose Your Favorite Colors)') }}
+													</p>
+													<div class="select-input-color" id="color-section">
+														@foreach($data->color as $key => $data1)
 														<div class="color-area">
-															<span class="remove color-remove"><i class="fas fa-times"></i></span>
+															<span class="remove color-remove"><i
+																	class="fas fa-times"></i></span>
 															<div class="input-group colorpicker-component cp">
-																<input type="text" name="color[]" value="{{ $data->color[$key] }}"
+																<input type="text" name="color[]"
+																	value="{{ $data->color[$key] }}"
 																	class="input-field cp" />
 																<span class="input-group-addon"><i></i></span>
 															</div>
 														</div>
 														@endforeach
-                                                    </div>
-                                                    <a href="javascript:;" id="color-btn" class="add-more mt-4 mb-3"><i
-                                                            class="fas fa-plus"></i>{{ __('Add More Color') }} </a>
-                                                </div>
-                                            </div>
+													</div>
+													<a href="javascript:;" id="color-btn" class="add-more mt-4 mb-3"><i
+															class="fas fa-plus"></i>{{ __('Add More Color') }} </a>
+												</div>
+											</div>
 
 											@else
-                                            <div class="col-12">
-                                                <div class="input-form">
-                                                    <h4 class="heading">
-                                                        {{ __('Product Colors') }}
-                                                    </h4>
-                                                    <p class="sub-heading">
-                                                        {{ __('(Choose Your Favorite Colors)') }}
-                                                    </p>
-                                                    <div class="select-input-color" id="color-section">
-                                                        <div class="color-area">
-                                                            <span class="remove color-remove"><i class="fas fa-times"></i></span>
-                                                            <div class="input-group colorpicker-component cp">
-                                                                <input type="text" name="color[]" value="#000000"
-                                                                    class="input-field cp" />
-                                                                <span class="input-group-addon"><i></i></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <a href="javascript:;" id="color-btn" class="add-more mt-4 mb-3"><i
-                                                            class="fas fa-plus"></i>{{ __('Add More Color') }} </a>
-                                                </div>
-                                            </div>
+											<div class="col-12">
+												<div class="input-form">
+													<h4 class="heading">
+														{{ __('Product Colors') }}
+													</h4>
+													<p class="sub-heading">
+														{{ __('(Choose Your Favorite Colors)') }}
+													</p>
+													<div class="select-input-color" id="color-section">
+														<div class="color-area">
+															<span class="remove color-remove"><i
+																	class="fas fa-times"></i></span>
+															<div class="input-group colorpicker-component cp">
+																<input type="text" name="color[]" value="#000000"
+																	class="input-field cp" />
+																<span class="input-group-addon"><i></i></span>
+															</div>
+														</div>
+													</div>
+													<a href="javascript:;" id="color-btn" class="add-more mt-4 mb-3"><i
+															class="fas fa-plus"></i>{{ __('Add More Color') }} </a>
+												</div>
+											</div>
 											@endif
-                
-                                        </div>
 
-                                    </div>
-                                </div><!--FECHAMENTO COL-XL-6-->
+										</div>
+
+									</div>
+								</div>
+								<!--FECHAMENTO COL-XL-6-->
 
 								<div class="col-xl-6">
 
 									<div class="checkbox-wrapper list list-personalizada">
-										<input type="checkbox" name="measure_check" class="checkclick1" id="allowProductMeasurement" value="1" {{ $data->measure == null ? '' : 'checked' }}>
-										<label for="allowProductMeasurement">{{ __('Allow Product Measurement') }}</label>
+										<input type="checkbox" name="measure_check" class="checkclick1"
+											id="allowProductMeasurement" value="1" {{ $data->measure == null ? '' :
+										'checked' }}>
+										<label for="allowProductMeasurement">{{ __('Allow Product Measurement')
+											}}</label>
 									</div>
 
 									<div class="{{ $data->measure == null ? 'showbox' : '' }} input-form">
-												
+
 										<h4 class="heading">{{ __('Product Measurement') }}</h4>
 										<select id="product_measure">
 											<option value="" {{$data->measure == null ? 'selected':''}}>{{ __("None") }}
@@ -529,255 +565,292 @@
 												{{ __("Litre") }}</option>
 											<option value="Pound" {{$data->measure == 'Pound' ? 'selected':''}}>
 												{{ __("Pound") }}</option>
-											<option value="Custom"
-												{{ in_array($data->measure,explode(',', 'Gram,Kilogram,Litre,Pound')) ? '' : 'selected' }}>
+											<option value="Custom" {{ in_array($data->measure,explode(',',
+												'Gram,Kilogram,Litre,Pound')) ? '' : 'selected' }}>
 												{{ __("Custom") }}</option>
 										</select>
-										<div class="{{ in_array($data->measure,explode(',', 'Gram,Kilogram,Litre,Pound')) ? 'hidden' : '' }}" id="measure">
+										<div class="{{ in_array($data->measure,explode(',', 'Gram,Kilogram,Litre,Pound')) ? 'hidden' : '' }}"
+											id="measure">
 											<input name="measure" type="text" id="measurement" class="input-field"
-													placeholder="{{ __('Enter Unit') }}" value="{{$data->measure}}">
+												placeholder="{{ __('Enter Unit') }}" value="{{$data->measure}}">
 										</div>
 
 									</div>
 
-								</div> <!--FINAL ROW COL-XL-6-->
+								</div>
+								<!--FINAL ROW COL-XL-6-->
 
-                                <div class="col-xl-6">
-                                    <div class="input-form">
-                                        <h4 class="heading">
-                                            {{ __('Product Previous Price') }}
-                                            <span>{{ __('(Optional)') }}</span>
-                                        </h4>
-                                        <input name="previous_price" step="0.01" type="number" class="input-field"
-										placeholder="{{ __("e.g 20") }}"
-										value="{{round($data->previous_price * $sign->value , 2)}}" min="0">
-                                    </div>
-                                </div> <!--FINAL ROW COL-XL-6-->
+								<div class="col-xl-6">
+									<div class="input-form">
+										<h4 class="heading">
+											{{ __('Product Previous Price') }}
+											<span>{{ __('(Optional)') }}</span>
+										</h4>
+										<input name="previous_price" step="0.01" type="number" class="input-field"
+											placeholder="{{ __(" e.g 20") }}"
+											value="{{round($data->previous_price * $sign->value , 2)}}" min="0">
+									</div>
+								</div>
+								<!--FINAL ROW COL-XL-6-->
 
-                                <div class="col-xl-6">
-                                    <div class="input-form">
-                                        <h4 class="heading">{{ __('Product Stock') }}
-                                            <span>
-                                                {{ __('(Leave Empty will Show Always Available)') }}
-                                            </span>
-                                        </h4>
-                                        <input name="stock" type="text" class="input-field"
-											placeholder="{{ __("e.g 20") }}" value="{{ $data->stock }}">
-                                        
-                                    </div>
-                                </div>
+								<div class="col-xl-6">
+									<div class="input-form">
+										<h4 class="heading">{{ __('Product Stock') }}
+											<span>
+												{{ __('(Leave Empty will Show Always Available)') }}
+											</span>
+										</h4>
+										<input name="stock" type="text" class="input-field" placeholder="{{ __(" e.g
+											20") }}" value="{{ $data->stock }}">
 
-                                <div class="col-xl-12">
-                                    <div class="title-section-form"></div>
-                                </div>
+									</div>
+								</div>
 
-                                <div class="col-xl-6">
-                                    <div class="featured-keyword-area input-form">
-                                        <h4 class="heading">
-                                            {{ __('Feature Tags') }}
-                                        </h4>
+								<div class="col-xl-12">
+									<div class="title-section-form"></div>
+								</div>
 
-                                        <div class="feature-tag-top-filds" id="feature-section">
+								<div class="col-xl-6">
+									<div class="featured-keyword-area input-form">
+										<h4 class="heading">
+											{{ __('Feature Tags') }}
+										</h4>
+
+										<div class="feature-tag-top-filds" id="feature-section">
 											@php
 											$currentFeature = 0;
 											@endphp
 
 											@if(!empty($data->features))
 
-												@foreach($data->features as $key => $data1)
+											@foreach($data->features as $key => $data1)
 
-												@php
-												$currentFeature += 1;
-												@endphp
+											@php
+											$currentFeature += 1;
+											@endphp
 
-												<div class="feature-area mb-3">
-													<span class="remove feature-remove"><i class="fas fa-times"></i></span>
-													<div class="row mb-0">
-														<div class="col-lg-6">
-															<div class="panel panel-lang">
-																<div class="panel-body">
-																	<div class="tab-content">
-																		<div role="tabpanel" class="tab-pane active" id="{{$lang->locale}}-features{{$currentFeature}}">
-																			<input type="text" name="{{$lang->locale}}[features][]" class="input-field" placeholder="{{ __('Enter Your Keyword') }}" value="{{ $data->features[$key] }}">
-																		</div>
-																		@foreach($locales as $loc)
-																			@if($loc->locale === $lang->locale)
-																				@continue
-																			@endif
-																			@php
-																			$transFeature = explode(',', $data->translate($loc->locale)->features);
-																			@endphp
-																			<div role="tabpanel" class="tab-pane" id="{{$loc->locale}}-features{{$currentFeature}}">
-																				<input type="text" name="{{$loc->locale}}[features][]" class="input-field" placeholder="{{ __('Enter Your Keyword') }}" value="{{ $transFeature[$key] ?? '' }}">
-																			</div>
-																		@endforeach
+											<div class="feature-area mb-3">
+												<span class="remove feature-remove"><i class="fas fa-times"></i></span>
+												<div class="row mb-0">
+													<div class="col-lg-6">
+														<div class="panel panel-lang">
+															<div class="panel-body">
+																<div class="tab-content">
+																	<div role="tabpanel" class="tab-pane active"
+																		id="{{$lang->locale}}-features{{$currentFeature}}">
+																		<input type="text"
+																			name="{{$lang->locale}}[features][]"
+																			class="input-field"
+																			placeholder="{{ __('Enter Your Keyword') }}"
+																			value="{{ $data->features[$key] }}">
 																	</div>
+																	@foreach($locales as $loc)
+																	@if($loc->locale === $lang->locale)
+																	@continue
+																	@endif
+																	@php
+																	$transFeature = explode(',',
+																	$data->translate($loc->locale)->features);
+																	@endphp
+																	<div role="tabpanel" class="tab-pane"
+																		id="{{$loc->locale}}-features{{$currentFeature}}">
+																		<input type="text"
+																			name="{{$loc->locale}}[features][]"
+																			class="input-field"
+																			placeholder="{{ __('Enter Your Keyword') }}"
+																			value="{{ $transFeature[$key] ?? '' }}">
+																	</div>
+																	@endforeach
 																</div>
 															</div>
 														</div>
-
-														<div class="col-lg-6">
-															<div class="input-group colorpicker-component cp">
-															<input type="text" name="colors[]" value="{{ $data->colors[$key] }}" class="input-field cp"/>
-															<span class="input-group-addon"><i></i></span>
-															</div>
-														</div>
 													</div>
-													<div class="panel panel-lang">
-														<div class="panel-footer">
-															<ul class="nav nav-pills" role="tablist">
-																<li role="presentation" class="active">
-																	<a href="#{{$lang->locale}}-features{{$currentFeature}}" class="active" aria-controls="{{$lang->locale}}-features{{$currentFeature}}"
-																		role="tab" data-toggle="tab">
-																		{{$lang->language}}
-																	</a>
-																</li>
-																@foreach ($locales as $loc)
-																	@if($loc->locale === $lang->locale)
-																		@continue
-																	@endif
-																	<li role="presentation">
-																		<a href="#{{$loc->locale}}-features{{$currentFeature}}" aria-controls="{{$loc->locale}}-features{{$currentFeature}}"
-																			role="tab" data-toggle="tab">
-																			{{$loc->language}}
-																		</a>
-																	</li>
-																@endforeach
-															</ul>
+
+													<div class="col-lg-6">
+														<div class="input-group colorpicker-component cp">
+															<input type="text" name="colors[]"
+																value="{{ $data->colors[$key] }}"
+																class="input-field cp" />
+															<span class="input-group-addon"><i></i></span>
 														</div>
 													</div>
 												</div>
+												<div class="panel panel-lang">
+													<div class="panel-footer">
+														<ul class="nav nav-pills" role="tablist">
+															<li role="presentation" class="active">
+																<a href="#{{$lang->locale}}-features{{$currentFeature}}"
+																	class="active"
+																	aria-controls="{{$lang->locale}}-features{{$currentFeature}}"
+																	role="tab" data-toggle="tab">
+																	{{$lang->language}}
+																</a>
+															</li>
+															@foreach ($locales as $loc)
+															@if($loc->locale === $lang->locale)
+															@continue
+															@endif
+															<li role="presentation">
+																<a href="#{{$loc->locale}}-features{{$currentFeature}}"
+																	aria-controls="{{$loc->locale}}-features{{$currentFeature}}"
+																	role="tab" data-toggle="tab">
+																	{{$loc->language}}
+																</a>
+															</li>
+															@endforeach
+														</ul>
+													</div>
+												</div>
+											</div>
 
 
-												@endforeach
+											@endforeach
 											@else
 											<div class="feature-area mb-3">
 												<span class="remove feature-remove"><i class="fas fa-times"></i></span>
-													<div class="row mb-0">
-														<div class="col-lg-6">
-															<div class="panel panel-lang">
-																<div class="panel-body">
-																	<div class="tab-content">
-																		<div role="tabpanel" class="tab-pane active" id="{{$lang->locale}}-features{{$currentFeature}}">
-																			<input type="text" name="{{$lang->locale}}[features][]" class="input-field" placeholder="{{ __('Enter Your Keyword') }}">
-																		</div>
-																		@foreach($locales as $loc)
-																			@if($loc->locale === $lang->locale)
-																				@continue
-																			@endif
-																			<div role="tabpanel" class="tab-pane" id="{{$loc->locale}}-features{{$currentFeature}}">
-																				<input type="text" name="{{$loc->locale}}[features][]" class="input-field" placeholder="{{ __('Enter Your Keyword') }}">
-																			</div>
-																		@endforeach
+												<div class="row mb-0">
+													<div class="col-lg-6">
+														<div class="panel panel-lang">
+															<div class="panel-body">
+																<div class="tab-content">
+																	<div role="tabpanel" class="tab-pane active"
+																		id="{{$lang->locale}}-features{{$currentFeature}}">
+																		<input type="text"
+																			name="{{$lang->locale}}[features][]"
+																			class="input-field"
+																			placeholder="{{ __('Enter Your Keyword') }}">
 																	</div>
+																	@foreach($locales as $loc)
+																	@if($loc->locale === $lang->locale)
+																	@continue
+																	@endif
+																	<div role="tabpanel" class="tab-pane"
+																		id="{{$loc->locale}}-features{{$currentFeature}}">
+																		<input type="text"
+																			name="{{$loc->locale}}[features][]"
+																			class="input-field"
+																			placeholder="{{ __('Enter Your Keyword') }}">
+																	</div>
+																	@endforeach
 																</div>
 															</div>
 														</div>
-
-														<div class="col-lg-6">
-															<div class="input-group colorpicker-component cp">
-															<input type="text" name="colors[]" value="#000000" class="input-field cp"/>
-															<span class="input-group-addon"><i></i></span>
-															</div>
-														</div>
 													</div>
-													<div class="panel panel-lang">
-														<div class="panel-footer">
-															<ul class="nav nav-pills" role="tablist">
-																<li role="presentation" class="active">
-																	<a href="#{{$lang->locale}}-features{{$currentFeature}}" class="active" aria-controls="{{$lang->locale}}-features{{$currentFeature}}"
-																		role="tab" data-toggle="tab">
-																		{{$lang->language}}
-																	</a>
-																</li>
-																@foreach ($locales as $loc)
-																	@if($loc->locale === $lang->locale)
-																		@continue
-																	@endif
-																	<li role="presentation">
-																		<a href="#{{$loc->locale}}-features{{$currentFeature}}" aria-controls="{{$loc->locale}}-features{{$currentFeature}}"
-																			role="tab" data-toggle="tab">
-																			{{$loc->language}}
-																		</a>
-																	</li>
-																@endforeach
-															</ul>
+
+													<div class="col-lg-6">
+														<div class="input-group colorpicker-component cp">
+															<input type="text" name="colors[]" value="#000000"
+																class="input-field cp" />
+															<span class="input-group-addon"><i></i></span>
 														</div>
 													</div>
 												</div>
+												<div class="panel panel-lang">
+													<div class="panel-footer">
+														<ul class="nav nav-pills" role="tablist">
+															<li role="presentation" class="active">
+																<a href="#{{$lang->locale}}-features{{$currentFeature}}"
+																	class="active"
+																	aria-controls="{{$lang->locale}}-features{{$currentFeature}}"
+																	role="tab" data-toggle="tab">
+																	{{$lang->language}}
+																</a>
+															</li>
+															@foreach ($locales as $loc)
+															@if($loc->locale === $lang->locale)
+															@continue
+															@endif
+															<li role="presentation">
+																<a href="#{{$loc->locale}}-features{{$currentFeature}}"
+																	aria-controls="{{$loc->locale}}-features{{$currentFeature}}"
+																	role="tab" data-toggle="tab">
+																	{{$loc->language}}
+																</a>
+															</li>
+															@endforeach
+														</ul>
+													</div>
+												</div>
+											</div>
 											@endif
 										</div>
 
-                                        <a href="javascript:;" id="feature-btn" class="add-fild-btn"><i
-                                                class="icofont-plus"></i> {{ __('Add More Field') }}</a>
-                                    </div>
-                                </div><!--FINAL ROW COL-XL-6-->
+										<a href="javascript:;" id="feature-btn" class="add-fild-btn"><i
+												class="icofont-plus"></i> {{ __('Add More Field') }}</a>
+									</div>
+								</div>
+								<!--FINAL ROW COL-XL-6-->
 
-                                <div class="col-xl-6">
-                                    <div class="input-form">
-                                        <h4 class="heading">
-                                            {{ __('Youtube Video URL') }}
-                                            <span>
-                                                {{ __('(Optional)') }}
-                                            </span>
-                                        </h4>
-                                        <input name="youtube" type="text" class="input-field"
-										placeholder="{{ __("Enter Youtube Video URL") }}" value="{{$data->youtube}}">
-                                    </div>
+								<div class="col-xl-6">
+									<div class="input-form">
+										<h4 class="heading">
+											{{ __('Youtube Video URL') }}
+											<span>
+												{{ __('(Optional)') }}
+											</span>
+										</h4>
+										<input name="youtube" type="text" class="input-field" placeholder="{{ __(" Enter
+											Youtube Video URL") }}" value="{{$data->youtube}}">
+									</div>
 
-                                    
 
-                                    <div class="checkbox-wrapper list list-personalizada">
-                                        <input type="checkbox" name="seo_check" value="1" class="checkclick1"
-                                            id="allowProductSEO" value="1" {{ ($data->meta_tag != null || strip_tags($data->meta_description) != null) ? 'checked':'' }}>
-                                        <label for="allowProductSEO">{{ __('Allow Product SEO') }}</label>
-                                    </div>
 
-                                    <div class="{{ ($data->meta_tag == null && strip_tags($data->meta_description) == null) ? "showbox":"" }}">
-                
-                                        <div class="input-form">
-											@component('admin.components.input-localized',["from" => $data, "type" => "tags"])
-												@slot('name')
-													meta_tag
-												@endslot
-												@slot('value')
-													meta_tag
-												@endslot
-												{{ __('Meta Tags') }}
+									<div class="checkbox-wrapper list list-personalizada">
+										<input type="checkbox" name="seo_check" value="1" class="checkclick1"
+											id="allowProductSEO" value="1" {{ ($data->meta_tag != null ||
+										strip_tags($data->meta_description) != null) ? 'checked':'' }}>
+										<label for="allowProductSEO">{{ __('Allow Product SEO') }}</label>
+									</div>
+
+									<div class="{{ ($data->meta_tag == null && strip_tags($data->meta_description) == null) ? "
+										showbox":"" }}">
+
+										<div class="input-form">
+											@component('admin.components.input-localized',["from" => $data, "type" =>
+											"tags"])
+											@slot('name')
+											meta_tag
+											@endslot
+											@slot('value')
+											meta_tag
+											@endslot
+											{{ __('Meta Tags') }}
 											@endcomponent
-                                        </div>
+										</div>
 
-                                        <div class="input-form">
-											@component('admin.components.input-localized',["from" => $data, "type" => "textarea"])
-												@slot('name')
-													meta_description
-												@endslot
-												@slot('placeholder')
-													{{ __('Details') }}
-												@endslot
-												@slot('value')
-													meta_description
-												@endslot
-												{{ __('Meta Description') }}
+										<div class="input-form">
+											@component('admin.components.input-localized',["from" => $data, "type" =>
+											"textarea"])
+											@slot('name')
+											meta_description
+											@endslot
+											@slot('placeholder')
+											{{ __('Details') }}
+											@endslot
+											@slot('value')
+											meta_description
+											@endslot
+											{{ __('Meta Description') }}
 											@endcomponent
-                                        </div>
-                                    </div>
-                                
-
-                                </div> <!--FINAL ROW COL-XL-6-->
+										</div>
+									</div>
 
 
-                            </div> <!--FINAL DA ROW DE DADOS EXTRAS-->
+								</div>
+								<!--FINAL ROW COL-XL-6-->
 
-                            <input type="hidden" name="type" value="Physical">
-                            <div class="row">
-                                <div class="col-xl-12 text-center">
-                                    <button class="addProductSubmit-btn"
-                                        type="submit">{{ __('Save') }}</button>
-                                </div>
-                            </div>
 
-                        </form>
+							</div>
+							<!--FINAL DA ROW DE DADOS EXTRAS-->
+
+							<input type="hidden" name="type" value="Physical">
+							<div class="row">
+								<div class="col-xl-12 text-center">
+									<button class="addProductSubmit-btn" type="submit">{{ __('Save') }}</button>
+								</div>
+							</div>
+
+						</form>
 					</div>
 				</div>
 			</div>
@@ -804,8 +877,8 @@
 									<input type="hidden" id="pid" name="product_id" value="">
 									<input type="file" name="gallery[]" class="hidden" id="uploadgallery"
 										accept="image/*" multiple>
-									<label for="image-upload" id="prod_gallery"><i
-											class="icofont-upload-alt"></i>{{ __("Upload File") }}</label>
+									<label for="image-upload" id="prod_gallery"><i class="icofont-upload-alt"></i>{{
+										__("Upload File") }}</label>
 								</form>
 							</div>
 						</div>
@@ -838,7 +911,7 @@
 </script>
 
 <script type="text/javascript">
-// Remove White Space
+	// Remove White Space
 function isEmpty(el){
 	return !$.trim(el.html())
 }
@@ -993,7 +1066,7 @@ $('.cp').colorpicker();
      				  }
                       else {
 	                    $('.selected-image .row').removeClass('justify-content-center');
-	      				$('.selected-image .row h3').remove();      
+	      				$('.selected-image .row h3').remove();
                           var arr = $.map(data[1], function(el) {
                           return el });
 
@@ -1004,14 +1077,14 @@ $('.cp').colorpicker();
                                             '<span class="remove-img"><i class="fas fa-times"></i>'+
                                             '<input type="hidden" value="'+arr[k]['id']+'">'+
                                             '</span>'+
-                                            '<a href="'+'{{asset('assets/images/galleries').'/'}}'+arr[k]['photo']+'" target="_blank">'+
-                                            '<img src="'+'{{asset('assets/images/galleries').'/'}}'+arr[k]['photo']+'" alt="gallery image">'+
+                                            '<a href="'+'{{asset('storage/images/galleries').'/'}}'+arr[k]['photo']+'" target="_blank">'+
+                                            '<img src="'+'{{asset('storage/images/galleries').'/'}}'+arr[k]['photo']+'" alt="gallery image">'+
                                             '</a>'+
                                         '</div>'+
                                   	'</div>');
-                          }                         
+                          }
                        }
- 
+
                     }
                   });
       });
@@ -1029,9 +1102,9 @@ $('.cp').colorpicker();
   $(document).on('click', '#prod_gallery' ,function() {
     $('#uploadgallery').click();
   });
-                                        
+
   $("#uploadgallery").change(function(){
-    $("#form-gallery").submit();  
+    $("#form-gallery").submit();
   });
 
   $(document).on('submit', '#form-gallery' ,function() {
@@ -1048,7 +1121,7 @@ $('.cp').colorpicker();
 		    if(data != 0)
 		    {
 	                    $('.selected-image .row').removeClass('justify-content-center');
-	      				$('.selected-image .row h3').remove();   
+	      				$('.selected-image .row h3').remove();
 		        var arr = $.map(data, function(el) {
 		        return el });
 		        for(var k in arr)
@@ -1058,21 +1131,21 @@ $('.cp').colorpicker();
                                             '<span class="remove-img"><i class="fas fa-times"></i>'+
                                             '<input type="hidden" value="'+arr[k]['id']+'">'+
                                             '</span>'+
-                                            '<a href="'+'{{asset('assets/images/galleries').'/'}}'+arr[k]['photo']+'" target="_blank">'+
-                                            '<img src="'+'{{asset('assets/images/galleries').'/'}}'+arr[k]['photo']+'" alt="gallery image">'+
+                                            '<a href="'+'{{asset('storage/images/galleries').'/'}}'+arr[k]['photo']+'" target="_blank">'+
+                                            '<img src="'+'{{asset('storage/images/galleries').'/'}}'+arr[k]['photo']+'" alt="gallery image">'+
                                             '</a>'+
                                         '</div>'+
                                   	'</div>');
-		            }          
+		            }
 		    }
-		                     
+
 		                       }
 
 		  });
 		  return false;
- }); 
+ });
 
-// Gallery Section Update Ends	
+// Gallery Section Update Ends
 
 </script>
 
@@ -1090,7 +1163,7 @@ $('.cropme').click();
 <script type="text/javascript">
 	$(document).ready(function() {
 
-    let html = `<img src="{{ (empty($data->photo) ? asset('assets/images/noimage.png') : (filter_var($data->photo, FILTER_VALIDATE_URL) ? $data->photo : asset('assets/images/products/'.$data->photo))) }}" alt="">`;
+    let html = `<img src="{{ (empty($data->photo) ? asset('assets/images/noimage.png') : (filter_var($data->photo, FILTER_VALIDATE_URL) ? $data->photo : asset('storage/images/products/'.$data->photo))) }}" alt="">`;
     $(".span4.cropme").html(html);
 
     $.ajaxSetup({
@@ -1145,7 +1218,7 @@ $('.cropme').click();
           $('#f-link').find('input').prop('required',true);
       }
   });
-  
+
 </script>
 
 <script src="{{asset('assets/admin/js/product.js')}}"></script>

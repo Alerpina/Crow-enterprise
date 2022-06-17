@@ -10,40 +10,40 @@
 @section('content')
 
 <div class="content-area">
-	<div class="mr-breadcrumb">
-		<div class="row">
-			<div class="col-lg-12">
-				<h4 class="heading">{{ __("Affiliate Product") }} <a class="add-btn"
-						href="javascript:history.back();"><i class="fas fa-arrow-left"></i> {{ __("Back") }}</a>
-				</h4>
-				<ul class="links">
-					<li>
-						<a href="{{ route('admin.dashboard') }}">{{ __("Dashboard") }} </a>
-					</li>
-					<li>
-						<a href="javascript:;">{{ __("Affiliate Products") }} </a>
-					</li>
-					<li>
-						<a href="{{ route('admin-import-index') }}">{{ __("All Products") }}</a>
-					</li>
-					<li>
-						<a href="{{ route('admin-import-create') }}">{{ __("Add Affiliate Product") }}</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</div>
-	<div class="add-product-content">
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="product-description">
-					<div class="body-area">
+    <div class="mr-breadcrumb">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4 class="heading">{{ __("Affiliate Product") }} <a class="add-btn"
+                        href="javascript:history.back();"><i class="fas fa-arrow-left"></i> {{ __("Back") }}</a>
+                </h4>
+                <ul class="links">
+                    <li>
+                        <a href="{{ route('admin.dashboard') }}">{{ __("Dashboard") }} </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">{{ __("Affiliate Products") }} </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin-import-index') }}">{{ __("All Products") }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin-import-create') }}">{{ __("Add Affiliate Product") }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="add-product-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="product-description">
+                    <div class="body-area">
 
-						<div class="gocover"
-							style="background: url({{asset('assets/images/'.$gs->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
-						</div>
-						<form id="geniusform" action="{{route('admin-import-store')}}" method="POST"
-							enctype="multipart/form-data">
+                        <div class="gocover"
+                            style="background: url({{asset('storage/images/'.$gs->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
+                        </div>
+                        <form id="geniusform" action="{{route('admin-import-store')}}" method="POST"
+                            enctype="multipart/form-data">
                             {{csrf_field()}}
 
                             @include('includes.admin.form-both')
@@ -55,42 +55,43 @@
                                 </h3>
                             </div>
 
-                            <div class="row border-sep"> <!--COMEÇO DA ROW DE DADOS OBRIGATORIOS-->
+                            <div class="row border-sep">
+                                <!--COMEÇO DA ROW DE DADOS OBRIGATORIOS-->
 
                                 <div class="col-12">
                                     <div class="input-form">
-										@component('admin.components.input-localized',["required" => true])
-											@slot('name')
-												name
-											@endslot
-											@slot('placeholder')
-											{{ __('Enter Product Name') }}
-											@endslot
-											{{ __('Product Name') }}*
-										@endcomponent
+                                        @component('admin.components.input-localized',["required" => true])
+                                        @slot('name')
+                                        name
+                                        @endslot
+                                        @slot('placeholder')
+                                        {{ __('Enter Product Name') }}
+                                        @endslot
+                                        {{ __('Product Name') }}*
+                                        @endcomponent
                                     </div>
                                 </div>
 
-								<div class="col-xl-6">
-									<div class="input-form">
-										<h4 class="heading">{{ __("Product Affiliate Link") }}* 
-											<span>{{ __("(External Link)") }}</span>
-										</h4>
-                                        <input type="text" class="input-field" placeholder="{{ __("Enter Product Link") }}"
-										name="affiliate_link" required="">
-									</div>
-								</div>
+                                <div class="col-xl-6">
+                                    <div class="input-form">
+                                        <h4 class="heading">{{ __("Product Affiliate Link") }}*
+                                            <span>{{ __("(External Link)") }}</span>
+                                        </h4>
+                                        <input type="text" class="input-field" placeholder="{{ __(" Enter Product Link")
+                                            }}" name="affiliate_link" required="">
+                                    </div>
+                                </div>
 
                                 <div class="col-xl-6">
                                     <div class="input-form">
                                         <h4 class="heading">{{ __('Category') }}*</h4>
                                         <select id="cat" name="category_id" required="">
-											<option value="">{{ __("Select Category") }}</option>
-											@foreach($cats as $cat)
-											<option data-href="{{ route('admin-subcat-load',$cat->id) }}"
-												value="{{ $cat->id }}">{{$cat->name}}</option>
-											@endforeach
-										</select>
+                                            <option value="">{{ __("Select Category") }}</option>
+                                            @foreach($cats as $cat)
+                                            <option data-href="{{ route('admin-subcat-load',$cat->id) }}"
+                                                value="{{ $cat->id }}">{{$cat->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
 
@@ -105,16 +106,16 @@
                                             </h4>
                                         </div>
                                         <input name="price" type="number" class="input-field"
-                                        placeholder="{{ __('e.g 20') }}" step="0.01" required="" min="0">
+                                            placeholder="{{ __('e.g 20') }}" step="0.01" required="" min="0">
                                     </div>
                                 </div>
 
                                 <div class="col-xl-6">
                                     <div class="input-form">
                                         <h4 class="heading">{{ __('Product Sku') }}* </h4>
-										<input type="text" class="input-field" placeholder="{{ __('Enter Product Sku') }}"
-										name="sku" required=""
-										value="{{ Illuminate\Support\Str::random(3).substr(time(), 6,8).Illuminate\Support\Str::random(3) }}">
+                                        <input type="text" class="input-field"
+                                            placeholder="{{ __('Enter Product Sku') }}" name="sku" required=""
+                                            value="{{ Illuminate\Support\Str::random(3).substr(time(), 6,8).Illuminate\Support\Str::random(3) }}">
                                     </div>
 
                                 </div>
@@ -123,16 +124,18 @@
                                     <div class="input-form">
                                         <h4 class="heading">{{ __('Display in Stores') }}* </h4>
                                         @foreach($stores as $store)
-										<div class="row justify-content-left">
-											<div class="col-lg-12 d-flex justify-content-between">
-												<label class="control-label" for="store{{$store->id}}">{{$store->title}} | {{$store->domain}}</label>
-												<label class="switch">
-													<input type="checkbox" name="stores[]" id="store{{$store->id}}" value="{{$store->id}}" checked>
-													<span class="slider round"></span>
-												</label>
-											</div>
-										</div>
-										@endforeach
+                                        <div class="row justify-content-left">
+                                            <div class="col-lg-12 d-flex justify-content-between">
+                                                <label class="control-label" for="store{{$store->id}}">{{$store->title}}
+                                                    | {{$store->domain}}</label>
+                                                <label class="switch">
+                                                    <input type="checkbox" name="stores[]" id="store{{$store->id}}"
+                                                        value="{{$store->id}}" checked>
+                                                    <span class="slider round"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        @endforeach
                                     </div>
                                 </div>
 
@@ -142,7 +145,8 @@
                                     <div id="childcatAttributes"></div>
                                 </div>
 
-                            </div> <!--FINAL DA ROW DE DADOS OBRIGATORIOS-->
+                            </div>
+                            <!--FINAL DA ROW DE DADOS OBRIGATORIOS-->
 
                             <div class="title-section-form">
                                 <span>2</span>
@@ -151,7 +155,8 @@
                                 </h3>
                             </div>
 
-                            <div class="row border-sep"> <!--COMEÇO DA ROW DE DADOS OPCIONAIS IMPORTANTES-->
+                            <div class="row border-sep">
+                                <!--COMEÇO DA ROW DE DADOS OPCIONAIS IMPORTANTES-->
 
                                 <div class="col-xl-6">
                                     <div class="input-form">
@@ -171,20 +176,21 @@
                                     </div>
                                 </div>
 
-								<div class="col-xl-6">
-									<div class="input-form">
-										<h4 class="heading">{{ __("Feature Image Source") }}*</h4>
-										<select id="imageSource" name="image_source">
-											<option value="file">{{ __("File") }}</option>
-											<option value="link">{{ __("Link") }}</option>
-										</select>
-									</div>
+                                <div class="col-xl-6">
+                                    <div class="input-form">
+                                        <h4 class="heading">{{ __("Feature Image Source") }}*</h4>
+                                        <select id="imageSource" name="image_source">
+                                            <option value="file">{{ __("File") }}</option>
+                                            <option value="link">{{ __("Link") }}</option>
+                                        </select>
+                                    </div>
 
                                     <div class="input-form">
                                         <h4 class="heading">
                                             {{ __('Product Gallery Images') }}
                                         </h4>
-                                        <a href="#" class="set-gallery-product" data-toggle="modal" data-target="#setgallery">
+                                        <a href="#" class="set-gallery-product" data-toggle="modal"
+                                            data-target="#setgallery">
                                             <i class="icofont-plus"></i> {{ __('Set Gallery') }}
                                         </a>
                                     </div>
@@ -201,13 +207,14 @@
                                             <option value="2">{{ __('New') }}</option>
                                             <option value="1">{{ __('Used') }}</option>
                                         </select>
-                                    </div> 
+                                    </div>
 
-								</div>
+                                </div>
 
                                 <div class="col-xl-6">
 
-                                    <div class="input-form" id="f-file" style="display:flex;flex-direction:column;align-items:center;">
+                                    <div class="input-form" id="f-file"
+                                        style="display:flex;flex-direction:column;align-items:center;">
                                         <h4 class="heading">{{ __('Feature Image') }} </h4>
                                         <div class="row">
                                             <div class="panel panel-body">
@@ -221,40 +228,41 @@
                                         </a>
                                     </div>
 
-									<div id="f-link" class="input-form" style="display: none;">
-										<h4 class="heading">{{ __("Feature Image Link") }}*</h4>
-										<input type="text" name="photolink" value="" class="input-field">
-									</div>
+                                    <div id="f-link" class="input-form" style="display: none;">
+                                        <h4 class="heading">{{ __("Feature Image Link") }}*</h4>
+                                        <input type="text" name="photolink" value="" class="input-field">
+                                    </div>
 
                                 </div>
 
                                 <input type="hidden" id="feature_photo" name="photo" value="">
                                 <input type="file" name="gallery[]" class="hidden" id="uploadgallery" accept="image/*"
-                                multiple>
+                                    multiple>
 
                                 <div class="col-xl-12">
                                     <div class="input-form">
-										@component('admin.components.input-localized',["type" => "richtext"])
-											@slot('name')
-												details
-											@endslot
-											{{ __('Product Description') }}
-										@endcomponent
+                                        @component('admin.components.input-localized',["type" => "richtext"])
+                                        @slot('name')
+                                        details
+                                        @endslot
+                                        {{ __('Product Description') }}
+                                        @endcomponent
                                     </div>
                                 </div>
 
                                 <div class="col-xl-12">
                                     <div class="input-form">
-										@component('admin.components.input-localized',["type" => "richtext"])
-											@slot('name')
-												policy
-											@endslot
-											{{ __('Product Buy/Return Policy') }}
-										@endcomponent
+                                        @component('admin.components.input-localized',["type" => "richtext"])
+                                        @slot('name')
+                                        policy
+                                        @endslot
+                                        {{ __('Product Buy/Return Policy') }}
+                                        @endcomponent
                                     </div>
                                 </div>
 
-                            </div> <!--FINAL DA ROW DE DADOS OPCIONAIS IMPORTANTES-->
+                            </div>
+                            <!--FINAL DA ROW DE DADOS OPCIONAIS IMPORTANTES-->
 
                             <div class="title-section-form">
                                 <span>3</span>
@@ -263,7 +271,8 @@
                                 </h3>
                             </div>
 
-                            <div class="row"> <!--COMEÇO DA ROW DE DADOS EXTRAS-->
+                            <div class="row">
+                                <!--COMEÇO DA ROW DE DADOS EXTRAS-->
 
                                 <div class="col-xl-6">
                                     <div class="form-list">
@@ -274,24 +283,25 @@
                                                 <label for="check1">{{ __('Allow Estimated Shipping Time') }}</label>
                                             </li>
                                         </ul>
-                                        
+
                                         <div class="showbox input-form">
-                                            
-                                    
-										@component('admin.components.input-localized')
-											@slot('name')
-											ship
-											@endslot
-											@slot('placeholder')
-											{{ __('Estimated Shipping Time') }}
-											@endslot
-											{{ __('Product Estimated Shipping Time') }}
-										@endcomponent
-                        
+
+
+                                            @component('admin.components.input-localized')
+                                            @slot('name')
+                                            ship
+                                            @endslot
+                                            @slot('placeholder')
+                                            {{ __('Estimated Shipping Time') }}
+                                            @endslot
+                                            {{ __('Product Estimated Shipping Time') }}
+                                            @endcomponent
+
 
                                         </div>
                                     </div>
-                                </div><!--FECHAMENTO COL-XL-6-->
+                                </div>
+                                <!--FECHAMENTO COL-XL-6-->
 
                                 <div class="col-xl-6">
                                     <ul class="list list-personalizada">
@@ -306,7 +316,8 @@
                                             <div class="col-xl-12">
                                                 <div class="product-size-details" id="size-section">
                                                     <div class="size-area">
-                                                        <span class="remove size-remove"><i class="fas fa-times"></i></span>
+                                                        <span class="remove size-remove"><i
+                                                                class="fas fa-times"></i></span>
                                                         <div class="row">
                                                             <div class="col-md-4 col-sm-6">
                                                                 <label>
@@ -325,18 +336,23 @@
                                                                         {{ __('(Number of quantity of this size)') }}
                                                                     </span>
                                                                 </label>
-                                                                <input type="number" name="size_qty[]" class="input-field"
-                                                                    placeholder="{{ __('Size Qty') }}" value="1" min="1">
+                                                                <input type="number" name="size_qty[]"
+                                                                    class="input-field"
+                                                                    placeholder="{{ __('Size Qty') }}" value="1"
+                                                                    min="1">
                                                             </div>
                                                             <div class="col-md-4 col-sm-6">
                                                                 <label>
                                                                     {{ __('Size Price') }} :
                                                                     <span>
-                                                                        {{ __('(This price will be added with base price)') }}
+                                                                        {{ __('(This price will be added with base
+                                                                        price)') }}
                                                                     </span>
                                                                 </label>
-                                                                <input type="number" step="0.01" name="size_price[]" class="input-field"
-                                                                    placeholder="{{ __('Size Price') }}" value="0" min="0">
+                                                                <input type="number" step="0.01" name="size_price[]"
+                                                                    class="input-field"
+                                                                    placeholder="{{ __('Size Price') }}" value="0"
+                                                                    min="0">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -347,8 +363,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
-                                </div> <!--FECHAMENTO COL-XL-6-->
+
+                                </div>
+                                <!--FECHAMENTO COL-XL-6-->
 
                                 <div class="col-xl-6">
                                     <ul class="list list-personalizada">
@@ -371,7 +388,8 @@
                                                     </p>
                                                     <div class="select-input-color" id="color-section">
                                                         <div class="color-area">
-                                                            <span class="remove color-remove"><i class="fas fa-times"></i></span>
+                                                            <span class="remove color-remove"><i
+                                                                    class="fas fa-times"></i></span>
                                                             <div class="input-group colorpicker-component cp">
                                                                 <input type="text" name="color[]" value="#000000"
                                                                     class="input-field cp" />
@@ -383,38 +401,42 @@
                                                             class="fas fa-plus"></i>{{ __('Add More Color') }} </a>
                                                 </div>
                                             </div>
-                
+
                                         </div>
 
                                     </div>
-                                </div><!--FECHAMENTO COL-XL-6-->
+                                </div>
+                                <!--FECHAMENTO COL-XL-6-->
 
-								<div class="col-xl-6">
+                                <div class="col-xl-6">
 
-									<div class="checkbox-wrapper list list-personalizada">
-										<input type="checkbox" name="measure_check" class="checkclick1" id="allowProductMeasurement" value="1">
-										<label for="allowProductMeasurement">{{ __('Allow Product Measurement') }}</label>
-									</div>
+                                    <div class="checkbox-wrapper list list-personalizada">
+                                        <input type="checkbox" name="measure_check" class="checkclick1"
+                                            id="allowProductMeasurement" value="1">
+                                        <label for="allowProductMeasurement">{{ __('Allow Product Measurement')
+                                            }}</label>
+                                    </div>
 
-									<div class="showbox input-form">
-												
-										<h4 class="heading">{{ __('Product Measurement') }}</h4>
-										<select id="product_measure">
-											<option value="">{{ __('None') }}</option>
-											<option value="Gram">{{ __('Gram') }}</option>
-											<option value="Kilogram">{{ __('Kilogram') }}</option>
-											<option value="Litre">{{ __('Litre') }}</option>
-											<option value="Pound">{{ __('Pound') }}</option>
-											<option value="Custom">{{ __('Custom') }}</option>
-										</select>
-										<div class="hidden" id="measure">
-											<input name="measure" type="text" id="measurement" class="input-field"
-													placeholder="{{ __('Enter Unit') }}">
-										</div>
+                                    <div class="showbox input-form">
 
-									</div>
+                                        <h4 class="heading">{{ __('Product Measurement') }}</h4>
+                                        <select id="product_measure">
+                                            <option value="">{{ __('None') }}</option>
+                                            <option value="Gram">{{ __('Gram') }}</option>
+                                            <option value="Kilogram">{{ __('Kilogram') }}</option>
+                                            <option value="Litre">{{ __('Litre') }}</option>
+                                            <option value="Pound">{{ __('Pound') }}</option>
+                                            <option value="Custom">{{ __('Custom') }}</option>
+                                        </select>
+                                        <div class="hidden" id="measure">
+                                            <input name="measure" type="text" id="measurement" class="input-field"
+                                                placeholder="{{ __('Enter Unit') }}">
+                                        </div>
 
-								</div> <!--FINAL ROW COL-XL-6-->
+                                    </div>
+
+                                </div>
+                                <!--FINAL ROW COL-XL-6-->
 
                                 <div class="col-xl-6">
                                     <div class="input-form">
@@ -423,9 +445,10 @@
                                             <span>{{ __('(Optional)') }}</span>
                                         </h4>
                                         <input name="previous_price" step="0.01" type="number" class="input-field"
-                                        placeholder="{{ __('e.g 20') }}" min="0">
+                                            placeholder="{{ __('e.g 20') }}" min="0">
                                     </div>
-                                </div> <!--FINAL ROW COL-XL-6-->
+                                </div>
+                                <!--FINAL ROW COL-XL-6-->
 
                                 <div class="col-xl-6">
                                     <div class="input-form">
@@ -435,8 +458,8 @@
                                             </span>
                                         </h4>
                                         <input name="stock" type="text" class="input-field"
-                                        placeholder="{{ __('e.g 20') }}">
-                                        
+                                            placeholder="{{ __('e.g 20') }}">
+
                                     </div>
                                 </div>
 
@@ -525,7 +548,8 @@
                                         <a href="javascript:;" id="feature-btn" class="add-fild-btn"><i
                                                 class="icofont-plus"></i> {{ __('Add More Field') }}</a>
                                     </div>
-                                </div><!--FINAL ROW COL-XL-6-->
+                                </div>
+                                <!--FINAL ROW COL-XL-6-->
 
                                 <div class="col-xl-6">
                                     <div class="input-form">
@@ -536,10 +560,10 @@
                                             </span>
                                         </h4>
                                         <input name="youtube" type="text" class="input-field"
-                                        placeholder="{{ __('Enter Youtube Video URL') }}">
+                                            placeholder="{{ __('Enter Youtube Video URL') }}">
                                     </div>
 
-                                    
+
 
                                     <div class="checkbox-wrapper list list-personalizada">
                                         <input type="checkbox" name="seo_check" value="1" class="checkclick1"
@@ -548,7 +572,7 @@
                                     </div>
 
                                     <div class="showbox">
-                
+
                                         <div class="input-form">
                                             @component('admin.components.input-localized',["type" => "tags"])
                                             @slot('name')
@@ -570,65 +594,67 @@
                                             @endcomponent
                                         </div>
                                     </div>
-                                
-
-                                </div> <!--FINAL ROW COL-XL-6-->
 
 
-                            </div> <!--FINAL DA ROW DE DADOS EXTRAS-->
+                                </div>
+                                <!--FINAL ROW COL-XL-6-->
+
+
+                            </div>
+                            <!--FINAL DA ROW DE DADOS EXTRAS-->
 
                             <input type="hidden" name="type" value="Physical">
                             <div class="row">
                                 <div class="col-xl-12 text-center">
-                                    <button class="addProductSubmit-btn"
-                                        type="submit">{{ __('Create Product') }}</button>
+                                    <button class="addProductSubmit-btn" type="submit">{{ __('Create Product')
+                                        }}</button>
                                 </div>
                             </div>
 
                         </form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="modal fade" id="setgallery" tabindex="-1" role="dialog" aria-labelledby="setgallery" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered  modal-lg" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalCenterTitle">{{ __("Image Gallery") }}</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<div class="top-area">
-					<div class="row">
-						<div class="col-sm-6 text-right">
-							<div class="upload-img-btn">
-								<label for="image-upload" id="prod_gallery"><i
-										class="icofont-upload-alt"></i>{{ __("Upload File") }}</label>
-							</div>
-						</div>
-						<div class="col-sm-6">
-							<a href="javascript:;" class="upload-done" data-dismiss="modal"> <i
-									class="fas fa-check"></i> {{ __("Done") }}</a>
-						</div>
-						<div class="col-sm-12 text-center">( <small>{{ __("You can upload multiple Images.") }}</small>
-							)</div>
-					</div>
-				</div>
-				<div class="gallery-images">
-					<div class="selected-image">
-						<div class="row">
+    <div class="modal-dialog modal-dialog-centered  modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">{{ __("Image Gallery") }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="top-area">
+                    <div class="row">
+                        <div class="col-sm-6 text-right">
+                            <div class="upload-img-btn">
+                                <label for="image-upload" id="prod_gallery"><i class="icofont-upload-alt"></i>{{
+                                    __("Upload File") }}</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <a href="javascript:;" class="upload-done" data-dismiss="modal"> <i
+                                    class="fas fa-check"></i> {{ __("Done") }}</a>
+                        </div>
+                        <div class="col-sm-12 text-center">( <small>{{ __("You can upload multiple Images.") }}</small>
+                            )</div>
+                    </div>
+                </div>
+                <div class="gallery-images">
+                    <div class="selected-image">
+                        <div class="row">
 
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @endsection
@@ -636,7 +662,7 @@
 @section('scripts')
 
 <script>
-	var current_feature = {{$currentFeature}};
+    var current_feature = {{$currentFeature}};
 </script>
 
 <script src="{{asset('assets/admin/js/jquery.Jcrop.js')}}"></script>
@@ -644,7 +670,7 @@
 <script src="{{asset('assets/admin/js/jquery.SimpleCropper.js')}}"></script>
 
 <script type="text/javascript">
-// Remove White Space
+    // Remove White Space
 function isEmpty(el){
 	return !$.trim(el.html())
 }
@@ -794,7 +820,7 @@ $('.cp').colorpicker();
      $('.selected-image .row').html('');
     $('#geniusform').find('.removegal').val(0);
   });
-                                        
+
   $("#uploadgallery").change(function(){
      var total_file=document.getElementById("uploadgallery").files.length;
      for(var i=0;i<total_file;i++)
@@ -815,12 +841,12 @@ $('.cp').colorpicker();
 
   });
 
-// Gallery Section Insert Ends	
+// Gallery Section Insert Ends
 
 </script>
 
 <script type="text/javascript">
-	$('#imageSource').on('change', function () {
+    $('#imageSource').on('change', function () {
     var file = this.value;
       if (file == "file"){
           $('#f-file').show();
@@ -833,11 +859,11 @@ $('.cp').colorpicker();
           $('#f-link').find('input').prop('required',true);
       }
   });
-  
+
 </script>
 
 <script type="text/javascript">
-	$('.cropme').simpleCropper();
+    $('.cropme').simpleCropper();
 $('#crop-image').on('click',function(){
 $('.cropme').click();
 });

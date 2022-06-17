@@ -28,7 +28,7 @@
                 <div class="product-description">
                     <div class="body-area">
                         <div class="gocover"
-                            style="background: url({{asset('assets/images/'.$admstore->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
+                            style="background: url({{asset('storage/images/'.$admstore->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
                         </div>
                         <form id="geniusform" action="{{route('admin-lang-create')}}" method="POST"
                             enctype="multipart/form-data">
@@ -50,7 +50,7 @@
                                     <div class="input-form">
                                         <h4 class="heading">{{ __('Language') }} *</h4>
                                         <input type="text" class="input-field" name="language"
-                                        placeholder="{{ __('English') }}" required>
+                                            placeholder="{{ __('English') }}" required>
                                     </div>
                                 </div>
 
@@ -59,8 +59,8 @@
                                         <h4 class="heading">{{ __('Locale') }} *
                                             <span>{{ __('Ex: en, pt-br, es') }}</span>
                                         </h4>
-                                        <input type="text" class="input-field" name="locale" placeholder="{{ __('en') }}"
-                                        required>
+                                        <input type="text" class="input-field" name="locale"
+                                            placeholder="{{ __('en') }}" required>
                                     </div>
                                 </div>
 
@@ -73,14 +73,15 @@
                                         </select>
                                     </div>
                                 </div>
-                                
-                            </div> <!--FECHAMENTO TAG ROW-->
+
+                            </div>
+                            <!--FECHAMENTO TAG ROW-->
 
 
                             <div class="row justify-content-center">
-                                
-                                    <button class="addProductSubmit-btn" type="submit">{{__('Create Language')}}</button>
-                                
+
+                                <button class="addProductSubmit-btn" type="submit">{{__('Create Language')}}</button>
+
                             </div>
                         </form>
                     </div>

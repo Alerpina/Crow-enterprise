@@ -41,7 +41,7 @@
               <select id="store_filter" class="process select go-dropdown-toggle">
                 @foreach ($stores as $store)
                 <option value="{{ route('admin-stores-isconfig',['id' => $store['id'], 'redirect' => true]) }}"
-                  {{$store['id'] == $admstore->id ? 'selected' : ''}}>{{$store['domain']}}</option>
+                  {{$store['id']==$admstore->id ? 'selected' : ''}}>{{$store['domain']}}</option>
                 @endforeach
               </select>
             </div>
@@ -58,18 +58,18 @@
         <div class="product-description">
           <div class="body-area">
             <div class="gocover"
-              style="background: url({{asset('assets/images/'.$admstore->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
+              style="background: url({{asset('storage/images/'.$admstore->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
             </div>
             <form action="{{ route('admin-gs-update') }}" id="geniusform" method="POST" enctype="multipart/form-data">
               {{ csrf_field() }}
 
               @include('includes.admin.form-both')
-            
+
               <div class="title-section-form">
                 <span>1</span>
-                  <h3>
-                    {{ __("Primary Colors") }}
-                  </h3>
+                <h3>
+                  {{ __("Primary Colors") }}
+                </h3>
               </div>
 
               <div class="row">
@@ -96,20 +96,20 @@
                     <div class="form-group">
                       <div class="input-group colorpicker-component cp">
                         <input class="input-field color-field" type="text" name="copyright_color"
-                        value="{{ $admstore->copyright_color }}" class="form-control cp" />
+                          value="{{ $admstore->copyright_color }}" class="form-control cp" />
                         <span class="input-group-addon"><i></i></span>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-                
-                <div class="title-section-form">
-                  <span>2</span>
-                    <h3>
-                      {{ __("Secondary Colors") }}
-                    </h3>
-                </div>
+
+              <div class="title-section-form">
+                <span>2</span>
+                <h3>
+                  {{ __("Secondary Colors") }}
+                </h3>
+              </div>
 
               <div class="row">
                 <div class="col-xl-3">
@@ -118,7 +118,7 @@
                     <div class="form-group">
                       <div class="input-group colorpicker-component cp">
                         <input type="text" class="input-field color-field" name="header_color"
-                        value="{{ $admstore->header_color }}" class="form-control cp" />
+                          value="{{ $admstore->header_color }}" class="form-control cp" />
                         <span class="input-group-addon"><i></i></span>
                       </div>
                     </div>
@@ -133,7 +133,7 @@
                     <div class="form-group">
                       <div class="input-group colorpicker-component cp">
                         <input class="input-field color-field" type="text" name="footer_text_color"
-                        value="{{ $admstore->footer_text_color }}" class="form-control cp" />
+                          value="{{ $admstore->footer_text_color }}" class="form-control cp" />
                         <span class="input-group-addon"><i></i></span>
                       </div>
                     </div>
@@ -141,12 +141,12 @@
                 </div>
               </div>
 
-                <div class="title-section-form">
-                  <span>3</span>
-                    <h3>
-                      {{ __("Other Colors") }}
-                    </h3>
-                </div>
+              <div class="title-section-form">
+                <span>3</span>
+                <h3>
+                  {{ __("Other Colors") }}
+                </h3>
+              </div>
 
               <div class="row">
                 <div class="col-xl-3">
@@ -155,18 +155,19 @@
                     <div class="form-group">
                       <div class="input-group colorpicker-component cp">
                         <input type="text" class="input-field color-field" name="ref_color"
-                        value="{{ $admstore->ref_color }}" class="form-control cp" />
+                          value="{{ $admstore->ref_color }}" class="form-control cp" />
                         <span class="input-group-addon"><i></i></span>
                       </div>
                     </div>
                   </div>
                 </div>
 
-              </div> <!--FECHAMENTO TAG ROW-->
+              </div>
+              <!--FECHAMENTO TAG ROW-->
 
               <div class="row justify-content-center">
-                  <button class="addProductSubmit-btn" type="submit">{{ __('Save') }}</button>
-        
+                <button class="addProductSubmit-btn" type="submit">{{ __('Save') }}</button>
+
               </div>
             </form>
           </div>

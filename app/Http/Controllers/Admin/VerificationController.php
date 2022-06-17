@@ -94,8 +94,8 @@ class VerificationController extends Controller
             $data[3] = ''.route('admin-vr-st',['id1' => $prod1->id, 'id2' => 'Verified']).'';
             $data[4] = ''.route('admin-vr-st',['id1' => $prod1->id, 'id2' => 'Declined']).'';
         }
-        return response()->json($data);              
-    }  
+        return response()->json($data);
+    }
 
 
     public function edit($id)
@@ -118,12 +118,12 @@ class VerificationController extends Controller
             $input['status'] = "completed";
             $data->update($input);
             //--- Logic Section Ends
-    
 
-        //--- Redirect Section          
+
+        //--- Redirect Section
         $msg = __('Status Updated Successfully.');
-        return response()->json($msg);    
-        //--- Redirect Section Ends     
+        return response()->json($msg);
+        //--- Redirect Section Ends
 
     }
 
@@ -137,10 +137,10 @@ class VerificationController extends Controller
         $vendor = User::where('id', $user->user_id)->first();
         $vendor->is_vendor_verified = ($id2 == "Verified") ? true : false;
         $vendor->update();
-        //--- Redirect Section        
+        //--- Redirect Section
         $msg[0] = __('Status Updated Successfully.');
-        return response()->json($msg);      
-        //--- Redirect Section Ends    
+        return response()->json($msg);
+        //--- Redirect Section Ends
 
     }
 
@@ -151,13 +151,13 @@ class VerificationController extends Controller
         $data = Verification::findOrFail($id);
         $photos =  explode(',',$data->attachments);
         foreach($photos as $photo){
-            unlink(public_path().'/assets/images/attachments/'.$photo);
+            unlink(public_path().'/storage/images/attachments/'.$photo);
         }
         $data->delete();
-        //--- Redirect Section     
+        //--- Redirect Section
         $msg = __('Data Deleted Successfully.');
-        return response()->json($msg);      
-        //--- Redirect Section Ends    
+        return response()->json($msg);
+        //--- Redirect Section Ends
 
     }
 

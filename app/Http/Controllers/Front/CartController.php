@@ -479,7 +479,7 @@ class CartController extends Controller
 
         $file = str_replace("\\", '/', $customizable_logo);
         $imgName = str_replace("C:/fakepath/", "", $file);
-        if (file_exists('assets/images/custom-logo/' . $imgName)) {
+        if (file_exists('storage/images/custom-logo/' . $imgName)) {
             $customizable_logo = $imgName;
         }
 
@@ -764,7 +764,7 @@ class CartController extends Controller
 
         $file = str_replace("\\", '/', $customizable_logo);
         $imgName = str_replace("C:/fakepath/", "", $file);
-        if (file_exists('assets/images/custom-logo/' . $imgName)) {
+        if (file_exists('storage/images/custom-logo/' . $imgName)) {
             $customizable_logo = $imgName;
         }
 

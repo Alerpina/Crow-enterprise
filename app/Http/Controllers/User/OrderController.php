@@ -125,21 +125,21 @@ class OrderController extends Controller
             return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
         }
         $data = Order::findOrFail($request->id);
-        if (!is_dir(public_path().'/assets/images/receipts/')) {
-            mkdir(public_path().'/assets/images/receipts/');
+        if (!is_dir(public_path().'/storage/images/receipts/')) {
+            mkdir(public_path().'/storage/images/receipts/');
         }
         //--- Validation Section Ends
         $image = $request->receipt;
         $image = base64_decode($image);
         $image_name = time().Str::random(8).'.png';
-        $path = 'assets/images/receipts/'.$image_name;
+        $path = 'storage/images/receipts/'.$image_name;
         $mime = mime_content_type($request->file('receipt')->getRealPath());
         if ($mime == "image/jpeg" || $mime == "image/png" || $mime == "image/gif" || $mime == "image/webp") {
             $img = Image::make($request->file('receipt')->getRealPath());
-            $img->save(public_path().'/assets/images/receipts/'.$image_name);
+            $img->save(public_path().'/storage/images/receipts/'.$image_name);
             if ($data->receipt != null) {
-                if (file_exists(public_path().'/assets/images/receipts/'.$data->receipt)) {
-                    unlink(public_path().'/assets/images/receipts/'.$data->receipt);
+                if (file_exists(public_path().'/storage/images/receipts/'.$data->receipt)) {
+                    unlink(public_path().'/storage/images/receipts/'.$data->receipt);
                 }
             }
             Order::where('id', $request->id)->update(['receipt' => $image_name]);

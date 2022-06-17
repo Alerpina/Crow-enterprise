@@ -28,16 +28,16 @@ class CustomProductController extends Controller
         } else{
             if ($file = $request->file('customizable_logo')){
                 $name = $file->getClientOriginalName();
-                $file->move('assets/images/custom-logo/', $name);
+                $file->move('storage/images/custom-logo/', $name);
                 $msg = __('New Data Added Successfully.');
                 return response()->json(['success' => true, 'message' => $msg]);
-            } 
+            }
         }
 
     }
 
     public function downloadLogo($file)
     {
-        return response()->download('assets/images/custom-logo/' . $file);
+        return response()->download('storage/images/custom-logo/' . $file);
     }
 }

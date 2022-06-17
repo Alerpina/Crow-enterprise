@@ -73,7 +73,7 @@ class XMLHelper {
             $valor = number_format($product->price, 2,'.','');
             $photo = "";
             if(!empty($product->photo) && !filter_var($product->photo, FILTER_VALIDATE_URL)){
-                $photo = $store_url."/assets/images/products/".$product->photo;
+                $photo = $store_url."/storage/images/products/".$product->photo;
             }
 
             $item                    = $xml->createElement("item");
@@ -176,7 +176,7 @@ class XMLHelper {
             $valor = number_format($product->price, 2,'.','');
             $photo = "";
             if(!empty($product->photo) && !filter_var($product->photo, FILTER_VALIDATE_URL)){
-                $photo = $store_url."/assets/images/products/".$product->photo;
+                $photo = $store_url."/storage/images/products/".$product->photo;
             }
 
             $item                    = $xml->createElement("item");
@@ -303,7 +303,7 @@ class XMLHelper {
             $valor = number_format($product->price, 2,'.','');
             $photo = "";
             if(!empty($product->photo) && !filter_var($product->photo, FILTER_VALIDATE_URL)){
-                $photo = $store_url."/assets/images/products/".$product->photo;
+                $photo = $store_url."/storage/images/products/".$product->photo;
             }
 
             $item                    = $xml->createElement("item");

@@ -10,7 +10,7 @@
                         @if(env('THEME') == "theme-03" || env('THEME') == "theme-05" || env('THEME') == "theme-06" ||
                         env('THEME') == "theme-07")
                         <div id="post-title">
-                            <img src="{{ asset('project/resources/views/front/themes/theme-03/assets/images/post-it.png')}}"
+                            <img src="{{ asset('project/resources/views/front/themes/theme-03/storage/images/post-it.png')}}"
                                 class="img-fluid" alt="Post it">
                         </div>
                         @endif

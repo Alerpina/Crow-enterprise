@@ -46,7 +46,7 @@ class CheckDiscrepancies extends Command
             $prog = $this->output->createProgressBar(count($products));
             foreach($products as $prod){
                 $photo = $prod->photo;
-                if(!File::exists(public_path('assets/images/products/'.$photo))){
+                if(!File::exists(public_path('storage/images/products/'.$photo))){
                     $prog->advance();
                     $discrepancies++;
                 }

@@ -100,7 +100,7 @@
                                 <li class="login-profile-area">
                                     <a class="dropdown-toggle-1" href="javascript:;">
                                         <div class="user-img">
-                                            <img src="{{ Auth::guard('admin')->user()->photo ? asset('storage/images/admins/'.Auth::guard('admin')->user()->photo ):asset('storage/images/noimage.png') }}"
+                                            <img src="{{ Auth::guard('admin')->user()->photo ? asset('storage/images/admins/'.Auth::guard('admin')->user()->photo ):asset('assets/images/noimage.png') }}"
                                                 alt="">
                                         </div>
                                     </a>

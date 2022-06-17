@@ -12,8 +12,8 @@
                                         <i class="fas fa-globe-americas"></i>
                                         <select name="language" class="language selectors nice">
                                             @foreach($locales as $language)
-                                            <option value="{{route('front.language',$language->id)}}"
-                                                {{$slocale->id == $language->id ? 'selected' : ''}}>
+                                            <option value="{{route('front.language',$language->id)}}" {{$slocale->id ==
+                                                $language->id ? 'selected' : ''}}>
                                                 {{$language->language}}
                                             </option>
                                             @endforeach
@@ -33,9 +33,13 @@
                                     <div class="currency-selector">
                                         <span><i class="fas fa-coins"></i>
                                             {{ __("Currency Rate") }}:
-                                            {{ $top_first_curr->sign.number_format($top_first_curr->value,$top_first_curr->decimal_digits,$top_first_curr->decimal_separator,$top_first_curr->thousands_separator) }}
+                                            {{
+                                            $top_first_curr->sign.number_format($top_first_curr->value,$top_first_curr->decimal_digits,$top_first_curr->decimal_separator,$top_first_curr->thousands_separator)
+                                            }}
                                             =
-                                            {{ $top_curr->sign . ' ' .number_format($top_curr->value ,$top_curr->decimal_digits,$top_curr->decimal_separator,$top_curr->thousands_separator) }}
+                                            {{ $top_curr->sign . ' ' .number_format($top_curr->value
+                                            ,$top_curr->decimal_digits,$top_curr->decimal_separator,$top_curr->thousands_separator)
+                                            }}
                                         </span>
                                     </div>
                                 </li>
@@ -146,14 +150,14 @@
                                     <div class="my-dropdown-menu profile-dropdown">
                                         <ul class="profile-links">
                                             @if ($gs->is_brands == 1)
-                                                <li>
-                                                    <a href="{{ route('front.brands') }}">
-                                                        <i class="fas fa-caret-right"></i>
-                                                        {{ __("Brands") }}
-                                                    </a>
-                                                </li>
+                                            <li>
+                                                <a href="{{ route('front.brands') }}">
+                                                    <i class="fas fa-caret-right"></i>
+                                                    {{ __("Brands") }}
+                                                </a>
+                                            </li>
                                             @endif
-                                            
+
                                             @if($gs->is_blog == 1)
                                             <li>
                                                 <a href="{{ route('front.blog') }}">
@@ -200,7 +204,8 @@
 
                                             @if($gs->is_cart)
                                             <li>
-                                                <a href="javascript:;" data-toggle="modal" data-target="#track-order-modal">
+                                                <a href="javascript:;" data-toggle="modal"
+                                                    data-target="#track-order-modal">
                                                     <i class="fas fa-caret-right"></i>
                                                     {{ __("Track Order") }}
                                                 </a>
@@ -225,8 +230,8 @@
                                     <div class="currency-selector" style="padding-right:12px;">
                                         <select name="currency" class="currency selectors nice">
                                             @foreach($currencies as $currency)
-                                            <option value="{{route('front.currency',$currency->id)}}"
-                                                {{ $scurrency->id == $currency->id ? 'selected' : ''}}>
+                                            <option value="{{route('front.currency',$currency->id)}}" {{ $scurrency->id
+                                                == $currency->id ? 'selected' : ''}}>
                                                 {{$currency->name}}
                                             </option>
                                             @endforeach
@@ -264,7 +269,7 @@
                 <div class="col-lg-3 col-sm-6 col-10 remove-padding">
                     <div class="logo">
                         <a href="{{ route('front.index') }}">
-                            <img src="{{asset('assets/images/'.$gs->logo)}}" alt="">
+                            <img src="{{asset('storage/images/'.$gs->logo)}}" alt="">
                         </a>
                     </div>
                 </div>
@@ -287,8 +292,8 @@
                                 <input type="hidden" name="maxprice" value="{{ request()->input('maxprice') }}">
                                 @endif
 
-                                <input type="text" id="prod_name" name="searchHttp" placeholder="{{ __("Search For Product") }}"
-                                value="{{ request()->input('searchHttp') }}" autocomplete="off">
+                                <input type="text" id="prod_name" name="searchHttp" placeholder="{{ __(" Search For
+                                    Product") }}" value="{{ request()->input('searchHttp') }}" autocomplete="off">
                                 <div class="autocomplete">
                                     <div id="myInputautocomplete-list" class="autocomplete-items"></div>
                                 </div>
@@ -306,42 +311,47 @@
                             <li class="my-dropdown">
                                 <a href="javascript:;" class="cart carticon">
                                     <div class="icon">
-                                    <svg class="img-fluid icons-header" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                        viewBox="0 0 512.001 512.001" style="enable-background:new 0 0 512.001 512.001;" xml:space="preserve">
-                                    <g>
-                                        <g>
-                                            <path d="M503.142,79.784c-7.303-8.857-18.128-13.933-29.696-13.933H176.37c-6.085,0-11.023,4.938-11.023,11.023
+                                        <svg class="img-fluid icons-header" version="1.1" id="Capa_1"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                            viewBox="0 0 512.001 512.001"
+                                            style="enable-background:new 0 0 512.001 512.001;" xml:space="preserve">
+                                            <g>
+                                                <g>
+                                                    <path d="M503.142,79.784c-7.303-8.857-18.128-13.933-29.696-13.933H176.37c-6.085,0-11.023,4.938-11.023,11.023
                                                 c0,6.085,4.938,11.023,11.023,11.023h297.07c5.032,0,9.541,2.1,12.688,5.914c3.197,3.88,4.475,8.995,3.511,13.972l-44.054,220.282
                                                 c-1.709,7.871-8.383,13.366-16.232,13.366H184.323L83.158,36.854C77.69,21.234,62.886,10.74,45.932,10.74
                                                 c-0.005,0-0.011,0-0.017,0c-14.38,0.496-28.963,0.491-32.535,0.248c-3.555-0.772-7.397,0.22-10.152,2.976
                                                 c-4.305,4.305-4.305,11.282,0,15.587c3.412,3.412,4.564,4.564,43.068,3.23c7.22,0,13.674,4.564,15.995,11.188l103.618,311.962
                                                 c1.499,4.503,5.71,7.545,10.461,7.545h252.982c18.31,0,33.841-12.638,37.815-30.909l44.109-220.525
-                                                C513.503,100.513,510.544,88.757,503.142,79.784z"/>
-                                        </g>
-                                    </g>
-                                    <g>
-                                        <g>
-                                            <path d="M424.392,424.11H223.77c-6.785,0-13.162-4.674-15.46-11.233l-21.495-63.935c-1.94-5.771-8.207-8.885-13.961-6.934
+                                                C513.503,100.513,510.544,88.757,503.142,79.784z" />
+                                                </g>
+                                            </g>
+                                            <g>
+                                                <g>
+                                                    <path d="M424.392,424.11H223.77c-6.785,0-13.162-4.674-15.46-11.233l-21.495-63.935c-1.94-5.771-8.207-8.885-13.961-6.934
                                                 c-5.771,1.935-8.874,8.19-6.934,13.961l21.539,64.061c5.473,15.625,20.062,26.119,36.31,26.119h200.622
-                                                c6.085,0,11.023-4.933,11.023-11.018S430.477,424.11,424.392,424.11z"/>
-                                        </g>
-                                    </g>
-                                    <g>
-                                        <g>
-                                            <path d="M231.486,424.104c-21.275,0-38.581,17.312-38.581,38.581s17.306,38.581,38.581,38.581s38.581-17.312,38.581-38.581
+                                                c6.085,0,11.023-4.933,11.023-11.018S430.477,424.11,424.392,424.11z" />
+                                                </g>
+                                            </g>
+                                            <g>
+                                                <g>
+                                                    <path
+                                                        d="M231.486,424.104c-21.275,0-38.581,17.312-38.581,38.581s17.306,38.581,38.581,38.581s38.581-17.312,38.581-38.581
                                                 S252.761,424.104,231.486,424.104z M231.486,479.22c-9.116,0-16.535-7.419-16.535-16.535c0-9.116,7.419-16.535,16.535-16.535
-                                                c9.116,0,16.535,7.419,16.535,16.535C248.021,471.802,240.602,479.22,231.486,479.22z"/>
-                                        </g>
-                                    </g>
-                                    <g>
-                                        <g>
-                                            <path d="M424.392,424.104c-21.269,0-38.581,17.312-38.581,38.581s17.312,38.581,38.581,38.581
+                                                c9.116,0,16.535,7.419,16.535,16.535C248.021,471.802,240.602,479.22,231.486,479.22z" />
+                                                </g>
+                                            </g>
+                                            <g>
+                                                <g>
+                                                    <path
+                                                        d="M424.392,424.104c-21.269,0-38.581,17.312-38.581,38.581s17.312,38.581,38.581,38.581
                                                 c21.269,0,38.581-17.312,38.581-38.581S445.661,424.104,424.392,424.104z M424.392,479.22c-9.116,0-16.535-7.419-16.535-16.535
-                                                c0-9.116,7.419-16.535,16.535-16.535c9.116,0,16.535,7.419,16.535,16.535C440.927,471.802,433.508,479.22,424.392,479.22z"/>
-                                        </g>
-                                    </g>
+                                                c0-9.116,7.419-16.535,16.535-16.535c9.116,0,16.535,7.419,16.535,16.535C440.927,471.802,433.508,479.22,424.392,479.22z" />
+                                                </g>
+                                            </g>
 
-                                    </svg>
+                                        </svg>
                                         <span class="cart-quantity" id="cart-count">
                                             {{ Session::has('cart') ? count(Session::get('cart')->items) : '0' }}
                                         </span>
@@ -353,12 +363,14 @@
                             </li>
                             @endif
 
-                            <li class="wishlist" data-toggle="tooltip" data-placement="top" title="{{ __("Wish") }}">
+                            <li class="wishlist" data-toggle="tooltip" data-placement="top" title="{{ __(" Wish") }}">
 
                                 @if(Auth::guard('web')->check())
                                 <a href="{{ route('user-wishlists') }}" class="wish">
-                                        <svg class="img-fluid icons-header" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                            viewBox="0 0 448.45 448.45" style="enable-background:new 0 0 448.45 448.45;" xml:space="preserve">
+                                    <svg class="img-fluid icons-header" version="1.1" id="Capa_1"
+                                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        x="0px" y="0px" viewBox="0 0 448.45 448.45"
+                                        style="enable-background:new 0 0 448.45 448.45;" xml:space="preserve">
                                         <g>
                                             <g>
                                                 <path d="M446.285,250.825c-5.322-24.01-21.278-44.294-43.36-55.12v0c-6.892-3.388-14.3-5.605-21.92-6.56
@@ -380,17 +392,19 @@
                                                     c-14.4-33.36-27.92-64.88-22.88-96c3.219-18.253,14.589-34.041,30.88-42.88c9.757-5.547,20.776-8.495,32-8.56
                                                     c8.222,0.01,16.367,1.585,24,4.64c37.2,14.88,33.76,54.64,33.6,56c-0.457,4.395,2.736,8.327,7.131,8.784
                                                     c2.553,0.265,5.078-0.711,6.789-2.624c1.12-1.28,28.24-30.64,64-13.12c17.829,8.655,30.732,24.975,35.04,44.32
-                                                    C434.949,272.245,431.21,291.295,420.126,306.105z"/>
+                                                    C434.949,272.245,431.21,291.295,420.126,306.105z" />
                                             </g>
                                         </g>
-                                        </svg>
-                                        <span id="wishlist-count">{{ count(Auth::user()->wishlists) }}</span>
+                                    </svg>
+                                    <span id="wishlist-count">{{ count(Auth::user()->wishlists) }}</span>
                                 </a>
                                 @else
                                 <a href="javascript:;" data-toggle="modal" id="wish-btn" data-target="#comment-log-reg"
                                     class="wish">
-                                        <svg class="img-fluid icons-header" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                            viewBox="0 0 448.45 448.45" style="enable-background:new 0 0 448.45 448.45;" xml:space="preserve">
+                                    <svg class="img-fluid icons-header" version="1.1" id="Capa_1"
+                                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        x="0px" y="0px" viewBox="0 0 448.45 448.45"
+                                        style="enable-background:new 0 0 448.45 448.45;" xml:space="preserve">
                                         <g>
                                             <g>
                                                 <path d="M446.285,250.825c-5.322-24.01-21.278-44.294-43.36-55.12v0c-6.892-3.388-14.3-5.605-21.92-6.56
@@ -412,35 +426,39 @@
                                                     c-14.4-33.36-27.92-64.88-22.88-96c3.219-18.253,14.589-34.041,30.88-42.88c9.757-5.547,20.776-8.495,32-8.56
                                                     c8.222,0.01,16.367,1.585,24,4.64c37.2,14.88,33.76,54.64,33.6,56c-0.457,4.395,2.736,8.327,7.131,8.784
                                                     c2.553,0.265,5.078-0.711,6.789-2.624c1.12-1.28,28.24-30.64,64-13.12c17.829,8.655,30.732,24.975,35.04,44.32
-                                                    C434.949,272.245,431.21,291.295,420.126,306.105z"/>
+                                                    C434.949,272.245,431.21,291.295,420.126,306.105z" />
                                             </g>
                                         </g>
-                                        </svg>
-                                        <span id="wishlist-count">0</span>
+                                    </svg>
+                                    <span id="wishlist-count">0</span>
                                 </a>
                                 @endif
 
                             </li>
 
-                            <li class="compare" data-toggle="tooltip" data-placement="top" title="{{ __("Compare") }}">
+                            <li class="compare" data-toggle="tooltip" data-placement="top" title="{{ __(" Compare") }}">
                                 <a href="{{ route('product.compare') }}" class="wish compare-product">
                                     <div class="icon">
-                                        <svg class="img-fluid icons-header" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                            viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
-                                        <g>
+                                        <svg class="img-fluid icons-header" version="1.1" id="Layer_1"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                            viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;"
+                                            xml:space="preserve">
                                             <g>
                                                 <g>
-                                                    <path d="M508.479,162.74l-106.667-96c-4.354-3.938-11.104-3.594-15.083,0.792c-3.938,4.375-3.583,11.125,0.792,15.063
+                                                    <g>
+                                                        <path
+                                                            d="M508.479,162.74l-106.667-96c-4.354-3.938-11.104-3.594-15.083,0.792c-3.938,4.375-3.583,11.125,0.792,15.063
                                                         L473.542,160H181.333c-5.896,0-10.667,4.771-10.667,10.667s4.771,10.667,10.667,10.667h292.208l-86.021,77.406
                                                         c-4.375,3.938-4.729,10.688-0.792,15.063c2.125,2.344,5.021,3.531,7.938,3.531c2.542,0,5.104-0.906,7.146-2.74l106.667-96
-                                                        c2.229-2.021,3.521-4.906,3.521-7.927C512,167.646,510.708,164.761,508.479,162.74z"/>
-                                                    <path d="M330.667,330.667H38.458l86.021-77.406c4.375-3.938,4.729-10.688,0.792-15.063c-3.979-4.385-10.708-4.729-15.083-0.792
+                                                        c2.229-2.021,3.521-4.906,3.521-7.927C512,167.646,510.708,164.761,508.479,162.74z" />
+                                                        <path d="M330.667,330.667H38.458l86.021-77.406c4.375-3.938,4.729-10.688,0.792-15.063c-3.979-4.385-10.708-4.729-15.083-0.792
                                                         l-106.667,96C1.292,335.427,0,338.313,0,341.333s1.292,5.906,3.521,7.927l106.667,96c2.042,1.833,4.604,2.74,7.146,2.74
                                                         c2.917,0,5.813-1.188,7.938-3.531c3.938-4.375,3.583-11.125-0.792-15.063L38.458,352h292.208c5.896,0,10.667-4.771,10.667-10.667
-                                                        S336.563,330.667,330.667,330.667z"/>
+                                                        S336.563,330.667,330.667,330.667z" />
+                                                    </g>
                                                 </g>
                                             </g>
-                                        </g>
                                         </svg>
                                         <span id="compare-count">
                                             {{ Session::has('compare') ? count(Session::get('compare')->items) : '0' }}
@@ -484,7 +502,7 @@
                                     @if($count)
                                     @if($category->photo)
                                     <div class="img">
-                                        <img src="{{ asset('assets/images/categories/'.$category->photo) }}" alt="">
+                                        <img src="{{ asset('storage/images/categories/'.$category->photo) }}" alt="">
                                     </div>
                                     @endif
                                     <div class="link-area">
@@ -501,7 +519,7 @@
                                     @else
                                     <a href="{{ route('front.category',$category->slug) }}">
                                         @if($category->photo)
-                                        <img src="{{ asset('assets/images/categories/'.$category->photo) }}">
+                                        <img src="{{ asset('storage/images/categories/'.$category->photo) }}">
                                         @endif
                                         {{ $category->name }}
                                     </a>
@@ -596,7 +614,7 @@
                                     @if($count)
                                     @if($category->photo)
                                     <div class="img">
-                                        <img src="{{ asset('assets/images/categories/'.$category->photo) }}" alt="">
+                                        <img src="{{ asset('storage/images/categories/'.$category->photo) }}" alt="">
                                     </div>
                                     @endif
                                     <div class="link-area">
@@ -613,7 +631,7 @@
                                     @else
                                     <a href="{{ route('front.category',$category->slug) }}">
                                         @if($category->photo)
-                                        <img src="{{ asset('assets/images/categories/'.$category->photo) }}">
+                                        <img src="{{ asset('storage/images/categories/'.$category->photo) }}">
                                         @endif
                                         {{ $category->name }}
                                     </a>

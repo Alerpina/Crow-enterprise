@@ -39,17 +39,17 @@
         <div class="product-description">
           <div class="body-area">
             <div class="gocover"
-              style="background: url({{asset('assets/images/'.$admstore->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
+              style="background: url({{asset('storage/images/'.$admstore->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
             </div>
             <form id="geniusform" action="{{route('admin-tlang-create')}}" method="POST" enctype="multipart/form-data">
               {{csrf_field()}}
               <div class="row">
                 <div class="col-xl-12">
-                    <div class="input-form">
-                        <p><small>* {{ __("indicates a required field") }}</small></p>
-                    </div>
+                  <div class="input-form">
+                    <p><small>* {{ __("indicates a required field") }}</small></p>
+                  </div>
                 </div>
-            </div>
+              </div>
 
               @include('includes.admin.form-both')
 
@@ -82,13 +82,13 @@
                     </select>
                   </div>
                 </div>
-               
+
               </div>
 
               <div class="row justify-content-center">
-           
-                  <button class="addProductSubmit-btn" type="submit">{{ __('Create Language') }}</button>
-                
+
+                <button class="addProductSubmit-btn" type="submit">{{ __('Create Language') }}</button>
+
               </div>
             </form>
           </div>

@@ -24,7 +24,7 @@
         <div class="product-description">
           <div class="body-area">
             <div class="gocover"
-              style="background: url({{asset('assets/images/'.$admstore->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
+              style="background: url({{asset('storage/images/'.$admstore->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
             </div>
             <div class="row">
               <div class="col-lg-3">
@@ -42,14 +42,13 @@
                       <div class="input-form">
                         <h4 class="heading">
                           {{ __('Cronjob URL') }} *
-                          <span>{{ __('(Copy This URL and paste this to cron job.)') }} <a
-                            target="_blank"
-                            href="https://www.youtube.com/watch?v=Hw0fbM7E80Q">{{ __('Check Tutorial') }}</a></span>
+                          <span>{{ __('(Copy This URL and paste this to cron job.)') }} <a target="_blank"
+                              href="https://www.youtube.com/watch?v=Hw0fbM7E80Q">{{ __('Check Tutorial') }}</a></span>
                         </h4>
                         <textarea class="input-field" readonly="">{{ url('/vendor/subscription/check') }}</textarea>
                       </div>
                     </div>
-                  
+
                   </div>
 
                 </form>

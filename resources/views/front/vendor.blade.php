@@ -1,28 +1,30 @@
 @extends('front.themes.' . env('THEME', 'theme-01') . '.layout')
 @section('content')
 <style>
-.super-title {
-    font-size: 60px;
-    line-height: 50px;
-    font-weight: bold;
-    color: #00000;
-    text-align: center;
-    padding-bottom: 20px;
-}
-.title {
-    font-size: 24px;
-    font-weight: bold;
-    color: #00000;
-}
-iframe {
-    width: 100%;
-    height: 450px;
-}
-    </style>
+    .super-title {
+        font-size: 60px;
+        line-height: 50px;
+        font-weight: bold;
+        color: #00000;
+        text-align: center;
+        padding-bottom: 20px;
+    }
+
+    .title {
+        font-size: 24px;
+        font-weight: bold;
+        color: #00000;
+    }
+
+    iframe {
+        width: 100%;
+        height: 450px;
+    }
+</style>
 <!-- Vendor Area Start -->
 <div class="vendor-banner"
-    style="background: url({{  $vendor->shop_image != null ? asset('assets/images/vendorbanner/'.$vendor->shop_image) : '' }}); background-repeat: no-repeat; background-size: cover ;background-position: center;{!! $vendor->shop_image != null ? '' : 'background-color:'.$gs->vendor_color !!} ">
-    
+    style="background: url({{  $vendor->shop_image != null ? asset('storage/images/vendorbanner/'.$vendor->shop_image) : '' }}); background-repeat: no-repeat; background-size: cover ;background-position: center;{!! $vendor->shop_image != null ? '' : 'background-color:'.$gs->vendor_color !!} ">
+
 </div>
 <hr>
 <div class="container">
@@ -62,7 +64,7 @@ iframe {
                 </h4>
             </div>
         </div>
-        <br/>
+        <br />
         <div class="row">
             <div class="col-lg-4">
                 <p class="title">Funcionamento</p>
@@ -85,7 +87,7 @@ iframe {
         </div>
     </div>
     @if($vendor->shop_details)
-    <br/><br>
+    <br /><br>
     <div class="row">
         <div class="col-lg-12 text-center">
             <p class="title">{{ __("Details") }}</p>
@@ -98,7 +100,7 @@ iframe {
     </div>
     @endif
     @if($vendor->vendor_map_embed)
-    <br/><br>
+    <br /><br>
     <div class="row">
         <div class="col-lg-12 text-center">
             <p class="title">{{ __("Map") }}</p>
@@ -128,7 +130,7 @@ iframe {
                         <div class="col-6 col-xl-3 p-0">
                             <div class="info-box">
                                 <div class="icon">
-                                    <img src="{{ asset('assets/images/services/'.$service->photo) }}">
+                                    <img src="{{ asset('storage/images/services/'.$service->photo) }}">
                                 </div>
                                 <div class="info">
                                     <div class="details">
@@ -152,7 +154,7 @@ iframe {
 
     </div>
 </section>
-{{-- Info Area End  --}}
+{{-- Info Area End --}}
 
 
 
@@ -172,18 +174,20 @@ iframe {
 
                     <div class="categori-item-area">
                         {{-- <div id="ajaxContent"> --}}
-                        <div class="row">
+                            <div class="row">
 
-                            @foreach($vprods as $prod)
-                            @include('includes.product.vendor')
-                            @endforeach
+                                @foreach($vprods as $prod)
+                                @include('includes.product.vendor')
+                                @endforeach
 
-                        </div>
-                        <div class="page-center category">
-                            {!! $vprods->appends(['sort' => request()->input('sort'), 'min' => request()->input('min'),
-                            'max' => request()->input('max')])->links() !!}
-                        </div>
-                        {{-- </div> --}}
+                            </div>
+                            <div class="page-center category">
+                                {!! $vprods->appends(['sort' => request()->input('sort'), 'min' =>
+                                request()->input('min'),
+                                'max' => request()->input('max')])->links() !!}
+                            </div>
+                            {{--
+                        </div> --}}
                     </div>
 
                     @else
@@ -233,12 +237,12 @@ iframe {
 
                                             <li>
                                                 <input type="text" class="input-field" id="subj" name="subject"
-                                                    placeholder="{{ __("Subject *") }}" required="">
+                                                    placeholder="{{ __(" Subject *") }}" required="">
                                             </li>
 
                                             <li>
                                                 <textarea class="input-field textarea" name="message" id="msg"
-                                                    placeholder="{{ __("Your Message") }}" required=""></textarea>
+                                                    placeholder="{{ __(" Your Message") }}" required=""></textarea>
                                             </li>
 
                                             <input type="hidden" name="email"
@@ -250,8 +254,8 @@ iframe {
                                             <input type="hidden" name="vendor_id" value="{{ $vendor->id }}">
 
                                         </ul>
-                                        <button class="submit-btn" id="emlsub1"
-                                            type="submit">{{ __("Send Message") }}</button>
+                                        <button class="submit-btn" id="emlsub1" type="submit">{{ __("Send Message")
+                                            }}</button>
                                     </form>
 
                                 </div>

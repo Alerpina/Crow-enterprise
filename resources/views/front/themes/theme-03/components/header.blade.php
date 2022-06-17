@@ -12,8 +12,8 @@
                                         <i class="fas fa-globe-americas"></i>
                                         <select name="language" class="language selectors nice">
                                             @foreach($locales as $language)
-                                            <option value="{{route('front.language',$language->id)}}"
-                                                {{$slocale->id == $language->id ? 'selected' : ''}}>
+                                            <option value="{{route('front.language',$language->id)}}" {{$slocale->id ==
+                                                $language->id ? 'selected' : ''}}>
                                                 {{$language->language}}
                                             </option>
                                             @endforeach
@@ -33,9 +33,13 @@
                                     <div class="currency-selector">
                                         <span><i class="fas fa-coins"></i>
                                             {{ __("Currency Rate") }}:
-                                            {{ $top_first_curr->sign.number_format($top_first_curr->value,$top_first_curr->decimal_digits,$top_first_curr->decimal_separator,$top_first_curr->thousands_separator) }}
+                                            {{
+                                            $top_first_curr->sign.number_format($top_first_curr->value,$top_first_curr->decimal_digits,$top_first_curr->decimal_separator,$top_first_curr->thousands_separator)
+                                            }}
                                             =
-                                            {{ $top_curr->sign . ' ' .number_format($top_curr->value ,$top_curr->decimal_digits,$top_curr->decimal_separator,$top_curr->thousands_separator) }}
+                                            {{ $top_curr->sign . ' ' .number_format($top_curr->value
+                                            ,$top_curr->decimal_digits,$top_curr->decimal_separator,$top_curr->thousands_separator)
+                                            }}
                                         </span>
                                     </div>
                                 </li>
@@ -198,7 +202,8 @@
 
                                             @if($gs->is_cart)
                                             <li>
-                                                <a href="javascript:;" data-toggle="modal" data-target="#track-order-modal">
+                                                <a href="javascript:;" data-toggle="modal"
+                                                    data-target="#track-order-modal">
                                                     <i class="fas fa-caret-right"></i>
                                                     {{ __("Track Order") }}
                                                 </a>
@@ -223,8 +228,8 @@
                                     <div class="currency-selector" style="padding-right:12px;">
                                         <select name="currency" class="currency selectors nice">
                                             @foreach($currencies as $currency)
-                                            <option value="{{route('front.currency',$currency->id)}}"
-                                                {{ $scurrency->id == $currency->id ? 'selected' : ''}}>
+                                            <option value="{{route('front.currency',$currency->id)}}" {{ $scurrency->id
+                                                == $currency->id ? 'selected' : ''}}>
                                                 {{$currency->name}}
                                             </option>
                                             @endforeach
@@ -276,8 +281,8 @@
                                 <input type="hidden" name="maxprice" value="{{ request()->input('maxprice') }}">
                                 @endif
 
-                                <input type="text" id="prod_name" name="searchHttp" placeholder="{{ __("Search For Product") }}"
-                                value="{{ request()->input('searchHttp') }}" autocomplete="off">
+                                <input type="text" id="prod_name" name="searchHttp" placeholder="{{ __(" Search For
+                                    Product") }}" value="{{ request()->input('searchHttp') }}" autocomplete="off">
                                 <div class="autocomplete">
                                     <div id="myInputautocomplete-list" class="autocomplete-items"></div>
                                 </div>
@@ -290,7 +295,7 @@
                 <div class="col-lg-4 col-sm-6 col-6 remove-padding">
                     <div class="logo">
                         <a href="{{ route('front.index') }}">
-                            <img src="{{asset('assets/images/'.$gs->logo)}}" alt="">
+                            <img src="{{asset('storage/images/'.$gs->logo)}}" alt="">
                         </a>
                     </div>
                 </div>
@@ -303,7 +308,8 @@
                             <li class="my-dropdown">
                                 <a href="javascript:;" class="cart carticon">
                                     <div class="icon">
-                                        <img src="{{ asset('project/resources/views/front/themes/theme-03/assets/images/cart.png')}}" class="img-fluid icons-header" alt="Carrinho">
+                                        <img src="{{ asset('project/resources/views/front/themes/theme-03/storage/images/cart.png')}}"
+                                            class="img-fluid icons-header" alt="Carrinho">
                                         <span class="cart-quantity" id="cart-count">
                                             {{ Session::has('cart') ? count(Session::get('cart')->items) : '0' }}
                                         </span>
@@ -315,27 +321,30 @@
                             </li>
                             @endif
 
-                            <li class="wishlist" data-toggle="tooltip" data-placement="top" title="{{ __("Wish") }}">
+                            <li class="wishlist" data-toggle="tooltip" data-placement="top" title="{{ __(" Wish") }}">
 
                                 @if(Auth::guard('web')->check())
                                 <a href="{{ route('user-wishlists') }}" class="wish">
-                                        <img src="{{ asset('project/resources/views/front/themes/theme-03/assets/images/love.png')}}" class="img-fluid icons-header" alt="Amei">
+                                    <img src="{{ asset('project/resources/views/front/themes/theme-03/storage/images/love.png')}}"
+                                        class="img-fluid icons-header" alt="Amei">
                                     <span id="wishlist-count">{{ count(Auth::user()->wishlists) }}</span>
                                 </a>
                                 @else
                                 <a href="javascript:;" data-toggle="modal" id="wish-btn" data-target="#comment-log-reg"
                                     class="wish">
-                                        <img src="{{ asset('project/resources/views/front/themes/theme-03/assets/images/love.png')}}" class="img-fluid icons-header" alt="Amei">
+                                    <img src="{{ asset('project/resources/views/front/themes/theme-03/storage/images/love.png')}}"
+                                        class="img-fluid icons-header" alt="Amei">
                                     <span id="wishlist-count">0</span>
                                 </a>
                                 @endif
 
                             </li>
 
-                            <li class="compare" data-toggle="tooltip" data-placement="top" title="{{ __("Compare") }}">
+                            <li class="compare" data-toggle="tooltip" data-placement="top" title="{{ __(" Compare") }}">
                                 <a href="{{ route('product.compare') }}" class="wish compare-product">
                                     <div class="icon">
-                                        <img src="{{ asset('project/resources/views/front/themes/theme-03/assets/images/compare.png')}}" class="img-fluid icons-header" alt="Comparar">
+                                        <img src="{{ asset('project/resources/views/front/themes/theme-03/storage/images/compare.png')}}"
+                                            class="img-fluid icons-header" alt="Comparar">
                                         <span id="compare-count">
                                             {{ Session::has('compare') ? count(Session::get('compare')->items) : '0' }}
                                         </span>
@@ -378,7 +387,7 @@
                                     @if($count)
                                     @if($category->photo)
                                     <div class="img">
-                                        <img src="{{ asset('assets/images/categories/'.$category->photo) }}" alt="">
+                                        <img src="{{ asset('storage/images/categories/'.$category->photo) }}" alt="">
                                     </div>
                                     @endif
                                     <div class="link-area">
@@ -395,7 +404,7 @@
                                     @else
                                     <a href="{{ route('front.category',$category->slug) }}">
                                         @if($category->photo)
-                                        <img src="{{ asset('assets/images/categories/'.$category->photo) }}">
+                                        <img src="{{ asset('storage/images/categories/'.$category->photo) }}">
                                         @endif
                                         {{ $category->name }}
                                     </a>
@@ -490,7 +499,7 @@
                                     @if($count)
                                     @if($category->photo)
                                     <div class="img">
-                                        <img src="{{ asset('assets/images/categories/'.$category->photo) }}" alt="">
+                                        <img src="{{ asset('storage/images/categories/'.$category->photo) }}" alt="">
                                     </div>
                                     @endif
                                     <div class="link-area">
@@ -507,7 +516,7 @@
                                     @else
                                     <a href="{{ route('front.category',$category->slug) }}">
                                         @if($category->photo)
-                                        <img src="{{ asset('assets/images/categories/'.$category->photo) }}">
+                                        <img src="{{ asset('storage/images/categories/'.$category->photo) }}">
                                         @endif
                                         {{ $category->name }}
                                     </a>

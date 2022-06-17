@@ -71,7 +71,7 @@ class MercadoLivre extends CachedModel
     }
 
     /* Sync store Product format with Meli Product format and returns it. */
-    public function productBusinessLogic(Product $product, $category_brand) 
+    public function productBusinessLogic(Product $product, $category_brand)
     {
         // Condition 2 = new / 1 = used
         $condition = "new";
@@ -86,7 +86,7 @@ class MercadoLivre extends CachedModel
             $name = $product->mercadolivre_name;
         }
 
-        $attributes = $this->getProductAttributes($product) ?? null; 
+        $attributes = $this->getProductAttributes($product) ?? null;
 
         if(!$attributes) {
             return redirect()->route('admin-prod-index')->with('error', __("Nenhum atributo foi cadastrado. Acesse Ações -> Editar -> Mercado Livre e cadastre os Atributos para melhorar seu anúncio."));
@@ -121,7 +121,7 @@ class MercadoLivre extends CachedModel
                     "id" => "WARRANTY_TIME",
                     "value_name" => $product->mercadolivre_warranty_time . ' ' . $product->mercadolivre_warranty_time_unit
                 ],
-            ], 
+            ],
             "pictures" => $this->getPicturesArray($product),
             "shipping" => [
                 "mode" => "custom",
@@ -139,7 +139,7 @@ class MercadoLivre extends CachedModel
     }
 
     /* Sync store Product format with Meli Product format and returns it. */
-    public function productUpdateBusinessLogic(Product $product, $category_brand) 
+    public function productUpdateBusinessLogic(Product $product, $category_brand)
     {
         // TODO: tratar +60 chars
         $name = $product->mercadolivre_name . " - No Ofertar";
@@ -147,7 +147,7 @@ class MercadoLivre extends CachedModel
             $name = $product->mercadolivre_name;
         }
 
-        $attributes = $this->getProductAttributes($product) ?? null; 
+        $attributes = $this->getProductAttributes($product) ?? null;
 
         if(!$attributes) {
             return redirect()->route('admin-prod-index')->with('error', __("Nenhum atributo foi cadastrado. Acesse Ações -> Editar -> Mercado Livre e cadastre os Atributos para melhorar seu anúncio."));
@@ -176,7 +176,7 @@ class MercadoLivre extends CachedModel
                     "id" => "WARRANTY_TIME",
                     "value_name" => $product->mercadolivre_warranty_time . ' ' . $product->mercadolivre_warranty_time_unit
                 ]
-            ], 
+            ],
             "pictures" => $this->getPicturesArray($product),
             "shipping" => [
                 "mode" => "custom",
@@ -215,7 +215,7 @@ class MercadoLivre extends CachedModel
         return $arr;
     }
 
-    /* 
+    /*
     *   Returns current warranty for a given product.
     */
     public function getProductWarranties(Product $product)
@@ -230,7 +230,7 @@ class MercadoLivre extends CachedModel
     {
         if(!$categoryId)
             return null;
-        
+
         $meli = self::first();
 
         $url = config('mercadolivre.api_base_url') . "categories/{$categoryId}/sale_terms";
@@ -257,10 +257,10 @@ class MercadoLivre extends CachedModel
     {
         $this->gallery_array = [];
         $galleries = Gallery::where('product_id', $product->id)->get();
-        $this->gallery_array[0]['source'] = asset('assets/images/products/' . $product->photo);
+        $this->gallery_array[0]['source'] = asset('storage/images/products/' . $product->photo);
         if($galleries) {
             foreach($galleries as $key => $gallery) {
-                $this->gallery_array[$key + 1]['source'] = asset('assets/images/galleries/'.$gallery->photo);
+                $this->gallery_array[$key + 1]['source'] = asset('storage/images/galleries/'.$gallery->photo);
             }
         }
         return $this->gallery_array;

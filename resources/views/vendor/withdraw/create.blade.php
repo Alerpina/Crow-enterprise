@@ -29,7 +29,7 @@
                     <div class="body-area">
 
                         <div class="gocover"
-                            style="background: url({{asset('assets/images/'.$gs->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
+                            style="background: url({{asset('storage/images/'.$gs->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
                         </div>
 
                         @include('includes.admin.form-both')
@@ -40,7 +40,8 @@
 
                             <div class="item form-group">
                                 <label class="control-label col-sm-12" for="name"><b>{{ __("Current Balance") }} :
-                                        {{ App\Models\Product::vendorConvertPrice(Auth::user()->current_balance) }}</b></label>
+                                        {{ App\Models\Product::vendorConvertPrice(Auth::user()->current_balance)
+                                        }}</b></label>
                             </div>
 
                             <div class="item form-group">
@@ -48,26 +49,27 @@
 
                                 </label>
                                 <div class="col-sm-12">
-                                    <input name="amount" placeholder="{{ __("Withdraw Amount") }}" class="form-control"
+                                    <input name="amount" placeholder="{{ __(" Withdraw Amount") }}" class="form-control"
                                         type="text" value="{{ old('amount') }}" required>
                                 </div>
                             </div>
 
                             <di class="item form-group">
-                                <label class="control-label col-sm-12"
-                                    for="name">{{ __("Additional Reference(Optional)") }}
+                                <label class="control-label col-sm-12" for="name">{{ __("Additional
+                                    Reference(Optional)") }}
 
                                 </label>
                                 <div class="col-sm-12">
-                                    <textarea class="form-control" name="reference" rows="6"
-                                        placeholder="{{ __("Additional Reference(Optional)") }}">{{ old('reference') }}</textarea>
+                                    <textarea class="form-control" name="reference" rows="6" placeholder="{{ __("
+                                        Additional Reference(Optional)") }}">{{ old('reference') }}</textarea>
                                 </div>
                             </di>
 
                             <div id="resp" class="col-md-12">
 
                                 <span class="help-block">
-                                    <strong>{{ __("Withdraw Fee") }} {{ $sign->sign }} {{ $gs->withdraw_fee }} {{ __("and") }}
+                                    <strong>{{ __("Withdraw Fee") }} {{ $sign->sign }} {{ $gs->withdraw_fee }} {{
+                                        __("and") }}
                                         {{ $gs->withdraw_charge }}% {{ __("will deduct from your account.") }}</strong>
                                 </span>
                             </div>

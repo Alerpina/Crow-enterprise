@@ -382,12 +382,12 @@
                                                     @if(env("ENABLE_CUSTOM_PRODUCT"))
                                                     @if(!empty($product['customizable_gallery']))
                                                     <b>{{ __("Custom Gallery") }}</b>: <img src="{{ asset("
-                                                        assets/images/thumbnails/".$product['customizable_gallery']) }}"
-                                                        width="100px"><br>
+                                                        storage/images/thumbnails/".$product['customizable_gallery'])
+                                                        }}" width="100px"><br>
                                                     @endif
                                                     @if(!empty($product['customizable_logo']))
                                                     <b>{{ __("Custom Logo") }}</b>: <img src="{{ asset("
-                                                        assets/images/custom-logo/".$product['customizable_logo']) }}"
+                                                        storage/images/custom-logo/".$product['customizable_logo']) }}"
                                                         width="100px"><br>
                                                     @endif
                                                     @endif

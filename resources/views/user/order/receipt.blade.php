@@ -5,8 +5,8 @@
 
 <section class="user-dashbord">
     <div class="container">
-    	<div class="row">
-			@include('includes.user-dashboard-sidebar')
+        <div class="row">
+            @include('includes.user-dashboard-sidebar')
             <div class="col-lg-8 text-center">
 
                 @if($order->method == "Bank Deposit")
@@ -17,17 +17,19 @@
                         </h4>
                     </div>
                     @if($order->receipt != null)
-                    <img id="preview" width="350px" src="{{asset('assets/images/receipts/'.$order->receipt)}}" alt="">
-                    @else 
+                    <img id="preview" width="350px" src="{{asset('storage/images/receipts/'.$order->receipt)}}" alt="">
+                    @else
                     <img id="preview" width="350px" src="" alt="">
                     @endif
                     <h5 class="titlereceipt">{{ __("Receipt for Order Number")}}: <b>{{$order->order_number}}</b></h5>
-                    <form id="uploadReceipt" action="{{ route('user-upload-receipt', $order->id) }}" method="POST" enctype="multipart/form-data">
+                    <form id="uploadReceipt" action="{{ route('user-upload-receipt', $order->id) }}" method="POST"
+                        enctype="multipart/form-data">
                         {{csrf_field()}}
                         <div class="box-insert-img">
                             <label for="receipt">{{ __('Choose File') }}</label>
                             <input type="file" name="receipt" id="receipt" onchange="readURL(this)" required>
-                            <button type="submit" id="btnUpload" class="btn btn-success btn-ok">{{ __('Send Receipt') }}</button>
+                            <button type="submit" id="btnUpload" class="btn btn-success btn-ok">{{ __('Send Receipt')
+                                }}</button>
                         </div>
                     </form>
                 </div>
@@ -42,11 +44,11 @@
             </div>
         </div>
     </div>
-<section>  
-@endsection
-@section('scripts')
-<script type="text/javascript">
-$(document).ready(function(){
+    <section>
+        @endsection
+        @section('scripts')
+        <script type="text/javascript">
+            $(document).ready(function(){
    if($("#preview").attr("src") != ""){
         toastr.warning(["Este pedido já tem um comprovante enviado, mas você pode atualizá-lo."]);
    }
@@ -84,5 +86,5 @@ $("#uploadReceipt").submit(function(e){
         },
     });
 });
-</script>
-@endsection
+        </script>
+        @endsection

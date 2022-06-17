@@ -27,12 +27,14 @@
                     <div class="aside">
                         @if($ps->best_seller_banner)
                         <a class="banner-effect sider-bar-align" href="{{ $ps->best_seller_banner_link }}">
-                            <img src="{{asset('assets/images/'.$ps->best_seller_banner)}}" alt="" style="width:100%;border-radius: 5px;">
+                            <img src="{{asset('storage/images/'.$ps->best_seller_banner)}}" alt=""
+                                style="width:100%;border-radius: 5px;">
                         </a>
                         @endif
                         @if($ps->best_seller_banner1)
                         <a class="banner-effect sider-bar-align" href="{{ $ps->best_seller_banner_link1 }}">
-                            <img src="{{asset('assets/images/'.$ps->best_seller_banner1)}}" alt="" style="width:100%;border-radius: 5px;">
+                            <img src="{{asset('storage/images/'.$ps->best_seller_banner1)}}" alt=""
+                                style="width:100%;border-radius: 5px;">
                         </a>
                         @endif
                     </div>
@@ -83,7 +85,7 @@
             <div class="col-lg-12 remove-padding">
                 <div class="img">
                     <a class="banner-effect" href="{{ $img->link }}">
-                        <img src="{{asset('assets/images/banners/'.$img->photo)}}" alt="">
+                        <img src="{{asset('storage/images/banners/'.$img->photo)}}" alt="">
                     </a>
                 </div>
             </div>
@@ -134,7 +136,7 @@
             <div class="col-lg-4 remove-padding">
                 <div class="left">
                     <a class="banner-effect" href="{{ $img->link }}" target="_blank">
-                        <img src="{{asset('assets/images/banners/'.$img->photo)}}" alt="">
+                        <img src="{{asset('storage/images/banners/'.$img->photo)}}" alt="">
                     </a>
                 </div>
             </div>
@@ -176,12 +178,14 @@
                     <div class="aside">
                         @if($ps->big_save_banner)
                         <a class="banner-effect sider-bar-align" href="{{ $ps->big_save_banner_link }}">
-                            <img src="{{asset('assets/images/'.$ps->big_save_banner)}}" alt="" style="width:100%;border-radius: 5px;">
+                            <img src="{{asset('storage/images/'.$ps->big_save_banner)}}" alt=""
+                                style="width:100%;border-radius: 5px;">
                         </a>
                         @endif
                         @if($ps->big_save_banner1)
                         <a class="banner-effect sider-bar-align" href="{{ $ps->big_save_banner_link1 }}">
-                            <img src="{{asset('assets/images/'.$ps->big_save_banner1)}}" alt="" style="width:100%;border-radius: 5px;">
+                            <img src="{{asset('storage/images/'.$ps->big_save_banner1)}}" alt=""
+                                style="width:100%;border-radius: 5px;">
                         </a>
                         @endif
                     </div>
@@ -309,7 +313,8 @@
                             <div class="slide-item">
                                 <div class="top-area">
                                     <div class="left">
-                                        <img src="{{ $review->photo ? asset('assets/images/reviews/'.$review->photo) : asset('assets/images/noimage.png') }}" alt="">
+                                        <img src="{{ $review->photo ? asset('storage/images/reviews/'.$review->photo) : asset('assets/images/noimage.png') }}"
+                                            alt="">
                                     </div>
                                     <div class="right">
                                         <div class="content">
@@ -337,7 +342,8 @@
                 <div class="blog-box">
                     <div class="blog-images">
                         <div class="img">
-                            <img src="{{ $blogg->photo ? asset('assets/images/blogs/'.$blogg->photo):asset('assets/images/noimage.png') }}" class="img-fluid" alt="">
+                            <img src="{{ $blogg->photo ? asset('storage/images/blogs/'.$blogg->photo):asset('assets/images/noimage.png') }}"
+                                class="img-fluid" alt="">
                             <div class="date d-flex justify-content-center">
                                 <div class="box align-self-center">
                                     <p>{{date('d', strtotime($blogg->created_at))}}</p>
@@ -348,9 +354,10 @@
 
                     </div>
                     <div class="details">
-                        <a href='{{route('front.blogshow',$blogg->id)}}'>
+                        <a href='{{route(' front.blogshow',$blogg->id)}}'>
                             <h4 class="blog-title">
-                                {{mb_strlen($blogg->title,'utf-8') > 40 ? mb_substr($blogg->title,0,40,'utf-8')."...":$blogg->title}}
+                                {{mb_strlen($blogg->title,'utf-8') > 40 ?
+                                mb_substr($blogg->title,0,40,'utf-8')."...":$blogg->title}}
                             </h4>
                         </a>
                         <p class="blog-text">
@@ -388,7 +395,7 @@
                     @foreach($partners as $data)
                     <div class="item-slide">
                         <a href="{{ $data->link }}" target="_blank">
-                            <img src="{{asset('assets/images/partner/'.$data->photo)}}" alt="">
+                            <img src="{{asset('storage/images/partner/'.$data->photo)}}" alt="">
                         </a>
                     </div>
                     @endforeach

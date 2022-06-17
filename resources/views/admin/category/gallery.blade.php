@@ -9,8 +9,8 @@
                     {{ csrf_field() }}
                     <input type="hidden" id="cid" name="category_id" value="{{ $data->id }}">
                     <input type="file" name="gallery[]" class="hidden" id="uploadgallery" accept="image/*" multiple>
-                    <label for="image-upload" id="cat_gallery"><i
-                            class="icofont-upload-alt"></i>{{ __("Upload File") }}</label>
+                    <label for="image-upload" id="cat_gallery"><i class="icofont-upload-alt"></i>{{ __("Upload File")
+                        }}</label>
                 </form>
             </div>
         </div>
@@ -19,7 +19,8 @@
                 {{ __("Done") }}</a>
         </div>
         <div class="col-sm-12 text-center">(
-            <small>{{ __("You can upload multiple Images") }}.</small> )</div>
+            <small>{{ __("You can upload multiple Images") }}.</small> )
+        </div>
     </div>
 </div>
 <div class="gallery-images">
@@ -84,11 +85,11 @@
                                 '</span>' +
                                 '<div class="gallery-img-id"><span>' + arr[l]['id'] +
                                 '</span></div>' +
-                                '<a href="' + '{{asset("assets/images/galleries")."/"}}' + arr[
+                                '<a href="' + '{{asset("storage/images/galleries")."/"}}' + arr[
                                     l][
                                     'customizable_gallery'
                                 ] + '" target="_blank">' +
-                                '<img src="' + '{{asset("assets/images/galleries")."/"}}' + arr[
+                                '<img src="' + '{{asset("storage/images/galleries")."/"}}' + arr[
                                     l][
                                     'customizable_gallery'
                                 ] + '" alt="gallery image">' +
@@ -101,7 +102,7 @@
             }
         });
     });
-    </script>
+</script>
 
 <script>
     $(document).on('click', '.remove-img', function() {
@@ -152,10 +153,10 @@
                             '<span class="remove-img"><i class="fas fa-times"></i>' +
                             '<input type="hidden" value="' + arr[m]['id'] + '">' +
                             '</span>' +
-                            '<a href="' + '{{asset("assets/images/galleries")."/"}}' + arr[m][
+                            '<a href="' + '{{asset("storage/images/galleries")."/"}}' + arr[m][
                                 'customizable_gallery'
                             ] + '" target="_blank">' +
-                            '<img src="' + '{{asset("assets/images/galleries")."/"}}' + arr[m][
+                            '<img src="' + '{{asset("storage/images/galleries")."/"}}' + arr[m][
                                 'customizable_gallery'
                             ] + '" alt="gallery image">' +
                             '</a>' +

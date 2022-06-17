@@ -27,7 +27,7 @@
             <div class="col-lg-12">
                 <div class="product-description">
                     <div class="body-area">
-                        <div class="gocover" style="background: url({{asset('assets/images/'.$admstore->admin_loader)}}) 
+                        <div class="gocover" style="background: url({{asset('storage/images/'.$admstore->admin_loader)}})
                                 no-repeat scroll center center rgba(45, 45, 45, 0.5);">
                         </div>
                         @include('includes.admin.partials.gateway-menu')

@@ -34,7 +34,7 @@
                 <div class="left-area">
                     <div class="contact-form">
                         <div class="gocover"
-                            style="background: url({{ asset('assets/images/'.$gs->loader) }}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
+                            style="background: url({{ asset('storage/images/'.$gs->loader) }}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
                         </div>
                         {!! $gs->vendor_policy !!}
                     </div>

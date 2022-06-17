@@ -107,18 +107,18 @@ class ImportController extends Controller
         list(, $image)      = explode(',', $image);
         $image = base64_decode($image);
         $image_name = time().Str::random(8).'.png';
-        $path = 'assets/images/products/'.$image_name;
+        $path = 'storage/images/products/'.$image_name;
         file_put_contents($path, $image);
                 if($data->photo != null)
                 {
-                    if (file_exists(public_path().'/assets/images/products/'.$data->photo)) {
-                        unlink(public_path().'/assets/images/products/'.$data->photo);
+                    if (file_exists(public_path().'/storage/images/products/'.$data->photo)) {
+                        unlink(public_path().'/storage/images/products/'.$data->photo);
                     }
-                } 
+                }
                         $input['photo'] = $image_name;
          $data->update($input);
 
-                        
+
         return response()->json(['status'=>true,'file_name' => $image_name]);
     }
 
@@ -145,7 +145,7 @@ class ImportController extends Controller
 
         }
 
-        //--- Logic Section        
+        //--- Logic Section
         $data = new Product;
         $sign = Currency::where('id', '=', 1)->first();
         $input = $this->withRequiredFields($request->all(), ['name']);
@@ -164,7 +164,7 @@ class ImportController extends Controller
             list(, $image)      = explode(',', $image);
             $image = base64_decode($image);
             $image_name = time() . Str::random(8) . '.png';
-            $path = 'assets/images/products/' . $image_name;
+            $path = 'storage/images/products/' . $image_name;
             file_put_contents($path, $image);
             $input['photo'] = $image_name;
         } else {
@@ -293,7 +293,7 @@ class ImportController extends Controller
         $input['previous_price'] = ($input['previous_price'] / $sign->value);
         $input['product_type'] = "affiliate";
 
-        // Save Data 
+        // Save Data
         $data->fill($input)->save();
 
         // Set SLug
@@ -303,14 +303,14 @@ class ImportController extends Controller
         } else {
             $prod->slug = Str::slug($data->name, '-') . '-' . strtolower($data->sku);
         }
-        $fimageData = public_path() . '/assets/images/products/' . $prod->photo;
+        $fimageData = public_path() . '/storage/images/products/' . $prod->photo;
         if (filter_var($prod->photo, FILTER_VALIDATE_URL)) {
             $fimageData = $prod->photo;
         }
 
         $img = Image::make($fimageData)->resize(285, 285);
         $thumbnail = time() . Str::random(8) . '.jpg';
-        $img->save(public_path() . '/assets/images/thumbnails/' . $thumbnail);
+        $img->save(public_path() . '/storage/images/thumbnails/' . $thumbnail);
         $prod->thumbnail  = $thumbnail;
         $prod->update();
 
@@ -323,7 +323,7 @@ class ImportController extends Controller
                     $name = time() . $file->getClientOriginalName();
                     $img = Image::make($file->getRealPath())->resize(800, 800);
                     $thumbnail = time() . Str::random(8) . '.jpg';
-                    $img->save(public_path() . '/assets/images/galleries/' . $name);
+                    $img->save(public_path() . '/storage/images/galleries/' . $name);
                     $gallery['photo'] = $name;
                     $gallery['product_id'] = $lastid;
                     $gallery->save();
@@ -337,10 +337,10 @@ class ImportController extends Controller
             $prod->stores()->sync($input['stores']);
         }
 
-        //--- Redirect Section        
+        //--- Redirect Section
         $msg = __('New Affiliate Product Added Successfully.') . '<a href="' . route('admin-import-index') . '">' . __('View Product Lists.') . '</a>';
         return response()->json($msg);
-        //--- Redirect Section Ends    
+        //--- Redirect Section Ends
     }
 
     //*** GET Request
@@ -439,7 +439,7 @@ class ImportController extends Controller
         }
         //-- End of Translations Section
 
-        //Check Types 
+        //Check Types
         if ($request->type_check == 1) {
             $input['link'] = null;
         } else {
@@ -552,12 +552,12 @@ class ImportController extends Controller
         //-- Logic Section Ends
 
         if ($data->photo != null) {
-            if (file_exists(public_path() . '/assets/images/thumbnails/' . $data->thumbnail)) {
-                unlink(public_path() . '/assets/images/thumbnails/' . $data->thumbnail);
+            if (file_exists(public_path() . '/storage/images/thumbnails/' . $data->thumbnail)) {
+                unlink(public_path() . '/storage/images/thumbnails/' . $data->thumbnail);
             }
         }
 
-        $fimageData = public_path() . '/assets/images/products/' . $prod->photo;
+        $fimageData = public_path() . '/storage/images/products/' . $prod->photo;
 
         if (filter_var($prod->photo, FILTER_VALIDATE_URL)) {
             $fimageData = $prod->photo;
@@ -565,13 +565,13 @@ class ImportController extends Controller
 
         $img = Image::make($fimageData)->resize(285, 285);
         $thumbnail = time() . Str::random(8) . '.jpg';
-        $img->save(public_path() . '/assets/images/thumbnails/' . $thumbnail);
+        $img->save(public_path() . '/storage/images/thumbnails/' . $thumbnail);
         $prod->thumbnail  = $thumbnail;
         $prod->update();
 
-        //--- Redirect Section        
+        //--- Redirect Section
         $msg = __('Product Updated Successfully.') . '<a href="' . route('admin-import-index') . '">' . __('View Product Lists.') . '</a>';
-        return response()->json($msg);      
-        //--- Redirect Section Ends    
+        return response()->json($msg);
+        //--- Redirect Section Ends
     }
 }

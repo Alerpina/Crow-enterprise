@@ -65,7 +65,7 @@
                                                 <div class="reply-area">
                                                     <div class="left">
                                                         <img class="img-circle"
-                                                            src="{{ asset('assets/images/admin.jpg')}}" alt="">
+                                                            src="{{ asset('storage/images/admin.jpg')}}" alt="">
                                                         <p class="ticket-date">{{ __("Admin") }}</p>
                                                     </div>
                                                     <div class="right">

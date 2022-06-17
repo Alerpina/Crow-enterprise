@@ -3,7 +3,7 @@
     <div class="content">
         <div class="title">
             <a href="{{ route('front.brand', $productt->brand->slug) }}">
-                <img src="{{$productt->brand->image ? asset('storage/images/brands/'.$productt->brand->image) : asset('storage/images/noimage.png') }}"
+                <img src="{{$productt->brand->image ? asset('storage/images/brands/'.$productt->brand->image) : asset('assets/images/noimage.png') }}"
                     alt="{{$productt->brand->name}}">
         </div>
         <p class="stor-name">

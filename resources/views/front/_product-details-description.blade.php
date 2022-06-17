@@ -52,7 +52,7 @@
                                             <img src="{{ $review->user->photo ?
                                                         asset('storage/images/users/'.
                                                             $review->user->photo) :
-                                                                asset('storage/images/noimage.png') }}" alt="">
+                                                                asset('assets/images/noimage.png') }}" alt="">
                                             <h5 class="name">{{ $review->user->name }}</h5>
                                             <p class="date">
                                                 {{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s',

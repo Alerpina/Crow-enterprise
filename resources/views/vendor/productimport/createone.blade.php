@@ -1,12 +1,11 @@
 @extends('layouts.vendor')
 @section('styles')
 <style>
-
-	.disabled {
-		pointer-events:none;
-		opacity: 0.5;
-	}
-	</style>
+    .disabled {
+        pointer-events: none;
+        opacity: 0.5;
+    }
+</style>
 
 <link href="{{asset('assets/vendor/css/product.css')}}" rel="stylesheet" />
 <link href="{{asset('assets/admin/css/jquery.Jcrop.css')}}" rel="stylesheet" />
@@ -21,7 +20,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h4 class="heading">{{ __("Affiliate Product") }} <a class="add-btn"
-                    href="javascript:history.back();"><i class="fas fa-arrow-left"></i> {{ __("Back") }}</a>
+                        href="javascript:history.back();"><i class="fas fa-arrow-left"></i> {{ __("Back") }}</a>
                 </h4>
                 <ul class="links">
                     <li>
@@ -47,7 +46,7 @@
                     <div class="body-area">
 
                         <div class="gocover"
-                            style="background: url({{asset('assets/images/'.$gs->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
+                            style="background: url({{asset('storage/images/'.$gs->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
                         </div>
                         <form id="geniusform" action="{{route('vendor-import-store')}}" method="POST"
                             enctype="multipart/form-data">
@@ -62,90 +61,93 @@
                                 </h3>
                             </div>
 
-                            <div class="row border-sep"> <!--COMEÇO DA ROW DE DADOS OBRIGATORIOS-->
+                            <div class="row border-sep">
+                                <!--COMEÇO DA ROW DE DADOS OBRIGATORIOS-->
 
                                 <div class="col-12">
                                     <div class="input-form">
 
                                         @component('admin.components.input-localized',["required" => true])
-                                            @slot('name')
-                                                name
-                                            @endslot
-                                            @slot('placeholder')
-                                            {{ __('Enter Product Name') }}
-                                            @endslot
-                                            {{ __('Product Name') }}*
+                                        @slot('name')
+                                        name
+                                        @endslot
+                                        @slot('placeholder')
+                                        {{ __('Enter Product Name') }}
+                                        @endslot
+                                        {{ __('Product Name') }}*
                                         @endcomponent
 
                                         @php
-                                        $temp_sku = Illuminate\Support\Str::random(3).substr(time(), 6,8).Illuminate\Support\Str::random(3);
+                                        $temp_sku = Illuminate\Support\Str::random(3).substr(time(),
+                                        6,8).Illuminate\Support\Str::random(3);
                                         @endphp
                                     </div>
                                 </div>
 
                                 <div class="col-xl-6">
-									<div class="input-form">
-                                        <h4 class="heading">{{ __("Product Affiliate Link") }}* 
+                                    <div class="input-form">
+                                        <h4 class="heading">{{ __("Product Affiliate Link") }}*
                                             <span>{{ __("(External Link)") }}</span>
                                         </h4>
-                                        <input type="text" class="input-field"
-                                            placeholder="{{ __("Product Affiliate Link") }}" name="affiliate_link"
-                                            required="">
+                                        <input type="text" class="input-field" placeholder="{{ __(" Product Affiliate
+                                            Link") }}" name="affiliate_link" required="">
                                     </div>
-                                </div>      
-                            
+                                </div>
+
                                 <div class="col-xl-6">
                                     <div class="input-form">
                                         <h4 class="heading">{{ __("Category") }}*</h4>
                                         <select id="cat" name="category_id" required="">
                                             <option value="">{{ __("Select Category") }}</option>
                                             @foreach($cats as $cat)
-                                                <option data-href="{{ route('vendor-subcat-load',$cat->id) }}"
-                                                    value="{{ $cat->id }}">{{$cat->name}}</option>
+                                            <option data-href="{{ route('vendor-subcat-load',$cat->id) }}"
+                                                value="{{ $cat->id }}">{{$cat->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>           
+                                </div>
 
                                 <div class="col-xl-6">
                                     <div class="input-form">
                                         <div class="d-flex">
                                             <h4 class="heading">
-                                                {{ __("Product Current Price") }}*                                    
+                                                {{ __("Product Current Price") }}*
                                                 <span>
                                                     ({{ __("In") }} {{$sign->name}})
                                                 </span>
                                             </h4>
                                         </div>
                                         <input name="price" step="0.1" type="number" class="input-field"
-                                            placeholder="{{ __("e.g 20") }}" required="" min="0">
+                                            placeholder="{{ __(" e.g 20") }}" required="" min="0">
                                     </div>
                                 </div>
-                                
-								<div class="col-xl-6">
+
+                                <div class="col-xl-6">
                                     <div class="input-form">
-										<h4 class="heading">{{ __('Product Sku') }}* </h4>
-										<input type="text" class="input-field" placeholder="{{ __('Enter Product Sku') }}"
-										name="sku" required="" value="{{ $temp_sku }}">
+                                        <h4 class="heading">{{ __('Product Sku') }}* </h4>
+                                        <input type="text" class="input-field"
+                                            placeholder="{{ __('Enter Product Sku') }}" name="sku" required=""
+                                            value="{{ $temp_sku }}">
                                     </div>
-                                </div>    
+                                </div>
 
                                 <div class="col-xl-6">
                                     <div class="input-form">
                                         <h4 class="heading">{{ __('Display in Stores') }}* </h4>
                                         @foreach($storesList as $store)
-										<div class="row justify-content-left">
-											<div class="col-lg-12 d-flex justify-content-between">
-												<label class="control-label" for="store{{$store->id}}">{{$store->title}} |
-													{{$store->domain}}</label>
-												<label class="switch">
-													<input type="checkbox" name="stores[]" id="store{{$store->id}}"
-														value="{{$store->id}}" checked>
-													<span class="slider round"></span>
-												</label>
-											</div>
-										</div>
-										@endforeach
+                                        <div class="row justify-content-left">
+                                            <div class="col-lg-12 d-flex justify-content-between">
+                                                <label class="control-label" for="store{{$store->id}}">{{$store->title}}
+                                                    |
+                                                    {{$store->domain}}</label>
+                                                <label class="switch">
+                                                    <input type="checkbox" name="stores[]" id="store{{$store->id}}"
+                                                        value="{{$store->id}}" checked>
+                                                    <span class="slider round"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        @endforeach
                                     </div>
                                 </div>
 
@@ -155,7 +157,8 @@
                                     <div id="childcatAttributes"></div>
                                 </div>
 
-                            </div> <!--FINAL DA ROW DE DADOS OBRIGATORIOS-->
+                            </div>
+                            <!--FINAL DA ROW DE DADOS OBRIGATORIOS-->
 
                             <div class="title-section-form">
                                 <span>2</span>
@@ -163,28 +166,29 @@
                                     {{ __('Important Data') }}
                                 </h3>
                             </div>
-                            
-                            <div class="row border-sep"> <!--COMEÇO DA ROW DE DADOS OPCIONAIS IMPORTANTES-->
+
+                            <div class="row border-sep">
+                                <!--COMEÇO DA ROW DE DADOS OPCIONAIS IMPORTANTES-->
                                 <div class="col-xl-6">
                                     <div class="input-form">
-										<h4 class="heading">{{ __('Brand') }}</h4>
-										<select id="brand" name="brand_id" required>
-											<option value="">{{ __('Select Brand') }}</option>
-											@foreach($brands as $brand)
-											<option data-href="{{ route('admin-brand-load',$brand->id) }}"
-												value="{{ $brand->id }}">{{$brand->name}}</option>
-											@endforeach
-										</select>
-									</div>
-								</div>
-
-							<div class="col-xl-6">
-								<div class="input-form">
-                                    <h4 class="heading">{{ __('Model Number') }} </h4>
-                                    <input type="text" class="input-field"
-                                        placeholder="{{ __('Enter Product Model Number') }}" name="mpn" required>
+                                        <h4 class="heading">{{ __('Brand') }}</h4>
+                                        <select id="brand" name="brand_id" required>
+                                            <option value="">{{ __('Select Brand') }}</option>
+                                            @foreach($brands as $brand)
+                                            <option data-href="{{ route('admin-brand-load',$brand->id) }}"
+                                                value="{{ $brand->id }}">{{$brand->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
+
+                                <div class="col-xl-6">
+                                    <div class="input-form">
+                                        <h4 class="heading">{{ __('Model Number') }} </h4>
+                                        <input type="text" class="input-field"
+                                            placeholder="{{ __('Enter Product Model Number') }}" name="mpn" required>
+                                    </div>
+                                </div>
                                 <div class="col-xl-6">
                                     <div class="input-form">
                                         <h4 class="heading">{{ __("Sub Category") }}*</h4>
@@ -193,7 +197,7 @@
                                         </select>
                                     </div>
                                 </div>
-    
+
                                 <div class="col-xl-6">
                                     <div class="input-form">
                                         <h4 class="heading">{{ __("Child Category") }}*</h4>
@@ -204,8 +208,9 @@
                                 </div>
 
                                 <div class="col-xl-6">
-    
-                                    <div class="input-form" id="f-file" style="display:flex;flex-direction:column;align-items:center;">
+
+                                    <div class="input-form" id="f-file"
+                                        style="display:flex;flex-direction:column;align-items:center;">
                                         <h4 class="heading">{{ __("Feature Image") }} *</h4>
                                         <div class="row">
                                             <div class="panel panel-body">
@@ -214,7 +219,7 @@
                                                 </div>
                                             </div>
                                         </div>
-        
+
                                         <a href="javascript:;" id="crop-image" class="d-inline-block mybtn1">
                                             <i class="icofont-upload-alt"></i> {{ __("Upload Image Here") }}
                                         </a>
@@ -256,7 +261,7 @@
                                             </div>
                                         </div>
                                     </div>
-        
+
                                     <div class="showbox input-form">
                                         <h4 class="heading">{{ __('Product Condition') }}*</h4>
                                         <select name="product_condition">
@@ -264,15 +269,15 @@
                                             <option value="1">{{ __('Used') }}</option>
                                         </select>
                                     </div>
-                                
+
                                 </div>
-                           
-                                
+
+
                                 <div class="col-xl-12">
                                     <div class="input-form">
                                         @component('admin.components.input-localized',["type" => "richtext"])
                                         @slot('name')
-                                            details
+                                        details
                                         @endslot
                                         {{ __('Product Description') }}
                                         @endcomponent
@@ -282,15 +287,16 @@
                                 <div class="col-xl-12">
                                     <div class="input-form">
                                         @component('admin.components.input-localized',["type" => "richtext"])
-                                            @slot('name')
-                                                policy
-                                            @endslot
-                                            {{ __('Product Buy/Return Policy') }}
+                                        @slot('name')
+                                        policy
+                                        @endslot
+                                        {{ __('Product Buy/Return Policy') }}
                                         @endcomponent
                                     </div>
                                 </div>
 
-                            </div> <!--FINAL DA ROW DE DADOS OPCIONAIS IMPORTANTES-->
+                            </div>
+                            <!--FINAL DA ROW DE DADOS OPCIONAIS IMPORTANTES-->
 
                             <div class="title-section-form">
                                 <span>3</span>
@@ -299,48 +305,51 @@
                                 </h3>
                             </div>
 
-                            <div class="row"> <!--COMEÇO DA ROW DE DADOS EXTRAS-->
+                            <div class="row">
+                                <!--COMEÇO DA ROW DE DADOS EXTRAS-->
 
                                 <div class="col-xl-6">
                                     <div class="col-lg-4">
                                         <div class="left-area">
-    
+
                                         </div>
                                     </div>
-    
+
                                     <div class="col-xl-6">
                                         <div class="form-list">
                                             <ul class="list list-personalizada">
                                                 <li>
-                                                    <input class="checkclick1" name="shipping_time_check" type="checkbox"
-                                                        id="check1" value="1">
-                                                    <label for="check1">{{ __("Allow Estimated Shipping Time") }}</label>
+                                                    <input class="checkclick1" name="shipping_time_check"
+                                                        type="checkbox" id="check1" value="1">
+                                                    <label for="check1">{{ __("Allow Estimated Shipping Time")
+                                                        }}</label>
                                                 </li>
-                                             </ul>
+                                            </ul>
                                         </div>
                                     </div>
 
                                     <div class="showbox input-form">
                                         @component('admin.components.input-localized')
-                                            @slot('name')
-                                            ship
-                                            @endslot
-                                            @slot('placeholder')
-                                            {{ __('Estimated Shipping Time') }}
-                                            @endslot
-                                            {{ __('Product Estimated Shipping Time') }}
+                                        @slot('name')
+                                        ship
+                                        @endslot
+                                        @slot('placeholder')
+                                        {{ __('Estimated Shipping Time') }}
+                                        @endslot
+                                        {{ __('Product Estimated Shipping Time') }}
                                         @endcomponent
                                     </div>
-                                </div><!--FECHAMENTO COL-XL-6-->
+                                </div>
+                                <!--FECHAMENTO COL-XL-6-->
 
                                 <div class="col-xl-6">
 
                                     <div class="col-lg-4">
                                         <div class="left-area">
-    
+
                                         </div>
                                     </div>
-    
+
                                     <div class="col-xl-6">
                                         <div class="form-list">
                                             <ul class="list list-personalizada">
@@ -356,7 +365,8 @@
                                             <div class="col-xl-12">
                                                 <div class="product-size-details" id="size-section">
                                                     <div class="size-area">
-                                                        <span class="remove size-remove"><i class="fas fa-times"></i></span>
+                                                        <span class="remove size-remove"><i
+                                                                class="fas fa-times"></i></span>
                                                         <div class="row">
                                                             <div class="col-md-4 col-sm-6">
                                                                 <label>
@@ -366,7 +376,7 @@
                                                                     </span>
                                                                 </label>
                                                                 <input type="text" name="size[]" class="input-field"
-                                                                    placeholder="{{ __("Size Name") }}">
+                                                                    placeholder="{{ __(" Size Name") }}">
                                                             </div>
                                                             <div class="col-md-4 col-sm-6">
                                                                 <label>
@@ -375,19 +385,21 @@
                                                                         {{ __("(Number of quantity of this size)") }}
                                                                     </span>
                                                                 </label>
-                                                                <input type="number" name="size_qty[]" class="input-field"
-                                                                    placeholder="{{ __("Size Qty") }}" value="1" min="1">
+                                                                <input type="number" name="size_qty[]"
+                                                                    class="input-field" placeholder="{{ __(" Size Qty")
+                                                                    }}" value="1" min="1">
                                                             </div>
                                                             <div class="col-md-4 col-sm-6">
                                                                 <label>
                                                                     {{ __("Size Price") }} :
                                                                     <span>
-                                                                        {{ __("(This price will be added with base price)") }}
+                                                                        {{ __("(This price will be added with base
+                                                                        price)") }}
                                                                     </span>
                                                                 </label>
                                                                 <input type="number" step="0.01" name="size_price[]"
-                                                                    class="input-field" placeholder="{{ __("Size Price") }}"
-                                                                    value="0" min="0">
+                                                                    class="input-field" placeholder="{{ __(" Size
+                                                                    Price") }}" value="0" min="0">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -398,20 +410,21 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div><!--FECHAMENTO COL-XL-6-->
+                                </div>
+                                <!--FECHAMENTO COL-XL-6-->
 
                                 <div class="col-xl-6">
                                     <div class="col-lg-4">
                                         <div class="left-area">
                                         </div>
                                     </div>
-    
+
                                     <div class="col-xl-6">
                                         <div class="form-list">
                                             <ul class="list list-personalizada">
                                                 <li>
-                                                    <input class="checkclick1" name="color_check" type="checkbox" id="check3"
-                                                        value="1">
+                                                    <input class="checkclick1" name="color_check" type="checkbox"
+                                                        id="check3" value="1">
                                                     <label for="check3">{{ __("Allow Product Colors") }}</label>
                                                 </li>
                                             </ul>
@@ -443,7 +456,8 @@
                                                             <label>
                                                                 {{ __('Color Price') }}
                                                                 <span>
-                                                                    {{ __('(This price will be added with base price)') }}
+                                                                    {{ __('(This price will be added with base price)')
+                                                                    }}
                                                                 </span>
                                                             </label>
                                                         </div>
@@ -453,88 +467,100 @@
                                                             <div class="col-md-3">
                                                                 <div class="select-input-color">
                                                                     <div class="color-area">
-                                                                        <div class="input-group colorpicker-component cp">
-                                                                            <input type="text" name="color[]" value="#000000"
+                                                                        <div
+                                                                            class="input-group colorpicker-component cp">
+                                                                            <input type="text" name="color[]"
+                                                                                value="#000000"
                                                                                 class="input-field cp" />
-                                                                            <span class="input-group-addon"><i></i></span>
+                                                                            <span
+                                                                                class="input-group-addon"><i></i></span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3">
-                                                                <input type="number" name="color_qty[]" class="input-field"
-                                                                    placeholder="{{ __('Color Qty') }}" value="0" min="0" required>
+                                                                <input type="number" name="color_qty[]"
+                                                                    class="input-field"
+                                                                    placeholder="{{ __('Color Qty') }}" value="0"
+                                                                    min="0" required>
                                                             </div>
                                                             <div class="col-md-3">
-                                                                <input type="number" step="0.01" name="color_price[]" class="input-field"
-                                                                    placeholder="{{ __('Color Price') }}" value="0" min="0" required>
+                                                                <input type="number" step="0.01" name="color_price[]"
+                                                                    class="input-field"
+                                                                    placeholder="{{ __('Color Price') }}" value="0"
+                                                                    min="0" required>
                                                             </div>
                                                             <div class="col-md-3">
-                                                                <button type="button" class="btn btn-danger text-white color-remove"><i class="fa fa-times"></i></button>
+                                                                <button type="button"
+                                                                    class="btn btn-danger text-white color-remove"><i
+                                                                        class="fa fa-times"></i></button>
                                                             </div>
                                                         </div>
-                                                    </div>        
-                                                                                                <a href="javascript:;" id="color-btn" class="add-more mt-4 mb-3"><i
+                                                    </div>
+                                                    <a href="javascript:;" id="color-btn" class="add-more mt-4 mb-3"><i
                                                             class="fas fa-plus"></i>{{ __('Add More Color') }} </a>
                                                 </div>
                                             </div>
-                
+
                                         </div>
 
                                     </div>
-                                </div><!--FECHAMENTO COL-XL-6-->
-    
+                                </div>
+                                <!--FECHAMENTO COL-XL-6-->
+
                                 <div class="col-xl-6">
                                     <div class="col-lg-4">
                                         <div class="left-area">
                                         </div>
                                     </div>
-    
+
                                     <div class="col-xl-6">
                                         <div class="form-list">
                                             <ul class="list list-personalizada">
                                                 <li>
-                                                    <input  type="checkbox" name="measure_check" class="checkclick"
-                                                    id="allowProductMeasurement" value="1">
-                                                <label
-                                                    for="allowProductMeasurement">{{ __("Allow Product Measurement") }}</label>
+                                                    <input type="checkbox" name="measure_check" class="checkclick"
+                                                        id="allowProductMeasurement" value="1">
+                                                    <label for="allowProductMeasurement">{{ __("Allow Product
+                                                        Measurement") }}</label>
                                                 </li>
                                             </ul>
                                         </div>
 
                                         <div class="showbox input-form">
                                             <h4 class="heading">{{ __("Product Measurement") }}*</h4>
-                                                <select id="product_measure">
-                                                    <option value="">{{ __("None") }}</option>
-                                                    <option value="Gram">{{ __("Gram") }}</option>
-                                                    <option value="Kilogram">{{ __("Kilogram") }}</option>
-                                                    <option value="Litre">{{ __("Litre") }}</option>
-                                                    <option value="Pound">{{ __("Pound") }}</option>
-                                                    <option value="Custom">{{ __("Custom") }}</option>
-                                                </select>
-                                                <div class="hidden" id="measure">
-                                                    <input name="measure" type="text" id="measurement" class="input-field"
-                                                        placeholder="{{ __("Enter Unit") }}">
-                                                </div>
+                                            <select id="product_measure">
+                                                <option value="">{{ __("None") }}</option>
+                                                <option value="Gram">{{ __("Gram") }}</option>
+                                                <option value="Kilogram">{{ __("Kilogram") }}</option>
+                                                <option value="Litre">{{ __("Litre") }}</option>
+                                                <option value="Pound">{{ __("Pound") }}</option>
+                                                <option value="Custom">{{ __("Custom") }}</option>
+                                            </select>
+                                            <div class="hidden" id="measure">
+                                                <input name="measure" type="text" id="measurement" class="input-field"
+                                                    placeholder="{{ __(" Enter Unit") }}">
+                                            </div>
                                             </h4>
                                         </div>
                                     </div>
-    
-                                </div><!--FECHAMENTO COL-XL-6-->
-    
-    
+
+                                </div>
+                                <!--FECHAMENTO COL-XL-6-->
+
+
                                 <div class="col-xl-6">
                                     <div class="input-form">
-                                            <h4 class="heading">{{ __("Product Previous Price") }}*
-                                                <span>
-                                                    {{ __("(Optional)") }}
-                                                </span>
-                                            </h4>
+                                        <h4 class="heading">{{ __("Product Previous Price") }}*
+                                            <span>
+                                                {{ __("(Optional)") }}
+                                            </span>
+                                        </h4>
                                         <input name="previous_price" step="0.1" type="number" class="input-field"
-                                            placeholder="{{ __("e.g 20") }}" min="0">
+                                            placeholder="{{ __(" e.g 20") }}" min="0">
                                     </div>
-                                </div><!--FINAL ROW COL-XL-6-->
-    
+                                </div>
+                                <!--FINAL ROW COL-XL-6-->
+
                                 <div class="col-xl-6">
                                     <div class="input-form">
                                         <h4 class="heading">{{ __("Product Stock") }}*
@@ -542,258 +568,259 @@
                                                 {{ __("(Leave Empty will Show Always Available)") }}
                                             </span>
                                         </h4>
-                                        <input name="stock" type="text" class="input-field"
-                                            placeholder="{{ __("e.g 20") }}">
+                                        <input name="stock" type="text" class="input-field" placeholder="{{ __(" e.g
+                                            20") }}">
                                     </div>
-                                </div><!--FINAL ROW COL-XL-6-->
-                                
+                                </div>
+                                <!--FINAL ROW COL-XL-6-->
+
                                 <div class="col-xl-12">
                                     <div class="title-section-form"></div>
                                 </div>
                             </div>
-                                    
-                                <div class="row">
-                                    <div class="col-xl-6">
-                                        <div class="featured-keyword-area input-form">
-                                            <h4 class="heading">
-                                                {{ __('Feature Tags') }}
-                                                <span>
-                                                    {{ __('(You can create up to 2 Product Tags)') }}
-                                                </span>
-                                            </h4>
-    
-                                            <div class="feature-tag-top-filds" id="feature-section">
-                                                <div class="feature-area mb-3">
-                                                    <div class="row mb-0">
-                                                        <div class="col-lg-6">
-                                                            <div class="panel panel-lang">
-                                                                <div class="panel-body">
-                                                                    <div class="tab-content">
-                                                                        <div role="tabpanel" class="tab-pane active"
-                                                                            id="{{$lang->locale}}-features0">
-                                                                            <input type="text"
-                                                                                name="{{$lang->locale}}[features][]"
-                                                                                class="input-field"
-                                                                                placeholder="{{ __('Enter Your Keyword') }}">
-                                                                        </div>
-                                                                        @foreach($locales as $loc)
-                                                                        @if($loc->locale === $lang->locale)
-                                                                        @continue
-                                                                        @endif
-                                                                        <div role="tabpanel" class="tab-pane"
-                                                                            id="{{$loc->locale}}-features0">
-                                                                            <input type="text"
-                                                                                name="{{$loc->locale}}[features][]"
-                                                                                class="input-field"
-                                                                                placeholder="{{ __('Enter Your Keyword') }}">
-                                                                        </div>
-                                                                        @endforeach
+
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <div class="featured-keyword-area input-form">
+                                        <h4 class="heading">
+                                            {{ __('Feature Tags') }}
+                                            <span>
+                                                {{ __('(You can create up to 2 Product Tags)') }}
+                                            </span>
+                                        </h4>
+
+                                        <div class="feature-tag-top-filds" id="feature-section">
+                                            <div class="feature-area mb-3">
+                                                <div class="row mb-0">
+                                                    <div class="col-lg-6">
+                                                        <div class="panel panel-lang">
+                                                            <div class="panel-body">
+                                                                <div class="tab-content">
+                                                                    <div role="tabpanel" class="tab-pane active"
+                                                                        id="{{$lang->locale}}-features0">
+                                                                        <input type="text"
+                                                                            name="{{$lang->locale}}[features][]"
+                                                                            class="input-field"
+                                                                            placeholder="{{ __('Enter Your Keyword') }}">
                                                                     </div>
+                                                                    @foreach($locales as $loc)
+                                                                    @if($loc->locale === $lang->locale)
+                                                                    @continue
+                                                                    @endif
+                                                                    <div role="tabpanel" class="tab-pane"
+                                                                        id="{{$loc->locale}}-features0">
+                                                                        <input type="text"
+                                                                            name="{{$loc->locale}}[features][]"
+                                                                            class="input-field"
+                                                                            placeholder="{{ __('Enter Your Keyword') }}">
+                                                                    </div>
+                                                                    @endforeach
                                                                 </div>
                                                             </div>
                                                         </div>
-    
-                                                        <div class="col-lg-6">
-                                                            <div class="input-group colorpicker-component cp">
-                                                                <input type="text" name="colors[]" value="#000000"
-                                                                    class="input-field cp" />
-                                                                <span class="input-group-addon"><i></i></span>
-                                                            </div>
-                                                        </div>
                                                     </div>
-                                                    <div class="panel panel-lang">
-                                                        <div class="panel-footer">
-                                                            <ul class="nav nav-pills" role="tablist">
-                                                                <li role="presentation" class="active">
-                                                                    <a href="#{{$lang->locale}}-features0"
-                                                                        class="active"
-                                                                        aria-controls="{{$lang->locale}}-features0"
-                                                                        role="tab" data-toggle="tab">
-                                                                        {{$lang->language}}
-                                                                    </a>
-                                                                </li>
-                                                                @foreach ($locales as $loc)
-                                                                @if($loc->locale === $lang->locale)
-                                                                @continue
-                                                                @endif
-                                                                <li role="presentation">
-                                                                    <a href="#{{$loc->locale}}-features0"
-                                                                        aria-controls="{{$loc->locale}}-features0"
-                                                                        role="tab" data-toggle="tab">
-                                                                        {{$loc->language}}
-                                                                    </a>
-                                                                </li>
-                                                                @endforeach
-                                                            </ul>
+
+                                                    <div class="col-lg-6">
+                                                        <div class="input-group colorpicker-component cp">
+                                                            <input type="text" name="colors[]" value="#000000"
+                                                                class="input-field cp" />
+                                                            <span class="input-group-addon"><i></i></span>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-        
-                                            <div class="feature-tag-top-filds" id="feature-section">
-                                                <div class="feature-area mb-3">
-                                                    <div class="row mb-0">
-                                                        <div class="col-lg-6">
-                                                            <div class="panel panel-lang">
-                                                                <div class="panel-body">
-                                                                    <div class="tab-content">
-                                                                        <div role="tabpanel" class="tab-pane active"
-                                                                            id="{{$lang->locale}}-features1">
-                                                                            <input type="text"
-                                                                                name="{{$lang->locale}}[features][]"
-                                                                                class="input-field"
-                                                                                placeholder="{{ __('Enter Your Keyword') }}">
-                                                                        </div>
-                                                                        @foreach($locales as $loc)
-                                                                        @if($loc->locale === $lang->locale)
-                                                                        @continue
-                                                                        @endif
-                                                                        <div role="tabpanel" class="tab-pane"
-                                                                            id="{{$loc->locale}}-features1">
-                                                                            <input type="text"
-                                                                                name="{{$loc->locale}}[features][]"
-                                                                                class="input-field"
-                                                                                placeholder="{{ __('Enter Your Keyword') }}">
-                                                                        </div>
-                                                                        @endforeach
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-        
-                                                        <div class="col-lg-6">
-                                                            <div class="input-group colorpicker-component cp">
-                                                                <input type="text" name="colors[]" value="#000000"
-                                                                    class="input-field cp" />
-                                                                <span class="input-group-addon"><i></i></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="panel panel-lang">
-                                                        <div class="panel-footer">
-                                                            <ul class="nav nav-pills" role="tablist">
-                                                                <li role="presentation" class="active">
-                                                                    <a href="#{{$lang->locale}}-features1"
-                                                                        class="active"
-                                                                        aria-controls="{{$lang->locale}}-features1"
-                                                                        role="tab" data-toggle="tab">
-                                                                        {{$lang->language}}
-                                                                    </a>
-                                                                </li>
-                                                                @foreach ($locales as $loc)
-                                                                @if($loc->locale === $lang->locale)
-                                                                @continue
-                                                                @endif
-                                                                <li role="presentation">
-                                                                    <a href="#{{$loc->locale}}-features1"
-                                                                        aria-controls="{{$loc->locale}}-features1"
-                                                                        role="tab" data-toggle="tab">
-                                                                        {{$loc->language}}
-                                                                    </a>
-                                                                </li>
-                                                                @endforeach
-                                                            </ul>
-                                                        </div>
+                                                <div class="panel panel-lang">
+                                                    <div class="panel-footer">
+                                                        <ul class="nav nav-pills" role="tablist">
+                                                            <li role="presentation" class="active">
+                                                                <a href="#{{$lang->locale}}-features0" class="active"
+                                                                    aria-controls="{{$lang->locale}}-features0"
+                                                                    role="tab" data-toggle="tab">
+                                                                    {{$lang->language}}
+                                                                </a>
+                                                            </li>
+                                                            @foreach ($locales as $loc)
+                                                            @if($loc->locale === $lang->locale)
+                                                            @continue
+                                                            @endif
+                                                            <li role="presentation">
+                                                                <a href="#{{$loc->locale}}-features0"
+                                                                    aria-controls="{{$loc->locale}}-features0"
+                                                                    role="tab" data-toggle="tab">
+                                                                    {{$loc->language}}
+                                                                </a>
+                                                            </li>
+                                                            @endforeach
+                                                        </ul>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div><!--FINAL ROW COL-XL-6-->
-        
-                                        <div class="col-xl-6">
-                                            <div class="input-form">
-                                                    <h4 class="heading">{{ __("Youtube Video URL") }}
-                                                        <span>{{ __("(Optional)") }}</span>
-                                                    </h4>
-                                                <input name="youtube" type="text" class="input-field"
-                                                    placeholder="{{ __("Youtube Video URL") }}">
-                                            </div>
-        
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <div class="checkbox-wrapper list list-personalizada">
-                                                        <input type="checkbox" name="seo_check" value="1" class="checkclick"
-                                                            id="allowProductSEO" value="1">
-                                                        <label for="allowProductSEO">{{ __("Allow Product SEO") }}</label>
+
+                                        <div class="feature-tag-top-filds" id="feature-section">
+                                            <div class="feature-area mb-3">
+                                                <div class="row mb-0">
+                                                    <div class="col-lg-6">
+                                                        <div class="panel panel-lang">
+                                                            <div class="panel-body">
+                                                                <div class="tab-content">
+                                                                    <div role="tabpanel" class="tab-pane active"
+                                                                        id="{{$lang->locale}}-features1">
+                                                                        <input type="text"
+                                                                            name="{{$lang->locale}}[features][]"
+                                                                            class="input-field"
+                                                                            placeholder="{{ __('Enter Your Keyword') }}">
+                                                                    </div>
+                                                                    @foreach($locales as $loc)
+                                                                    @if($loc->locale === $lang->locale)
+                                                                    @continue
+                                                                    @endif
+                                                                    <div role="tabpanel" class="tab-pane"
+                                                                        id="{{$loc->locale}}-features1">
+                                                                        <input type="text"
+                                                                            name="{{$loc->locale}}[features][]"
+                                                                            class="input-field"
+                                                                            placeholder="{{ __('Enter Your Keyword') }}">
+                                                                    </div>
+                                                                    @endforeach
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6">
+                                                        <div class="input-group colorpicker-component cp">
+                                                            <input type="text" name="colors[]" value="#000000"
+                                                                class="input-field cp" />
+                                                            <span class="input-group-addon"><i></i></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="panel panel-lang">
+                                                    <div class="panel-footer">
+                                                        <ul class="nav nav-pills" role="tablist">
+                                                            <li role="presentation" class="active">
+                                                                <a href="#{{$lang->locale}}-features1" class="active"
+                                                                    aria-controls="{{$lang->locale}}-features1"
+                                                                    role="tab" data-toggle="tab">
+                                                                    {{$lang->language}}
+                                                                </a>
+                                                            </li>
+                                                            @foreach ($locales as $loc)
+                                                            @if($loc->locale === $lang->locale)
+                                                            @continue
+                                                            @endif
+                                                            <li role="presentation">
+                                                                <a href="#{{$loc->locale}}-features1"
+                                                                    aria-controls="{{$loc->locale}}-features1"
+                                                                    role="tab" data-toggle="tab">
+                                                                    {{$loc->language}}
+                                                                </a>
+                                                            </li>
+                                                            @endforeach
+                                                        </ul>
                                                     </div>
                                                 </div>
                                             </div>
-        
-                                            <div class="showbox">
-                                                @component('admin.components.input-localized',["type" => "tags"])
-                                                @slot('name')
-                                                meta_tag
-                                                @endslot
-                                                {{ __('Meta Tags') }}
-                                                @endcomponent
-                
-                                                @component('admin.components.input-localized',["type" => "textarea"])
-                                                @slot('name')
-                                                meta_description
-                                                @endslot
-                                                @slot('placeholder')
-                                                {{ __('Details') }}
-                                                @endslot
-                                                {{ __('Meta Description') }}
-                                                @endcomponent
-                
-                                            </div>
-                                        </div><!--FINAL ROW COL-XL-6-->
+                                        </div>
                                     </div>
-                                    
-                                    <input type="hidden" name="type" value="Physical">
+                                </div>
+                                <!--FINAL ROW COL-XL-6-->
+
+                                <div class="col-xl-6">
+                                    <div class="input-form">
+                                        <h4 class="heading">{{ __("Youtube Video URL") }}
+                                            <span>{{ __("(Optional)") }}</span>
+                                        </h4>
+                                        <input name="youtube" type="text" class="input-field" placeholder="{{ __("
+                                            Youtube Video URL") }}">
+                                    </div>
+
                                     <div class="row">
-                                        <div class="col-xl-12 text-center">
-                                            <button class="addProductSubmit-btn"
-                                                type="submit">{{ __("Create Product") }}</button>
+                                        <div class="col-lg-12">
+                                            <div class="checkbox-wrapper list list-personalizada">
+                                                <input type="checkbox" name="seo_check" value="1" class="checkclick"
+                                                    id="allowProductSEO" value="1">
+                                                <label for="allowProductSEO">{{ __("Allow Product SEO") }}</label>
+                                            </div>
                                         </div>
                                     </div>
-                                </form>
+
+                                    <div class="showbox">
+                                        @component('admin.components.input-localized',["type" => "tags"])
+                                        @slot('name')
+                                        meta_tag
+                                        @endslot
+                                        {{ __('Meta Tags') }}
+                                        @endcomponent
+
+                                        @component('admin.components.input-localized',["type" => "textarea"])
+                                        @slot('name')
+                                        meta_description
+                                        @endslot
+                                        @slot('placeholder')
+                                        {{ __('Details') }}
+                                        @endslot
+                                        {{ __('Meta Description') }}
+                                        @endcomponent
+
+                                    </div>
+                                </div>
+                                <!--FINAL ROW COL-XL-6-->
                             </div>
+
+                            <input type="hidden" name="type" value="Physical">
+                            <div class="row">
+                                <div class="col-xl-12 text-center">
+                                    <button class="addProductSubmit-btn" type="submit">{{ __("Create Product")
+                                        }}</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="setgallery" tabindex="-1" role="dialog" aria-labelledby="setgallery" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered  modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">{{ __("Image Gallery") }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="top-area">
+                    <div class="row">
+                        <div class="col-sm-6 text-right">
+                            <div class="upload-img-btn">
+                                <label for="image-upload" id="prod_gallery"><i class="icofont-upload-alt"></i>{{
+                                    __("Upload File") }}</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <a href="javascript:;" class="upload-done" data-dismiss="modal"> <i
+                                    class="fas fa-check"></i> {{ __("Done") }}</a>
+                        </div>
+                        <div class="col-sm-12 text-center">( <small>{{ __("You can upload multiple Images.") }}</small>
+                            )</div>
+                    </div>
+                </div>
+                <div class="gallery-images">
+                    <div class="selected-image">
+                        <div class="row">
+
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <div class="modal fade" id="setgallery" tabindex="-1" role="dialog" aria-labelledby="setgallery" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered  modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalCenterTitle">{{ __("Image Gallery") }}</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="top-area">
-                            <div class="row">
-                                <div class="col-sm-6 text-right">
-                                    <div class="upload-img-btn">
-                                        <label for="image-upload" id="prod_gallery"><i
-                                                class="icofont-upload-alt"></i>{{ __("Upload File") }}</label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <a href="javascript:;" class="upload-done" data-dismiss="modal"> <i
-                                            class="fas fa-check"></i> {{ __("Done") }}</a>
-                                </div>
-                                <div class="col-sm-12 text-center">( <small>{{ __("You can upload multiple Images.") }}</small>
-                                    )</div>
-                            </div>
-                        </div>
-                        <div class="gallery-images">
-                            <div class="selected-image">
-                                <div class="row">
-        
-        
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>         
+    </div>
+</div>
 
 @endsection
 
@@ -812,11 +839,11 @@
                 color_stock_total = parseInt(color_stock_total) + parseInt(color_input[i].value);
             }
             if(isNaN(color_stock_total)){
-                $("#stock").val(null); 
+                $("#stock").val(null);
             } else{
                 $("#stock").val(color_stock_total);
             }
-            
+
         });
         $("#check3").change(function(){
             if($(this).is(":checked")){
@@ -826,11 +853,11 @@
                     color_stock_total = parseInt(color_stock_total) + parseInt(color_input[i].value);
                 }
                 if(isNaN(color_stock_total)){
-                    $("#stock").val(null); 
+                    $("#stock").val(null);
                 } else{
                     $("#stock").val(color_stock_total);
                 }
-                
+
                 $("#stock").attr("readonly", true);
                 $("#stock").addClass("disabled");
             } else{
@@ -845,11 +872,11 @@
                 size_stock_total = parseInt(size_stock_total) + parseInt(size_input[i].value);
             }
             if(isNaN(size_stock_total)){
-                $("#stock").val(null); 
+                $("#stock").val(null);
             } else{
                 $("#stock").val(size_stock_total);
             }
-            
+
         });
         $("#size-check").change(function(){
             if($(this).is(":checked")){
@@ -859,11 +886,11 @@
                     size_stock_total = parseInt(size_stock_total) + parseInt(size_input[i].value);
                 }
                 if(isNaN(size_stock_total)){
-                    $("#stock").val(null); 
+                    $("#stock").val(null);
                 } else{
                     $("#stock").val(size_stock_total);
                 }
-                
+
                 $("#stock").attr("readonly", true);
                 $("#stock").addClass("disabled");
             } else{
@@ -874,7 +901,7 @@
     });
 </script>
 <script type="text/javascript">
-// Remove White Space
+    // Remove White Space
 function isEmpty(el){
 	return !$.trim(el.html())
 }
@@ -1039,11 +1066,11 @@ $('.cp').colorpicker();
                 '" class="removegal" value="' + i + '">')
         }
     });
-    // Gallery Section Insert Ends	
+    // Gallery Section Insert Ends
 </script>
 
 <script type="text/javascript">
-	$('#imageSource').on('change', function () {
+    $('#imageSource').on('change', function () {
     var file = this.value;
       if (file == "file"){
           $('#f-file').show();
@@ -1056,7 +1083,7 @@ $('.cp').colorpicker();
           $('#f-link').find('input').prop('required',true);
       }
   });
-  
+
 </script>
 <script type="text/javascript">
     $('.cropme').simpleCropper();

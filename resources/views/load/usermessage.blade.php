@@ -32,7 +32,7 @@
         <div class="col-lg-12">
             <div class="reply-area">
                 <div class="left">
-                    <img class="img-circle" src="{{ asset('assets/images/admin.jpg')}}" alt="">
+                    <img class="img-circle" src="{{ asset('storage/images/admin.jpg')}}" alt="">
                     <p class="ticket-date">Admin</p>
                 </div>
                 <div class="right">

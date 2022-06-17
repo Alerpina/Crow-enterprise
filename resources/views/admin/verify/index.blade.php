@@ -2,24 +2,24 @@
 
 @section('styles')
 <style>
-    .mr-breadcrumb .links .action-list li {
-        display: block;
-    }
+	.mr-breadcrumb .links .action-list li {
+		display: block;
+	}
 
-    .mr-breadcrumb .links .action-list ul {
-        overflow-y: auto;
-        max-height: 240px;
-    }
+	.mr-breadcrumb .links .action-list ul {
+		overflow-y: auto;
+		max-height: 240px;
+	}
 
-    .mr-breadcrumb .links .action-list .go-dropdown-toggle {
-        padding-left: 20px;
-        padding-right: 30px;
-    }
+	.mr-breadcrumb .links .action-list .go-dropdown-toggle {
+		padding-left: 20px;
+		padding-right: 30px;
+	}
 </style>
 @endsection
 
 @section('content')
-<input type="hidden" id="headerdata" value="{{ __("VERIFICATION") }}">
+<input type="hidden" id="headerdata" value="{{ __(" VERIFICATION") }}">
 <div class="content-area">
 	<div class="mr-breadcrumb">
 		<div class="row">
@@ -53,11 +53,14 @@
 						<table id="geniustable" class="table table-hover dt-responsive" cellspacing="0" width="100%">
 							<thead>
 								<tr>
-									<th><i class="icofont-options icofont-lg" data-toggle="tooltip" title='{{ __("Options") }}'></i></th>
+									<th><i class="icofont-options icofont-lg" data-toggle="tooltip"
+											title='{{ __("Options") }}'></i></th>
 									<th>{{ __("Vendor Name") }}</th>
-									<th><i class="icofont-email icofont-lg" data-toggle="tooltip" title='{{ __("Vendor Email") }}'></i></th>
+									<th><i class="icofont-email icofont-lg" data-toggle="tooltip"
+											title='{{ __("Vendor Email") }}'></i></th>
 									<th>{{ __("Descriptions") }}</th>
-									<th><i class="icofont-eye icofont-lg" data-toggle="tooltip" title='{{ __("Status") }}'></i></th>
+									<th><i class="icofont-eye icofont-lg" data-toggle="tooltip"
+											title='{{ __("Status") }}'></i></th>
 								</tr>
 							</thead>
 						</table>
@@ -75,7 +78,7 @@
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
 			<div class="submit-loader">
-				<img src="{{asset('assets/images/'.$gs->admin_loader)}}" alt="">
+				<img src="{{asset('storage/images/'.$gs->admin_loader)}}" alt="">
 			</div>
 			<div class="modal-header">
 				<h5 class="modal-title"></h5>
@@ -196,7 +199,7 @@
 				data: 'action',
 				searchable: false,
 				orderable: false
-			},	
+			},
 			{
 				data: 'name',
 				name: 'name'
@@ -217,11 +220,11 @@
 		],
 		language: {
 			url: '{{$datatable_translation}}',
-			processing: '<img src="{{asset("assets/images/".$gs->admin_loader)}}">'
+			processing: '<img src="{{asset("storage/images/".$gs->admin_loader)}}">'
 		},
 		drawCallback: function(settings) {
 			$(this).find('.select').niceSelect();
-			/* 
+			/*
 			* Setando no Cookie a página atual
 			*/
 			$("#geniustable").on('page.dt', function(){
@@ -238,8 +241,8 @@
 		if(sessionStorage.getItem("CurrentPage") == undefined){
 			sessionStorage.setItem("CurrentPage", 0);
 		}
-		$(document).on('click', 'a', function(e){ 
-			var link = jQuery(this); 
+		$(document).on('click', 'a', function(e){
+			var link = jQuery(this);
 			var x = '{{ Request::route()->getPrefix() }}';
 			y = x.split("/");
 			if(!(link.attr("data-href") || link.attr("href").indexOf("#") > -1 || link.attr("href").indexOf("javascript") > -1 || link.attr("href").indexOf(y[1]) > -1)){
@@ -248,7 +251,7 @@
 			}
 		});
 	});
-  </script>
+</script>
 
 <script type="text/javascript">
 	// Gallery Section Update
@@ -279,8 +282,8 @@
 						$('.selected-image .row').append('<div class="col-sm-6">' +
 							'<div class="img gallery-img">' +
 							'<a class="img-popup" href="' +
-							'{{asset("assets/images/attachments")."/"}}' + arr[k] + '">' +
-							'<img  src="' + '{{asset("assets/images/attachments")."/"}}' + arr[k] +
+							'{{asset("storage/images/attachments")."/"}}' + arr[k] + '">' +
+							'<img  src="' + '{{asset("storage/images/attachments")."/"}}' + arr[k] +
 							'" alt="gallery image">' +
 							'</a>' +
 							'</div>' +
@@ -311,7 +314,7 @@
 			}
 		});
 	});
-	// Gallery Section Update Ends	
+	// Gallery Section Update Ends
 </script>
 
 <script>

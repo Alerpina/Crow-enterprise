@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="content-area">
-	<div class="mr-breadcrumb">
+    <div class="mr-breadcrumb">
         <div class="row">
             <div class="col-lg-12">
                 <h4 class="heading">{{ __('Popular Products') }}</h4>
@@ -18,49 +18,53 @@
             </div>
         </div>
     </div>
-	<div class="product-area">
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="mr-table allproduct">
-					@include('includes.form-error')
-					@include('includes.form-success')
-					<div class="table-responsiv">
-						<table id="example" class="table table-hover dt-responsive" cellspacing="0" width="100%">
-							<thead>
-								<tr>
-									<th>{{ __('Name') }}</th>
-									<th>{{ __('Category') }}</th>
-									<th><i class="icofont-mouse icofont-lg" data-toggle="tooltip" title='{{ __("Clicks") }}'></i></th>
-								</tr>
-							</thead>
+    <div class="product-area">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="mr-table allproduct">
+                    @include('includes.form-error')
+                    @include('includes.form-success')
+                    <div class="table-responsiv">
+                        <table id="example" class="table table-hover dt-responsive" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>{{ __('Name') }}</th>
+                                    <th>{{ __('Category') }}</th>
+                                    <th><i class="icofont-mouse icofont-lg" data-toggle="tooltip"
+                                            title='{{ __("Clicks") }}'></i></th>
+                                </tr>
+                            </thead>
 
-							<tbody>
-								@foreach($productss as $productt)
-								
-								<tr>
+                            <tbody>
+                                @foreach($productss as $productt)
 
-									<td>
-										<a href="{{ route('front.product', $productt->product->slug)}}" target="_blank">{{mb_strlen($productt->product->name,'utf-8') > 60 ? mb_substr($productt->product->name,0,60,'utf-8').'...' : $productt->product->name}} </a>
-									</td>
+                                <tr>
 
-									<td>
-										{{$productt->product->category->name}}
-									</td>
-									<td>
+                                    <td>
+                                        <a href="{{ route('front.product', $productt->product->slug)}}"
+                                            target="_blank">{{mb_strlen($productt->product->name,'utf-8') > 60 ?
+                                            mb_substr($productt->product->name,0,60,'utf-8').'...' :
+                                            $productt->product->name}} </a>
+                                    </td>
 
-										{{$productt->product_count}}
-									</td>
-								</tr>
-								
-								@endforeach
-							</tbody>
+                                    <td>
+                                        {{$productt->product->category->name}}
+                                    </td>
+                                    <td>
 
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                                        {{$productt->product_count}}
+                                    </td>
+                                </tr>
+
+                                @endforeach
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -79,7 +83,7 @@
         ordering: false,
         language: {
             url: '{{$datatable_translation}}',
-            processing: '<img src="{{asset("assets/images/".$admstore->admin_loader)}}">'
+            processing: '<img src="{{asset("storage/images/".$admstore->admin_loader)}}">'
         },
         drawCallback: function(settings) {
             $(this).find('.select').niceSelect();
@@ -96,7 +100,7 @@
                 var sort = $("#prevdate").val();
                 window.location = "{{url('/admin/products/popular/')}}/" + sort;
             });
-            /* 
+            /*
             * Setando no Cookie a página atual
             */
             $("#example").on('page.dt', function(){
@@ -111,8 +115,8 @@
         if(sessionStorage.getItem("CurrentPage") == undefined){
             sessionStorage.setItem("CurrentPage", 0);
         }
-        $(document).on('click', 'a', function(e){ 
-            var link = jQuery(this); 
+        $(document).on('click', 'a', function(e){
+            var link = jQuery(this);
             var x = '{{ Request::route()->getPrefix() }}';
             y = x.split("/");
             if(!(link.attr("data-href") || link.attr("href").indexOf("#") > -1 || link.attr("href").indexOf("javascript") > -1 || !(link.attr("href").indexOf("page")))){

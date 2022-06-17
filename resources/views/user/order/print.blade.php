@@ -24,7 +24,7 @@
     <link href="{{asset('assets/print/css/print.css')}}" rel="stylesheet">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-    <link rel="icon" type="image/png" href="{{asset('assets/images/'.$gs->favicon)}}">
+    <link rel="icon" type="image/png" href="{{asset('storage/images/'.$gs->favicon)}}">
     <style type="text/css">
         #color-bar {
             display: inline-block;

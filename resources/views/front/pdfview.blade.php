@@ -1,37 +1,45 @@
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>{{ __("Products list") }}</title>
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
             font-size: 10pt;
         }
+
         table {
             width: 100%;
             max-width: 100%;
             border-collapse: collapse;
             border-spacing: 0;
-        } 
-        th, td {
+        }
+
+        th,
+        td {
             border: 1px solid #ddd;
             padding: 8px;
             line-height: 1.42857143;
         }
+
         th {
             text-align: left;
             font-size: 10pt
         }
+
         .float-right {
             float: right;
         }
+
         .float-left {
             float: left;
         }
+
         .titulo {
             font-size: 10t;
         }
     </style>
 </head>
+
 <body>
     <div>
         <div class="float-left titulo">
@@ -60,13 +68,15 @@
                     <td>{{ $index+1 }}</td>
                     <td>{{ $product->sku }}</td>
                     <td>{{ $product->name }}</td>
-                    <td> <img width="100px" src="{{ ($product->photo) ? asset('assets/images/products/'.$product->photo) : asset('assets/images/noimage.png') }}" alt=""> </td>
-                    <td>{{ 
-                            number_format(
-                            $product->price * $currency->value,
-                            $currency->decimal_digits,
-                            $currency->decimal_separator,
-                            $currency->thousands_separator) 
+                    <td> <img width="100px"
+                            src="{{ ($product->photo) ? asset('storage/images/products/'.$product->photo) : asset('assets/images/noimage.png') }}"
+                            alt=""> </td>
+                    <td>{{
+                        number_format(
+                        $product->price * $currency->value,
+                        $currency->decimal_digits,
+                        $currency->decimal_separator,
+                        $currency->thousands_separator)
                         }}
                     </td>
                     <td>{{ $product->brand }}</td>

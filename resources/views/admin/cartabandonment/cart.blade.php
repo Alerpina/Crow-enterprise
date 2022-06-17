@@ -5,7 +5,9 @@
     <div class="mr-breadcrumb">
         <div class="row">
             <div class="col-lg-12">
-                <h4 class="heading">{{ __("Cart Abandonment") }}<a class="add-btn" href="{{ url()->previous() }}"><i class="fas fa-arrow-left"></i> {{ __("Back") }}</a></h4></h4>
+                <h4 class="heading">{{ __("Cart Abandonment") }}<a class="add-btn" href="{{ url()->previous() }}"><i
+                            class="fas fa-arrow-left"></i> {{ __("Back") }}</a></h4>
+                </h4>
                 <ul class="links">
                     <li>
                         <a href="{{ route('admin.dashboard') }}">{{ __("Dashboard") }} </a>
@@ -25,8 +27,7 @@
                         <div class="col-lg-12">
                             <h5 class="title">{{ __('Products of Cart Abandonment') }} #{{ $id }} </h5>
                         </div>
-                        <table id="example2" class="table table-hover dt-responsive" cellspacing="0"
-                            width="100%">
+                        <table id="example2" class="table table-hover dt-responsive" cellspacing="0" width="100%">
                             <thead style="border-top:1px solid rgba(0, 0, 0, 0.1) !important;">
                                 <tr>
                                     <th>{{ __('Product') }}</th>
@@ -59,29 +60,41 @@
 
                                     <td>
                                         @if($product['size'])
-                                       <p>
-                                            Size : {{str_replace('-',' ',$product['size'])}}
-                                       </p>
-                                       @endif
-                                       @if($product['color'])
                                         <p>
-                                            {{ __('Color') }} : <span style="margin-left: 40px; width: 20px; height: 0.2px; display: block; border: 10px solid {{$product['color'] == "" ? "white" : $product['color']}};"></span>
+                                            Size : {{str_replace('-',' ',$product['size'])}}
+                                        </p>
+                                        @endif
+                                        @if($product['color'])
+                                        <p>
+                                            {{ __('Color') }} : <span
+                                                style="margin-left: 40px; width: 20px; height: 0.2px; display: block; border: 10px solid {{$product['color'] == "" ? "
+                                                white" : $product['color']}};"></span>
                                         </p>
                                         @endif
                                         <p>
-                                            {{ __('Price') }} : {{$order_curr->sign}}{{ number_format($product['item']['price'] * $order_curr->value, $order_curr->decimal_digits, $order_curr->decimal_separator,$order_curr->thousands_separator) }}
+                                            {{ __('Price') }} : {{$order_curr->sign}}{{
+                                            number_format($product['item']['price'] * $order_curr->value,
+                                            $order_curr->decimal_digits,
+                                            $order_curr->decimal_separator,$order_curr->thousands_separator) }}
                                         </p>
                                         <p>
-                                            <small>{{ $first_curr->sign." ".__('Price') }} : {{$first_curr->sign}}{{ number_format($product['item']['price'], $first_curr->decimal_digits, $first_curr->decimal_separator,$first_curr->thousands_separator) }}</small>
+                                            <small>{{ $first_curr->sign." ".__('Price') }} : {{$first_curr->sign}}{{
+                                                number_format($product['item']['price'], $first_curr->decimal_digits,
+                                                $first_curr->decimal_separator,$first_curr->thousands_separator)
+                                                }}</small>
                                         </p>
 
-                                       <p>
-                                        {{ __('Qty') }} : {{$product['qty']}} {{ $product['item']['measure'] }}
-                                       </p>
+                                        <p>
+                                            {{ __('Qty') }} : {{$product['qty']}} {{ $product['item']['measure'] }}
+                                        </p>
                                     </td>
 
-                                    <td style="text-align: end;">{{$order_curr->sign}}{{ number_format($product['price'] * $order_curr->value, $order_curr->decimal_digits, $order_curr->decimal_separator,$order_curr->thousands_separator) }}
-                                        <br><small>{{$first_curr->sign}}{{ number_format($product['price'], $first_curr->decimal_digits, $first_curr->decimal_separator,$first_curr->thousands_separator) }}</small>
+                                    <td style="text-align: end;">{{$order_curr->sign}}{{ number_format($product['price']
+                                        * $order_curr->value, $order_curr->decimal_digits,
+                                        $order_curr->decimal_separator,$order_curr->thousands_separator) }}
+                                        <br><small>{{$first_curr->sign}}{{ number_format($product['price'],
+                                            $first_curr->decimal_digits,
+                                            $first_curr->decimal_separator,$first_curr->thousands_separator) }}</small>
                                     </td>
                                     @php
                                     $subtotal += round($product['price'] * $order_curr->value, 2);
@@ -101,7 +114,7 @@
     </div>
 </div>
 <div class="submit-loader">
-    <img  src="{{asset('assets/images/'.$gs->admin_loader)}}" alt="">
+    <img src="{{asset('storage/images/'.$gs->admin_loader)}}" alt="">
 </div>
 
 {{-- DELETE MODAL ENDS --}}

@@ -10,7 +10,7 @@
                             <div class="slide-item">
                                 <div class="top-area">
                                     <div class="left">
-                                        <img src="{{ $review->photo ? asset('assets/images/reviews/'.$review->photo) : asset('assets/images/noimage.png') }}"
+                                        <img src="{{ $review->photo ? asset('storage/images/reviews/'.$review->photo) : asset('assets/images/noimage.png') }}"
                                             alt="">
                                     </div>
                                     <div class="right">

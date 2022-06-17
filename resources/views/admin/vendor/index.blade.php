@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<input type="hidden" id="headerdata" value="{{ __("VENDOR") }}">
+<input type="hidden" id="headerdata" value="{{ __(" VENDOR") }}">
 <div class="content-area">
 	<div class="mr-breadcrumb">
 		<div class="row">
@@ -31,11 +31,15 @@
 						<table id="geniustable" class="table table-hover dt-responsive" cellspacing="0" width="100%">
 							<thead>
 								<tr>
-									<th><i class="icofont-options icofont-lg" data-toggle="tooltip" title='{{ __("Options") }}'></i></th>
+									<th><i class="icofont-options icofont-lg" data-toggle="tooltip"
+											title='{{ __("Options") }}'></i></th>
 									<th>{{ __("Store Name") }}</th>
-									<th><i class="icofont-email icofont-lg" data-toggle="tooltip" title='{{ __("Vendor Email") }}'></i></th>
-									<th><i class="icofont-numbered icofont-lg" data-toggle="tooltip" title='{{ __("Shop Number") }}'></i></th>
-									<th><i class="icofont-eye icofont-lg" data-toggle="tooltip" title='{{ __("Status") }}'></i></th>
+									<th><i class="icofont-email icofont-lg" data-toggle="tooltip"
+											title='{{ __("Vendor Email") }}'></i></th>
+									<th><i class="icofont-numbered icofont-lg" data-toggle="tooltip"
+											title='{{ __("Shop Number") }}'></i></th>
+									<th><i class="icofont-eye icofont-lg" data-toggle="tooltip"
+											title='{{ __("Status") }}'></i></th>
 								</tr>
 							</thead>
 						</table>
@@ -53,7 +57,7 @@
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
 			<div class="submit-loader">
-				<img src="{{asset('assets/images/'.$gs->admin_loader)}}" alt="">
+				<img src="{{asset('storage/images/'.$gs->admin_loader)}}" alt="">
 			</div>
 			<div class="modal-header">
 				<h5 class="modal-title"></h5>
@@ -81,7 +85,7 @@
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
 			<div class="submit-loader">
-				<img src="{{asset('assets/images/'.$gs->admin_loader)}}" alt="">
+				<img src="{{asset('storage/images/'.$gs->admin_loader)}}" alt="">
 			</div>
 			<div class="modal-header">
 				<h5 class="modal-title">{{__('ASK FOR VERIFICATION')}}</h5>
@@ -188,19 +192,19 @@
 										<ul>
 											<li>
 												<input type="email" class="input-field eml-val" id="eml1" name="to"
-													placeholder="{{ __("Email") }} *" value="" required="">
+													placeholder="{{ __(" Email") }} *" value="" required="">
 											</li>
 											<li>
 												<input type="text" class="input-field" id="subj1" name="subject"
-													placeholder="{{ __("Subject") }} *" required="">
+													placeholder="{{ __(" Subject") }} *" required="">
 											</li>
 											<li>
 												<textarea class="input-field textarea" name="message" id="msg1"
-													placeholder="{{ __("Your Message") }} *" required=""></textarea>
+													placeholder="{{ __(" Your Message") }} *" required=""></textarea>
 											</li>
 										</ul>
-										<button class="submit-btn" id="emlsub1"
-											type="submit">{{ __("Send Message") }}</button>
+										<button class="submit-btn" id="emlsub1" type="submit">{{ __("Send Message")
+											}}</button>
 									</form>
 								</div>
 							</div>
@@ -237,13 +241,13 @@
                      ],
                language : {
 					url: '{{$datatable_translation}}',
-					processing: '<img src="{{asset('assets/images/'.$gs->admin_loader)}}">'
+					processing: '<img src="{{asset('storage/images/'.$gs->admin_loader)}}">'
                 },
 				drawCallback : function( settings ) {
-	    				$(this).find('.select').niceSelect();	
+	    				$(this).find('.select').niceSelect();
 				},
 				initComplete: function(settings, json) {
-					/* 
+					/*
 					* Setando no Cookie a página atual
 					*/
 					$("#geniustable").on('page.dt', function(){
@@ -252,8 +256,8 @@
 				}
             });
 
-	    				$('.select1').niceSelect();	
-																
+	    				$('.select1').niceSelect();
+
 </script>
 
 <script type="text/javascript">
@@ -280,8 +284,8 @@ if(admin_loader == 1)
 		if(sessionStorage.getItem("CurrentPage") == undefined){
 			sessionStorage.setItem("CurrentPage", 0);
 		}
-		$(document).on('click', 'a', function(e){ 
-			var link = jQuery(this); 
+		$(document).on('click', 'a', function(e){
+			var link = jQuery(this);
 			var x = '{{ Request::route()->getPrefix() }}';
 			y = x.split("/");
 			if(link.attr("href").indexOf("vendors/subs") > -1){

@@ -28,7 +28,7 @@
         <div class="product-description">
           <div class="body-area">
             <div class="gocover"
-              style="background: url({{asset('assets/images/'.$gs->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
+              style="background: url({{asset('storage/images/'.$gs->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
             </div>
             <form action="{{ route('admin-gs-update') }}" id="geniusform" method="POST" enctype="multipart/form-data">
               {{ csrf_field() }}
@@ -46,10 +46,10 @@
                     <div class="action-list">
                       <select
                         class="process select droplinks {{ $admstore->is_affilate == 1 ? 'drop-success' : 'drop-danger' }}">
-                        <option data-val="1" value="{{route('admin-gs-isaffilate',1)}}"
-                          {{ $admstore->is_affilate == 1 ? 'selected' : '' }}>{{ __('Activated') }}</option>
-                        <option data-val="0" value="{{route('admin-gs-isaffilate',0)}}"
-                          {{ $admstore->is_affilate == 0 ? 'selected' : '' }}>{{ __('Deactivated') }}</option>
+                        <option data-val="1" value="{{route('admin-gs-isaffilate',1)}}" {{ $admstore->is_affilate == 1 ?
+                          'selected' : '' }}>{{ __('Activated') }}</option>
+                        <option data-val="0" value="{{route('admin-gs-isaffilate',0)}}" {{ $admstore->is_affilate == 0 ?
+                          'selected' : '' }}>{{ __('Deactivated') }}</option>
                       </select>
                     </div>
                   </div>
@@ -63,22 +63,22 @@
                     <div class="action-list">
                       <select
                         class="process select droplinks {{ $gs->reg_vendor == 1 ? 'drop-success' : 'drop-danger' }}">
-                        <option data-val="1" value="{{route('admin-gs-regvendor',1)}}"
-                          {{ $gs->reg_vendor == 1 ? 'selected' : '' }}>{{ __("Activated") }}</option>
-                        <option data-val="0" value="{{route('admin-gs-regvendor',0)}}"
-                          {{ $gs->reg_vendor == 0 ? 'selected' : '' }}>{{ __("Deactivated") }}</option>
+                        <option data-val="1" value="{{route('admin-gs-regvendor',1)}}" {{ $gs->reg_vendor == 1 ?
+                          'selected' : '' }}>{{ __("Activated") }}</option>
+                        <option data-val="0" value="{{route('admin-gs-regvendor',0)}}" {{ $gs->reg_vendor == 0 ?
+                          'selected' : '' }}>{{ __("Deactivated") }}</option>
                       </select>
                     </div>
                   </div>
                 </div>
-                
+
                 <div class="col-xl-6">
                   <div class="input-form">
                     <h4 class="heading">{{ __('Withdraw Fee') }}
                       <span>{{ __('In') }} {{ $curr->name }}</span>
                     </h4>
                     <input name="withdraw_fee" type="number" class="input-field" placeholder="{{ __('Withdraw Fee') }}"
-                    step="1" min="0" value="{{ $admstore->withdraw_fee }}" required>
+                      step="1" min="0" value="{{ $admstore->withdraw_fee }}" required>
                   </div>
                 </div>
 
@@ -87,17 +87,19 @@
                     <h4 class="heading">{{ __('Withdraw Charge') }}
                       <span>%</span>
                     </h4>
-                    <input name="withdraw_charge" type="number" class="input-field" placeholder="{{ __('Withdraw Charge') }}"
-                    step="1" min="0" max="100" value="{{ $admstore->withdraw_charge }}" required>
+                    <input name="withdraw_charge" type="number" class="input-field"
+                      placeholder="{{ __('Withdraw Charge') }}" step="1" min="0" max="100"
+                      value="{{ $admstore->withdraw_charge }}" required>
                   </div>
                 </div>
 
-              </div> <!--FECHAMENTO TAG ROW-->
+              </div>
+              <!--FECHAMENTO TAG ROW-->
 
               <div class="row justify-content-center">
-                
-                  <button class="addProductSubmit-btn" type="submit">{{ __('Save') }}</button>
-                
+
+                <button class="addProductSubmit-btn" type="submit">{{ __('Save') }}</button>
+
               </div>
             </form>
           </div>

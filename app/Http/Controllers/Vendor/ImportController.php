@@ -52,7 +52,7 @@ class ImportController extends Controller
     {
          $user = Auth::user();
          $datas = $user->products()->where('product_type','affiliate')->orderBy('id','desc')->get();
-         
+
          //--- Integrating This Collection Into Datatables
         return Datatables::of($datas)
         ->addColumn('action', function (Product $data) {
@@ -67,8 +67,8 @@ class ImportController extends Controller
             </div>';
         })
         ->editColumn('photo', function (Product $data) {
-            if (file_exists(public_path().'/assets/images/thumbnails/'.$data->thumbnail)) {
-                return asset('assets/images/thumbnails/'.$data->thumbnail);
+            if (file_exists(public_path().'/storage/images/thumbnails/'.$data->thumbnail)) {
+                return asset('storage/images/thumbnails/'.$data->thumbnail);
             } else{
                 return asset('assets/images/noimage.png');
             }
@@ -143,30 +143,30 @@ class ImportController extends Controller
         list(, $image)      = explode(',', $image);
         $image = base64_decode($image);
         $image_name = time().Str::random(8).'.png';
-        $path = 'assets/images/products/'.$image_name;
+        $path = 'storage/images/products/'.$image_name;
         file_put_contents($path, $image);
                 if($data->photo != null)
                 {
-                    if (file_exists(public_path().'/assets/images/products/'.$data->photo)) {
-                        unlink(public_path().'/assets/images/products/'.$data->photo);
+                    if (file_exists(public_path().'/storage/images/products/'.$data->photo)) {
+                        unlink(public_path().'/storage/images/products/'.$data->photo);
                     }
-                } 
+                }
                         $input['photo'] = $image_name;
          $data->update($input);
          if($data->thumbnail != null)
                 {
-                    if (file_exists(public_path().'/assets/images/thumbnails/'.$data->thumbnail)) {
-                        unlink(public_path().'/assets/images/thumbnails/'.$data->thumbnail);
+                    if (file_exists(public_path().'/storage/images/thumbnails/'.$data->thumbnail)) {
+                        unlink(public_path().'/storage/images/thumbnails/'.$data->thumbnail);
                     }
                 }
 
-        $img = Image::make(public_path().'/assets/images/products/'.$data->photo)->resize(285, 285);
+        $img = Image::make(public_path().'/storage/images/products/'.$data->photo)->resize(285, 285);
         $thumbnail = time().Str::random(8).'.png';
-        $img->save(public_path().'/assets/images/thumbnails/'.$thumbnail);
+        $img->save(public_path().'/storage/images/thumbnails/'.$thumbnail);
         $data->thumbnail  = $thumbnail;
         $data->update();
 
-                        
+
         return response()->json(['status'=>true,'file_name' => $image_name]);
     }
 
@@ -193,7 +193,7 @@ class ImportController extends Controller
             ];
 
             $validator = Validator::make($request->all(), $rules);
-            
+
             if ($validator->fails()) {
             return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
             }
@@ -201,7 +201,7 @@ class ImportController extends Controller
 
             }
 
-        //--- Logic Section        
+        //--- Logic Section
             $data = new Product;
             $sign = Currency::find($this->storeSettings->currency_id);
             $input = $this->withRequiredFields($request->all(), ['name']);
@@ -212,7 +212,7 @@ class ImportController extends Controller
                 $file->move('assets/files', $name);
                 $input['file'] = $name;
             }
-    
+
             $input['photo'] = "";
             if ($request->photo != "") {
                 $image = $request->photo;
@@ -220,7 +220,7 @@ class ImportController extends Controller
                 list(, $image)      = explode(',', $image);
                 $image = base64_decode($image);
                 $image_name = time() . Str::random(8) . '.png';
-                $path = 'assets/images/products/' . $image_name;
+                $path = 'storage/images/products/' . $image_name;
                 file_put_contents($path, $image);
                 $input['photo'] = $image_name;
             } else {
@@ -289,7 +289,7 @@ class ImportController extends Controller
                     }
                     //--- Validation Section Ends
 
-                
+
             // Check Condition
             if ($request->product_condition_check == ""){
                 $input['product_condition'] = 0;
@@ -298,7 +298,7 @@ class ImportController extends Controller
             // Check Shipping Time
             if ($request->shipping_time_check == ""){
                 $input['ship'] = null;
-            } 
+            }
 
             // Check Size
             if(empty($request->size_check ))
@@ -358,10 +358,10 @@ class ImportController extends Controller
             }
 
             // Check Measurement
-            if ($request->mesasure_check == "") 
+            if ($request->mesasure_check == "")
              {
-                $input['measure'] = null;    
-             } 
+                $input['measure'] = null;
+             }
 
             }
 
@@ -372,20 +372,20 @@ class ImportController extends Controller
 
                 if(in_array(null, $request->license) || in_array(null, $request->license_qty))
                 {
-                    $input['license'] = null;  
+                    $input['license'] = null;
                     $input['license_qty'] = null;
                 }
-                else 
-                {             
-                    $input['license'] = implode(',,', $request->license);  
-                    $input['license_qty'] = implode(',', $request->license_qty);                 
+                else
+                {
+                    $input['license'] = implode(',,', $request->license);
+                    $input['license_qty'] = implode(',', $request->license_qty);
                 }
 
             }
 
             // Conert Price According to Currency
              $input['price'] = ($input['price'] / $sign->value);
-             $input['previous_price'] = ($input['previous_price'] / $sign->value);    
+             $input['previous_price'] = ($input['previous_price'] / $sign->value);
              $input['product_type'] = "affiliate";
              $input['user_id'] = Auth::user()->id;
               // store filtering attributes for physical product
@@ -452,7 +452,7 @@ class ImportController extends Controller
              $jsonAttr = json_encode($attrArr);
              $input['attributes'] = $jsonAttr;
            }
-            // Save Data 
+            // Save Data
                 $data->fill($input)->save();
 
             // Set SLug
@@ -462,17 +462,17 @@ class ImportController extends Controller
             } else {
                 $prod->slug = Str::slug($data->name, '-') . '-' . strtolower($data->sku);
             }
-            $fimageData = public_path() . '/assets/images/products/' . $prod->photo;
+            $fimageData = public_path() . '/storage/images/products/' . $prod->photo;
             if (filter_var($prod->photo, FILTER_VALIDATE_URL)) {
                 $fimageData = $prod->photo;
             }
-    
+
             $img = Image::make($fimageData)->resize(285, 285);
             $thumbnail = time() . Str::random(8) . '.jpg';
-            $img->save(public_path() . '/assets/images/thumbnails/' . $thumbnail);
+            $img->save(public_path() . '/storage/images/thumbnails/' . $thumbnail);
             $prod->thumbnail  = $thumbnail;
             $prod->update();
-    
+
             // Add To Gallery If any
             $lastid = $data->id;
             if ($files = $request->file('gallery')){
@@ -481,7 +481,7 @@ class ImportController extends Controller
                     {
                         $gallery = new Gallery;
                         $name = time().$file->getClientOriginalName();
-                        $file->move('assets/images/galleries',$name);
+                        $file->move('storage/images/galleries',$name);
                         $gallery['photo'] = $name;
                         $gallery['product_id'] = $lastid;
                         $gallery->save();
@@ -495,17 +495,17 @@ class ImportController extends Controller
             $prod->stores()->sync($input['stores']);
         }
 
-        //--- Redirect Section        
+        //--- Redirect Section
         $msg = __('New Affiliate Product Added Successfully.').'<a href="'.route('vendor-import-index').'">'.__('View Product Lists.').'</a>';
-        return response()->json($msg);      
-        //--- Redirect Section Ends   
+        return response()->json($msg);
+        //--- Redirect Section Ends
         }
         else
         {
-        //--- Redirect Section        
-        return response()->json(array('errors' => [ 0 => __('You Canot Add More Product.')]));       
+        //--- Redirect Section
+        return response()->json(array('errors' => [ 0 => __('You Canot Add More Product.')]));
 
-        //--- Redirect Section Ends    
+        //--- Redirect Section Ends
         }
 
     }
@@ -549,7 +549,7 @@ class ImportController extends Controller
             ];
 
         $validator = Validator::make($request->all(), $rules);
-        
+
         if ($validator->fails()) {
         return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
         }
@@ -621,10 +621,10 @@ class ImportController extends Controller
         }
         //-- End of Translations Section
 
-            //Check Types 
+            //Check Types
             if($request->type_check == 1)
             {
-                $input['link'] = null;           
+                $input['link'] = null;
             }
             else
             {
@@ -633,7 +633,7 @@ class ImportController extends Controller
                         unlink(public_path().'/assets/files/'.$data->file);
                     }
                 }
-                $input['file'] = null;            
+                $input['file'] = null;
             }
 
             if ($request->image_source == 'file') {
@@ -642,7 +642,7 @@ class ImportController extends Controller
                 $input['photo'] = $request->photolink;
             }
 
- 
+
             // Check Physical
             if($data->type == "Physical")
             {
@@ -664,7 +664,7 @@ class ImportController extends Controller
                         // Check Shipping Time
                         if ($request->shipping_time_check == ""){
                             $input['ship'] = null;
-                        } 
+                        }
 
                         // Check Size
 
@@ -725,10 +725,10 @@ class ImportController extends Controller
                         }
 
                         // Check Measure
-                    if ($request->measure_check == "") 
+                    if ($request->measure_check == "")
                      {
-                        $input['measure'] = null;    
-                     } 
+                        $input['measure'] = null;
+                     }
             }
 
         // Check License
@@ -736,30 +736,30 @@ class ImportController extends Controller
         {
 
         if(!in_array(null, $request->license) && !in_array(null, $request->license_qty))
-        {             
-            $input['license'] = implode(',,', $request->license);  
-            $input['license_qty'] = implode(',', $request->license_qty);                 
+        {
+            $input['license'] = implode(',,', $request->license);
+            $input['license_qty'] = implode(',', $request->license_qty);
         }
         else
         {
             if(in_array(null, $request->license) || in_array(null, $request->license_qty))
             {
-                $input['license'] = null;  
+                $input['license'] = null;
                 $input['license_qty'] = null;
             }
             else
             {
                 $license = explode(',,', $prod->license);
                 $license_qty = explode(',', $prod->license_qty);
-                $input['license'] = implode(',,', $license);  
+                $input['license'] = implode(',,', $license);
                 $input['license_qty'] = implode(',', $license_qty);
             }
-        }  
+        }
 
         }
 
          $input['price'] = $input['price'] / $sign->value;
-         $input['previous_price'] = $input['previous_price'] / $sign->value; 
+         $input['previous_price'] = $input['previous_price'] / $sign->value;
 
          // store filtering attributes for physical product
          $attrArr = [];
@@ -830,7 +830,7 @@ class ImportController extends Controller
             }
             else {
                 $data->slug = Str::slug($data->name,'-').'-'.strtolower(Str::slug($data->sku));
-            } 
+            }
          $data->update($input);
 
          //associates with stores
@@ -842,12 +842,12 @@ class ImportController extends Controller
         //-- Logic Section Ends
 
         if ($data->photo != null) {
-            if (file_exists(public_path() . '/assets/images/thumbnails/' . $data->thumbnail)) {
-                unlink(public_path() . '/assets/images/thumbnails/' . $data->thumbnail);
+            if (file_exists(public_path() . '/storage/images/thumbnails/' . $data->thumbnail)) {
+                unlink(public_path() . '/storage/images/thumbnails/' . $data->thumbnail);
             }
         }
 
-        $fimageData = public_path() . '/assets/images/products/' . $prod->photo;
+        $fimageData = public_path() . '/storage/images/products/' . $prod->photo;
 
         if (filter_var($prod->photo, FILTER_VALIDATE_URL)) {
             $fimageData = $prod->photo;
@@ -855,14 +855,14 @@ class ImportController extends Controller
 
         $img = Image::make($fimageData)->resize(285, 285);
         $thumbnail = time() . Str::random(8) . '.jpg';
-        $img->save(public_path() . '/assets/images/thumbnails/' . $thumbnail);
+        $img->save(public_path() . '/storage/images/thumbnails/' . $thumbnail);
         $prod->thumbnail  = $thumbnail;
         $prod->update();
 
-        //--- Redirect Section        
+        //--- Redirect Section
         $msg = __('Product Updated Successfully.') . '<a href="' . route('vendor-import-index') . '">' . __('View Product Lists.') . '</a>';
-        return response()->json($msg);      
-        //--- Redirect Section Ends    
-        
+        return response()->json($msg);
+        //--- Redirect Section Ends
+
     }
 }

@@ -17,32 +17,30 @@
             @foreach($sliders as $data)
             <a href="{{$data->link}}" target="_blank">
                 <div class="intro-content ">
-                    <img src="{{asset('assets/images/sliders/'.$data->photo)}}">
-                                <div class="slider-content">
-                                    <!-- layer 1 -->
-                                    <div class="layer-1">
-                                        <h4 style="font-size: {{$data->subtitle_size}}px; color: {{$data->subtitle_color}}"
-                                        class="subtitle subtitle{{$data->id}}"
-                                        data-animation="animated {{$data->subtitle_anime}}">
-                                        {{$data->subtitle_text}}</h4>
-                                        <h2 style="font-size: {{$data->title_size}}px; color: {{$data->title_color}}"
-                                        class="title title{{$data->id}}"
-                                        data-animation="animated {{$data->title_anime}}">
-                                        {{$data->title_text}}</h2>
-                                    </div>
-                                    <!-- layer 2 -->
-                                    <div class="layer-2">
-                                        <p style="font-size: {{$data->details_size}}px; color: {{$data->details_color}}"
-                                        class="text text{{$data->id}}"
-                                        data-animation="animated {{$data->details_anime}}">
-                                        {{$data->details_text}}</p>
-                                    </div>
-                                </div>
+                    <img src="{{asset('storage/images/sliders/'.$data->photo)}}">
+                    <div class="slider-content">
+                        <!-- layer 1 -->
+                        <div class="layer-1">
+                            <h4 style="font-size: {{$data->subtitle_size}}px; color: {{$data->subtitle_color}}"
+                                class="subtitle subtitle{{$data->id}}"
+                                data-animation="animated {{$data->subtitle_anime}}">
+                                {{$data->subtitle_text}}</h4>
+                            <h2 style="font-size: {{$data->title_size}}px; color: {{$data->title_color}}"
+                                class="title title{{$data->id}}" data-animation="animated {{$data->title_anime}}">
+                                {{$data->title_text}}</h2>
+                        </div>
+                        <!-- layer 2 -->
+                        <div class="layer-2">
+                            <p style="font-size: {{$data->details_size}}px; color: {{$data->details_color}}"
+                                class="text text{{$data->id}}" data-animation="animated {{$data->details_anime}}">
+                                {{$data->details_text}}</p>
+                        </div>
+                    </div>
                 </div>
-             </a>
+            </a>
             @endforeach
         </div>
-              
+
     </div>
 
     @endif

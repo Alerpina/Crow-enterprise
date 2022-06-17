@@ -600,8 +600,8 @@ class OrderController extends Controller
             break;
             case "reject":
                 Order::where('id', $id)->update(['receipt' => null]);
-                if (file_exists(public_path().'/assets/images/receipts/'.$data->receipt)) {
-                    unlink(public_path().'/assets/images/receipts/'.$data->receipt);
+                if (file_exists(public_path().'/storage/images/receipts/'.$data->receipt)) {
+                    unlink(public_path().'/storage/images/receipts/'.$data->receipt);
                 }
                 $msg = __('The receipt has been rejected.');
                 $this->sendReceiptUpdate($id, false);

@@ -14,7 +14,7 @@
                 <div class="blog-box">
                     <div class="blog-images">
                         <div class="img">
-                            <img src="{{ $blogg->photo ? asset('assets/images/blogs/'.$blogg->photo):asset('assets/images/noimage.png') }}"
+                            <img src="{{ $blogg->photo ? asset('storage/images/blogs/'.$blogg->photo):asset('assets/images/noimage.png') }}"
                                 class="img-fluid" alt="">
                             <div class="date d-flex justify-content-center">
                                 <div class="box align-self-center">
@@ -26,9 +26,10 @@
 
                     </div>
                     <div class="details">
-                        <a href='{{route('front.blogshow',$blogg->id)}}'>
+                        <a href='{{route(' front.blogshow',$blogg->id)}}'>
                             <h4 class="blog-title">
-                                {{mb_strlen($blogg->title,'utf-8') > 40 ? mb_substr($blogg->title,0,40,'utf-8')."...":$blogg->title}}
+                                {{mb_strlen($blogg->title,'utf-8') > 40 ?
+                                mb_substr($blogg->title,0,40,'utf-8')."...":$blogg->title}}
                             </h4>
                         </a>
                         <p class="blog-text">

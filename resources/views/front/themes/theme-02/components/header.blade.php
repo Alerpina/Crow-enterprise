@@ -12,8 +12,8 @@
                                         <i class="fas fa-globe-americas"></i>
                                         <select name="language" class="language selectors nice">
                                             @foreach($locales as $language)
-                                            <option value="{{route('front.language',$language->id)}}"
-                                                {{$slocale->id == $language->id ? 'selected' : ''}}>
+                                            <option value="{{route('front.language',$language->id)}}" {{$slocale->id ==
+                                                $language->id ? 'selected' : ''}}>
                                                 {{$language->language}}
                                             </option>
                                             @endforeach
@@ -28,8 +28,8 @@
                                         <span>{{ $scurrency->sign }}</span>
                                         <select name="currency" class="currency selectors nice">
                                             @foreach($currencies as $currency)
-                                            <option value="{{route('front.currency',$currency->id)}}"
-                                                {{ $scurrency->id == $currency->id ? 'selected' : ''}}>
+                                            <option value="{{route('front.currency',$currency->id)}}" {{ $scurrency->id
+                                                == $currency->id ? 'selected' : ''}}>
                                                 {{$currency->name}}
                                             </option>
                                             @endforeach
@@ -49,9 +49,13 @@
                                     <div class="currency-selector">
                                         <span><i class="fas fa-coins"></i>
                                             {{ __("Currency Rate") }}:
-                                            {{ $top_first_curr->sign.number_format($top_first_curr->value,$top_first_curr->decimal_digits,$top_first_curr->decimal_separator,$top_first_curr->thousands_separator) }}
+                                            {{
+                                            $top_first_curr->sign.number_format($top_first_curr->value,$top_first_curr->decimal_digits,$top_first_curr->decimal_separator,$top_first_curr->thousands_separator)
+                                            }}
                                             =
-                                            {{ $top_curr->sign . ' ' .number_format($top_curr->value ,$top_curr->decimal_digits,$top_curr->decimal_separator,$top_curr->thousands_separator) }}
+                                            {{ $top_curr->sign . ' ' .number_format($top_curr->value
+                                            ,$top_curr->decimal_digits,$top_curr->decimal_separator,$top_curr->thousands_separator)
+                                            }}
                                         </span>
                                     </div>
                                 </li>
@@ -156,7 +160,7 @@
                 <div class="col-lg-3 col-sm-6 col-5 remove-padding">
                     <div class="logo">
                         <a href="{{ route('front.index') }}">
-                            <img src="{{asset('assets/images/'.$gs->logo)}}" alt="">
+                            <img src="{{asset('storage/images/'.$gs->logo)}}" alt="">
                         </a>
                     </div>
                 </div>
@@ -178,8 +182,8 @@
                                 <input type="hidden" name="maxprice" value="{{ request()->input('maxprice') }}">
                                 @endif
 
-                                <input type="text" id="prod_name" name="searchHttp" placeholder="{{ __("Search For Product") }}"
-                                value="{{ request()->input('searchHttp') }}" autocomplete="off">
+                                <input type="text" id="prod_name" name="searchHttp" placeholder="{{ __(" Search For
+                                    Product") }}" value="{{ request()->input('searchHttp') }}" autocomplete="off">
                                 <div class="autocomplete">
                                     <div id="myInputautocomplete-list" class="autocomplete-items"></div>
                                 </div>
@@ -208,7 +212,7 @@
                             </li>
                             @endif
 
-                            <li class="wishlist" data-toggle="tooltip" data-placement="top" title="{{ __("Wish") }}">
+                            <li class="wishlist" data-toggle="tooltip" data-placement="top" title="{{ __(" Wish") }}">
 
                                 @if(Auth::guard('web')->check())
                                 <a href="{{ route('user-wishlists') }}" class="wish">
@@ -260,7 +264,7 @@
                                     @if($count)
                                     @if($category->photo)
                                     <div class="img">
-                                        <img src="{{ asset('assets/images/categories/'.$category->photo) }}" alt="">
+                                        <img src="{{ asset('storage/images/categories/'.$category->photo) }}" alt="">
                                     </div>
                                     @endif
                                     <div class="link-area">
@@ -277,7 +281,7 @@
                                     @else
                                     <a href="{{ route('front.category',$category->slug) }}">
                                         @if($category->photo)
-                                        <img src="{{ asset('assets/images/categories/'.$category->photo) }}">
+                                        <img src="{{ asset('storage/images/categories/'.$category->photo) }}">
                                         @endif
                                         {{ $category->name }}
                                     </a>
@@ -372,7 +376,7 @@
                                     @if($count)
                                     @if($category->photo)
                                     <div class="img">
-                                        <img src="{{ asset('assets/images/categories/'.$category->photo) }}" alt="">
+                                        <img src="{{ asset('storage/images/categories/'.$category->photo) }}" alt="">
                                     </div>
                                     @endif
                                     <div class="link-area">
@@ -389,7 +393,7 @@
                                     @else
                                     <a class="color2" href="{{ route('front.category',$category->slug) }}">
                                         @if($category->photo)
-                                        <img src="{{ asset('assets/images/categories/'.$category->photo) }}">
+                                        <img src="{{ asset('storage/images/categories/'.$category->photo) }}">
                                         @endif
                                         {{ $category->name }}
                                     </a>

@@ -31,7 +31,8 @@
                   <th><i class="icofont-options icofont-lg" data-toggle="tooltip" title='{{ __("Options") }}'></i></th>
                   <th>{{ __("Title") }}</th>
                   <th><i class="icofont-dollar icofont-lg" data-toggle="tooltip" title='{{ __("Cost") }}'></i></th>
-                  <th><i class="icofont-clock-time icofont-lg" data-toggle="tooltip" title='{{ __("Duration") }}'></i></th>
+                  <th><i class="icofont-clock-time icofont-lg" data-toggle="tooltip" title='{{ __("Duration") }}'></i>
+                  </th>
                   <th>{{ __("Product Allowed") }}</th>
                 </tr>
               </thead>
@@ -50,7 +51,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="submit-loader">
-        <img src="{{asset('assets/images/spinner.gif')}}" alt="">
+        <img src="{{asset('storage/images/spinner.gif')}}" alt="">
       </div>
       <div class="modal-header">
         <h5 class="modal-title"></h5>
@@ -120,7 +121,7 @@
         data: 'action',
         searchable: false,
         orderable: false
-      },  
+      },
       {
         data: 'title',
         name: 'title'
@@ -140,7 +141,7 @@
     ],
     language: {
       url: '{{$datatable_translation}}',
-      processing: '<img src="{{asset("assets/images/spinner.gif")}}">'
+      processing: '<img src="{{asset("storage/images/spinner.gif")}}">'
     },
     drawCallback: function(settings) {
       $(this).find('.select').niceSelect();
@@ -151,7 +152,7 @@
         '<i class="fas fa-plus"></i> {{ __("Add New Subscription") }}' +
         '</a>' +
         '</div>');
-        /* 
+        /*
         * Setando no Cookie a página atual
         */
         $("#geniustable").on('page.dt', function(){
@@ -167,8 +168,8 @@
       if(sessionStorage.getItem("CurrentPage") == undefined){
           sessionStorage.setItem("CurrentPage", 0);
       }
-      $(document).on('click', 'a', function(e){ 
-          var link = jQuery(this); 
+      $(document).on('click', 'a', function(e){
+          var link = jQuery(this);
           var x = '{{ Request::route()->getPrefix() }}';
           y = x.split("/");
           if(!(link.attr("data-href") || link.attr("href").indexOf("#") > -1 || link.attr("href").indexOf("javascript") > -1 || link.attr("href").indexOf(y[1]) > -1)){

@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<input type="hidden" id="headerdata" value="{{ __("PRODUCT") }}">
+<input type="hidden" id="headerdata" value="{{ __(" PRODUCT") }}">
 <div class="content-area">
 	<div class="mr-breadcrumb">
 		<div class="row">
@@ -32,12 +32,16 @@
 						<table id="geniustable" class="table table-hover dt-responsive" cellspacing="0" width="100%">
 							<thead>
 								<tr>
-									<th><i class="icofont-options icofont-lg" data-toggle="tooltip" title='{{ __("Options") }}'></i></th>
+									<th><i class="icofont-options icofont-lg" data-toggle="tooltip"
+											title='{{ __("Options") }}'></i></th>
 									<th>{{ __("Name") }}</th>
 									<th>{{ __("Type") }}</th>
-									<th><i class="fa fa-th-large fa-lg" data-toggle="tooltip" title='{{ __("Stock") }}'></i></th>
-									<th><i class="icofont-dollar icofont-lg" data-toggle="tooltip" title='{{ __("Price") }}'></i></th>
-									<th><i class="icofont-eye icofont-lg" data-toggle="tooltip" title='{{ __("Status") }}'></i></th>
+									<th><i class="fa fa-th-large fa-lg" data-toggle="tooltip"
+											title='{{ __("Stock") }}'></i></th>
+									<th><i class="icofont-dollar icofont-lg" data-toggle="tooltip"
+											title='{{ __("Price") }}'></i></th>
+									<th><i class="icofont-eye icofont-lg" data-toggle="tooltip"
+											title='{{ __("Status") }}'></i></th>
 								</tr>
 							</thead>
 						</table>
@@ -55,7 +59,7 @@
 	<div class="modal-dialog highlight" role="document">
 		<div class="modal-content">
 			<div class="submit-loader">
-				<img src="{{asset('assets/images/'.$gs->admin_loader)}}" alt="">
+				<img src="{{asset('storage/images/'.$gs->admin_loader)}}" alt="">
 			</div>
 			<div class="modal-header">
 				<h5 class="modal-title"></h5>
@@ -127,8 +131,8 @@
 									<input type="hidden" id="pid" name="product_id" value="">
 									<input type="file" name="gallery[]" class="hidden" id="uploadgallery"
 										accept="image/*" multiple>
-									<label for="image-upload" id="prod_gallery"><i
-											class="icofont-upload-alt"></i>{{ __("Upload File") }}</label>
+									<label for="image-upload" id="prod_gallery"><i class="icofont-upload-alt"></i>{{
+										__("Upload File") }}</label>
 								</form>
 							</div>
 						</div>
@@ -198,7 +202,7 @@
 		],
 		language: {
 			url: '{{$datatable_translation}}',
-			processing: '<img src="{{asset("assets/images/".$gs->admin_loader)}}">'
+			processing: '<img src="{{asset("storage/images/".$gs->admin_loader)}}">'
 		},
 		drawCallback: function(settings) {
 			$(this).find('.select').niceSelect();
@@ -212,7 +216,7 @@
                     type: 'GET',
                     url: '{{ url("admin/products/status") }}' + '/' + id + '/' + statusNovo
                 });
-                
+
             });
 		},
 		initComplete: function(settings, json) {
@@ -221,7 +225,7 @@
 				'<i class="fas fa-plus"></i> <span class="remove-mobile">{{ __("Add New Product") }}<span>' +
 				'</a>' +
 				'</div>');
-			/* 
+			/*
             * Setando no Cookie a página atual
             */
             $("#geniustable").on('page.dt', function(){
@@ -232,13 +236,13 @@
 </script>
 {{-- DATA TABLE ENDS--}}
 <script>
-$(document).ready(function(){
+	$(document).ready(function(){
 	// First access - CurrentPage
 	if(sessionStorage.getItem("CurrentPage") == undefined){
 		sessionStorage.setItem("CurrentPage", 0);
 	}
-	$(document).on('click', 'a', function(e){ 
-		var link = jQuery(this); 
+	$(document).on('click', 'a', function(e){
+		var link = jQuery(this);
 		var x = '{{ Request::route()->getPrefix() }}';
 		y = x.split("/");
 		if(!(link.attr("data-href") || link.attr("href").indexOf("#") > -1 || link.attr("href").indexOf("javascript") > -1 || link.attr("href").indexOf(y[1]) > -1)){
@@ -246,7 +250,7 @@ $(document).ready(function(){
 			table.state.clear();
 		}
 	});
-});	
+});
 </script>
 
 
@@ -278,10 +282,10 @@ $(document).ready(function(){
 							'<span class="remove-img"><i class="fas fa-times"></i>' +
 							'<input type="hidden" value="' + arr[k]['id'] + '">' +
 							'</span>' +
-							'<a href="' + '{{asset("assets/images/galleries")."/"}}' + arr[k][
+							'<a href="' + '{{asset("storage/images/galleries")."/"}}' + arr[k][
 								'photo'
 							] + '" target="_blank">' +
-							'<img src="' + '{{asset("assets/images/galleries")."/"}}' + arr[k][
+							'<img src="' + '{{asset("storage/images/galleries")."/"}}' + arr[k][
 								'photo'
 							] + '" alt="gallery image">' +
 							'</a>' +
@@ -331,10 +335,10 @@ $(document).ready(function(){
 							'<span class="remove-img"><i class="fas fa-times"></i>' +
 							'<input type="hidden" value="' + arr[k]['id'] + '">' +
 							'</span>' +
-							'<a href="' + '{{asset("assets/images/galleries")."/"}}' + arr[k][
+							'<a href="' + '{{asset("storage/images/galleries")."/"}}' + arr[k][
 								'photo'
 							] + '" target="_blank">' +
-							'<img src="' + '{{asset("assets/images/galleries")."/"}}' + arr[k][
+							'<img src="' + '{{asset("storage/images/galleries")."/"}}' + arr[k][
 								'photo'
 							] + '" alt="gallery image">' +
 							'</a>' +
@@ -346,7 +350,7 @@ $(document).ready(function(){
 		});
 		return false;
 	});
-	// Gallery Section Update Ends	
+	// Gallery Section Update Ends
 </script>
 
 @endsection

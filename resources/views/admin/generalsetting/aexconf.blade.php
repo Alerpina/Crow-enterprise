@@ -41,7 +41,7 @@
               <select id="store_filter" class="process select go-dropdown-toggle">
                 @foreach ($stores as $store)
                 <option value="{{ route('admin-stores-isconfig',['id' => $store['id'], 'redirect' => true]) }}"
-                  {{$store['id'] == $admstore->id ? 'selected' : ''}}>{{$store['domain']}}</option>
+                  {{$store['id']==$admstore->id ? 'selected' : ''}}>{{$store['domain']}}</option>
                 @endforeach
               </select>
             </div>
@@ -58,10 +58,10 @@
         <div class="product-description">
           <div class="body-area">
             <div class="gocover"
-              style="background: url({{asset('assets/images/'.$admstore->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
+              style="background: url({{asset('storage/images/'.$admstore->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
             </div>
             <div class="submit-loader">
-              <img  src="{{asset('assets/images/'.$gs->admin_loader)}}" alt="">
+              <img src="{{asset('storage/images/'.$gs->admin_loader)}}" alt="">
             </div>
             <form action="{{ route('admin-gs-update') }}" id="geniusform" method="POST" enctype="multipart/form-data">
               {{ csrf_field() }}
@@ -76,8 +76,7 @@
                   </div>
                 </div>
                 <div class="col-lg-6">
-                  <input name="aex_public" class="input-field"
-                    value="{{ $admstore->aex_public }}" required="">
+                  <input name="aex_public" class="input-field" value="{{ $admstore->aex_public }}" required="">
                 </div>
               </div>
 
@@ -89,25 +88,25 @@
                   </div>
                 </div>
                 <div class="col-lg-6">
-                  <input name="aex_private" class="input-field"
-                    value="{{ $admstore->aex_private }}" required="">
+                  <input name="aex_private" class="input-field" value="{{ $admstore->aex_private }}" required="">
                 </div>
               </div>
 
               <div class="row justify-content-center">
                 <div class="col-lg-3">
-                    <div class="left-area">
-                        <h4 class="heading">{{ __('Origin City') }}:</h4>
-                    </div>
+                  <div class="left-area">
+                    <h4 class="heading">{{ __('Origin City') }}:</h4>
+                  </div>
                 </div>
                 <div class="col-lg-6">
-                    <select id="aex_origin" name="aex_origin">
-                        <option value="">{{ __('Select City') }}</option>
-                        @foreach($aex_cities as $city)
-                        <option {{$city->codigo_ciudad == $admstore->aex_origin ? "selected":""}}
-                            value="{{ $city->codigo_ciudad }}">{{$city->denominacion}} - {{$city->departamento_denominacion}}</option>
-                        @endforeach
-                    </select>
+                  <select id="aex_origin" name="aex_origin">
+                    <option value="">{{ __('Select City') }}</option>
+                    @foreach($aex_cities as $city)
+                    <option {{$city->codigo_ciudad == $admstore->aex_origin ? "selected":""}}
+                      value="{{ $city->codigo_ciudad }}">{{$city->denominacion}} - {{$city->departamento_denominacion}}
+                    </option>
+                    @endforeach
+                  </select>
                 </div>
               </div>
 
@@ -119,8 +118,8 @@
                   </div>
                 </div>
                 <div class="col-lg-6">
-                  <input name="aex_calle_principal" class="input-field"
-                    value="{{ $admstore->aex_calle_principal }}" required="">
+                  <input name="aex_calle_principal" class="input-field" value="{{ $admstore->aex_calle_principal }}"
+                    required="">
                 </div>
               </div>
 
@@ -132,8 +131,8 @@
                   </div>
                 </div>
                 <div class="col-lg-6">
-                  <input name="aex_calle_transversal" class="input-field"
-                    value="{{ $admstore->aex_calle_transversal }}" required="">
+                  <input name="aex_calle_transversal" class="input-field" value="{{ $admstore->aex_calle_transversal }}"
+                    required="">
                 </div>
               </div>
 
@@ -145,8 +144,8 @@
                   </div>
                 </div>
                 <div class="col-lg-6">
-                  <input name="aex_numero_casa" class="input-field"
-                    value="{{ $admstore->aex_numero_casa }}" required="">
+                  <input name="aex_numero_casa" class="input-field" value="{{ $admstore->aex_numero_casa }}"
+                    required="">
                 </div>
               </div>
 
@@ -158,60 +157,55 @@
                   </div>
                 </div>
                 <div class="col-lg-6">
-                  <input name="aex_telefono" class="input-field"
-                    value="{{ $admstore->aex_telefono }}" required="">
+                  <input name="aex_telefono" class="input-field" value="{{ $admstore->aex_telefono }}" required="">
                 </div>
-              </div>
-
-              <div class="row justify-content-center">
-                  <div class="col-lg-3">
-                      <div class="left-area">
-                          <h4 class="heading">
-                              {{ __('Production Mode') }}:
-                          </h4>
-                      </div>
-                  </div>
-                  <div class="col-lg-6">
-                      <div class="action-list">
-                          <select
-                              class="process select droplinks {{ $admstore->is_aex_production ? 'drop-success' : 'drop-danger' }}">
-                              <option data-val="1"
-                                  value="{{route('admin-gs-aex-production',1)}}"
-                                  {{ $admstore->is_aex_production ? 'selected' : '' }}>
-                                  {{ __('Activated') }}</option>
-                              <option data-val="0"
-                                  value="{{route('admin-gs-aex-production',0)}}"
-                                  {{ $admstore->is_aex_production == 0 ? 'selected' : '' }}>
-                                  {{ __('Deactivated') }}</option>
-                          </select>
-                      </div>
-                  </div>
               </div>
 
               <div class="row justify-content-center">
                 <div class="col-lg-3">
-                    <div class="left-area">
-                        <h4 class="heading">
-                            {{ __('Calculate Insurance') }}:
-                        </h4>
-                    </div>
+                  <div class="left-area">
+                    <h4 class="heading">
+                      {{ __('Production Mode') }}:
+                    </h4>
+                  </div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="action-list">
-                        <select
-                            class="process select droplinks {{ $admstore->is_aex_insurance ? 'drop-success' : 'drop-danger' }}">
-                            <option data-val="1"
-                                value="{{route('admin-gs-aex-insurance',1)}}"
-                                {{ $admstore->is_aex_insurance ? 'selected' : '' }}>
-                                {{ __('Activated') }}</option>
-                            <option data-val="0"
-                                value="{{route('admin-gs-aex-insurance',0)}}"
-                                {{ $admstore->is_aex_insurance == 0 ? 'selected' : '' }}>
-                                {{ __('Deactivated') }}</option>
-                        </select>
-                    </div>
+                  <div class="action-list">
+                    <select
+                      class="process select droplinks {{ $admstore->is_aex_production ? 'drop-success' : 'drop-danger' }}">
+                      <option data-val="1" value="{{route('admin-gs-aex-production',1)}}" {{ $admstore->
+                        is_aex_production ? 'selected' : '' }}>
+                        {{ __('Activated') }}</option>
+                      <option data-val="0" value="{{route('admin-gs-aex-production',0)}}" {{ $admstore->
+                        is_aex_production == 0 ? 'selected' : '' }}>
+                        {{ __('Deactivated') }}</option>
+                    </select>
+                  </div>
                 </div>
-            </div>
+              </div>
+
+              <div class="row justify-content-center">
+                <div class="col-lg-3">
+                  <div class="left-area">
+                    <h4 class="heading">
+                      {{ __('Calculate Insurance') }}:
+                    </h4>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="action-list">
+                    <select
+                      class="process select droplinks {{ $admstore->is_aex_insurance ? 'drop-success' : 'drop-danger' }}">
+                      <option data-val="1" value="{{route('admin-gs-aex-insurance',1)}}" {{ $admstore->is_aex_insurance
+                        ? 'selected' : '' }}>
+                        {{ __('Activated') }}</option>
+                      <option data-val="0" value="{{route('admin-gs-aex-insurance',0)}}" {{ $admstore->is_aex_insurance
+                        == 0 ? 'selected' : '' }}>
+                        {{ __('Deactivated') }}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
 
               <div class="row justify-content-center">
                 <div class="col-lg-3">
@@ -257,7 +251,7 @@
   });
 </script>
 <script>
-    $('.btn-update-aex-cities').on('click', function(e) {
+  $('.btn-update-aex-cities').on('click', function(e) {
         if (admin_loader == 1) {
             $('.submit-loader').show();
         }

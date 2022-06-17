@@ -545,7 +545,7 @@ class CatalogController extends Controller
         $input = $request->all();
         $comment->fill($input)->save();
         $comments = Comment::where('product_id', '=', $request->product_id)->get()->count();
-        $data[0] = $comment->user->photo ? url('storage/images/users/' . $comment->user->photo) : url('storage/images/noimage.png');
+        $data[0] = $comment->user->photo ? url('storage/images/users/' . $comment->user->photo) : url('assets/images/noimage.png');
         $data[1] = $comment->user->name;
         $data[2] = $comment->created_at->diffForHumans();
         $data[3] = $comment->text;
@@ -593,7 +593,7 @@ class CatalogController extends Controller
         $input = $request->all();
         $input['comment_id'] = $id;
         $reply->fill($input)->save();
-        $data[0] = $reply->user->photo ? url('storage/images/users/' . $reply->user->photo) : url('storage/images/noimage.png');
+        $data[0] = $reply->user->photo ? url('storage/images/users/' . $reply->user->photo) : url('assets/images/noimage.png');
         $data[1] = $reply->user->name;
         $data[2] = $reply->created_at->diffForHumans();
         $data[3] = $reply->text;

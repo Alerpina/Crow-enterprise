@@ -6,8 +6,9 @@
                 <div class="section-top">
                     <h2 class="section-title">
                         {{ __("Testimony") }}
-                        <div id="post-title"> 
-                            <img src="{{ asset('project/resources/views/front/themes/theme-03/assets/images/post-it.png')}}" class="img-fluid" alt="Post it">
+                        <div id="post-title">
+                            <img src="{{ asset('project/resources/views/front/themes/theme-03/storage/images/post-it.png')}}"
+                                class="img-fluid" alt="Post it">
                         </div>
                     </h2>
                 </div>
@@ -19,7 +20,8 @@
                             <div class="slide-item">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <img class="img-fluid" src="{{ $review->photo ? asset('assets/images/reviews/'.$review->photo) : asset('assets/images/noimage.png') }}"
+                                        <img class="img-fluid"
+                                            src="{{ $review->photo ? asset('storage/images/reviews/'.$review->photo) : asset('assets/images/noimage.png') }}"
                                             alt="">
                                     </div>
                                     <div class="col-md-8 coments">

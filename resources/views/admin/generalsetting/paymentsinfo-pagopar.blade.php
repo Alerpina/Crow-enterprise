@@ -6,17 +6,20 @@
     .img-upload #image-preview {
         background-size: unset !important;
     }
+
     .mr-breadcrumb .links .action-list li {
-		display: block;
-	}
-	.mr-breadcrumb .links .action-list ul {
-		overflow-y: auto;
-		max-height: 240px;
-	}
-	.mr-breadcrumb .links .action-list .go-dropdown-toggle {
-		padding-left: 20px;
-		padding-right: 30px;
-	}
+        display: block;
+    }
+
+    .mr-breadcrumb .links .action-list ul {
+        overflow-y: auto;
+        max-height: 240px;
+    }
+
+    .mr-breadcrumb .links .action-list .go-dropdown-toggle {
+        padding-left: 20px;
+        padding-right: 30px;
+    }
 </style>
 
 @endsection
@@ -41,11 +44,13 @@
                     @if(config('features.multistore'))
                     <li>
                         <div class="action-list godropdown">
-                        <select id="store_filter" class="process select go-dropdown-toggle">
-                            @foreach ($stores as $store)
-                            <option value="{{ route('admin-stores-isconfig',['id' => $store['id'], 'redirect' => true]) }}" {{$store['id'] == $admstore->id ? 'selected' : ''}}>{{$store['domain']}}</option>
-                            @endforeach
-                        </select>
+                            <select id="store_filter" class="process select go-dropdown-toggle">
+                                @foreach ($stores as $store)
+                                <option
+                                    value="{{ route('admin-stores-isconfig',['id' => $store['id'], 'redirect' => true]) }}"
+                                    {{$store['id']==$admstore->id ? 'selected' : ''}}>{{$store['domain']}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </li>
                     @endif
@@ -59,7 +64,7 @@
             <div class="col-lg-12">
                 <div class="product-description">
                     <div class="body-area">
-                        <div class="gocover" style="background: url({{asset('assets/images/'.$admstore->admin_loader)}}) 
+                        <div class="gocover" style="background: url({{asset('storage/images/'.$admstore->admin_loader)}})
                                 no-repeat scroll center center rgba(45, 45, 45, 0.5);">
                         </div>
                         <div class="row">
@@ -83,11 +88,11 @@
                                                 <div class="action-list">
                                                     <select
                                                         class="process select droplinks {{ $admstore->is_pagopar == 1 ? 'drop-success' : 'drop-danger' }}">
-                                                        <option data-val="1" value="{{route('admin-gs-pagopar',1)}}"
-                                                            {{ $admstore->is_pagopar == 1 ? 'selected' : '' }}>
+                                                        <option data-val="1" value="{{route('admin-gs-pagopar',1)}}" {{
+                                                            $admstore->is_pagopar == 1 ? 'selected' : '' }}>
                                                             {{ __('Activated') }}</option>
-                                                        <option data-val="0" value="{{route('admin-gs-pagopar',0)}}"
-                                                            {{ $admstore->is_pagopar == 0 ? 'selected' : '' }}>
+                                                        <option data-val="0" value="{{route('admin-gs-pagopar',0)}}" {{
+                                                            $admstore->is_pagopar == 0 ? 'selected' : '' }}>
                                                             {{ __('Deactivated') }}</option>
                                                     </select>
                                                 </div>
@@ -97,47 +102,56 @@
                                         <div class="col-xl-5">
                                             <div class="input-form">
                                                 <h4 class="heading">{{ __('Pagopar Public Key') }} *
-                                                    <span><i class="icofont-question-circle" data-toggle="tooltip" data-placement="top" title="{{__('Consult your public key with the payment method provider.')}}"></i></span>
+                                                    <span><i class="icofont-question-circle" data-toggle="tooltip"
+                                                            data-placement="top"
+                                                            title="{{__('Consult your public key with the payment method provider.')}}"></i></span>
                                                 </h4>
                                                 <textarea class="input-field" name="pagopar_public_key"
-                                                placeholder="{{ __('Pagopar Public Key') }}">{{ $admstore->pagopar_public_key }}</textarea>
-                                                
+                                                    placeholder="{{ __('Pagopar Public Key') }}">{{ $admstore->pagopar_public_key }}</textarea>
+
                                             </div>
                                         </div>
 
                                         <div class="col-xl-5">
                                             <div class="input-form">
                                                 <h4 class="heading">{{ __('Pagopar Private Key') }} *
-                                                    <span><i class="icofont-question-circle" data-toggle="tooltip" data-placement="top" title="{{__('Consult your private key with the payment method provider.')}}"></i></span>
+                                                    <span><i class="icofont-question-circle" data-toggle="tooltip"
+                                                            data-placement="top"
+                                                            title="{{__('Consult your private key with the payment method provider.')}}"></i></span>
                                                 </h4>
                                                 <textarea class="input-field" name="pagopar_private_key"
-                                                placeholder="{{ __('Pagopar Private Key') }}">{{ $admstore->pagopar_private_key }}</textarea>
-                                                
+                                                    placeholder="{{ __('Pagopar Private Key') }}">{{ $admstore->pagopar_private_key }}</textarea>
+
                                             </div>
                                         </div>
-                                        
+
                                         <div class="col-xl-12">
                                             <div class="input-form">
-                                            @component('admin.components.input-localized',["from" => $admstore, "type" => "textarea"])
-                                            @slot('name')
-                                            pagopar_text
-                                            @endslot
-                                            @slot('value')
-                                            pagopar_text
-                                            @endslot
-                                            {{ __('Pagopar Text') }} * <span><i class="icofont-question-circle" data-toggle="tooltip" data-placement="top" title="{{__('Enter the message that will be displayed to the customer when using the payment method.')}}" style="margin-top: -120px; margin-right:42px;"></i></span>
-                                            @endcomponent
-                                            
+                                                @component('admin.components.input-localized',["from" => $admstore,
+                                                "type" => "textarea"])
+                                                @slot('name')
+                                                pagopar_text
+                                                @endslot
+                                                @slot('value')
+                                                pagopar_text
+                                                @endslot
+                                                {{ __('Pagopar Text') }} * <span><i class="icofont-question-circle"
+                                                        data-toggle="tooltip" data-placement="top"
+                                                        title="{{__('Enter the message that will be displayed to the customer when using the payment method.')}}"
+                                                        style="margin-top: -120px; margin-right:42px;"></i></span>
+                                                @endcomponent
+
 
                                             </div>
                                         </div>
-                                        
-                                    </div> <!--FECHAMENTO TAG ROW-->
+
+                                    </div>
+                                    <!--FECHAMENTO TAG ROW-->
 
                                     <div class="row justify-content-center">
-                                        
-                                            <button class="addProductSubmit-btn" type="submit">{{ __('Save') }}</button>
-                                    
+
+                                        <button class="addProductSubmit-btn" type="submit">{{ __('Save') }}</button>
+
                                     </div>
                                 </form>
                             </div>
@@ -153,7 +167,7 @@
 
 @section('scripts')
 <script>
-  $('document').ready(function () {
+    $('document').ready(function () {
       $("#store_filter").niceSelect('update');
   });
 

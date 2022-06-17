@@ -24,7 +24,7 @@
         <div class="product-description">
           <div class="body-area">
             <div class="gocover"
-              style="background: url({{asset('assets/images/'.$admstore->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
+              style="background: url({{asset('storage/images/'.$admstore->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
             </div>
             <div class="row">
               <div class="col-lg-3">
@@ -46,10 +46,10 @@
                         <div class="action-list">
                           <select
                             class="process select droplinks {{ $admstore->is_jivochat == 1 ? 'drop-success' : 'drop-danger' }}">
-                            <option data-val="1" value="{{route('admin-gs-jivochat',1)}}"
-                              {{ $admstore->is_jivochat == 1 ? 'selected' : '' }}>{{ __('Activated') }}</option>
-                            <option data-val="0" value="{{route('admin-gs-jivochat',0)}}"
-                              {{ $admstore->is_jivochat == 0 ? 'selected' : '' }}>{{ __('Deactivated') }}</option>
+                            <option data-val="1" value="{{route('admin-gs-jivochat',1)}}" {{ $admstore->is_jivochat == 1
+                              ? 'selected' : '' }}>{{ __('Activated') }}</option>
+                            <option data-val="0" value="{{route('admin-gs-jivochat',0)}}" {{ $admstore->is_jivochat == 0
+                              ? 'selected' : '' }}>{{ __('Deactivated') }}</option>
                           </select>
                         </div>
                       </div>
@@ -61,18 +61,18 @@
                           {{ __('Jivochat Widget Code') }} *
                         </h4>
                         <div class="tawk-area">
-                        <textarea name="jivochat">{{$admstore->jivochat}}</textarea>
-                      </div>
+                          <textarea name="jivochat">{{$admstore->jivochat}}</textarea>
+                        </div>
                       </div>
                     </div>
-                   
+
                   </div>
-  
+
 
                   <div class="row justify-content-center">
-                  
-                      <button class="addProductSubmit-btn" type="submit">{{ __('Save') }}</button>
-              
+
+                    <button class="addProductSubmit-btn" type="submit">{{ __('Save') }}</button>
+
                   </div>
                 </form>
               </div>

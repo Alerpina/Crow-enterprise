@@ -16,7 +16,8 @@
                             <div class="info-box">
                                 <div class="icon">
                                     <a target="_blank" href="{{ $service->link }}">
-                                        <img class="img-fluid-service" src="{{ asset('assets/images/services/'.$service->photo) }}">
+                                        <img class="img-fluid-service"
+                                            src="{{ asset('storage/images/services/'.$service->photo) }}">
                                     </a>
                                     <h4 class="title">{{ $service->title }}</h4>
                                 </div>
@@ -40,6 +41,6 @@
 
     </div>
 </section>
-{{-- Info Area End  --}}
+{{-- Info Area End --}}
 
 @endif

@@ -12,8 +12,8 @@
                                         <i class="fas fa-globe-americas"></i>
                                         <select name="language" class="language selectors nice">
                                             @foreach($locales as $language)
-                                            <option value="{{route('front.language',$language->id)}}"
-                                                {{$slocale->id == $language->id ? 'selected' : ''}}>
+                                            <option value="{{route('front.language',$language->id)}}" {{$slocale->id ==
+                                                $language->id ? 'selected' : ''}}>
                                                 {{$language->language}}
                                             </option>
                                             @endforeach
@@ -33,9 +33,13 @@
                                     <div class="currency-selector">
                                         <span><i class="fas fa-coins"></i>
                                             {{ __("Currency Rate") }}:
-                                            {{ $top_first_curr->sign.number_format($top_first_curr->value,$top_first_curr->decimal_digits,$top_first_curr->decimal_separator,$top_first_curr->thousands_separator) }}
+                                            {{
+                                            $top_first_curr->sign.number_format($top_first_curr->value,$top_first_curr->decimal_digits,$top_first_curr->decimal_separator,$top_first_curr->thousands_separator)
+                                            }}
                                             =
-                                            {{ $top_curr->sign . ' ' .number_format($top_curr->value ,$top_curr->decimal_digits,$top_curr->decimal_separator,$top_curr->thousands_separator) }}
+                                            {{ $top_curr->sign . ' ' .number_format($top_curr->value
+                                            ,$top_curr->decimal_digits,$top_curr->decimal_separator,$top_curr->thousands_separator)
+                                            }}
                                         </span>
                                     </div>
                                 </li>
@@ -198,7 +202,8 @@
 
                                             @if($gs->is_cart)
                                             <li>
-                                                <a href="javascript:;" data-toggle="modal" data-target="#track-order-modal">
+                                                <a href="javascript:;" data-toggle="modal"
+                                                    data-target="#track-order-modal">
                                                     <i class="fas fa-caret-right"></i>
                                                     {{ __("Track Order") }}
                                                 </a>
@@ -223,8 +228,8 @@
                                     <div class="currency-selector" style="padding-right:12px;">
                                         <select name="currency" class="currency selectors nice">
                                             @foreach($currencies as $currency)
-                                            <option value="{{route('front.currency',$currency->id)}}"
-                                                {{ $scurrency->id == $currency->id ? 'selected' : ''}}>
+                                            <option value="{{route('front.currency',$currency->id)}}" {{ $scurrency->id
+                                                == $currency->id ? 'selected' : ''}}>
                                                 {{$currency->name}}
                                             </option>
                                             @endforeach
@@ -276,8 +281,8 @@
                                 <input type="hidden" name="maxprice" value="{{ request()->input('maxprice') }}">
                                 @endif
 
-                                <input type="text" id="prod_name" name="searchHttp" placeholder="{{ __("Search For Product") }}"
-                                value="{{ request()->input('searchHttp') }}" autocomplete="off">
+                                <input type="text" id="prod_name" name="searchHttp" placeholder="{{ __(" Search For
+                                    Product") }}" value="{{ request()->input('searchHttp') }}" autocomplete="off">
                                 <div class="autocomplete">
                                     <div id="myInputautocomplete-list" class="autocomplete-items"></div>
                                 </div>
@@ -290,7 +295,7 @@
                 <div class="col-lg-4 col-sm-6 col-6 remove-padding">
                     <div class="logo">
                         <a href="{{ route('front.index') }}">
-                            <img src="{{asset('assets/images/'.$gs->logo)}}" alt="">
+                            <img src="{{asset('storage/images/'.$gs->logo)}}" alt="">
                         </a>
                     </div>
                 </div>
@@ -303,24 +308,28 @@
                             <li class="my-dropdown">
                                 <a href="javascript:;" class="cart carticon">
                                     <div class="icon">
-                                        <svg class="icons-header" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                            viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+                                        <svg class="icons-header" version="1.1" id="Capa_1"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                            viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;"
+                                            xml:space="preserve">
                                             <g>
                                                 <g>
-                                                    <circle cx="181.333" cy="437.333" r="53.333"/>
+                                                    <circle cx="181.333" cy="437.333" r="53.333" />
                                                 </g>
                                             </g>
                                             <g>
                                                 <g>
-                                                    <path d="M509.867,89.6c-2.133-2.133-4.267-4.267-8.533-4.267H96L85.333,29.867c-2.133-4.267-6.4-8.533-10.667-8.533h-64
+                                                    <path
+                                                        d="M509.867,89.6c-2.133-2.133-4.267-4.267-8.533-4.267H96L85.333,29.867c-2.133-4.267-6.4-8.533-10.667-8.533h-64
                                                         C4.267,21.333,0,25.6,0,32s4.267,10.667,10.667,10.667h55.467l51.2,260.267c8.533,34.133,38.4,59.733,74.667,59.733h245.333
                                                         c6.4,0,10.667-4.267,10.667-10.667c0-6.4-4.267-10.667-10.667-10.667H192c-17.067,0-34.133-8.533-42.667-23.467L460.8,275.2
-                                                        c4.267,0,8.533-4.267,8.533-8.533L512,96C512,96,512,91.733,509.867,89.6z"/>
+                                                        c4.267,0,8.533-4.267,8.533-8.533L512,96C512,96,512,91.733,509.867,89.6z" />
                                                 </g>
                                             </g>
                                             <g>
                                                 <g>
-                                                    <circle cx="394.667" cy="437.333" r="53.333"/>
+                                                    <circle cx="394.667" cy="437.333" r="53.333" />
                                                 </g>
                                             </g>
                                         </svg>
@@ -335,19 +344,21 @@
                             </li>
                             @endif
 
-                            <li class="wishlist" data-toggle="tooltip" data-placement="top" title="{{ __("Wish") }}">
+                            <li class="wishlist" data-toggle="tooltip" data-placement="top" title="{{ __(" Wish") }}">
 
                                 @if(Auth::guard('web')->check())
                                 <a href="{{ route('user-wishlists') }}" class="wish">
-                                    <svg class="icons-header" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                        viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+                                    <svg class="icons-header" version="1.1" id="Capa_1"
+                                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;"
+                                        xml:space="preserve">
                                         <g>
                                             <g>
                                                 <path d="M376,30c-27.783,0-53.255,8.804-75.707,26.168c-21.525,16.647-35.856,37.85-44.293,53.268
                                                     c-8.437-15.419-22.768-36.621-44.293-53.268C189.255,38.804,163.783,30,136,30C58.468,30,0,93.417,0,177.514
                                                     c0,90.854,72.943,153.015,183.369,247.118c18.752,15.981,40.007,34.095,62.099,53.414C248.38,480.596,252.12,482,256,482
                                                     s7.62-1.404,10.532-3.953c22.094-19.322,43.348-37.435,62.111-53.425C439.057,330.529,512,268.368,512,177.514
-                                                    C512,93.417,453.532,30,376,30z"/>
+                                                    C512,93.417,453.532,30,376,30z" />
                                             </g>
                                         </g>
                                     </svg>
@@ -356,15 +367,17 @@
                                 @else
                                 <a href="javascript:;" data-toggle="modal" id="wish-btn" data-target="#comment-log-reg"
                                     class="wish">
-                                    <svg class="icons-header" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                        viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+                                    <svg class="icons-header" version="1.1" id="Capa_1"
+                                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;"
+                                        xml:space="preserve">
                                         <g>
                                             <g>
                                                 <path d="M376,30c-27.783,0-53.255,8.804-75.707,26.168c-21.525,16.647-35.856,37.85-44.293,53.268
                                                     c-8.437-15.419-22.768-36.621-44.293-53.268C189.255,38.804,163.783,30,136,30C58.468,30,0,93.417,0,177.514
                                                     c0,90.854,72.943,153.015,183.369,247.118c18.752,15.981,40.007,34.095,62.099,53.414C248.38,480.596,252.12,482,256,482
                                                     s7.62-1.404,10.532-3.953c22.094-19.322,43.348-37.435,62.111-53.425C439.057,330.529,512,268.368,512,177.514
-                                                    C512,93.417,453.532,30,376,30z"/>
+                                                    C512,93.417,453.532,30,376,30z" />
                                             </g>
                                         </g>
                                     </svg>
@@ -374,23 +387,28 @@
 
                             </li>
 
-                            <li class="compare" data-toggle="tooltip" data-placement="top" title="{{ __("Compare") }}">
+                            <li class="compare" data-toggle="tooltip" data-placement="top" title="{{ __(" Compare") }}">
                                 <a href="{{ route('product.compare') }}" class="wish compare-product">
                                     <div class="icon">
-                                        <svg class="icons-header" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                            viewBox="0 0 512.016 512.016" style="enable-background:new 0 0 512.016 512.016;" xml:space="preserve">
+                                        <svg class="icons-header" version="1.1" id="Capa_1"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                            viewBox="0 0 512.016 512.016"
+                                            style="enable-background:new 0 0 512.016 512.016;" xml:space="preserve">
                                             <g>
                                                 <g>
-                                                    <path d="M496.008,79.997h-368v-48c0-6.464-3.904-12.32-9.888-14.784s-12.832-1.088-17.44,3.456l-96,96
+                                                    <path
+                                                        d="M496.008,79.997h-368v-48c0-6.464-3.904-12.32-9.888-14.784s-12.832-1.088-17.44,3.456l-96,96
                                                         c-6.24,6.24-6.24,16.384,0,22.624l96,96c4.608,4.576,11.456,5.952,17.44,3.488s9.888-8.32,9.888-14.784v-48h368
-                                                        c8.832,0,16-7.168,16-16v-64C512.008,87.133,504.84,79.997,496.008,79.997z"/>
+                                                        c8.832,0,16-7.168,16-16v-64C512.008,87.133,504.84,79.997,496.008,79.997z" />
                                                 </g>
                                             </g>
                                             <g>
                                                 <g>
-                                                    <path d="M507.336,372.701l-96-96.032c-4.576-4.576-11.456-5.952-17.44-3.456c-5.984,2.496-9.888,8.32-9.888,14.784v48h-368
+                                                    <path
+                                                        d="M507.336,372.701l-96-96.032c-4.576-4.576-11.456-5.952-17.44-3.456c-5.984,2.496-9.888,8.32-9.888,14.784v48h-368
                                                         c-8.832,0-16,7.168-16,16v64c0,8.832,7.168,16,16,16h368v48c0,6.464,3.904,12.32,9.888,14.784
-                                                        c5.984,2.496,12.864,1.12,17.44-3.456l96-96C513.576,389.085,513.576,378.941,507.336,372.701z"/>
+                                                        c5.984,2.496,12.864,1.12,17.44-3.456l96-96C513.576,389.085,513.576,378.941,507.336,372.701z" />
                                                 </g>
                                             </g>
                                         </svg>
@@ -436,7 +454,7 @@
                                     @if($count)
                                     @if($category->photo)
                                     <div class="img">
-                                        <img src="{{ asset('assets/images/categories/'.$category->photo) }}" alt="">
+                                        <img src="{{ asset('storage/images/categories/'.$category->photo) }}" alt="">
                                     </div>
                                     @endif
                                     <div class="link-area">
@@ -453,7 +471,7 @@
                                     @else
                                     <a href="{{ route('front.category',$category->slug) }}">
                                         @if($category->photo)
-                                        <img src="{{ asset('assets/images/categories/'.$category->photo) }}">
+                                        <img src="{{ asset('storage/images/categories/'.$category->photo) }}">
                                         @endif
                                         {{ $category->name }}
                                     </a>
@@ -548,7 +566,7 @@
                                     @if($count)
                                     @if($category->photo)
                                     <div class="img">
-                                        <img src="{{ asset('assets/images/categories/'.$category->photo) }}" alt="">
+                                        <img src="{{ asset('storage/images/categories/'.$category->photo) }}" alt="">
                                     </div>
                                     @endif
                                     <div class="link-area">
@@ -565,7 +583,7 @@
                                     @else
                                     <a href="{{ route('front.category',$category->slug) }}">
                                         @if($category->photo)
-                                        <img src="{{ asset('assets/images/categories/'.$category->photo) }}">
+                                        <img src="{{ asset('storage/images/categories/'.$category->photo) }}">
                                         @endif
                                         {{ $category->name }}
                                     </a>

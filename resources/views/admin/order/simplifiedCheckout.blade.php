@@ -60,17 +60,23 @@
                     @include('includes.admin.form-success')
                     <div class="table-responsiv">
                         <div class="gocover"
-                            style="background: url({{asset('assets/images/'.$admstore->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
+                            style="background: url({{asset('storage/images/'.$admstore->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
                         </div>
                         <table id="geniustable" class="table table-hover dt-responsive" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
-                                    <th><i class="icofont-options icofont-lg" data-toggle="tooltip" title='{{ __("Options") }}'></i></th>
-                                    <th><i class="icofont-user icofont-lg" data-toggle="tooltip" title='{{ __("Customer Name") }}'></i></th>
-                                    <th><i class="icofont-phone-circle icofont-lg" data-toggle="tooltip" title='{{ __("Customer Phone") }}'></i></th>
-                                    <th><i class="icofont-numbered icofont-lg" data-toggle="tooltip" title='{{ __("Order Number") }}'></i></th>
-                                    <th><i class="icofont-cart icofont-lg" data-toggle="tooltip" title='{{ __("Total Qty") }}'></i></th>
-                                    <th><i class="icofont-dollar icofont-lg" data-toggle="tooltip" title='{{ __("Total Cost") }}'></i></th>
+                                    <th><i class="icofont-options icofont-lg" data-toggle="tooltip"
+                                            title='{{ __("Options") }}'></i></th>
+                                    <th><i class="icofont-user icofont-lg" data-toggle="tooltip"
+                                            title='{{ __("Customer Name") }}'></i></th>
+                                    <th><i class="icofont-phone-circle icofont-lg" data-toggle="tooltip"
+                                            title='{{ __("Customer Phone") }}'></i></th>
+                                    <th><i class="icofont-numbered icofont-lg" data-toggle="tooltip"
+                                            title='{{ __("Order Number") }}'></i></th>
+                                    <th><i class="icofont-cart icofont-lg" data-toggle="tooltip"
+                                            title='{{ __("Total Qty") }}'></i></th>
+                                    <th><i class="icofont-dollar icofont-lg" data-toggle="tooltip"
+                                            title='{{ __("Total Cost") }}'></i></th>
                                     <th>{{ __("Payment Status") }}</th>
                                     <th>{{ __("Delivery Status") }}</th>
                                 </tr>
@@ -89,7 +95,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="submit-loader">
-                <img src="{{asset('assets/images/'.$admstore->admin_loader)}}" alt="">
+                <img src="{{asset('storage/images/'.$admstore->admin_loader)}}" alt="">
             </div>
             <div class="modal-header d-block text-center">
                 <h4 class="modal-title d-inline-block">{{ __('Update Status') }}</h4>
@@ -148,8 +154,8 @@
                                                     placeholder="{{ __('Your Message') }} *" required=""></textarea>
                                             </li>
                                         </ul>
-                                        <button class="submit-btn" id="emlsub"
-                                            type="submit">{{ __('Send Email') }}</button>
+                                        <button class="submit-btn" id="emlsub" type="submit">{{ __('Send Email')
+                                            }}</button>
                                     </form>
                                 </div>
                             </div>
@@ -170,7 +176,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="submit-loader">
-                <img src="{{asset('assets/images/'.$admstore->admin_loader)}}" alt="">
+                <img src="{{asset('storage/images/'.$admstore->admin_loader)}}" alt="">
             </div>
             <div class="modal-header">
                 <h5 class="modal-title"></h5>
@@ -213,7 +219,7 @@
                     span.text($(this).text());
                     $(this).trigger('click');
                     $(this).parent().parent().removeClass("open").delay(100);
-                    
+
                 } else $(this).removeClass('selected focus');
             });
         },
@@ -259,14 +265,14 @@
         ],
         language: {
             url: '{{$datatable_translation}}',
-            processing: '<img src="{{asset("assets/images/".$admstore->admin_loader)}}">'
+            processing: '<img src="{{asset("storage/images/".$admstore->admin_loader)}}">'
         },
         drawCallback: function(settings) {
             $(this).find('.select').niceSelect();
 
-            /* 
-            * If any of the filters are changed, the table resets completely. 
-            * It also adds current SelectedOrderSimplifiedFilter to Session Storage, with is used to 
+            /*
+            * If any of the filters are changed, the table resets completely.
+            * It also adds current SelectedOrderSimplifiedFilter to Session Storage, with is used to
             * keep the selection until user leaves the scope.
             */
             $('#order_simplified_filters').on('change', function() {
@@ -282,7 +288,7 @@
             $(document).ready(function(){
                 table.page(parseInt(sessionStorage.getItem("CurrentPage"))).draw(false);
             });
-            /* 
+            /*
             * Setando no Cookie a página atual
             */
             $("#geniustable").on('page.dt', function(){
@@ -311,7 +317,7 @@
         table.ajax.url($(this).val()).load();
     });
     $(document).on('click', 'a', function(e){
-        var link = jQuery(this); 
+        var link = jQuery(this);
         var x = '{{ Request::route()->getPrefix() }}';
         y = x.split("/");
         if(!(link.attr("data-href") || link.attr("href").indexOf("#") > -1 || link.attr("href").indexOf("javascript") > -1 || link.attr("href").indexOf("simplified-checkout") > -1 || link.attr("href").indexOf("order") > -1)){

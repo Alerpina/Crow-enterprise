@@ -41,7 +41,7 @@
               <select id="store_filter" class="process select go-dropdown-toggle">
                 @foreach ($stores as $store)
                 <option value="{{ route('admin-stores-isconfig',['id' => $store['id'], 'redirect' => true]) }}"
-                  {{$store['id'] == $admstore->id ? 'selected' : ''}}>{{$store['domain']}}</option>
+                  {{$store['id']==$admstore->id ? 'selected' : ''}}>{{$store['domain']}}</option>
                 @endforeach
               </select>
             </div>
@@ -58,12 +58,13 @@
         <div class="product-description">
           <div class="body-area">
             <div class="gocover"
-              style="background: url({{asset('assets/images/'.$admstore->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
+              style="background: url({{asset('storage/images/'.$admstore->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
             </div>
             <div class="submit-loader">
-              <img  src="{{asset('assets/images/'.$gs->admin_loader)}}" alt="">
+              <img src="{{asset('storage/images/'.$gs->admin_loader)}}" alt="">
             </div>
-            <form action="{{ route('admin-gs-update-melhorenvio') }}" id="geniusform" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin-gs-update-melhorenvio') }}" id="geniusform" method="POST"
+              enctype="multipart/form-data">
               {{ csrf_field() }}
 
               @include('includes.admin.form-both')
@@ -79,61 +80,59 @@
                 </div>
                 <div class="col-lg-6">
                   <textarea rows="6" name="token" class="input-field"
-                     required="">{{ $admstore->melhorenvio->token }}</textarea>
+                    required="">{{ $admstore->melhorenvio->token }}</textarea>
                 </div>
               </div>
 
               <div class="row justify-content-center">
                 <div class="col-lg-3">
-                    <div class="left-area">
-                        <h4 class="heading">
-                          <span><i class="icofont-question-circle" data-toggle="tooltip" data-placement="top" title="{{__('Turns on real shipping. Disable it to test.')}}"></i></span>
-                            {{ __('Production Mode') }}:
-                        </h4>
-                    </div>
+                  <div class="left-area">
+                    <h4 class="heading">
+                      <span><i class="icofont-question-circle" data-toggle="tooltip" data-placement="top"
+                          title="{{__('Turns on real shipping. Disable it to test.')}}"></i></span>
+                      {{ __('Production Mode') }}:
+                    </h4>
+                  </div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="action-list">
-                        <select
-                            class="process select droplinks {{ $admstore->melhorenvio->production == 1 ? 'drop-success' : 'drop-danger' }}">
-                            <option data-val="1"
-                                value="{{route('admin-gs-melhorenvio-production',1)}}"
-                                {{ $admstore->melhorenvio->production == 1 ? 'selected' : '' }}>
-                                {{ __('Activated') }}</option>
-                            <option data-val="0"
-                                value="{{route('admin-gs-melhorenvio-production',0)}}"
-                                {{ $admstore->melhorenvio->production == 0 ? 'selected' : '' }}>
-                                {{ __('Deactivated') }}</option>
-                        </select>
-                    </div>
+                  <div class="action-list">
+                    <select
+                      class="process select droplinks {{ $admstore->melhorenvio->production == 1 ? 'drop-success' : 'drop-danger' }}">
+                      <option data-val="1" value="{{route('admin-gs-melhorenvio-production',1)}}" {{ $admstore->
+                        melhorenvio->production == 1 ? 'selected' : '' }}>
+                        {{ __('Activated') }}</option>
+                      <option data-val="0" value="{{route('admin-gs-melhorenvio-production',0)}}" {{ $admstore->
+                        melhorenvio->production == 0 ? 'selected' : '' }}>
+                        {{ __('Deactivated') }}</option>
+                    </select>
+                  </div>
                 </div>
               </div>
 
               <div class="row justify-content-center">
                 <div class="col-lg-3">
-                    <div class="left-area">
-                        <h4 class="heading">
-                            {{ __('Calculate Insurance') }}:
-                        </h4>
-                    </div>
+                  <div class="left-area">
+                    <h4 class="heading">
+                      {{ __('Calculate Insurance') }}:
+                    </h4>
+                  </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="d-flex">
                     <div class="action-list">
                       <select
-                          class="process select droplinks {{ $admstore->melhorenvio->insurance ? 'drop-success' : 'drop-danger' }}">
-                          <option data-val="1"
-                          value="{{route('admin-gs-melhorenvio-insurance',1)}}"
-                          {{ $admstore->melhorenvio->insurance ? 'selected' : '' }}>
+                        class="process select droplinks {{ $admstore->melhorenvio->insurance ? 'drop-success' : 'drop-danger' }}">
+                        <option data-val="1" value="{{route('admin-gs-melhorenvio-insurance',1)}}" {{ $admstore->
+                          melhorenvio->insurance ? 'selected' : '' }}>
                           {{ __('Activated') }}</option>
-                          <option data-val="0"
-                          value="{{route('admin-gs-melhorenvio-insurance',0)}}"
-                          {{ $admstore->melhorenvio->insurance == 0 ? 'selected' : '' }}>
+                        <option data-val="0" value="{{route('admin-gs-melhorenvio-insurance',0)}}" {{ $admstore->
+                          melhorenvio->insurance == 0 ? 'selected' : '' }}>
                           {{ __('Deactivated') }}</option>
-                        </select>
+                      </select>
                     </div>
                     <div class="alert alert-info ml-2 mb-0 p-2">
-                      {{ __('If the total order amount is greater than the maximum insurance amount, the service will not be shown') }}
+                      {{ __('If the total order amount is greater than the maximum insurance amount, the service will
+                      not be shown') }}
                     </div>
                   </div>
                 </div>
@@ -141,77 +140,71 @@
 
               <div class="row justify-content-center">
                 <div class="col-lg-3">
-                    <div class="left-area">
-                        <h4 class="heading">
-                            {{ __('Calculate Receipt') }}:
-                        </h4>
-                    </div>
+                  <div class="left-area">
+                    <h4 class="heading">
+                      {{ __('Calculate Receipt') }}:
+                    </h4>
+                  </div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="action-list">
-                        <select
-                            class="process select droplinks {{ $admstore->melhorenvio->receipt ? 'drop-success' : 'drop-danger' }}">
-                            <option data-val="1"
-                                value="{{route('admin-gs-melhorenvio-receipt',1)}}"
-                                {{ $admstore->melhorenvio->receipt ? 'selected' : '' }}>
-                                {{ __('Activated') }}</option>
-                            <option data-val="0"
-                                value="{{route('admin-gs-melhorenvio-receipt',0)}}"
-                                {{ $admstore->melhorenvio->receipt == 0 ? 'selected' : '' }}>
-                                {{ __('Deactivated') }}</option>
-                        </select>
-                    </div>
+                  <div class="action-list">
+                    <select
+                      class="process select droplinks {{ $admstore->melhorenvio->receipt ? 'drop-success' : 'drop-danger' }}">
+                      <option data-val="1" value="{{route('admin-gs-melhorenvio-receipt',1)}}" {{ $admstore->
+                        melhorenvio->receipt ? 'selected' : '' }}>
+                        {{ __('Activated') }}</option>
+                      <option data-val="0" value="{{route('admin-gs-melhorenvio-receipt',0)}}" {{ $admstore->
+                        melhorenvio->receipt == 0 ? 'selected' : '' }}>
+                        {{ __('Deactivated') }}</option>
+                    </select>
+                  </div>
                 </div>
               </div>
 
               <div class="row justify-content-center">
                 <div class="col-lg-3">
-                    <div class="left-area">
-                        <h4 class="heading">
-                            {{ __('Calculate Own Hand') }}:
-                        </h4>
-                    </div>
+                  <div class="left-area">
+                    <h4 class="heading">
+                      {{ __('Calculate Own Hand') }}:
+                    </h4>
+                  </div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="action-list">
-                        <select
-                            class="process select droplinks {{ $admstore->melhorenvio->ownhand ? 'drop-success' : 'drop-danger' }}">
-                            <option data-val="1"
-                                value="{{route('admin-gs-melhorenvio-ownhand',1)}}"
-                                {{ $admstore->melhorenvio->ownhand ? 'selected' : '' }}>
-                                {{ __('Activated') }}</option>
-                            <option data-val="0"
-                                value="{{route('admin-gs-melhorenvio-ownhand',0)}}"
-                                {{ $admstore->melhorenvio->ownhand == 0 ? 'selected' : '' }}>
-                                {{ __('Deactivated') }}</option>
-                        </select>
-                    </div>
+                  <div class="action-list">
+                    <select
+                      class="process select droplinks {{ $admstore->melhorenvio->ownhand ? 'drop-success' : 'drop-danger' }}">
+                      <option data-val="1" value="{{route('admin-gs-melhorenvio-ownhand',1)}}" {{ $admstore->
+                        melhorenvio->ownhand ? 'selected' : '' }}>
+                        {{ __('Activated') }}</option>
+                      <option data-val="0" value="{{route('admin-gs-melhorenvio-ownhand',0)}}" {{ $admstore->
+                        melhorenvio->ownhand == 0 ? 'selected' : '' }}>
+                        {{ __('Deactivated') }}</option>
+                    </select>
+                  </div>
                 </div>
               </div>
 
               {{-- Collect not working on Melhor Envio yet --}}
               {{-- <div class="row justify-content-center">
                 <div class="col-lg-3">
-                    <div class="left-area">
-                        <h4 class="heading">
-                            {{ __('Calculate Collect') }}:
-                        </h4>
-                    </div>
+                  <div class="left-area">
+                    <h4 class="heading">
+                      {{ __('Calculate Collect') }}:
+                    </h4>
+                  </div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="action-list">
-                        <select
-                            class="process select droplinks {{ $admstore->melhorenvio->collect ? 'drop-success' : 'drop-danger' }}">
-                            <option data-val="1"
-                                value="{{route('admin-gs-melhorenvio-collect',1)}}"
-                                {{ $admstore->melhorenvio->collect ? 'selected' : '' }}>
-                                {{ __('Activated') }}</option>
-                            <option data-val="0"
-                                value="{{route('admin-gs-melhorenvio-collect',0)}}"
-                                {{ $admstore->melhorenvio->collect == 0 ? 'selected' : '' }}>
-                                {{ __('Deactivated') }}</option>
-                        </select>
-                    </div>
+                  <div class="action-list">
+                    <select
+                      class="process select droplinks {{ $admstore->melhorenvio->collect ? 'drop-success' : 'drop-danger' }}">
+                      <option data-val="1" value="{{route('admin-gs-melhorenvio-collect',1)}}" {{ $admstore->
+                        melhorenvio->collect ? 'selected' : '' }}>
+                        {{ __('Activated') }}</option>
+                      <option data-val="0" value="{{route('admin-gs-melhorenvio-collect',0)}}" {{ $admstore->
+                        melhorenvio->collect == 0 ? 'selected' : '' }}>
+                        {{ __('Deactivated') }}</option>
+                    </select>
+                  </div>
                 </div>
               </div> --}}
 
@@ -223,8 +216,8 @@
                   </div>
                 </div>
                 <div class="col-lg-6">
-                  <input name="from_name" class="input-field"
-                    value="{{ $admstore->melhorenvio->from_name }}" required="">
+                  <input name="from_name" class="input-field" value="{{ $admstore->melhorenvio->from_name }}"
+                    required="">
                 </div>
               </div>
 
@@ -236,8 +229,8 @@
                   </div>
                 </div>
                 <div class="col-lg-6">
-                  <input name="from_phone" class="input-field"
-                    value="{{ $admstore->melhorenvio->from_phone }}" required="">
+                  <input name="from_phone" class="input-field" value="{{ $admstore->melhorenvio->from_phone }}"
+                    required="">
                 </div>
               </div>
 
@@ -249,8 +242,8 @@
                   </div>
                 </div>
                 <div class="col-lg-6">
-                  <input name="from_email" class="input-field"
-                    value="{{ $admstore->melhorenvio->from_email }}" required="">
+                  <input name="from_email" class="input-field" value="{{ $admstore->melhorenvio->from_email }}"
+                    required="">
                 </div>
               </div>
 
@@ -301,8 +294,8 @@
                   </div>
                 </div>
                 <div class="col-lg-6">
-                  <input name="from_address" class="input-field"
-                    value="{{ $admstore->melhorenvio->from_address }}" required="">
+                  <input name="from_address" class="input-field" value="{{ $admstore->melhorenvio->from_address }}"
+                    required="">
                 </div>
               </div>
 
@@ -314,8 +307,8 @@
                   </div>
                 </div>
                 <div class="col-lg-6">
-                  <input name="from_number" class="input-field"
-                    value="{{ $admstore->melhorenvio->from_number }}" required="">
+                  <input name="from_number" class="input-field" value="{{ $admstore->melhorenvio->from_number }}"
+                    required="">
                 </div>
               </div>
 
@@ -340,8 +333,8 @@
                   </div>
                 </div>
                 <div class="col-lg-6">
-                  <input name="from_district" class="input-field"
-                    value="{{ $admstore->melhorenvio->from_district }}" required="">
+                  <input name="from_district" class="input-field" value="{{ $admstore->melhorenvio->from_district }}"
+                    required="">
                 </div>
               </div>
 
@@ -353,8 +346,8 @@
                   </div>
                 </div>
                 <div class="col-lg-6">
-                  <input name="from_city" class="input-field"
-                    value="{{ $admstore->melhorenvio->from_city }}" required="">
+                  <input name="from_city" class="input-field" value="{{ $admstore->melhorenvio->from_city }}"
+                    required="">
                 </div>
               </div>
 
@@ -370,9 +363,9 @@
                     <option value="">{{ __('Select State') }}</option>
                     @foreach($states as $state)
                     <option {{$state->initial == $admstore->melhorenvio->from_state ? "selected":""}}
-                        value="{{ $state->initial }}">{{$state->name}}</option>
+                      value="{{ $state->initial }}">{{$state->name}}</option>
                     @endforeach
-                </select>
+                  </select>
                 </div>
               </div>
 
@@ -411,8 +404,7 @@
                   </div>
                 </div>
                 <div class="col-lg-6">
-                  <input name="from_note" class="input-field"
-                    value="{{ $admstore->melhorenvio->from_note }}">
+                  <input name="from_note" class="input-field" value="{{ $admstore->melhorenvio->from_note }}">
                 </div>
               </div>
 
@@ -435,7 +427,7 @@
                 <div class="row justify-content-center">
                   <div class="col-lg-3">
                     <div class="left-area">
-  
+
                     </div>
                   </div>
                   <div class="col-lg-6">
@@ -445,26 +437,27 @@
                   </div>
                 </div>
                 @endif
-                @foreach ($melhorenvio_companies as $company)    
+                @foreach ($melhorenvio_companies as $company)
                 <div class="row justify-content-center">
                   <div class="col-lg-3">
                     <div class="left-area">
-                      <img src="{{ $company->picture }}" alt="{{ $company->name }}" style="max-height:50px; max-width:180px">      
+                      <img src="{{ $company->picture }}" alt="{{ $company->name }}"
+                        style="max-height:50px; max-width:180px">
                     </div>
-                </div>
-                <div class="col-lg-6">
-                  <div class="row justify-content-left">
-                    <h4 class="heading ml-3">{{ $company->name }}</h4>
-                    @foreach($company->services as $service)
-                    <div class="col-lg-12 d-flex justify-content-between">
-                      <label class="control-label" for="service{{$service->id}}">{{$service->name}} |
-                        {{($service->type == 'express') ? __('Express') : __('Normal')}} |
-                        {{ __('Insurance Max:') }} R${{number_format($service->insurance_max, 2, ',','.')}}
-                      </label>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="row justify-content-left">
+                      <h4 class="heading ml-3">{{ $company->name }}</h4>
+                      @foreach($company->services as $service)
+                      <div class="col-lg-12 d-flex justify-content-between">
+                        <label class="control-label" for="service{{$service->id}}">{{$service->name}} |
+                          {{($service->type == 'express') ? __('Express') : __('Normal')}} |
+                          {{ __('Insurance Max:') }} R${{number_format($service->insurance_max, 2, ',','.')}}
+                        </label>
                         <label class="switch">
                           <input type="checkbox" name="selected_services[]" id="service{{$service->id}}"
-                          value="{{$service->id}}"
-                          {{in_array($service->id, $admstore->melhorenvio->selected_services)? 'checked' : ''}}>
+                            value="{{$service->id}}" {{in_array($service->id,
+                          $admstore->melhorenvio->selected_services)? 'checked' : ''}}>
                           <span class="slider round"></span>
                         </label>
                       </div>
@@ -474,7 +467,7 @@
                 </div>
                 @endforeach
               </div>
-              
+
               <div class="row justify-content-center">
                 <div class="col-lg-3">
                   <div class="left-area">
@@ -482,7 +475,8 @@
                   </div>
                 </div>
                 <div class="col-lg-6">
-                  <a class="mybtn1 btn-info btn-update-melhorenvio-companies" data-href="{{route('admin-gs-update-melhorenvio-companies')}}">
+                  <a class="mybtn1 btn-info btn-update-melhorenvio-companies"
+                    data-href="{{route('admin-gs-update-melhorenvio-companies')}}">
                     <i class="fas fa-sync-alt"></i><span> {{ __("Update Companies and Services") }}</span>
                   </a>
                 </div>
@@ -519,7 +513,7 @@
   });
 </script>
 <script>
-    $('.btn-update-melhorenvio-companies').on('click', function(e) {
+  $('.btn-update-melhorenvio-companies').on('click', function(e) {
         if (admin_loader == 1) {
             $('.submit-loader').show();
         }

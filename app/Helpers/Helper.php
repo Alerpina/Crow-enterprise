@@ -25,8 +25,8 @@ class Helper
 
     public static function generateProductThumbnailsFtp($ftp_folder, $ref_code_int)
     {
-        $ftp_path = public_path('assets/images/ftp/'.$ftp_folder.$ref_code_int);
-        $thumb_path = public_path('assets/images/thumbnails/');
+        $ftp_path = public_path('storage/images/ftp/'.$ftp_folder.$ref_code_int);
+        $thumb_path = public_path('storage/images/thumbnails/');
         if (is_dir($ftp_path) && !Helper::dir_is_empty($ftp_path)) {
             $thumb = Product::where('ref_code', $ref_code_int)->get('thumbnail')->pluck('thumbnail')->first();
             $files = scandir($ftp_path);
@@ -52,11 +52,11 @@ class Helper
                                 Product::where('ref_code', $ref_code_int)->update(['thumbnail' => null, 'photo' => null, 'ftp_hash' => null]);
                             }
                             // Não existe thumbnail correspondente ao arquivo?
-                            if (!File::exists(public_path('assets/images/thumbnails/'.$first_file))) {
+                            if (!File::exists(public_path('storage/images/thumbnails/'.$first_file))) {
                                 Product::where('ref_code', $ref_code_int)->update(['thumbnail' => $first_file, 'photo' => $first_file, 'ftp_hash' => $hash]);
-                                $img = Image::make(public_path('assets/images/ftp/'.$ftp_folder.$ref_code_int.'/'.$first_file))->resize(285, 285);
-                                $img->save(public_path('assets/images/thumbnails/'.$first_file));
-                                return asset('assets/images/thumbnails/'.$first_file);
+                                $img = Image::make(public_path('storage/images/ftp/'.$ftp_folder.$ref_code_int.'/'.$first_file))->resize(285, 285);
+                                $img->save(public_path('storage/images/thumbnails/'.$first_file));
+                                return asset('storage/images/thumbnails/'.$first_file);
                             }
                         } else {
                             // Hashes iguais e Thumbnail existente, seta Foto no banco também para o filtro funcionar

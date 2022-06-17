@@ -4,23 +4,25 @@
 
 @endsection
 <style>
-    .card-bg{
-        background-color:#2d3277 !important;
+    .card-bg {
+        background-color: #2d3277 !important;
     }
-    .card-border{
-        border-color:#2d3277 !important;
+
+    .card-border {
+        border-color: #2d3277 !important;
     }
-    .button-details{
+
+    .button-details {
         width: 105px !important;
         display: flex !important;
         justify-content: center !important;
         align-items: center !important;
     }
-    </style>
+</style>
 @section('content')
 <div class="content-area">
     @include('includes.form-success')
-    
+
     @if(Session::has('cache'))
 
     <div class="alert alert-success validation">
@@ -30,7 +32,7 @@
     </div>
 
 
-  @endif
+    @endif
 
     <div class="row row-cards-one ">
         <div class="col-md-12 col-lg-6 col-xl-4 ">
@@ -132,7 +134,7 @@
         <div class="col-md-6 col-xl-4">
             <div class="card c-info-box-area">
                 <div class="c-info-box box4 card-border">
-                     <p>{{ $data['completed_orders'] }}</p>
+                    <p>{{ $data['completed_orders'] }}</p>
                 </div>
                 <div class="c-info-box-content">
                     <h6 class="title">{{ __('Total Sales') }}</h6>
@@ -162,8 +164,9 @@
                                     <td>{{ $order->order_number }}</td>
                                     <td>{{ date('Y-m-d',strtotime($order->created_at)) }}</td>
                                     <td>
-                                        <div class="action-list "><a href="{{ route('admin-order-show',$order->id) }} " class="button-details"><i
-                                                    class="fas fa-eye"></i> {{ __('Details') }}</a>
+                                        <div class="action-list "><a href="{{ route('admin-order-show',$order->id) }} "
+                                                class="button-details"><i class="fas fa-eye"></i> {{ __('Details')
+                                                }}</a>
                                         </div>
                                     </td>
                                 </tr>
@@ -178,142 +181,152 @@
         </div>
 
         <div class="col-md-6 col-lg-6 col-xl-6">
-                <div class="card">
-                        <h5 class="card-header">{{ __('Recent Customer(s)') }}</h5>
-                        <div class="card-body">
-        
-                            <div class="my-table-responsiv">
-                                <table class="table table-hover dt-responsive" cellspacing="0" width="100%">
-                                    <thead>
-                                        <tr>
-                                            <th>{{ __('Customer Email') }}</th>
-                                            <th>{{ __('Joined') }}</th>
-                                        </tr>
-                                        @foreach($data['recent_customers'] as $customer)
-                                        <tr>
-                                            <td>{{ $customer->customer_email }}</td>
-                                            <td>{{ $customer->created_at }}</td>
-                                        </tr>
-                                        @endforeach
-                                    </thead>
-                                </table>
-                            </div>
-        
-                        </div>
+            <div class="card">
+                <h5 class="card-header">{{ __('Recent Customer(s)') }}</h5>
+                <div class="card-body">
+
+                    <div class="my-table-responsiv">
+                        <table class="table table-hover dt-responsive" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>{{ __('Customer Email') }}</th>
+                                    <th>{{ __('Joined') }}</th>
+                                </tr>
+                                @foreach($data['recent_customers'] as $customer)
+                                <tr>
+                                    <td>{{ $customer->customer_email }}</td>
+                                    <td>{{ $customer->created_at }}</td>
+                                </tr>
+                                @endforeach
+                            </thead>
+                        </table>
                     </div>
+
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="row row-cards-one">
 
-            <div class="col-md-12 col-lg-12 col-xl-12">
-                    <div class="card">
-                            <h5 class="card-header">{{ __('Popular Product(s)') }}</h5>
-                            <div class="card-body">
-            
-                                <div class="table-responsiv  dashboard-home-table">
-                                    <table id="poproducts" class="table table-hover dt-responsive" cellspacing="0" width="100%">
-                                        <thead>
-                                            <tr>
-                                                <th>{{ __('Featured Image') }}</th>
-                                                <th>{{ __('Name') }}</th>
-                                                <th>{{ __('Category') }}</th>
-                                                <th>{{ __('Type') }}</th>
-                                                <th>{{ __('Price') }}</th>
-                                                <th></th>
-                                                
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach($data['popular_products'] as $product)
-                                            <tr>
-                                            <td><img src="{{filter_var($product->photo, FILTER_VALIDATE_URL) ?$product->photo:asset('assets/images/products/'.$product->photo)}}"></td>
-                                            <td>{{  mb_strlen(strip_tags($product->name),'utf-8') > 50 ? mb_substr(strip_tags($product->name),0,50,'utf-8').'...' : strip_tags($product->name) }}</td>
-                                            <td>{{ $product->category->name }}
-                                                    @if(isset($product->subcategory))
-                                                    <br>
-                                                    {{ $product->subcategory->name }}
-                                                    @endif
-                                                    @if(isset($product->childcategory))
-                                                    <br>
-                                                    {{ $product->childcategory->name }}
-                                                    @endif
-                                                </td>
-                                                <td>{{ $product->type }}</td>
+        <div class="col-md-12 col-lg-12 col-xl-12">
+            <div class="card">
+                <h5 class="card-header">{{ __('Popular Product(s)') }}</h5>
+                <div class="card-body">
 
-                                                <td> {{ $product->showPrice() }} </td>
+                    <div class="table-responsiv  dashboard-home-table">
+                        <table id="poproducts" class="table table-hover dt-responsive" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>{{ __('Featured Image') }}</th>
+                                    <th>{{ __('Name') }}</th>
+                                    <th>{{ __('Category') }}</th>
+                                    <th>{{ __('Type') }}</th>
+                                    <th>{{ __('Price') }}</th>
+                                    <th></th>
 
-                                                <td>
-                                                    <div class="action-list"><a href="{{ route('admin-prod-edit',$product->id) }}"><i
-                                                                class="fas fa-eye"></i> {{ __('Details') }}</a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($data['popular_products'] as $product)
+                                <tr>
+                                    <td><img
+                                            src="{{filter_var($product->photo, FILTER_VALIDATE_URL) ?$product->photo:asset('storage/images/products/'.$product->photo)}}">
+                                    </td>
+                                    <td>{{ mb_strlen(strip_tags($product->name),'utf-8') > 50 ?
+                                        mb_substr(strip_tags($product->name),0,50,'utf-8').'...' :
+                                        strip_tags($product->name) }}</td>
+                                    <td>{{ $product->category->name }}
+                                        @if(isset($product->subcategory))
+                                        <br>
+                                        {{ $product->subcategory->name }}
+                                        @endif
+                                        @if(isset($product->childcategory))
+                                        <br>
+                                        {{ $product->childcategory->name }}
+                                        @endif
+                                    </td>
+                                    <td>{{ $product->type }}</td>
+
+                                    <td> {{ $product->showPrice() }} </td>
+
+                                    <td>
+                                        <div class="action-list"><a
+                                                href="{{ route('admin-prod-edit',$product->id) }}"><i
+                                                    class="fas fa-eye"></i> {{ __('Details') }}</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-    
+
         </div>
+
+    </div>
 
     <div class="row row-cards-one">
 
-            <div class="col-md-12 col-lg-12 col-xl-12">
-                    <div class="card">
-                            <h5 class="card-header">{{ __('Recent Product(s)') }}</h5>
-                            <div class="card-body">
-            
-                                <div class="table-responsiv dashboard-home-table">
-                                    <table id="pproducts" class="table table-hover dt-responsive" cellspacing="0" width="100%">
-                                            <thead>
-                                                    <tr>
-                                                        <th>{{ __('Featured Image') }}</th>
-                                                        <th>{{ __('Name') }}</th>
-                                                        <th>{{ __('Category') }}</th>
-                                                        <th>{{ __('Type') }}</th>
-                                                        <th>{{ __('Price') }}</th>
-                                                        <th></th>
-                                                        
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach($data['recent_products'] as $recent_product)
-                                                    <tr>
-                                                    <td><img src="{{filter_var($recent_product->photo, FILTER_VALIDATE_URL) ?$recent_product->photo:asset('assets/images/products/'.$recent_product->photo)}}"></td>
-                                                    <td>{{  mb_strlen(strip_tags($recent_product->name),'utf-8') > 50 ? mb_substr(strip_tags($recent_product->name),0,50,'utf-8').'...' : strip_tags($recent_product->name) }}</td>
-                                                    <td>{{ $recent_product->category->name }}
-                                                        @if(isset($recent_product->subcategory))
-                                                        <br>
-                                                        {{ $recent_product->subcategory->name }}
-                                                        @endif
-                                                        @if(isset($recent_product->childcategory))
-                                                        <br>
-                                                        {{ $recent_product->childcategory->name }}
-                                                        @endif
-                                                    </td>
-                                                        <td>{{ $recent_product->type }}</td>
-                                                        <td> {{ $recent_product->showPrice() }} </td>
-                                                        <td>
-                                                            <div class="action-list"><a href="{{ route('admin-prod-edit',$recent_product->id) }}"><i
-                                                                        class="fas fa-eye"></i> {{ __('Details') }}</a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    @endforeach
-                                                </tbody>
-                                    </table>
-                                </div>
-            
-                            </div>
-                        </div>
-    
+        <div class="col-md-12 col-lg-12 col-xl-12">
+            <div class="card">
+                <h5 class="card-header">{{ __('Recent Product(s)') }}</h5>
+                <div class="card-body">
+
+                    <div class="table-responsiv dashboard-home-table">
+                        <table id="pproducts" class="table table-hover dt-responsive" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>{{ __('Featured Image') }}</th>
+                                    <th>{{ __('Name') }}</th>
+                                    <th>{{ __('Category') }}</th>
+                                    <th>{{ __('Type') }}</th>
+                                    <th>{{ __('Price') }}</th>
+                                    <th></th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($data['recent_products'] as $recent_product)
+                                <tr>
+                                    <td><img
+                                            src="{{filter_var($recent_product->photo, FILTER_VALIDATE_URL) ?$recent_product->photo:asset('storage/images/products/'.$recent_product->photo)}}">
+                                    </td>
+                                    <td>{{ mb_strlen(strip_tags($recent_product->name),'utf-8') > 50 ?
+                                        mb_substr(strip_tags($recent_product->name),0,50,'utf-8').'...' :
+                                        strip_tags($recent_product->name) }}</td>
+                                    <td>{{ $recent_product->category->name }}
+                                        @if(isset($recent_product->subcategory))
+                                        <br>
+                                        {{ $recent_product->subcategory->name }}
+                                        @endif
+                                        @if(isset($recent_product->childcategory))
+                                        <br>
+                                        {{ $recent_product->childcategory->name }}
+                                        @endif
+                                    </td>
+                                    <td>{{ $recent_product->type }}</td>
+                                    <td> {{ $recent_product->showPrice() }} </td>
+                                    <td>
+                                        <div class="action-list"><a
+                                                href="{{ route('admin-prod-edit',$recent_product->id) }}"><i
+                                                    class="fas fa-eye"></i> {{ __('Details') }}</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
             </div>
-    
+
         </div>
+
+    </div>
 
     <div class="row row-cards-one">
 
@@ -331,12 +344,12 @@
 
     </div>
 
-@endsection
+    @endsection
 
-@section('scripts')
+    @section('scripts')
 
-<script language="JavaScript">
-    displayLineChart();
+    <script language="JavaScript">
+        displayLineChart();
 
     function displayLineChart() {
         var data = {
@@ -364,14 +377,14 @@
     }
 
 
-    
-</script>
 
-<script type="text/javascript">
-    $('#poproducts').dataTable( {
+    </script>
+
+    <script type="text/javascript">
+        $('#poproducts').dataTable( {
         language : {
                     url: '{{$datatable_translation}}',
-					processing: '<img src="{{asset('assets/images/'.$gs->admin_loader)}}">'
+					processing: '<img src="{{asset('storage/images/'.$gs->admin_loader)}}">'
                 },
       "ordering": false,
           'lengthChange': false,
@@ -385,11 +398,11 @@
     </script>
 
 
-<script type="text/javascript">
-    $('#pproducts').dataTable( {
+    <script type="text/javascript">
+        $('#pproducts').dataTable( {
         language : {
-					url: '{{$datatable_translation}}', 
-					processing: '<img src="{{asset('assets/images/'.$gs->admin_loader)}}">'
+					url: '{{$datatable_translation}}',
+					processing: '<img src="{{asset('storage/images/'.$gs->admin_loader)}}">'
                 },
       "ordering": false,
       'lengthChange': false,
@@ -403,4 +416,4 @@
     </script>
 
 
-@endsection
+    @endsection

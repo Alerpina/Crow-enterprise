@@ -48,7 +48,7 @@ class UpdatePhotoReferences extends Command
             $start = microtime(true);
             foreach($products as $prod){
                 $photo = $prod->photo;
-                if(!File::exists(public_path('assets/images/products/'.$photo))){
+                if(!File::exists(public_path('storage/images/products/'.$photo))){
                     \DB::statement('UPDATE products SET photo = null, thumbnail = null WHERE id = '.$prod->id.'');
                     $prog->advance();
                     $countProds++;
@@ -73,7 +73,7 @@ class UpdatePhotoReferences extends Command
                 foreach($thumbs as $thumb){
                     $photo = $thumb->photo;
                     $thumbnail = $thumb->thumbnail;
-                    if(!File::exists(public_path('assets/images/thumbnails/'.$thumbnail))){
+                    if(!File::exists(public_path('storage/images/thumbnails/'.$thumbnail))){
                         \DB::statement('UPDATE products SET photo = null, thumbnail = null WHERE id = '.$thumb->id.'');
                     }
                     $prog->advance();
@@ -85,6 +85,6 @@ class UpdatePhotoReferences extends Command
                     $this->info('Referência(s) de '.$countThumbs.' miniatura(s) atualizada(s) com sucesso!');
                 }
             } else $this->error('Não foram encontradas miniaturas de produtos para atualizar.');
-        } 
+        }
     }
 }

@@ -20,7 +20,7 @@ class CategoryGalleryController extends Controller
         parent::__construct();
     }
 
-    public function open($catid) 
+    public function open($catid)
     {
         $data = Category::findOrFail($catid);
         return view('admin.category.gallery', compact('data'));
@@ -42,7 +42,7 @@ class CategoryGalleryController extends Controller
     }
 
     public function store(Request $request)
-    { 
+    {
         $data = null;
         $lastid = $request->category_id;
         if ($files = $request->file('gallery')){
@@ -56,18 +56,18 @@ class CategoryGalleryController extends Controller
 
                     $thumbnail = time().Str::random(8).'.jpg';
 
-                    $img->save(public_path().'/assets/images/galleries/'.$thumbnail);
-                    $thumb->save(public_path().'/assets/images/thumbnails/'.$thumbnail);
+                    $img->save(public_path().'/storage/images/galleries/'.$thumbnail);
+                    $thumb->save(public_path().'/storage/images/thumbnails/'.$thumbnail);
 
                     $gallery['customizable_gallery'] = $thumbnail;
                     $gallery['category_id'] = $lastid;
                     $gallery['thumbnail'] = $thumbnail;
                     $gallery->save();
-                    $data[] = $gallery;                        
+                    $data[] = $gallery;
                 }
             }
         }
-        return response()->json($data);      
+        return response()->json($data);
     }
 
     public function destroy()
@@ -75,14 +75,14 @@ class CategoryGalleryController extends Controller
 
         $id = $_GET['id'];
         $gal = CategoryGallery::findOrFail($id);
-            if (file_exists(public_path().'/assets/images/galleries/'.$gal->customizable_gallery)) {
-                unlink(public_path().'/assets/images/galleries/'.$gal->customizable_gallery);
-                unlink(public_path().'/assets/images/thumbnails/'.$gal->thumbnail);
+            if (file_exists(public_path().'/storage/images/galleries/'.$gal->customizable_gallery)) {
+                unlink(public_path().'/storage/images/galleries/'.$gal->customizable_gallery);
+                unlink(public_path().'/storage/images/thumbnails/'.$gal->thumbnail);
 
             }
         $gal->delete();
-            
-    } 
+
+    }
 
 }
 

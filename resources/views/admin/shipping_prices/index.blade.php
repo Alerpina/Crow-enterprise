@@ -56,7 +56,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="submit-loader">
-        <img src="{{asset('assets/images/'.$admstore->admin_loader)}}" alt="">
+        <img src="{{asset('storage/images/'.$admstore->admin_loader)}}" alt="">
       </div>
       <div class="modal-header">
         <h5 class="modal-title"></h5>
@@ -143,7 +143,7 @@
     ],
     language: {
       url: '{{$datatable_translation}}',
-      processing: '<img src="{{asset("assets/images/".$admstore->admin_loader)}}">'
+      processing: '<img src="{{asset("storage/images/".$admstore->admin_loader)}}">'
     },
     drawCallback: function(settings) {},
     initComplete: function(settings, json) {

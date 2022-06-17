@@ -29,7 +29,7 @@ class ProductController extends Controller
     public function __construct()
     {
         parent::__construct();
-        
+
         $this->middleware('auth');
 
         $this->middleware(function ($request, $next) {
@@ -60,8 +60,8 @@ class ProductController extends Controller
                 </div>';
         })
         ->editColumn('photo', function (Product $data) {
-            if (file_exists(public_path().'/assets/images/thumbnails/'.$data->thumbnail)) {
-                return asset('assets/images/thumbnails/'.$data->thumbnail);
+            if (file_exists(public_path().'/storage/images/thumbnails/'.$data->thumbnail)) {
+                return asset('storage/images/thumbnails/'.$data->thumbnail);
             } else{
                 return asset('assets/images/noimage.png');
             }
@@ -94,14 +94,14 @@ class ProductController extends Controller
             <div class="godropdown">
                 <button class="go-dropdown-toggle"> ' . __('Actions') . '<i class="fas fa-chevron-down"></i></button>
                 <div class="action-list">
-                    <a href="javascript:;" data-href="' . route('vendor-prod-fastedit', $data->id) . '" data-toggle="modal" data-target="#fast_edit_modal" class="fasteditbtn"><i class="fas fa-edit"></i> ' . __('Edit') . '</a>  
-                    <a href="javascript:;" data-href="' . route('vendor-prod-delete', $data->id) . '" data-toggle="modal" data-target="#confirm-delete" class="delete"><i class="fas fa-trash-alt"></i> ' . __('Delete') . '</a>  
+                    <a href="javascript:;" data-href="' . route('vendor-prod-fastedit', $data->id) . '" data-toggle="modal" data-target="#fast_edit_modal" class="fasteditbtn"><i class="fas fa-edit"></i> ' . __('Edit') . '</a>
+                    <a href="javascript:;" data-href="' . route('vendor-prod-delete', $data->id) . '" data-toggle="modal" data-target="#confirm-delete" class="delete"><i class="fas fa-trash-alt"></i> ' . __('Delete') . '</a>
                 </div>
             </div>';
         })
         ->editColumn('photo', function (Product $data) {
-            if (file_exists(public_path().'/assets/images/thumbnails/'.$data->thumbnail)) {
-                return asset('assets/images/thumbnails/'.$data->thumbnail);
+            if (file_exists(public_path().'/storage/images/thumbnails/'.$data->thumbnail)) {
+                return asset('storage/images/thumbnails/'.$data->thumbnail);
             } else{
                 return asset('assets/images/noimage.png');
             }
@@ -199,7 +199,7 @@ class ProductController extends Controller
 
         //-- Logic Section
         $data = Product::findOrFail($id);
-        
+
         // Remove base product info
         $data->being_sold = false;
         $data->vendor_min_price = 0;
@@ -266,8 +266,8 @@ class ProductController extends Controller
             $sign = Currency::where('id','=',1)->first();
             $storesList = Generalsetting::all();
             $currentStores = $data->stores()->pluck('id')->toArray();
-    
-    
+
+
             if($data->type == 'Digital')
                 return view('vendor.product.edit.digital',compact('cats','data','sign'));
             elseif($data->type == 'License')
@@ -278,7 +278,7 @@ class ProductController extends Controller
         } else{
             return redirect()->route('vendor-prod-index');
         }
-       
+
     }
 
     //*** GET Request
@@ -303,7 +303,7 @@ class ProductController extends Controller
                 return redirect()->route('vendor.dashboard')->with('unsuccess',__('Sorry the page does not exist.'));
             } else{
                 $admin_prod = $admin_prod->first();
-    
+
                 $existing_product = Product::where('user_id', Auth::user()->id)
                     ->where('brand_id', $admin_prod->brand_id)
                     ->where('category_id', $admin_prod->category_id)
@@ -313,7 +313,7 @@ class ProductController extends Controller
                     return response()->json(array('errors' => [__("You already sell this product.")]));
                 }
             }
-    
+
             // Start Get info from Old Product
             $old = Product::findOrFail($id);
             if($old->category_id){
@@ -329,18 +329,18 @@ class ProductController extends Controller
             $sign = Currency::where('id','=',1)->first();
             $storesList = Generalsetting::all();
             $currentStores = $old->stores()->pluck('id')->toArray();
-    
+
             // Replicate into a new product and change what's necessary
             $new = $old->replicateWithTranslations();
             //$new->slug = Str::slug($new->name,'-').'-'.strtolower(Str::random(3).$new->id.Str::random(3));
             $new->sku = Str::random(3).substr(time(), 6,8).Str::random(3);
             $new->ref_code = $new->sku;
             $new->product_type = "normal";
-    
+
             $new->photo = $old->photo;
             $new->thumbnail = $old->thumbnail;
             $new->price = ($request->price) ? $request->price : $old->price;
-    
+
             /* Vendor Exclusive Section */
             $new->user_id = Auth::user()->id;
             // Remove from all highlights
@@ -357,20 +357,20 @@ class ProductController extends Controller
             $new->vendor_min_price = 0;
             $new->vendor_max_price = 0;
             $new->Push();
-    
+
             // Associate with stores
             if($old->has('stores')) {
                 $new->stores()->sync($old->stores);
             }
             $new->update();
-    
+
             $old->being_sold = 1;
-    
+
             // Find admin product
             $base_prod = Product::where('user_id', 0)->where('slug', $old->slug)->first();
             $max = $base_prod->vendor_max_price;
             $min = $base_prod->vendor_min_price;
-    
+
             // For each vendor product, works with its price
             foreach(Product::where('user_id', '!=', 0)->where('slug', $old->slug)->get() as $v_prod){
                 // Price higher than max price
@@ -395,11 +395,11 @@ class ProductController extends Controller
                 $base_prod->vendor_max_price = $max;
                 $base_prod->update();
             }
-    
+
             $old->update();
-    
+
             $msg = __('Product Copied Successfully.');
-            return response()->json($msg); 
+            return response()->json($msg);
         } else return response()->json(array('errors' => [__("You cannot add more Products.")]));
     }
 
@@ -411,8 +411,8 @@ class ProductController extends Controller
         if($data->galleries->count() > 0)
         {
             foreach ($data->galleries as $gal) {
-                    if (file_exists(public_path().'/assets/images/galleries/'.$gal->photo)) {
-                        unlink(public_path().'/assets/images/galleries/'.$gal->photo);
+                    if (file_exists(public_path().'/storage/images/galleries/'.$gal->photo)) {
+                        unlink(public_path().'/storage/images/galleries/'.$gal->photo);
                     }
                 $gal->delete();
             }

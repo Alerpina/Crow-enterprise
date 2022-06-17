@@ -231,8 +231,8 @@ class User extends Authenticatable implements TranslatableContract
             return asset("assets/images/noimage.png");
         }
         //if(!$value) return asset('assets/images/noimage.png');
-        if (File::exists(public_path('assets/images/users/'.$this->photo))) {
-            return asset("assets/images/users/".$this->photo);
+        if (File::exists(public_path('storage/images/users/'.$this->photo))) {
+            return asset("storage/images/users/".$this->photo);
         }
     }
 }

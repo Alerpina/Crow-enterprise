@@ -24,7 +24,7 @@
         <div class="product-description">
           <div class="body-area">
             <div class="gocover"
-              style="background: url({{asset('assets/images/'.$admstore->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
+              style="background: url({{asset('storage/images/'.$admstore->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
             </div>
             <div class="row">
               <div class="col-lg-3">
@@ -48,13 +48,13 @@
                       </div>
                     </div>
                     <div class="col-lg-7">
-                      
+
                     </div>
                   </div>
                   <div class="row justify-content-center">
-                   
-                      <button class="addProductSubmit-btn" type="submit">{{ __('Save') }}</button>
-                
+
+                    <button class="addProductSubmit-btn" type="submit">{{ __('Save') }}</button>
+
                   </div>
               </div>
               </form>

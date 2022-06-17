@@ -2,17 +2,16 @@
 
 @section('styles')
 <style>
+    .disabled {
+        pointer-events: none;
+        opacity: 0.5;
+    }
 
-.disabled {
-    pointer-events:none;
-    opacity: 0.5;
-}
-
-.delete-button{
-    justify-content: end;
-    display: flex;
-    align-items: baseline;
-}
+    .delete-button {
+        justify-content: end;
+        display: flex;
+        align-items: baseline;
+    }
 </style>
 
 <link href="{{asset('assets/admin/css/product.css')}}" rel="stylesheet" />
@@ -54,7 +53,7 @@
                     <div class="body-area">
 
                         <div class="gocover"
-                            style="background: url({{asset('assets/images/'.$gs->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
+                            style="background: url({{asset('storage/images/'.$gs->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
                         </div>
                         <form action="{{route('admin-prod-update-meli',$data->id)}}" method="POST"
                             enctype="multipart/form-data">
@@ -68,51 +67,87 @@
                                 </h3>
                             </div>
 
-                            <div class="row"> <!-- ROW MERCADO LIVRE -->
+                            <div class="row">
+                                <!-- ROW MERCADO LIVRE -->
                                 {{-- Só pode escolher o tipo do anúncio uma vez. --}}
                                 @if(!$data->mercadolivre_id)
                                 <div class="col-12">
                                     <div class="input-form">
-                                        <h4 class="heading">Tipo do Anúncio * <i class="icofont-question-circle" data-toggle="tooltip" style="display: inline-block " data-placement="top" title="Escolha o tipo de anúncio a ser criado. Esta escolha pode implicar em encargos, taxas sobre a venda, entre outros. Verifique as informações específicas de cada Tipo de Anúncio na Plataforma Mercado Livre."></i></h4>  </h4>
+                                        <h4 class="heading">Tipo do Anúncio * <i class="icofont-question-circle"
+                                                data-toggle="tooltip" style="display: inline-block "
+                                                data-placement="top"
+                                                title="Escolha o tipo de anúncio a ser criado. Esta escolha pode implicar em encargos, taxas sobre a venda, entre outros. Verifique as informações específicas de cada Tipo de Anúncio na Plataforma Mercado Livre."></i>
+                                        </h4>
+                                        </h4>
                                         <select name="listing_type_id">
                                             <option value="">Selecione...</option>
                                             @foreach($listingTypesWithDetails as $listingType)
-                                            <option {{ $listingType['id'] == $data->mercadolivre_listing_type_id ? "selected" : "" }} value="{{ $listingType['id'] }}">{{ $listingType['name'] }} - Exposição: {{ $listingType['details']['configuration']->listing_exposure }}</option>
+                                            <option {{ $listingType['id']==$data->mercadolivre_listing_type_id ?
+                                                "selected" : "" }} value="{{ $listingType['id'] }}">{{
+                                                $listingType['name'] }} - Exposição: {{
+                                                $listingType['details']['configuration']->listing_exposure }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
                                 @endif
-                                
+
                                 <div class="col-12">
                                     <div class="input-form">
-                                        <h4 class="heading">{{ __('Mercado Livre Name') }} * <i class="icofont-question-circle" data-toggle="tooltip" style="display: inline-block " data-placement="top" title="{{ __('Name to be shown at Mercado Livre Announcement') }}"></i></h4>  </h4>
-                                        <input type="text" class="input-field" placeholder="{{ __('Enter Mercado Livre Name') }}"
-                                        name="mercadolivre_name" required="" value="{{ $data->mercadolivre_name }}" maxlength="60">
+                                        <h4 class="heading">{{ __('Mercado Livre Name') }} * <i
+                                                class="icofont-question-circle" data-toggle="tooltip"
+                                                style="display: inline-block " data-placement="top"
+                                                title="{{ __('Name to be shown at Mercado Livre Announcement') }}"></i>
+                                        </h4>
+                                        </h4>
+                                        <input type="text" class="input-field"
+                                            placeholder="{{ __('Enter Mercado Livre Name') }}" name="mercadolivre_name"
+                                            required="" value="{{ $data->mercadolivre_name }}" maxlength="60">
                                     </div>
                                 </div>
 
                                 <div class="col-6">
                                     <div class="input-form">
-                                        <h4 class="heading">Utilizar Preço Personalizado <i class="icofont-question-circle" data-toggle="tooltip" style="display: inline-block " data-placement="top" title="Escolha se este anúncio terá preço personalizado ou não. Dependendo da seleção, o preço base do Produto será utilizado para anunciá-lo.."></i></h4>  </h4>
+                                        <h4 class="heading">Utilizar Preço Personalizado <i
+                                                class="icofont-question-circle" data-toggle="tooltip"
+                                                style="display: inline-block " data-placement="top"
+                                                title="Escolha se este anúncio terá preço personalizado ou não. Dependendo da seleção, o preço base do Produto será utilizado para anunciá-lo.."></i>
+                                        </h4>
+                                        </h4>
                                         <select name="custom_price">
-                                            <option value="0" {{ !$data->mercadolivre_price ? "selected" : "" }}>Não</option>
-                                            <option value="1" {{ $data->mercadolivre_price ? "selected" : "" }}>Sim</option>
+                                            <option value="0" {{ !$data->mercadolivre_price ? "selected" : "" }}>Não
+                                            </option>
+                                            <option value="1" {{ $data->mercadolivre_price ? "selected" : "" }}>Sim
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="col-6">
                                     <div class="input-form">
-                                        <h4 class="heading">Preço * <i class="icofont-question-circle" data-toggle="tooltip" style="display: inline-block " data-placement="top" title="Preço praticado no anúncio. Este valor sobrescreve o valor praticado do Produto em relação ao Anúncio."></i></h4>  </h4>
-                                        <input type="number" min="0" step="0.01" class="input-field" placeholder="Preço do Anúncio..."
-                                        name="mercadolivre_price" required="" value="{{ $data->mercadolivre_price ?? $data->price }}" {{ !$data->mercadolivre_price ? "disabled" : "" }}>
+                                        <h4 class="heading">Preço * <i class="icofont-question-circle"
+                                                data-toggle="tooltip" style="display: inline-block "
+                                                data-placement="top"
+                                                title="Preço praticado no anúncio. Este valor sobrescreve o valor praticado do Produto em relação ao Anúncio."></i>
+                                        </h4>
+                                        </h4>
+                                        <input type="number" min="0" step="0.01" class="input-field"
+                                            placeholder="Preço do Anúncio..." name="mercadolivre_price" required=""
+                                            value="{{ $data->mercadolivre_price ?? $data->price }}" {{
+                                            !$data->mercadolivre_price ? "disabled" : "" }}>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="input-form">
-                                        <h4 class="heading">{{ __('Mercado Livre Description') }} * <i class="icofont-question-circle" data-toggle="tooltip" style="display: inline-block " data-placement="top" title="{{ __('Description to be shown at Mercado Livre Announcement') }}"></i></h4>  </h4>
-                                        <textarea class="input-field" name="mercadolivre_description" placeholder="{{ __('Enter Mercado Livre Description') }}" cols="30" rows="10">{{ $data->mercadolivre_description }}</textarea>
+                                        <h4 class="heading">{{ __('Mercado Livre Description') }} * <i
+                                                class="icofont-question-circle" data-toggle="tooltip"
+                                                style="display: inline-block " data-placement="top"
+                                                title="{{ __('Description to be shown at Mercado Livre Announcement') }}"></i>
+                                        </h4>
+                                        </h4>
+                                        <textarea class="input-field" name="mercadolivre_description"
+                                            placeholder="{{ __('Enter Mercado Livre Description') }}" cols="30"
+                                            rows="10">{{ $data->mercadolivre_description }}</textarea>
                                     </div>
                                 </div>
                                 {{-- Só pode definir a Garantia do Produto uma vez. POR ENQUANTO. --}}
@@ -122,34 +157,50 @@
 
                                 <div class="col-12">
                                     <div class="input-form">
-                                        <h4 class="heading">Tipo de Garantia <i class="icofont-question-circle" data-toggle="tooltip" style="display: inline-block " data-placement="top" title="Especifique o tipo de Garantia para este Anúncio"></i></h4>  </h4>
+                                        <h4 class="heading">Tipo de Garantia <i class="icofont-question-circle"
+                                                data-toggle="tooltip" style="display: inline-block "
+                                                data-placement="top"
+                                                title="Especifique o tipo de Garantia para este Anúncio"></i></h4>
+                                        </h4>
                                         <select name="warranty_type_id" required>
                                             <option value="">Selecione...</option>
                                             @foreach($warranties as $warranty)
-                                                @if($warranty['id'] === "WARRANTY_TYPE")
-                                                    @foreach($warranty['values'] as $value)
-                                                        <option value="{{ $value->id }}" {{ $value->id === $data->mercadolivre_warranty_type_id ? "selected" : "" }} data-name="{{ $value->name }}">{{ $value->name }}</option>
-                                                    @endforeach
-                                                @endif
+                                            @if($warranty['id'] === "WARRANTY_TYPE")
+                                            @foreach($warranty['values'] as $value)
+                                            <option value="{{ $value->id }}" {{ $value->id ===
+                                                $data->mercadolivre_warranty_type_id ? "selected" : "" }} data-name="{{
+                                                $value->name }}">{{ $value->name }}</option>
+                                            @endforeach
+                                            @endif
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="input-form" id="warranty_time_input_form" style="{{ $data->mercadolivre_without_warranty ? "display: none; " : ""}}">
-                                        <h4 class="heading">Tempo de Garantia <i class="icofont-question-circle" data-toggle="tooltip" style="display: inline-block " data-placement="top" title="Especifique o tempo de Garantia para este Anúncio"></i></h4>  </h4>
+                                    <div class="input-form" id="warranty_time_input_form"
+                                        style="{{ $data->mercadolivre_without_warranty ? " display: none; " : ""}}">
+                                        <h4 class="heading">Tempo de Garantia <i class="icofont-question-circle"
+                                                data-toggle="tooltip" style="display: inline-block "
+                                                data-placement="top"
+                                                title="Especifique o tempo de Garantia para este Anúncio"></i></h4>
+                                        </h4>
                                         <div class="row">
                                             <div class="col-6">
-                                                <input type="number" step="1" min="1" max="" class="input-field" placeholder="Insira a Quantidade"
-                                                    name="warranty_time" {{ $data->mercadolivre_without_warranty ? "" : "required" }} maxlength="4" value="{{ $data->mercadolivre_warranty_time }}">
+                                                <input type="number" step="1" min="1" max="" class="input-field"
+                                                    placeholder="Insira a Quantidade" name="warranty_time" {{
+                                                    $data->mercadolivre_without_warranty ? "" : "required" }}
+                                                maxlength="4" value="{{ $data->mercadolivre_warranty_time }}">
                                             </div>
                                             <div class="col-6">
-                                                <select name="warranty_time_unit"  {{ $data->mercadolivre_without_warranty ? "" : "required" }}>
+                                                <select name="warranty_time_unit" {{
+                                                    $data->mercadolivre_without_warranty ? "" : "required" }}>
                                                     <option value="">Selecione...</option>
                                                     @foreach($warranties as $warranty)
-                                                        @if($warranty['id'] === "WARRANTY_TIME")
-                                                            @foreach($warranty['allowed_units'] as $allowedUnit)
-                                                                <option value="{{ $allowedUnit->id }}" {{ $allowedUnit->id === $data->mercadolivre_warranty_time_unit ? "selected" : "" }}>{{ $allowedUnit->name }}</option>
-                                                            @endforeach
-                                                        @endif
+                                                    @if($warranty['id'] === "WARRANTY_TIME")
+                                                    @foreach($warranty['allowed_units'] as $allowedUnit)
+                                                    <option value="{{ $allowedUnit->id }}" {{ $allowedUnit->id ===
+                                                        $data->mercadolivre_warranty_time_unit ? "selected" : "" }}>{{
+                                                        $allowedUnit->name }}</option>
+                                                    @endforeach
+                                                    @endif
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -160,49 +211,73 @@
 
                                 @if($data->mercadolivre_name)
                                 <div class="col-xl-12">
-                                @if (!empty($extraData['meli_category_attributes']))
+                                    @if (!empty($extraData['meli_category_attributes']))
                                     <div class="input-form">
-                                        <h4 class="heading">{{ __('Datasheet') }} * <i class="icofont-question-circle" data-toggle="tooltip" style="display: inline-block " data-placement="top" title="Dados variados da Ficha Técnica, dependendo da Categoria do Produto."></i></h4>  </h4>
+                                        <h4 class="heading">{{ __('Datasheet') }} * <i class="icofont-question-circle"
+                                                data-toggle="tooltip" style="display: inline-block "
+                                                data-placement="top"
+                                                title="Dados variados da Ficha Técnica, dependendo da Categoria do Produto."></i>
+                                        </h4>
+                                        </h4>
                                         <div class="row">
                                             @foreach ($extraData['meli_category_attributes'] as $key => $attribute)
-                                                <div class="col-xl-3">
+                                            <div class="col-xl-3">
 
-                                                    {{-- Título --}}
-                                                    <h4 class="heading" style="font-weight:bold;padding-top:1rem;">{{ $attribute->name }}
+                                                {{-- Título --}}
+                                                <h4 class="heading" style="font-weight:bold;padding-top:1rem;">{{
+                                                    $attribute->name }}
                                                     @if(isset($attribute->tooltip))
-                                                        <i class="icofont-question-circle" data-toggle="tooltip" style="display: inline-block " data-placement="top" title="{!! $attribute->tooltip !!}"></i>
+                                                    <i class="icofont-question-circle" data-toggle="tooltip"
+                                                        style="display: inline-block " data-placement="top"
+                                                        title="{!! $attribute->tooltip !!}"></i>
                                                     @endif
                                                     @if(isset($attribute->hint))
-                                                        <br><small style="font-style: italic; font-size: 70%"> {{ $attribute->hint }}</small>
+                                                    <br><small style="font-style: italic; font-size: 70%"> {{
+                                                        $attribute->hint }}</small>
                                                     @endif
-                                                    </h4>
+                                                </h4>
 
-                                                    {{-- Dados --}}
-                                                    @if(isset($attribute->values))
-                                                    <select name="mercadolivre_category_attributes[{{ $key }}][{{ $attribute->name }}][value]">
-                                                        <option value="">Selecione...</option>
-                                                        @foreach($attribute->values as $attributeValue)
-                                                        <option value="{{ $attributeValue->id }}" {{ $attributeValue->id === $attribute->value ? "selected" : "" }}>{{ $attributeValue->name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @elseif(isset($attribute->allowed_units))
-                                                    <div class="row">
-                                                        <div class="col-xl-6">
-                                                            <input type="text" class="input-field" placeholder="{{ __('Enter') . " " . $attribute->name }}" name="mercadolivre_category_attributes[{{ $key }}][{{ $attribute->name }}][value]" value="{{ $attribute->value }}">
-                                                        </div>
-                                                        <div class="col-xl-6">
-                                                            <select name="mercadolivre_category_attributes[{{ $key }}][{{ $attribute->name }}][allowed_unit_selected]">
-                                                                <option value="">Selecione...</option>
-                                                                @foreach($attribute->allowed_units as $allowedUnit)
-                                                                <option value="{{ $allowedUnit->id }}" {{ isset($allowedUnit->selected) ? ($allowedUnit->selected ? "selected" : "") : "" }}>{{ $allowedUnit->name }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
+                                                {{-- Dados --}}
+                                                @if(isset($attribute->values))
+                                                <select
+                                                    name="mercadolivre_category_attributes[{{ $key }}][{{ $attribute->name }}][value]">
+                                                    <option value="">Selecione...</option>
+                                                    @foreach($attribute->values as $attributeValue)
+                                                    <option value="{{ $attributeValue->id }}" {{ $attributeValue->id ===
+                                                        $attribute->value ? "selected" : "" }}>{{ $attributeValue->name
+                                                        }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @elseif(isset($attribute->allowed_units))
+                                                <div class="row">
+                                                    <div class="col-xl-6">
+                                                        <input type="text" class="input-field"
+                                                            placeholder="{{ __('Enter') . " " . $attribute->name }}"
+                                                            name="mercadolivre_category_attributes[{{ $key }}][{{ $attribute->name }}][value]"
+                                                            value="{{ $attribute->value }}">
                                                     </div>
-                                                    @else
-                                                    <input maxlength="{{ isset($attribute->value_max_length) ? $attribute->value_max_length : "255" }}" type="text" class="input-field" placeholder="{{ __('Enter') . " " . $attribute->name }}" name="mercadolivre_category_attributes[{{ $key }}][{{ $attribute->name }}][value]" value="{{ $attribute->value }}">
-                                                    @endif
+                                                    <div class="col-xl-6">
+                                                        <select
+                                                            name="mercadolivre_category_attributes[{{ $key }}][{{ $attribute->name }}][allowed_unit_selected]">
+                                                            <option value="">Selecione...</option>
+                                                            @foreach($attribute->allowed_units as $allowedUnit)
+                                                            <option value="{{ $allowedUnit->id }}" {{
+                                                                isset($allowedUnit->selected) ? ($allowedUnit->selected
+                                                                ? "selected" : "") : "" }}>{{ $allowedUnit->name }}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
                                                 </div>
+                                                @else
+                                                <input
+                                                    maxlength="{{ isset($attribute->value_max_length) ? $attribute->value_max_length : "
+                                                    255" }}" type="text" class="input-field"
+                                                    placeholder="{{ __('Enter') . " " . $attribute->name }}"
+                                                    name="mercadolivre_category_attributes[{{ $key }}][{{ $attribute->name }}][value]"
+                                                    value="{{ $attribute->value }}">
+                                                @endif
+                                            </div>
                                             @endforeach
                                         </div>
                                     </div>
@@ -215,10 +290,10 @@
                                 <div class="col-xl-6 text-center">
                                     <div class="row justify-content-left">
                                         <div class="col-lg-12 d-flex justify-content-between">
-                                            <label class="control-label" for="update_check">{{ $data->mercadolivre_id ? "Atualizar" : "Enviar" }} Anúncio ao Salvar</label>
+                                            <label class="control-label" for="update_check">{{ $data->mercadolivre_id ?
+                                                "Atualizar" : "Enviar" }} Anúncio ao Salvar</label>
                                             <label class="switch">
-                                                <input type="checkbox" name="update_check" id="update_check"
-                                                value="">
+                                                <input type="checkbox" name="update_check" id="update_check" value="">
                                                 <span class="slider round"></span>
                                             </label>
                                         </div>
@@ -258,8 +333,8 @@
                                     <input type="hidden" id="pid" name="product_id" value="">
                                     <input type="file" name="gallery[]" class="hidden" id="uploadgallery"
                                         accept="image/*" multiple>
-                                    <label for="image-upload" id="prod_gallery"><i
-                                            class="icofont-upload-alt"></i>{{ __('Upload File') }}</label>
+                                    <label for="image-upload" id="prod_gallery"><i class="icofont-upload-alt"></i>{{
+                                        __('Upload File') }}</label>
                                 </form>
                             </div>
                         </div>
@@ -272,33 +347,33 @@
                     </div>
                 </div>
                 @if (empty($ftp_gallery))
-                    <div class="gallery-images">
-                        <div class="selected-image">
-                            <div class="row">
+                <div class="gallery-images">
+                    <div class="selected-image">
+                        <div class="row">
 
-                            </div>
                         </div>
                     </div>
+                </div>
                 @else
-                    <div class="gallery-images">
-                        <div class="">
-                            <div class="row">
-                                @foreach($ftp_gallery as $ftp_image)
-                                    @if ($ftp_image != $data->photo)
+                <div class="gallery-images">
+                    <div class="">
+                        <div class="row">
+                            @foreach($ftp_gallery as $ftp_image)
+                            @if ($ftp_image != $data->photo)
 
-                                        <div class="col-sm-6">
-                                            <div class="img gallery-img">
-                                                <a href="{{ $ftp_image }}">
-                                                    <img src="{{ $ftp_image }}" alt="gallery image">
-                                                </a>
-                                            </div>   
-                                        </div>
-
-                                    @endif
-                                @endforeach
+                            <div class="col-sm-6">
+                                <div class="img gallery-img">
+                                    <a href="{{ $ftp_image }}">
+                                        <img src="{{ $ftp_image }}" alt="gallery image">
+                                    </a>
+                                </div>
                             </div>
+
+                            @endif
+                            @endforeach
                         </div>
                     </div>
+                </div>
                 @endif
             </div>
         </div>
@@ -317,7 +392,6 @@
 </script>
 
 <script>
-
     $(document).ready(function(){
         $('select[name=custom_price]').change(function () {
             let input = $('input[name=mercadolivre_price]');
@@ -340,7 +414,7 @@
 <script>
     $(document).ready(function() {
         let html =
-            `<img src="{{ (filter_var($data->photo, FILTER_VALIDATE_URL) ? $data->photo : asset('assets/images/products/'.$data->photo)) }}" alt="">`;
+            `<img src="{{ (filter_var($data->photo, FILTER_VALIDATE_URL) ? $data->photo : asset('storage/images/products/'.$data->photo)) }}" alt="">`;
         $('.span4.cropme').html(html);
         $.ajaxSetup({
             headers: {

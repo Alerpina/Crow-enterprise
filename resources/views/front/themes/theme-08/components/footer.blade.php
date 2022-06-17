@@ -9,7 +9,7 @@
                     </h4>
                     <div class="footer-logo">
                         <a href="{{ route('front.index') }}" class="logo-link">
-                            <img src="{{asset('assets/images/'.$gs->footer_logo)}}" alt="">
+                            <img src="{{asset('storage/images/'.$gs->footer_logo)}}" alt="">
                         </a>
                     </div>
                     <div class="text m-0">
@@ -128,7 +128,7 @@
 
                     </ul>
                 </div>
-            </div> 
+            </div>
             <div class="col-md-4">
                 <div>
                     {!! $gs->copyright !!}
@@ -138,19 +138,22 @@
     </div>
 
     <div class="copy-bg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="content">
                         <div class="content">
-                            <div class="content">
-                                <p>COPYRIGHT {{ $gs->title }} © {{ date('Y') }}. {{ $gs->company_document ? ('| ' . $gs->document_name . ' - ' . $gs->company_document . ' |') : '' }} {{ __('All Rights Reserved') }}.</p>
-                                <p>{{ __('Developed By') }} <a id="agcrow" href="https://www.agenciacrow.com.br/">Agência Crow</a></p>
-                            </div>
+                            <p>COPYRIGHT {{ $gs->title }} © {{ date('Y') }}. {{ $gs->company_document ? ('| ' .
+                                $gs->document_name . ' - ' . $gs->company_document . ' |') : '' }} {{ __('All Rights
+                                Reserved') }}.</p>
+                            <p>{{ __('Developed By') }} <a id="agcrow" href="https://www.agenciacrow.com.br/">Agência
+                                    Crow</a></p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
+    </div>
+
 </footer>
 <!-- Footer Area End -->

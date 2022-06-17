@@ -27,7 +27,7 @@ class TeamMemberController extends Controller
                 if (file_exists(public_path().'/storage/images/team_member/'.$data->photo)) {
                     return asset('storage/images/team_member/'.$data->photo);
                 } else {
-                    return asset('storage/images/noimage.png');
+                    return asset('assets/images/noimage.png');
                 }
             })
             ->editColumn('category_id', function (TeamMember $data) {

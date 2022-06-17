@@ -1,4 +1,4 @@
-@if($ps->reviews_store == 1)   
+@if($ps->reviews_store == 1)
 <section class="blog-area">
     <div class="container">
         <div class="row">
@@ -27,7 +27,7 @@
                                     </p>
                                 </blockquote>
                                 <div class="left">
-                                    <img src="{{ $review->photo ? asset('assets/images/reviews/'.$review->photo) : asset('assets/images/noimage.png') }}"
+                                    <img src="{{ $review->photo ? asset('storage/images/reviews/'.$review->photo) : asset('assets/images/noimage.png') }}"
                                         alt="">
                                 </div>
                             </div>

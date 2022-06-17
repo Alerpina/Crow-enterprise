@@ -28,8 +28,10 @@
                         <table id="geniustable" class="table table-hover dt-responsive" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
-                                    <th><i class="icofont-ui-image icofont-lg" data-toggle="tooltip" title='{{ __("Featured Image") }}'></i></th>
-                                    <th><i class="icofont-options icofont-lg" data-toggle="tooltip" title='{{ __("Options") }}'></i></th>
+                                    <th><i class="icofont-ui-image icofont-lg" data-toggle="tooltip"
+                                            title='{{ __("Featured Image") }}'></i></th>
+                                    <th><i class="icofont-options icofont-lg" data-toggle="tooltip"
+                                            title='{{ __("Options") }}'></i></th>
                                     <th width="30%">{{ __('Title') }}</th>
                                     <th width="40%">{{ __('Details') }}</th>
                                 </tr>
@@ -49,7 +51,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="submit-loader">
-                <img src="{{asset('assets/images/'.$admstore->admin_loader)}}" alt="">
+                <img src="{{asset('storage/images/'.$admstore->admin_loader)}}" alt="">
             </div>
             <div class="modal-header">
                 <h5 class="modal-title"></h5>
@@ -136,7 +138,7 @@
         ],
         language: {
             url: '{{$datatable_translation}}',
-            processing: '<img src="{{asset("assets/images/".$admstore->admin_loader)}}">'
+            processing: '<img src="{{asset("storage/images/".$admstore->admin_loader)}}">'
         },
         drawCallback: function(settings) {
             $(this).find('.select').niceSelect();

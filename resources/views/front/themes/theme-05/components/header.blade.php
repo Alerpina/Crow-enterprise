@@ -12,7 +12,8 @@
                                         <i class="fas fa-globe-americas"></i>
                                         <select name="language" class="language selectors nice">
                                             @foreach($locales as $language)
-                                            <option value="{{route('front.language',$language->id)}}" {{$slocale->id == $language->id ? 'selected' : ''}}>
+                                            <option value="{{route('front.language',$language->id)}}" {{$slocale->id ==
+                                                $language->id ? 'selected' : ''}}>
                                                 {{$language->language}}
                                             </option>
                                             @endforeach
@@ -32,9 +33,13 @@
                                     <div class="currency-selector">
                                         <span><i class="fas fa-coins"></i>
                                             {{ __("Currency Rate") }}:
-                                            {{ $top_first_curr->sign.number_format($top_first_curr->value,$top_first_curr->decimal_digits,$top_first_curr->decimal_separator,$top_first_curr->thousands_separator) }}
+                                            {{
+                                            $top_first_curr->sign.number_format($top_first_curr->value,$top_first_curr->decimal_digits,$top_first_curr->decimal_separator,$top_first_curr->thousands_separator)
+                                            }}
                                             =
-                                            {{ $top_curr->sign . ' ' .number_format($top_curr->value ,$top_curr->decimal_digits,$top_curr->decimal_separator,$top_curr->thousands_separator) }}
+                                            {{ $top_curr->sign . ' ' .number_format($top_curr->value
+                                            ,$top_curr->decimal_digits,$top_curr->decimal_separator,$top_curr->thousands_separator)
+                                            }}
                                         </span>
                                     </div>
                                 </li>
@@ -196,7 +201,8 @@
 
                                             @if($gs->is_cart)
                                             <li>
-                                                <a href="javascript:;" data-toggle="modal" data-target="#track-order-modal">
+                                                <a href="javascript:;" data-toggle="modal"
+                                                    data-target="#track-order-modal">
                                                     <i class="fas fa-caret-right"></i>
                                                     {{ __("Track Order") }}
                                                 </a>
@@ -221,7 +227,8 @@
                                     <div class="currency-selector" style="padding-right:12px;">
                                         <select name="currency" class="currency selectors nice">
                                             @foreach($currencies as $currency)
-                                            <option value="{{route('front.currency',$currency->id)}}" {{ $scurrency->id == $currency->id ? 'selected' : ''}}>
+                                            <option value="{{route('front.currency',$currency->id)}}" {{ $scurrency->id
+                                                == $currency->id ? 'selected' : ''}}>
                                                 {{$currency->name}}
                                             </option>
                                             @endforeach
@@ -259,7 +266,7 @@
                 <div class="col-8 col-lg-12 remove-padding">
                     <div class="logo">
                         <a href="{{ route('front.index') }}">
-                            <img src="{{asset('assets/images/'.$gs->logo)}}" alt="">
+                            <img src="{{asset('storage/images/'.$gs->logo)}}" alt="">
                         </a>
                     </div>
                 </div>
@@ -270,7 +277,8 @@
                 <div class="col-lg-6 col-sm-12 remove-padding">
                     <div class="search-box-wrapper">
                         <div class="search-box">
-                            <form id="searchForm" class="search-form" action="{{ route('front.category') }}" method="GET">
+                            <form id="searchForm" class="search-form" action="{{ route('front.category') }}"
+                                method="GET">
 
                                 @if (!empty(request()->input('sort')))
                                 <input type="hidden" name="sort" value="{{ request()->input('sort') }}">
@@ -284,8 +292,8 @@
                                 <input type="hidden" name="maxprice" value="{{ request()->input('maxprice') }}">
                                 @endif
 
-                                <input type="text" id="prod_name" name="searchHttp" placeholder="{{ __("Search For Product") }}"
-                                value="{{ request()->input('searchHttp') }}" autocomplete="off">
+                                <input type="text" id="prod_name" name="searchHttp" placeholder="{{ __(" Search For
+                                    Product") }}" value="{{ request()->input('searchHttp') }}" autocomplete="off">
                                 <div class="autocomplete">
                                     <div id="myInputautocomplete-list" class="autocomplete-items"></div>
                                 </div>
@@ -303,21 +311,32 @@
                             <li class="my-dropdown">
                                 <a href="javascript:;" class="cart carticon">
                                     <div class="icon">
-                                        <svg class="icons-header" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="496.971px" height="496.971px" viewBox="0 0 496.971 496.971" style="enable-background:new 0 0 496.971 496.971;" xml:space="preserve">
+                                        <svg class="icons-header" version="1.1" id="Capa_1"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="496.971px"
+                                            height="496.971px" viewBox="0 0 496.971 496.971"
+                                            style="enable-background:new 0 0 496.971 496.971;" xml:space="preserve">
                                             <g>
                                                 <g>
                                                     <rect x="249.231" y="230.676" width="110.437" height="58.41" />
-                                                    <polygon points="219.383,132.183 129.481,132.183 136.166,200.831 219.383,200.831 "/>
-                                                    <polygon points="219.383,289.086 219.383,230.679 139.074,230.679 144.763,289.086 "/>
-                                                    <polygon points="219.383,43.923 120.884,43.923 126.573,102.335 219.383,102.335 " />
-                                                    <polygon points="389.516,289.086 449.213,289.086 460.592,230.679 389.516,230.679 "/>
-                                                    <rect x="249.231" y="43.923" width="110.437" height="58.41"/>
-                                                    <rect x="249.231" y="132.183" width="110.437" height="68.646"/>
-                                                    <polygon points="389.516,102.335 485.592,102.335 496.971,43.923 389.516,43.923 "/>
-                                                    <polygon points="389.516,200.831 466.406,200.831 479.777,132.183 389.516,132.183 "/>
-                                                    <polygon points="89.858,28.999 0,28.999 0,58.847 62.367,58.847 86.246,348.784 449.213,348.784 449.213,318.937 113.736,318.937"/>
-                                                    <circle cx="133.57" cy="422.453" r="45.519"/>
-                                                    <circle cx="394.74" cy="422.453" r="45.519"/>
+                                                    <polygon
+                                                        points="219.383,132.183 129.481,132.183 136.166,200.831 219.383,200.831 " />
+                                                    <polygon
+                                                        points="219.383,289.086 219.383,230.679 139.074,230.679 144.763,289.086 " />
+                                                    <polygon
+                                                        points="219.383,43.923 120.884,43.923 126.573,102.335 219.383,102.335 " />
+                                                    <polygon
+                                                        points="389.516,289.086 449.213,289.086 460.592,230.679 389.516,230.679 " />
+                                                    <rect x="249.231" y="43.923" width="110.437" height="58.41" />
+                                                    <rect x="249.231" y="132.183" width="110.437" height="68.646" />
+                                                    <polygon
+                                                        points="389.516,102.335 485.592,102.335 496.971,43.923 389.516,43.923 " />
+                                                    <polygon
+                                                        points="389.516,200.831 466.406,200.831 479.777,132.183 389.516,132.183 " />
+                                                    <polygon
+                                                        points="89.858,28.999 0,28.999 0,58.847 62.367,58.847 86.246,348.784 449.213,348.784 449.213,318.937 113.736,318.937" />
+                                                    <circle cx="133.57" cy="422.453" r="45.519" />
+                                                    <circle cx="394.74" cy="422.453" r="45.519" />
                                                 </g>
                                             </g>
                                         </svg>
@@ -333,41 +352,48 @@
                             </li>
                             @endif
 
-                            <li class="wishlist" data-toggle="tooltip" data-placement="top" title="{{ __("Wish") }}">
+                            <li class="wishlist" data-toggle="tooltip" data-placement="top" title="{{ __(" Wish") }}">
 
                                 @if(Auth::guard('web')->check())
                                 <a href="{{ route('user-wishlists') }}" class="wish">
-                                    <svg class="icons-header" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                            viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+                                    <svg class="icons-header" version="1.1" id="Capa_1"
+                                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;"
+                                        xml:space="preserve">
                                         <g>
                                             <g>
-                                                <path d="M378.667,21.333c-56.792,0-103.698,52.75-122.667,77.646c-18.969-24.896-65.875-77.646-122.667-77.646
+                                                <path
+                                                    d="M378.667,21.333c-56.792,0-103.698,52.75-122.667,77.646c-18.969-24.896-65.875-77.646-122.667-77.646
                                                     C59.813,21.333,0,88.927,0,172c0,45.323,17.99,87.562,49.479,116.469c0.458,0.792,1.021,1.521,1.677,2.177l197.313,196.906
                                                     c2.083,2.073,4.802,3.115,7.531,3.115s5.458-1.042,7.542-3.125L467.417,283.74l2.104-2.042c1.667-1.573,3.313-3.167,5.156-5.208
                                                     c0.771-0.76,1.406-1.615,1.896-2.542C499.438,245.948,512,209.833,512,172C512,88.927,452.188,21.333,378.667,21.333z
                                                     M458.823,261.948c-0.292,0.344-0.563,0.708-0.802,1.083c-1,1.146-2.094,2.156-3.177,3.188L255.99,464.927L68.667,277.979
                                                     c-0.604-1.188-1.448-2.271-2.479-3.177C37.677,249.906,21.333,212.437,21.333,172c0-71.313,50.24-129.333,112-129.333
                                                     c61.063,0,113.177,79.646,113.698,80.448c3.938,6.083,14,6.083,17.938,0c0.521-0.802,52.635-80.448,113.698-80.448
-                                                    c61.76,0,112,58.021,112,129.333C490.667,205.604,479.354,237.552,458.823,261.948z"/>
+                                                    c61.76,0,112,58.021,112,129.333C490.667,205.604,479.354,237.552,458.823,261.948z" />
                                             </g>
                                         </g>
                                     </svg>
                                     <span id="wishlist-count">{{ count(Auth::user()->wishlists) }}</span>
                                 </a>
                                 @else
-                                <a href="javascript:;" data-toggle="modal" id="wish-btn" data-target="#comment-log-reg" class="wish">
-                                    <svg class="icons-header" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                            viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+                                <a href="javascript:;" data-toggle="modal" id="wish-btn" data-target="#comment-log-reg"
+                                    class="wish">
+                                    <svg class="icons-header" version="1.1" id="Capa_1"
+                                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;"
+                                        xml:space="preserve">
                                         <g>
                                             <g>
-                                                <path d="M378.667,21.333c-56.792,0-103.698,52.75-122.667,77.646c-18.969-24.896-65.875-77.646-122.667-77.646
+                                                <path
+                                                    d="M378.667,21.333c-56.792,0-103.698,52.75-122.667,77.646c-18.969-24.896-65.875-77.646-122.667-77.646
                                                     C59.813,21.333,0,88.927,0,172c0,45.323,17.99,87.562,49.479,116.469c0.458,0.792,1.021,1.521,1.677,2.177l197.313,196.906
                                                     c2.083,2.073,4.802,3.115,7.531,3.115s5.458-1.042,7.542-3.125L467.417,283.74l2.104-2.042c1.667-1.573,3.313-3.167,5.156-5.208
                                                     c0.771-0.76,1.406-1.615,1.896-2.542C499.438,245.948,512,209.833,512,172C512,88.927,452.188,21.333,378.667,21.333z
                                                     M458.823,261.948c-0.292,0.344-0.563,0.708-0.802,1.083c-1,1.146-2.094,2.156-3.177,3.188L255.99,464.927L68.667,277.979
                                                     c-0.604-1.188-1.448-2.271-2.479-3.177C37.677,249.906,21.333,212.437,21.333,172c0-71.313,50.24-129.333,112-129.333
                                                     c61.063,0,113.177,79.646,113.698,80.448c3.938,6.083,14,6.083,17.938,0c0.521-0.802,52.635-80.448,113.698-80.448
-                                                    c61.76,0,112,58.021,112,129.333C490.667,205.604,479.354,237.552,458.823,261.948z"/>
+                                                    c61.76,0,112,58.021,112,129.333C490.667,205.604,479.354,237.552,458.823,261.948z" />
                                             </g>
                                         </g>
                                     </svg>
@@ -377,26 +403,31 @@
 
                             </li>
 
-                            <li class="compare" data-toggle="tooltip" data-placement="top" title="{{ __("Compare") }}">
+                            <li class="compare" data-toggle="tooltip" data-placement="top" title="{{ __(" Compare") }}">
                                 <a href="{{ route('product.compare') }}" class="wish compare-product">
                                     <div class="icon">
-                                        <svg class="icons-header" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                                viewBox="0 0 368.008 368.008" style="enable-background:new 0 0 368.008 368.008;" xml:space="preserve">
+                                        <svg class="icons-header" version="1.1" id="Capa_1"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                            viewBox="0 0 368.008 368.008"
+                                            style="enable-background:new 0 0 368.008 368.008;" xml:space="preserve">
                                             <g>
                                                 <g>
                                                     <g>
-                                                        <path d="M39.316,207.968c0.232,0.024,0.464,0.032,0.696,0.032c3.848,0,7.2-2.776,7.872-6.64
+                                                        <path
+                                                            d="M39.316,207.968c0.232,0.024,0.464,0.032,0.696,0.032c3.848,0,7.2-2.776,7.872-6.64
                                                             c0.464-2.664,12.064-65.352,72.12-65.352h112v32c0,3.168,1.864,6.032,4.768,7.32c2.896,1.28,6.272,0.736,8.616-1.4l88-80
                                                             c1.664-1.52,2.616-3.664,2.616-5.92s-0.952-4.4-2.616-5.92l-88-80c-2.344-2.136-5.728-2.688-8.616-1.4
                                                             c-2.904,1.288-4.768,4.152-4.768,7.32v40h-112c-47.696,0-88,36.64-88,80v72C32.004,204.16,35.18,207.616,39.316,207.968z
                                                             M48.004,128.008c0-34.688,32.976-64,72-64h120c4.424,0,8-3.584,8-8V26.096l68.112,61.912l-68.112,61.912v-21.912
-                                                            c0-4.416-3.576-8-8-8h-120c-37.304,0-59.328,19.968-72,39.784V128.008z"/>
-                                                        <path d="M328.692,160.048c-4.12-0.392-7.856,2.504-8.568,6.608c-0.472,2.664-12.064,65.352-72.12,65.352h-104v-32
+                                                            c0-4.416-3.576-8-8-8h-120c-37.304,0-59.328,19.968-72,39.784V128.008z" />
+                                                        <path
+                                                            d="M328.692,160.048c-4.12-0.392-7.856,2.504-8.568,6.608c-0.472,2.664-12.064,65.352-72.12,65.352h-104v-32
                                                             c0-3.104-1.8-5.928-4.608-7.248c-2.816-1.312-6.128-0.888-8.512,1.104l-96,80c-1.824,1.52-2.88,3.768-2.88,6.144
                                                             c0,2.376,1.056,4.624,2.88,6.144l96,80c1.464,1.224,3.288,1.856,5.12,1.856c1.152,0,2.312-0.248,3.392-0.752
                                                             c2.808-1.32,4.608-4.144,4.608-7.248v-40h104c47.704,0,88-36.64,88-80v-72C336.004,163.856,332.828,160.4,328.692,160.048z
                                                             M320.004,240.008c0,34.688-32.968,64-72,64h-112c-4.416,0-8,3.584-8,8v30.92L52.5,280.008l75.504-62.92v22.92
-                                                            c0,4.416,3.584,8,8,8h112c37.304,0,59.328-19.968,72-39.784V240.008z"/>
+                                                            c0,4.416,3.584,8,8,8h112c37.304,0,59.328-19.968,72-39.784V240.008z" />
                                                     </g>
                                                 </g>
                                             </g>
@@ -443,7 +474,7 @@
                                     @if($count)
                                     @if($category->photo)
                                     <div class="img">
-                                        <img src="{{ asset('assets/images/categories/'.$category->photo) }}" alt="">
+                                        <img src="{{ asset('storage/images/categories/'.$category->photo) }}" alt="">
                                     </div>
                                     @endif
                                     <div class="link-area">
@@ -460,7 +491,7 @@
                                     @else
                                     <a href="{{ route('front.category',$category->slug) }}">
                                         @if($category->photo)
-                                        <img src="{{ asset('assets/images/categories/'.$category->photo) }}">
+                                        <img src="{{ asset('storage/images/categories/'.$category->photo) }}">
                                         @endif
                                         {{ $category->name }}
                                     </a>
@@ -479,7 +510,8 @@
 
                                     @endphp
 
-                                    <ul class="{{ $ck == 1 ? 'categories_mega_menu' : 'categories_mega_menu column_1' }}">
+                                    <ul
+                                        class="{{ $ck == 1 ? 'categories_mega_menu' : 'categories_mega_menu column_1' }}">
 
                                         @foreach($category->subs_order_by as $subcat)
                                         <li>
@@ -554,7 +586,7 @@
                                     @if($count)
                                     @if($category->photo)
                                     <div class="img">
-                                        <img src="{{ asset('assets/images/categories/'.$category->photo) }}" alt="">
+                                        <img src="{{ asset('storage/images/categories/'.$category->photo) }}" alt="">
                                     </div>
                                     @endif
                                     <div class="link-area">
@@ -571,7 +603,7 @@
                                     @else
                                     <a href="{{ route('front.category',$category->slug) }}">
                                         @if($category->photo)
-                                        <img src="{{ asset('assets/images/categories/'.$category->photo) }}">
+                                        <img src="{{ asset('storage/images/categories/'.$category->photo) }}">
                                         @endif
                                         {{ $category->name }}
                                     </a>
@@ -590,7 +622,8 @@
 
                                     @endphp
 
-                                    <ul class="{{ $ck == 1 ? 'categories_mega_menu' : 'categories_mega_menu column_1' }}">
+                                    <ul
+                                        class="{{ $ck == 1 ? 'categories_mega_menu' : 'categories_mega_menu column_1' }}">
 
                                         @foreach($category->subs_order_by as $subcat)
                                         <li>

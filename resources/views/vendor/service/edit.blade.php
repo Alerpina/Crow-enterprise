@@ -3,11 +3,10 @@
 @section('styles')
 
 <style>
-.img-upload #image-preview {
-  width: 180px;
-  height: 180px;
-}
-
+  .img-upload #image-preview {
+    width: 180px;
+    height: 180px;
+  }
 </style>
 
 @endsection
@@ -26,27 +25,27 @@
               {{csrf_field()}}
               <div class="row">
                 <div class="col-xl-12">
-                    <div class="input-form">
-                        <p><small>* {{ __("indicates a required field") }}</small></p>
-                    </div>
+                  <div class="input-form">
+                    <p><small>* {{ __("indicates a required field") }}</small></p>
+                  </div>
                 </div>
-            </div>
+              </div>
 
               <div class="row">
 
                 <div class="col-xl-12">
                   <div class="input-form">
                     @component('admin.components.input-localized',["required" => true, "from" => $data])
-                        @slot('name')
-                            title
-                        @endslot
-                        @slot('placeholder')
-                        {{ __('Title') }}
-                        @endslot
-                        @slot('value')
-                            title
-                        @endslot
-                        {{ __('Title') }}*
+                    @slot('name')
+                    title
+                    @endslot
+                    @slot('placeholder')
+                    {{ __('Title') }}
+                    @endslot
+                    @slot('value')
+                    title
+                    @endslot
+                    {{ __('Title') }}*
                     @endcomponent
                   </div>
                 </div>
@@ -56,9 +55,10 @@
                   <div class="input-form">
                     <h4 class="heading">{{ __('Current Featured Image') }} *</h4>
                     <div class="img-upload">
-                      <div style="width:180px;background-image: url( {{ asset('assets/admin/images/quadriculado.jpg')}} );background-size:contain;">
+                      <div
+                        style="width:180px;background-image: url( {{ asset('assets/admin/images/quadriculado.jpg')}} );background-size:contain;">
                         <div id="image-preview" class="img-preview"
-                          style="background-image:url('{{ $data->photo ? asset('assets/images/services/'.$data->photo):asset('assets/images/noimage.png') }}');background-size:100% !important;background-position:center !important;">
+                          style="background-image:url('{{ $data->photo ? asset('storage/images/services/'.$data->photo):asset('assets/images/noimage.png') }}');background-size:100% !important;background-position:center !important;">
                           <label for="image-upload" class="img-label" id="image-label"><i
                               class="icofont-upload-alt"></i>{{ __('Upload Image') }}</label>
                           <input type="file" name="photo" class="img-upload" id="image-upload">
@@ -72,28 +72,28 @@
                 <div class="col-xl-6">
                   <div class="input-form">
                     @component('admin.components.input-localized',["type" => "textarea", "from" => $data])
-                        @slot('name')
-                            details
-                        @endslot
-                        @slot('placeholder')
-                            {{ __('Description') }}
-                        @endslot
-                        @slot('value')
-                            details
-                        @endslot
-                        {{ __('Description') }} *
+                    @slot('name')
+                    details
+                    @endslot
+                    @slot('placeholder')
+                    {{ __('Description') }}
+                    @endslot
+                    @slot('value')
+                    details
+                    @endslot
+                    {{ __('Description') }} *
                     @endcomponent
                   </div>
                 </div>
 
               </div>
 
-             
-              
+
+
               <div class="row justify-content-center">
                 <button class="addProductSubmit-btn" type="submit">{{ __('Save') }}</button>
               </div>
-              
+
             </form>
 
           </div>

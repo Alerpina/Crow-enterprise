@@ -77,7 +77,7 @@ class VendorController extends Controller
          {
             $name = time().$photo->getClientOriginalName();
             $photo_name = str_replace(' ', '-', $name);
-            $photo->move('assets/images/users',$photo_name);
+            $photo->move('storage/images/users',$photo_name);
             $input['photo'] = $photo_name;
         }
 
@@ -85,7 +85,7 @@ class VendorController extends Controller
          {
             $name = time().$file->getClientOriginalName();
             $slider_name = str_replace(' ', '-', $name);
-            $file->move('assets/images/vendorbanner',$slider_name);
+            $file->move('storage/images/vendorbanner',$slider_name);
             $input['shop_image'] = $slider_name;
         }
 
@@ -159,8 +159,8 @@ class VendorController extends Controller
       {
           $data = Auth::user();
           if($data->shop_image != null) {
-              if (file_exists(public_path().'/assets/images/vendorbanner/'.$data->shop_image)) {
-                  unlink(public_path().'/assets/images/vendorbanner/'.$data->shop_image);
+              if (file_exists(public_path().'/storage/images/vendorbanner/'.$data->shop_image)) {
+                  unlink(public_path().'/storage/images/vendorbanner/'.$data->shop_image);
                   $input['shop_image'] = '';
                   $data->update($input);
                   $msg = __('Image Deleted Successfully');
@@ -176,8 +176,8 @@ class VendorController extends Controller
     {
         $data = Auth::user();
         if($data->photo != null) {
-            if (file_exists(public_path().'/assets/images/users/'.$data->photo)) {
-                unlink(public_path().'/assets/images/users/'.$data->photo);
+            if (file_exists(public_path().'/storage/images/users/'.$data->photo)) {
+                unlink(public_path().'/storage/images/users/'.$data->photo);
                 $input['photo'] = '';
                 $data->update($input);
                 $msg = __('Image Deleted Successfully');
@@ -268,7 +268,7 @@ class VendorController extends Controller
                         else {
                             $input['attachments'] .= $name.',';
                         }
-                        $file->move('assets/images/attachments',$name);
+                        $file->move('storage/images/attachments',$name);
 
                     $i++;
                     }

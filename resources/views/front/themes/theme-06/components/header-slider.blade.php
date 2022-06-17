@@ -20,7 +20,7 @@
                         @foreach($sliders as $data)
                         <a href="{{$data->link}}" target="_blank">
                             <div class="intro-content ">
-                                <img src="{{asset('assets/images/sliders/'.$data->photo)}}">
+                                <img src="{{asset('storage/images/sliders/'.$data->photo)}}">
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-lg-12">

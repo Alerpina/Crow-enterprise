@@ -27,9 +27,12 @@
 						<table id="geniustable" class="table table-hover dt-responsive" cellspacing="0" width="100%">
 							<thead>
 								<tr>
-									<th><i class="icofont-calendar icofont-lg" data-toggle="tooltip" title='{{ __("Withdraw Date") }}'></i></th>
-									<th><i class="icofont-dollar icofont-lg" data-toggle="tooltip" title='{{ __("Amount") }}'></i></th>
-									<th><i class="icofont-eye icofont-lg" data-toggle="tooltip" title='{{ __("Status") }}'></i></th>
+									<th><i class="icofont-calendar icofont-lg" data-toggle="tooltip"
+											title='{{ __("Withdraw Date") }}'></i></th>
+									<th><i class="icofont-dollar icofont-lg" data-toggle="tooltip"
+											title='{{ __("Amount") }}'></i></th>
+									<th><i class="icofont-eye icofont-lg" data-toggle="tooltip"
+											title='{{ __("Status") }}'></i></th>
 								</tr>
 							</thead>
 						</table>
@@ -56,7 +59,7 @@
 			ajax: '{{ route("vendor-withdraw-datatables") }}',
         	language : {
           		url: '{{$datatable_translation}}',
-          		processing: '<img src="{{asset('assets/images/'.$gs->admin_loader)}}">'
+          		processing: '<img src="{{asset('storage/images/'.$gs->admin_loader)}}">'
         	},
 			columns: [
             {
@@ -82,8 +85,8 @@
           		'</a>'+
 				  '</div>');
 			}
-		});								
-									
+		});
+
 </script>
 
 {{-- DATA TABLE --}}

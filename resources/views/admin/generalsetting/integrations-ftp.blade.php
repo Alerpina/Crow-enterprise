@@ -24,7 +24,7 @@
         <div class="product-description">
           <div class="body-area">
             <div class="gocover"
-              style="background: url({{asset('assets/images/'.$admstore->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
+              style="background: url({{asset('storage/images/'.$admstore->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
             </div>
             <div class="row">
               <div class="col-lg-3">
@@ -44,7 +44,7 @@
                           {{ __('FTP Images Folder') }}
                         </h4>
                         <input type="text" class="input-field" placeholder="products_images/" name="ftp_folder"
-                        value="{{ $admstore->ftp_folder }}">
+                          value="{{ $admstore->ftp_folder }}">
                       </div>
                     </div>
                   </div>
@@ -66,11 +66,12 @@
                         </div>
                       </div>
                       <div class="submit-loader">
-                        <img src="{{asset('assets/images/'.$admstore->admin_loader)}}" alt="">
+                        <img src="{{asset('storage/images/'.$admstore->admin_loader)}}" alt="">
                       </div>
                       <div class="row">
                         <div class="col-md-12">
-                          <button class="add-btn" id="generateProductThumbnails" href="{{ route('admin-prod-generatethumbnails') }}">{{ __('Product Thumbnails') }}</button>
+                          <button class="add-btn" id="generateProductThumbnails"
+                            href="{{ route('admin-prod-generatethumbnails') }}">{{ __('Product Thumbnails') }}</button>
                         </div>
                       </div>
                     </div>

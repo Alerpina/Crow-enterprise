@@ -18,7 +18,7 @@ class ServiceController extends Controller
         parent::__construct();
 
         $this->middleware('auth');
-        
+
         $this->middleware(function ($request, $next) {
             $user = Auth::guard('web')->user();
             if($user->checkWarning())
@@ -55,8 +55,8 @@ class ServiceController extends Controller
                 </div>';
             })
             ->editColumn('photo', function (Service $data) {
-                if (file_exists(public_path().'/assets/images/services/'.$data->photo)) {
-                    return asset('assets/images/services/'.$data->photo);
+                if (file_exists(public_path().'/storage/images/services/'.$data->photo)) {
+                    return asset('storage/images/services/'.$data->photo);
                 } else{
                     return asset('assets/images/noimage.png');
                 }
@@ -102,7 +102,7 @@ class ServiceController extends Controller
                 ];
 
         $validator = Validator::make($request->all(), $rules, $customs);
-        
+
         if ($validator->fails()) {
           return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
         }
@@ -113,17 +113,17 @@ class ServiceController extends Controller
         $input = $this->removeEmptyTranslations($request->all());
         if ($file = $request->file('photo')) {
             $name = time().Str::random(8).".".$file->getClientOriginalExtension();
-            $file->move('assets/images/services', $name);
+            $file->move('storage/images/services', $name);
             $input['photo'] = $name;
         }
         $input['user_id'] = Auth::user()->id;
         $data->fill($input)->save();
         //--- Logic Section Ends
 
-        //--- Redirect Section        
+        //--- Redirect Section
         $msg = __('New Data Added Successfully.');
-        return response()->json($msg);      
-        //--- Redirect Section Ends    
+        return response()->json($msg);
+        //--- Redirect Section Ends
     }
 
     //*** GET Request
@@ -142,7 +142,7 @@ class ServiceController extends Controller
                 ];
 
         $validator = Validator::make($request->all(), $rules);
-        
+
         if ($validator->fails()) {
           return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
         }
@@ -151,25 +151,25 @@ class ServiceController extends Controller
         //--- Logic Section
         $data = Service::findOrFail($id);
         $input = $request->all();
-            if ($file = $request->file('photo')) 
-            {              
+            if ($file = $request->file('photo'))
+            {
                 $name = time().Str::random(8).".".$file->getClientOriginalExtension();
-                $file->move('assets/images/services',$name);
+                $file->move('storage/images/services',$name);
                 if($data->photo != null)
                 {
-                    if (file_exists(public_path().'/assets/images/services/'.$data->photo)) {
-                        unlink(public_path().'/assets/images/services/'.$data->photo);
+                    if (file_exists(public_path().'/storage/images/services/'.$data->photo)) {
+                        unlink(public_path().'/storage/images/services/'.$data->photo);
                     }
-                }            
+                }
             $input['photo'] = $name;
-            } 
+            }
         $data->update($input);
         //--- Logic Section Ends
 
-        //--- Redirect Section     
+        //--- Redirect Section
         $msg = __('Data Updated Successfully.');
-        return response()->json($msg);      
-        //--- Redirect Section Ends            
+        return response()->json($msg);
+        //--- Redirect Section Ends
     }
 
     //*** GET Request Delete
@@ -179,20 +179,20 @@ class ServiceController extends Controller
         //If Photo Doesn't Exist
         if($data->photo == null){
             $data->delete();
-            //--- Redirect Section     
+            //--- Redirect Section
             $msg = __('Data Deleted Successfully.');
-            return response()->json($msg);      
-            //--- Redirect Section Ends     
+            return response()->json($msg);
+            //--- Redirect Section Ends
         }
         //If Photo Exist
-        if (file_exists(public_path().'/assets/images/services/'.$data->photo)) {
-            unlink(public_path().'/assets/images/services/'.$data->photo);
+        if (file_exists(public_path().'/storage/images/services/'.$data->photo)) {
+            unlink(public_path().'/storage/images/services/'.$data->photo);
         }
         $data->delete();
-        //--- Redirect Section     
+        //--- Redirect Section
         $msg = __('Data Deleted Successfully.');
-        return response()->json($msg);      
-        //--- Redirect Section Ends     
+        return response()->json($msg);
+        //--- Redirect Section Ends
     }
 
 }

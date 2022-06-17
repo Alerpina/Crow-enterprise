@@ -41,7 +41,7 @@
               <select id="store_filter" class="process select go-dropdown-toggle">
                 @foreach ($stores as $store)
                 <option value="{{ route('admin-stores-isconfig',['id' => $store['id'], 'redirect' => true]) }}"
-                  {{$store['id'] == $admstore->id ? 'selected' : ''}}>{{$store['domain']}}</option>
+                  {{$store['id']==$admstore->id ? 'selected' : ''}}>{{$store['domain']}}</option>
                 @endforeach
               </select>
             </div>
@@ -58,20 +58,23 @@
         <div class="product-description">
           <div class="body-area">
             <div class="gocover"
-              style="background: url({{asset('assets/images/'.$admstore->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
+              style="background: url({{asset('storage/images/'.$admstore->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
             </div>
             <form action="{{ route('admin-gs-update') }}" id="geniusform" method="POST" enctype="multipart/form-data">
               {{ csrf_field() }}
 
               @include('includes.admin.form-both')
               <div class="row justify-content-center">
-              <div class="col-lg-3">
+                <div class="col-lg-3">
                 </div>
                 <div class="col-lg-6">
-                <div class="alert alert-info">
-                  <p>{{__('Search your Zip Code:')}} <a href="https://buscacepinter.correios.com.br/app/faixa_cep_uf_localidade/index.php" target="_blank">BuscaFaixaCep</a></p>
-                  <p>{{__('Local zip code will use the settings registered with the General Shipping, not the mail settings.')}}</p>
-                </div>
+                  <div class="alert alert-info">
+                    <p>{{__('Search your Zip Code:')}} <a
+                        href="https://buscacepinter.correios.com.br/app/faixa_cep_uf_localidade/index.php"
+                        target="_blank">BuscaFaixaCep</a></p>
+                    <p>{{__('Local zip code will use the settings registered with the General Shipping, not the mail
+                      settings.')}}</p>
+                  </div>
                 </div>
               </div>
 
@@ -86,7 +89,8 @@
                   <input name="correios_cep" class="input-field" placeholder="{{ __('e.g 01000-000') }}"
                     value="{{ $admstore->correios_cep }}" required="">
                 </div>
-                <i class="icofont-question-circle" data-toggle="tooltip" data-placement="top" title="{{__('Enter your local store zip code.')}}"></i>
+                <i class="icofont-question-circle" data-toggle="tooltip" data-placement="top"
+                  title="{{__('Enter your local store zip code.')}}"></i>
               </div>
 
               <div class="row justify-content-center">
@@ -100,7 +104,8 @@
                   <input name="localcep_start" class="input-field" placeholder="{{ __('e.g 01000-000') }}"
                     value="{{ $admstore->localcep_start }}" required="">
                 </div>
-                <i class="icofont-question-circle" data-toggle="tooltip" data-placement="top" title="{{__('Insert the beginning of the zip code range that will be defined as Regional Freight.')}}"></i>
+                <i class="icofont-question-circle" data-toggle="tooltip" data-placement="top"
+                  title="{{__('Insert the beginning of the zip code range that will be defined as Regional Freight.')}}"></i>
               </div>
 
               <div class="row justify-content-center">
@@ -114,7 +119,8 @@
                   <input name="localcep_end" class="input-field" placeholder="{{ __('e.g 01000-000') }}"
                     value="{{ $admstore->localcep_end }}" required="">
                 </div>
-                <i class="icofont-question-circle" data-toggle="tooltip" data-placement="top" title="{{__('Insert the end of the zip code range that will be defined as Regional Freight')}}"></i>
+                <i class="icofont-question-circle" data-toggle="tooltip" data-placement="top"
+                  title="{{__('Insert the end of the zip code range that will be defined as Regional Freight')}}"></i>
               </div>
 
               <div class="row justify-content-center">

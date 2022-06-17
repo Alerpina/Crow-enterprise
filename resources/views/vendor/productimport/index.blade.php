@@ -1,23 +1,23 @@
-@extends('layouts.vendor') 
+@extends('layouts.vendor')
 
-@section('content')  
+@section('content')
 <input type="hidden" id="headerdata" value="PRODUCT">
 <div class="content-area">
 	<div class="mr-breadcrumb">
 		<div class="row">
 			<div class="col-lg-12">
-					<h4 class="heading">{{ __("All Affiliate Products") }}</h4>
-					<ul class="links">
-						<li>
-							<a href="{{ route('vendor-dashboard') }}">{{ __("Dashbord") }} </a>
-						</li>
-						<li>
-							<a href="javascript:;">{{ __("Affiliate Products") }} </a>
-						</li>
-						<li>
-							<a href="javascript:;">{{ __("All Affiliate Products") }}</a>
-						</li>
-					</ul>
+				<h4 class="heading">{{ __("All Affiliate Products") }}</h4>
+				<ul class="links">
+					<li>
+						<a href="{{ route('vendor-dashboard') }}">{{ __("Dashbord") }} </a>
+					</li>
+					<li>
+						<a href="javascript:;">{{ __("Affiliate Products") }} </a>
+					</li>
+					<li>
+						<a href="javascript:;">{{ __("All Affiliate Products") }}</a>
+					</li>
+				</ul>
 			</div>
 		</div>
 	</div>
@@ -26,21 +26,26 @@
 			<div class="col-lg-12">
 				<div class="mr-table allproduct">
 
-	@include('includes.admin.form-success')  
+					@include('includes.admin.form-success')
 
 					<div class="table-responsiv">
-							<table id="geniustable" class="table table-hover dt-responsive" cellspacing="0" width="100%">
-								<thead>
-									<tr>
-										<th><i class="icofont-ui-image icofont-lg" data-toggle="tooltip" title='{{ __("Photo") }}'></i></th>
-										<th><i class="icofont-options icofont-lg" data-toggle="tooltip" title='{{ __("Options") }}'></i></th>
-										<th>{{ __("Name") }}</th>
-										<th><i class="fa fa-th-large fa-lg" data-toggle="tooltip" title='{{ __("Stock") }}'></i></th>
-										<th><i class="icofont-dollar icofont-lg" data-toggle="tooltip" title='{{ __("Price") }}'></i></th>
-										<th><i class="icofont-eye icofont-lg" data-toggle="tooltip" title='{{ __("Status") }}'></i></th>
-									</tr>
-								</thead>
-							</table>
+						<table id="geniustable" class="table table-hover dt-responsive" cellspacing="0" width="100%">
+							<thead>
+								<tr>
+									<th><i class="icofont-ui-image icofont-lg" data-toggle="tooltip"
+											title='{{ __("Photo") }}'></i></th>
+									<th><i class="icofont-options icofont-lg" data-toggle="tooltip"
+											title='{{ __("Options") }}'></i></th>
+									<th>{{ __("Name") }}</th>
+									<th><i class="fa fa-th-large fa-lg" data-toggle="tooltip"
+											title='{{ __("Stock") }}'></i></th>
+									<th><i class="icofont-dollar icofont-lg" data-toggle="tooltip"
+											title='{{ __("Price") }}'></i></th>
+									<th><i class="icofont-eye icofont-lg" data-toggle="tooltip"
+											title='{{ __("Status") }}'></i></th>
+								</tr>
+							</thead>
+						</table>
 					</div>
 				</div>
 			</div>
@@ -55,25 +60,25 @@
 <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="modal2" aria-hidden="true">
 
 
-<div class="modal-dialog highlight" role="document">
-<div class="modal-content">
-		<div class="submit-loader">
-				<img  src="{{asset('assets/images/'.$gs->admin_loader)}}" alt="">
-		</div>
-	<div class="modal-header">
-	<h5 class="modal-title"></h5>
-	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		<span aria-hidden="true">&times;</span>
-	</button>
-	</div>
-	<div class="modal-body">
+	<div class="modal-dialog highlight" role="document">
+		<div class="modal-content">
+			<div class="submit-loader">
+				<img src="{{asset('storage/images/'.$gs->admin_loader)}}" alt="">
+			</div>
+			<div class="modal-header">
+				<h5 class="modal-title"></h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
 
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __("Close") }}</button>
+			</div>
+		</div>
 	</div>
-	<div class="modal-footer">
-	<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __("Close") }}</button>
-	</div>
-</div>
-</div>
 </div>
 
 {{-- HIGHLIGHT ENDS --}}
@@ -82,30 +87,30 @@
 {{-- DELETE MODAL --}}
 
 <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="modal1" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
+	<div class="modal-dialog">
+		<div class="modal-content">
 
-	<div class="modal-header d-block text-center">
-		<h4 class="modal-title d-inline-block">{{ __("Confirm Delete") }}</h4>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
+			<div class="modal-header d-block text-center">
+				<h4 class="modal-title d-inline-block">{{ __("Confirm Delete") }}</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<p class="text-center">{{ __("You are about to delete this Product.") }}</p>
+				<p class="text-center">{{ __("Do you want to proceed?") }}</p>
+			</div>
+
+			<!-- Modal footer -->
+			<div class="modal-footer justify-content-center">
+				<button type="button" class="btn btn-default" data-dismiss="modal">{{ __("Cancel") }}</button>
+				<a class="btn btn-danger btn-ok">{{ __("Delete") }}</a>
+			</div>
+
+		</div>
 	</div>
-
-      <!-- Modal body -->
-      <div class="modal-body">
-            <p class="text-center">{{ __("You are about to delete this Product.") }}</p>
-            <p class="text-center">{{ __("Do you want to proceed?") }}</p>
-      </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer justify-content-center">
-            <button type="button" class="btn btn-default" data-dismiss="modal">{{ __("Cancel") }}</button>
-            <a class="btn btn-danger btn-ok">{{ __("Delete") }}</a>
-      </div>
-
-    </div>
-  </div>
 </div>
 
 {{-- DELETE MODAL ENDS --}}
@@ -116,40 +121,44 @@
 <div class="modal fade" id="setgallery" tabindex="-1" role="dialog" aria-labelledby="setgallery" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<div class="modal-content">
-		<div class="modal-header">
-			<h5 class="modal-title" id="exampleModalCenterTitle">{{ __("Image Gallery") }}</h5>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			<span aria-hidden="true">×</span>
-			</button>
-		</div>
-		<div class="modal-body">
-			<div class="top-area">
-				<div class="row">
-					<div class="col-sm-6 text-right">
-						<div class="upload-img-btn">
-							<form  method="POST" enctype="multipart/form-data" id="form-gallery">
-								{{ csrf_field() }}
-							<input type="hidden" id="pid" name="product_id" value="">
-							<input type="file" name="gallery[]" class="hidden" id="uploadgallery" accept="image/*" multiple>
-									<label for="image-upload" id="prod_gallery"><i class="icofont-upload-alt"></i>{{ __("Upload File") }}</label>
-							</form>
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalCenterTitle">{{ __("Image Gallery") }}</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="top-area">
+					<div class="row">
+						<div class="col-sm-6 text-right">
+							<div class="upload-img-btn">
+								<form method="POST" enctype="multipart/form-data" id="form-gallery">
+									{{ csrf_field() }}
+									<input type="hidden" id="pid" name="product_id" value="">
+									<input type="file" name="gallery[]" class="hidden" id="uploadgallery"
+										accept="image/*" multiple>
+									<label for="image-upload" id="prod_gallery"><i class="icofont-upload-alt"></i>{{
+										__("Upload File") }}</label>
+								</form>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<a href="javascript:;" class="upload-done" data-dismiss="modal"> <i
+									class="fas fa-check"></i> {{ __("Done") }}</a>
+						</div>
+						<div class="col-sm-12 text-center">( <small>{{ __("You can upload multiple Images.") }}</small>
+							)</div>
+					</div>
+				</div>
+				<div class="gallery-images">
+					<div class="selected-image">
+						<div class="row">
+
+
 						</div>
 					</div>
-					<div class="col-sm-6">
-						<a href="javascript:;" class="upload-done" data-dismiss="modal"> <i class="fas fa-check"></i> {{ __("Done") }}</a>
-					</div>
-					<div class="col-sm-12 text-center">( <small>{{ __("You can upload multiple Images.") }}</small> )</div>
 				</div>
 			</div>
-			<div class="gallery-images">
-				<div class="selected-image">
-					<div class="row">
-
-
-					</div>
-				</div>
-			</div>
-		</div>
 		</div>
 	</div>
 </div>
@@ -157,7 +166,7 @@
 
 {{-- GALLERY MODAL ENDS --}}
 
-@endsection    
+@endsection
 
 
 
@@ -166,9 +175,8 @@
 
 {{-- DATA TABLE --}}
 
-    <script type="text/javascript">
-		
-		var table = $('#geniustable').DataTable({
+<script type="text/javascript">
+	var table = $('#geniustable').DataTable({
 			   ordering: false,
                processing: true,
                serverSide: true,
@@ -212,7 +220,7 @@
 			   ],
                 language : {
 					url: '{{$datatable_translation}}',
-					processing: '<img src="{{asset('assets/images/'.$gs->admin_loader)}}">'
+					processing: '<img src="{{asset('storage/images/'.$gs->admin_loader)}}">'
                 },
 				drawCallback : function( settings ) {
 					$(".checkboxStatus").on('click', function(){
@@ -234,16 +242,16 @@
 					'</a>'+
 						'</div>');
 					}
-            });	
+            });
 			$(document).on('click', 'a', function(e){
-				var link = jQuery(this); 
+				var link = jQuery(this);
 				var x = '{{ Request::route()->getPrefix() }}';
 				y = x.split("/");
 				if(!(link.attr("data-href") || link.attr("href").indexOf("#") > -1 || link.attr("href").indexOf("javascript") > -1 || link.attr("href").indexOf("orders") > -1 || link.attr("href").indexOf("order") > -1)){
 					sessionStorage.setItem("CurrentPage", 0);
 					table.state.clear();
 				}
-			});						
+			});
 
 
 {{-- DATA TABLE ENDS--}}
@@ -253,9 +261,7 @@
 
 
 <script type="text/javascript">
-	
-
-// Gallery Section Update
+	// Gallery Section Update
 
     $(document).on("click", ".set-gallery" , function(){
         var pid = $(this).find('input[type=hidden]').val();
@@ -273,7 +279,7 @@
      				  }
                       else {
 	                    $('.selected-image .row').removeClass('justify-content-center');
-	      				$('.selected-image .row h3').remove();      
+	      				$('.selected-image .row h3').remove();
                           var arr = $.map(data[1], function(el) {
                           return el });
 
@@ -284,14 +290,14 @@
                                             '<span class="remove-img"><i class="fas fa-times"></i>'+
                                             '<input type="hidden" value="'+arr[k]['id']+'">'+
                                             '</span>'+
-                                            '<a href="'+'{{asset('assets/images/galleries').'/'}}'+arr[k]['photo']+'" target="_blank">'+
-                                            '<img src="'+'{{asset('assets/images/galleries').'/'}}'+arr[k]['photo']+'" alt="gallery image">'+
+                                            '<a href="'+'{{asset('storage/images/galleries').'/'}}'+arr[k]['photo']+'" target="_blank">'+
+                                            '<img src="'+'{{asset('storage/images/galleries').'/'}}'+arr[k]['photo']+'" alt="gallery image">'+
                                             '</a>'+
                                         '</div>'+
                                   	'</div>');
-                          }                         
+                          }
                        }
- 
+
                     }
                   });
       });
@@ -310,10 +316,10 @@
   $(document).on('click', '#prod_gallery' ,function() {
     $('#uploadgallery').click();
   });
-                                        
-                                
+
+
   $("#uploadgallery").change(function(){
-    $("#form-gallery").submit();  
+    $("#form-gallery").submit();
   });
 
   $(document).on('submit', '#form-gallery' ,function() {
@@ -330,7 +336,7 @@
 		    if(data != 0)
 		    {
 	                    $('.selected-image .row').removeClass('justify-content-center');
-	      				$('.selected-image .row h3').remove();   
+	      				$('.selected-image .row h3').remove();
 		        var arr = $.map(data, function(el) {
 		        return el });
 		        for(var k in arr)
@@ -340,22 +346,22 @@
                                             '<span class="remove-img"><i class="fas fa-times"></i>'+
                                             '<input type="hidden" value="'+arr[k]['id']+'">'+
                                             '</span>'+
-                                            '<a href="'+'{{asset('assets/images/galleries').'/'}}'+arr[k]['photo']+'" target="_blank">'+
-                                            '<img src="'+'{{asset('assets/images/galleries').'/'}}'+arr[k]['photo']+'" alt="gallery image">'+
+                                            '<a href="'+'{{asset('storage/images/galleries').'/'}}'+arr[k]['photo']+'" target="_blank">'+
+                                            '<img src="'+'{{asset('storage/images/galleries').'/'}}'+arr[k]['photo']+'" alt="gallery image">'+
                                             '</a>'+
                                         '</div>'+
                                   	'</div>');
-		            }          
+		            }
 		    }
-		                     
+
 		                       }
 
 		  });
 		  return false;
- }); 
+ });
 
 
-// Gallery Section Update Ends	
+// Gallery Section Update Ends
 
 
 </script>
@@ -363,4 +369,4 @@
 
 
 
-@endsection   
+@endsection

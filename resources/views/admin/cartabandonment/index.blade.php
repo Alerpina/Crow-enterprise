@@ -26,11 +26,15 @@
                         <table id="geniustable" class="table table-hover dt-responsive" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
-                                    <th><i class="icofont-email icofont-lg" data-toggle="tooltip" title='{{ __("Send Email") }}'></i></th>
+                                    <th><i class="icofont-email icofont-lg" data-toggle="tooltip"
+                                            title='{{ __("Send Email") }}'></i></th>
                                     <th>{{ __("Name") }}</th>
-                                    <th><i class="icofont-envelope icofont-lg" data-toggle="tooltip" title='{{ __("Email") }}'></i></th>
-                                    <th><i class="icofont-envelope-open icofont-lg" data-toggle="tooltip" title='{{ __("Email Sent") }}'></i></th>
-                                    <th><i class="icofont-cart icofont-lg" data-toggle="tooltip" title='{{ __("Qty") }}'></i></th>
+                                    <th><i class="icofont-envelope icofont-lg" data-toggle="tooltip"
+                                            title='{{ __("Email") }}'></i></th>
+                                    <th><i class="icofont-envelope-open icofont-lg" data-toggle="tooltip"
+                                            title='{{ __("Email Sent") }}'></i></th>
+                                    <th><i class="icofont-cart icofont-lg" data-toggle="tooltip"
+                                            title='{{ __("Qty") }}'></i></th>
                                 </tr>
                             </thead>
                         </table>
@@ -70,7 +74,7 @@
     </div>
 </div>
 <div class="submit-loader">
-    <img  src="{{asset('assets/images/'.$gs->admin_loader)}}" alt="">
+    <img src="{{asset('storage/images/'.$gs->admin_loader)}}" alt="">
 </div>
 
 {{-- DELETE MODAL ENDS --}}
@@ -113,7 +117,7 @@
         ],
         language: {
             url: '{{$datatable_translation}}',
-            processing: '<img src="{{asset("assets/images/".$admstore->admin_loader)}}">'
+            processing: '<img src="{{asset("storage/images/".$admstore->admin_loader)}}">'
         },
         initComplete: function(settings, json){
             /*
@@ -122,7 +126,7 @@
             $(document).ready(function(){
                 table.page(parseInt(sessionStorage.getItem("CurrentPage"))).draw(false);
             });
-            /* 
+            /*
             * Setando no Cookie a página atual
             */
             $("#geniustable").on('page.dt', function(){
@@ -139,7 +143,7 @@
         }
     });
     $(document).on('click', 'a', function(e){
-        var link = jQuery(this); 
+        var link = jQuery(this);
         var x = '{{ Request::route()->getPrefix() }}';
         y = x.split("/");
         if(!(link.attr("data-href") || link.attr("href").indexOf("#") > -1 || link.attr("href").indexOf("javascript") > -1 || link.attr("href").indexOf("cartabandonments") > -1 || link.attr("href").indexOf("cartabandonments") > -1)){

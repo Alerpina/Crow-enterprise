@@ -24,7 +24,7 @@
         <div class="product-description">
           <div class="body-area">
             <div class="gocover"
-              style="background: url({{asset('assets/images/'.$admstore->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
+              style="background: url({{asset('storage/images/'.$admstore->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
             </div>
             <div class="row">
               <div class="col-lg-3">
@@ -47,10 +47,10 @@
                         <div class="action-list">
                           <select
                             class="process select droplinks {{ $data->f_check == 1 ? 'drop-success' : 'drop-danger' }}">
-                            <option data-val="1" value="{{route('admin-social-facebookup',1)}}"
-                              {{ $data->f_check == 1 ? 'selected' : '' }}>{{ __('Activated') }}</option>
-                            <option data-val="0" value="{{route('admin-social-facebookup',0)}}"
-                              {{ $data->f_check == 0 ? 'selected' : '' }}>{{ __('Deactivated') }}</option>
+                            <option data-val="1" value="{{route('admin-social-facebookup',1)}}" {{ $data->f_check == 1 ?
+                              'selected' : '' }}>{{ __('Activated') }}</option>
+                            <option data-val="0" value="{{route('admin-social-facebookup',0)}}" {{ $data->f_check == 0 ?
+                              'selected' : '' }}>{{ __('Deactivated') }}</option>
                           </select>
                         </div>
                       </div>
@@ -61,9 +61,9 @@
                         <h4 class="heading">{{ __('App ID') }} *
                           <span>{{ __('Get Your App ID from developers.facebook.com') }}</span>
                         </h4>
-          
+
                         <input type="text" class="input-field" placeholder="{{ __('Enter App ID') }}" name="fclient_id"
-                        value="{{ $data->fclient_id }}" required="">
+                          value="{{ $data->fclient_id }}" required="">
                       </div>
                     </div>
 
@@ -72,9 +72,9 @@
                         <h4 class="heading">{{ __('App Secret') }} *
                           <span>{{ __('Get Your App Secret from developers.facebook.com') }}</span>
                         </h4>
-               
+
                         <input type="text" class="input-field" placeholder="{{ __('Enter App Secret') }}"
-                        name="fclient_secret" value="{{ $data->fclient_secret }}" required="">
+                          name="fclient_secret" value="{{ $data->fclient_secret }}" required="">
                       </div>
                     </div>
 
@@ -82,14 +82,15 @@
                       <div class="input-form">
                         <h4 class="heading">{{ __('Website URL') }} *</h4>
                         <input type="text" class="input-field" placeholder="{{ __('Website URL') }}"
-                        value="{{ url('/') }}" readonly="">
+                          value="{{ url('/') }}" readonly="">
                       </div>
                     </div>
 
                     <div class="col-xl-6">
                       <div class="input-form">
                         <h4 class="heading">{{ __('Valid OAuth Redirect URI') }} *
-                          <span>{{ __('Copy this url and paste it to your Valid OAuth Redirect URI in developers.facebook.com.') }}</span>
+                          <span>{{ __('Copy this url and paste it to your Valid OAuth Redirect URI in
+                            developers.facebook.com.') }}</span>
                         </h4>
                         @php
                         $url = url('/auth/facebook/callback');
@@ -99,15 +100,15 @@
                           value="{{$url}}" readonly>
                       </div>
                     </div>
-                   
+
 
                   </div>
 
 
                   <div class="row justify-content-center">
-                    
-                      <button class="addProductSubmit-btn" type="submit">{{ __('Save') }}</button>
-                
+
+                    <button class="addProductSubmit-btn" type="submit">{{ __('Save') }}</button>
+
                   </div>
                 </form>
               </div>
