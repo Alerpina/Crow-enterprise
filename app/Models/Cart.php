@@ -525,16 +525,16 @@ class Cart extends CachedModel
                 $default < 0.05 ? $default = 0.05 : '';
                 break;
             case 'width':
-                $default = empty($this->storeSettings->correios_width)? 1 : $this->storeSettings->correios_width;
-                $default < 1 ? $default = 1 : '';
+                $default = empty($this->storeSettings->correios_width)? 10 : $this->storeSettings->correios_width;
+                $default < 10 ? $default = 10 : '';
                 break;
             case 'height':
                 $default = empty($this->storeSettings->correios_height)? 1 : $this->storeSettings->correios_height;
                 $default < 1 ? $default = 1 : '';
                 break;
             case 'length':
-                $default = empty($this->storeSettings->correios_length)? 1 : $this->storeSettings->correios_length;
-                $default < 1 ? $default = 1 : '';
+                $default = empty($this->storeSettings->correios_length)? 15 : $this->storeSettings->correios_length;
+                $default < 15 ? $default = 15 : '';
                 break;
         }
         if (empty($value) || $value < $default) {
@@ -546,12 +546,15 @@ class Cart extends CachedModel
     {
         $cart_volume = 0;
         foreach ($this->items as $prod) {
+            ds($prod['item']->original);
             $item_width = isset($prod['item']->original['width']) ? $prod['item']->original['width'] : 0;
             $item_height = isset($prod['item']->original['height']) ? $prod['item']->original['height'] : 0;
             $item_length = isset($prod['item']->original['length']) ? $prod['item']->original['length'] : 0;
+            ds($item_width, $item_height, $item_length)->label('volume');
             $temp_width = $this->checkMeasure($item_width, 'width');
             $temp_height = $this->checkMeasure($item_height, 'height');
             $temp_length = $this->checkMeasure($item_length, 'length');
+            ds($temp_width, $temp_height, $temp_length)->label('temp volume');
             $cart_volume = $cart_volume + (($temp_width * $temp_height * $temp_length) * $prod['qty']);
         }
         return $cart_volume;

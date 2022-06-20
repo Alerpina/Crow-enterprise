@@ -367,25 +367,51 @@ class CheckoutController extends Controller
         $responseShippings = [];
         $found = false;
         $html = "";
-        $cep = preg_replace('/[^0-9]/', null, $request->zip_code);
+        $cep = preg_replace('/[^0-9]/', '', $request->zip_code);
 
         /*
         * Métodos de Envio por Região
         * Se o CEP digitado estiver na faixa de algum dos métodos ativos e com uso de região ativado [evita duplicidade de shipping em momentos indevidos]
         */
-        $shippingsByRegion = Shipping::where('status', 1)->where('city_id', $request->city_id)->where('is_region', 1)->where('cep_start', '!=', null)->where('cep_end', '!=', null)->where('cep_start', '<=', (int)$cep)->where('cep_end', '>=', (int)$cep)->get();
+        $shippingsByRegion = Shipping::where('status', 1)
+                                ->where('city_id', $request->city_id)
+                                ->where('is_region', 1)
+                                ->where('cep_start', '!=', null)
+                                ->where('cep_end', '!=', null)
+                                ->where('cep_start', '<=', (int)$cep)->where('cep_end', '>=', (int)$cep)
+                                ->get();
 
         // 1 - Get shippings by city - all except those with region enabled
-        $shippingsByCity = Shipping::where(['status' => 1, 'city_id' => $request->city_id])->whereRaw('(is_region is null or is_region = 0)')->get();
+        $shippingsByCity = Shipping::where([
+                                'status' => 1,
+                                'city_id' => $request->city_id
+                            ])
+                            ->whereRaw('(is_region is null or is_region = 0)')
+                            ->get();
 
         // 2 - Get shippings by state
-        $shippingsByState = Shipping::where(['status' => 1, 'state_id' => $request->state_id])->whereNull('city_id')->get();
+        $shippingsByState = Shipping::where([
+                                    'status' => 1,
+                                    'state_id' => $request->state_id
+                                ])
+                                ->whereNull('city_id')
+                                ->get();
 
         // 3 - Get shippings by country
-        $shippingsByCountry = Shipping::where(['status' => 1, 'country_id' => $request->country_id])->whereNull('city_id')->whereNull('state_id')->get();
+        $shippingsByCountry = Shipping::where([
+                                    'status' => 1,
+                                    'country_id' => $request->country_id
+                                ])
+                                ->whereNull('city_id')
+                                ->whereNull('state_id')
+                                ->get();
 
         // 4 - Get shippings without location
-        $shippingsWithoutLocation = Shipping::where('status', 1)->whereNull('city_id')->whereNull('state_id')->whereNull('country_id')->get();
+        $shippingsWithoutLocation = Shipping::where('status', 1)
+                                        ->whereNull('city_id')
+                                        ->whereNull('state_id')
+                                        ->whereNull('country_id')
+                                        ->get();
 
         if ($shippingsByRegion->count() && !$found) {
             $responseShippings = $shippingsByRegion->toArray();
@@ -516,10 +542,10 @@ class CheckoutController extends Controller
         $dest_zipcode = '';
         if (!empty($request->zip_code)) {
             $dest_zipcode = $request->zip_code;
-            $dest_zipcode = preg_replace('/[^0-9]/', null, $dest_zipcode);
+            $dest_zipcode = preg_replace('/[^0-9]/', '', $dest_zipcode);
         }
-        $local_cep_start = preg_replace('/[^0-9]/', null, $this->storeSettings->localcep_start);
-        $local_cep_end = preg_replace('/[^0-9]/', null, $this->storeSettings->localcep_end);
+        $local_cep_start = preg_replace('/[^0-9]/', '', $this->storeSettings->localcep_start);
+        $local_cep_end = preg_replace('/[^0-9]/', '', $this->storeSettings->localcep_end);
 
         $correiosPac = '';
         $correiosSedex = '';
@@ -564,11 +590,11 @@ class CheckoutController extends Controller
         if ($this->storeSettings->is_correios) {
             $destino = $request->zip_code;
             $cep_origem = $this->storeSettings->correios_cep;
-            $cep_origem = preg_replace('/[^0-9]/', null, $cep_origem);
+            $cep_origem = preg_replace('/[^0-9]/', '', $cep_origem);
             $cep_destino = '';
             if (!empty($destino)) {
                 $cep_destino = $destino;
-                $cep_destino = preg_replace('/[^0-9]/', null, $cep_destino);
+                $cep_destino = preg_replace('/[^0-9]/', '', $cep_destino);
             }
 
             $oldCart = Session::get('cart');
@@ -635,6 +661,7 @@ class CheckoutController extends Controller
             $url = $url . '&nCdServico=' . $servico;
             $url = $url . '&nVlDiametro=' . $diametro;
             $url = $url . '&StrRetorno=xml';
+            ds($url)->label('correios');
             $retorno = ['erro' => 'Serviço temporariamente indisponível, tente novamente mais tarde.'];
             $frete_calcula = simplexml_load_string(file_get_contents($url));
             $frete = $frete_calcula->cServico;
@@ -647,7 +674,7 @@ class CheckoutController extends Controller
             } elseif ($frete->Erro == '7') {
                 $retorno = ['erro' => 'Serviço indisponível, tente mais tarde.'];
             } else {
-                $retorno = ['erro' => 'Erro no cálculo do frete. Erro:' . $frete->Erro];
+                $retorno = ['erro' => 'Erro no cálculo do frete. Erro:' . $frete->MsgErro];
             }
 
             if (!empty($retorno['erro'])) {
