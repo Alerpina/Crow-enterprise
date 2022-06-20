@@ -1481,7 +1481,7 @@
                     </div>
                     <div class="cupon-box">
                         <div id="coupon-link">
-                            <img src="{{ asset('storage/images/tag.png') }}">
+                            <img src="{{ asset('assets/images/tag.png') }}">
                             {{ __("Have a promotion code?") }}
                         </div>
                         <form id="check-coupon-form" class="coupon">
