@@ -661,7 +661,6 @@ class CheckoutController extends Controller
             $url = $url . '&nCdServico=' . $servico;
             $url = $url . '&nVlDiametro=' . $diametro;
             $url = $url . '&StrRetorno=xml';
-            ds($url)->label('correios');
             $retorno = ['erro' => 'Serviço temporariamente indisponível, tente novamente mais tarde.'];
             $frete_calcula = simplexml_load_string(file_get_contents($url));
             $frete = $frete_calcula->cServico;

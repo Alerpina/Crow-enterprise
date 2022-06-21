@@ -37,7 +37,7 @@ class Cart extends CachedModel
         $size_cost = 0;
         $color_cost = 0;
         $material_cost = 0;
-        $storedItem = ['qty' => 0,'size_key' => 0, 'photo' => $item->photo, 'size_qty' =>  $item->size_qty, 'color_qty' => $item->color_qty, 'color_price' => $item->color_price,'material_qty' => $item->material_qty,'material' => $item->material, 'material_price' => $item->material_price, 'max_quantity' => $item->max_quantity,'size_price' => $item->size_price, 'size' => $item->size, 'color' => $item->color, 'customizable_gallery' => $item->customizable_gallery, 'customizable_name' => $item->customizable_name, 'customizable_number' => $item->customizable_number, 'customizable_logo' => $item->customizable_logo, 'agree_terms' => $item->agree_terms, 'stock' => $item->stock, 'price' => $item->price, 'item' => $item, 'license' => '', 'dp' => '0','keys' => $keys, 'values' => $values];
+        $storedItem = ['qty' => 0,'size_key' => 0, 'photo' => $item->photo, 'size_qty' =>  $item->size_qty, 'color_key' => 0, 'color_qty' => $item->color_qty, 'color_price' => $item->color_price,'material_qty' => $item->material_qty,'material' => $item->material, 'material_price' => $item->material_price, 'max_quantity' => $item->max_quantity,'size_price' => $item->size_price, 'size' => $item->size, 'color' => $item->color, 'customizable_gallery' => $item->customizable_gallery, 'customizable_name' => $item->customizable_name, 'customizable_number' => $item->customizable_number, 'customizable_logo' => $item->customizable_logo, 'agree_terms' => $item->agree_terms, 'stock' => $item->stock, 'price' => $item->price, 'item' => $item, 'license' => '', 'dp' => '0','keys' => $keys, 'values' => $values];
         $custom_item_id = $id.$size.$material.$color.$customizable_gallery.$customizable_name.$customizable_number.$customizable_logo.str_replace(str_split(' ,'), '', $values);
 
         $custom_item_id = str_replace(array( '\'', '"', ',', '.', ' ', ';', '<', '>' ), '', $custom_item_id);
@@ -92,6 +92,9 @@ class Cart extends CachedModel
             $storedItem['size_price'] = $item->size_price[0];
             $size_cost = $item->size_price[0];
             $size_cost += $size_cost * ($this->storeSettings->product_percent / 100);
+        }
+        if (!empty($item->color)) {
+            $storedItem['color'] = $item->color[0];
         }
         if (!empty($color)) {
             $storedItem['color'] = $color;
@@ -546,15 +549,12 @@ class Cart extends CachedModel
     {
         $cart_volume = 0;
         foreach ($this->items as $prod) {
-            ds($prod['item']->original);
             $item_width = isset($prod['item']->original['width']) ? $prod['item']->original['width'] : 0;
             $item_height = isset($prod['item']->original['height']) ? $prod['item']->original['height'] : 0;
             $item_length = isset($prod['item']->original['length']) ? $prod['item']->original['length'] : 0;
-            ds($item_width, $item_height, $item_length)->label('volume');
             $temp_width = $this->checkMeasure($item_width, 'width');
             $temp_height = $this->checkMeasure($item_height, 'height');
             $temp_length = $this->checkMeasure($item_length, 'length');
-            ds($temp_width, $temp_height, $temp_length)->label('temp volume');
             $cart_volume = $cart_volume + (($temp_width * $temp_height * $temp_length) * $prod['qty']);
         }
         return $cart_volume;
