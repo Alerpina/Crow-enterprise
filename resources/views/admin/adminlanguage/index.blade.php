@@ -44,37 +44,6 @@
     </div>
 </div>
 
-{{-- DELETE MODAL --}}
-
-<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="modal1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <div class="modal-header d-block text-center">
-                <h4 class="modal-title d-inline-block">{{ __('Confirm Delete') }}</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                <p class="text-center">{{ __('You are about to delete this Language.') }}</p>
-                <p class="text-center">{{ __('Do you want to proceed?') }}</p>
-            </div>
-
-            <!-- Modal footer -->
-            <div class="modal-footer justify-content-center">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('Cancel') }}</button>
-                <a class="btn btn-danger btn-ok">{{ __('Delete') }}</a>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-{{-- DELETE MODAL ENDS --}}
-
 @endsection
 
 @section('scripts')
@@ -110,11 +79,6 @@
             $(this).find('.select').niceSelect();
         },
         initComplete: function(settings, json) {
-            $(".btn-area").append('<div class="col-sm-4 text-right">' +
-                '<a class="add-btn" href="{{route("admin-tlang-create")}}">' +
-                '<i class="fas fa-plus"></i> {{ __("Add New Language") }}' +
-                '</a>' +
-                '</div>');
             /*
             * Setando no Cookie a página atual
             */

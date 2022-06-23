@@ -10,6 +10,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use InvalidArgumentException;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;

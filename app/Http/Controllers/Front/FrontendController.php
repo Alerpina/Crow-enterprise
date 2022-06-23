@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers\Front;
 
+use Image;
+use Validator;
 use Carbon\Carbon;
-use App\Models\State;
-use App\Models\City;
+use Dompdf\Dompdf;
 use App\Models\Faq;
+use Dompdf\Options;
 use App\Models\Blog;
+use App\Models\City;
 use App\Models\Page;
 use App\Models\User;
 use App\Models\Order;
+use App\Models\State;
 use App\Models\Banner;
 use App\Models\Review;
 use App\Models\Slider;
@@ -18,30 +22,27 @@ use App\Models\Partner;
 use App\Models\Product;
 use App\Models\Service;
 use App\Models\Category;
+use App\Models\Currency;
 use App\Models\Language;
 use App\Models\Subscriber;
 use App\Models\TeamMember;
+use Dompdf\Css\Stylesheet;
 use App\Models\Pagesetting;
+use Illuminate\Support\Str;
 use App\Models\BlogCategory;
+use App\Models\Notification;
+use Facade\FlareClient\View;
 use Illuminate\Http\Request;
 use App\Classes\GeniusMailer;
 use InvalidArgumentException;
 use App\Models\Generalsetting;
 use App\Models\TeamMemberCategory;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\BlogCategoryTranslation;
-use App\Models\Currency;
-use Dompdf\Css\Stylesheet;
 use Illuminate\Support\Facades\Session;
-use Dompdf\Dompdf;
-use Dompdf\Options;
-use Facade\FlareClient\View;
-use Image;
-use Validator;
-use App\Models\Notification;
-use Illuminate\Support\Str;
 
 class FrontendController extends Controller
 {

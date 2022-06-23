@@ -24,8 +24,8 @@ class AdminLanguageController extends Controller
         $datas = AdminLanguage::orderBy('id');
         //--- Integrating This Collection Into Datatables
         return Datatables::of($datas)
-            ->addColumn('language', function(AdminLanguage $data){
-                if($data->is_default){ 
+            ->addColumn('language', function (AdminLanguage $data) {
+                if ($data->is_default) {
                     $badge = ' <span class="badge badge-pill badge-primary">'.__("Default").'</span>';
                     return __($data->language).$badge;
                 } else {
@@ -33,13 +33,16 @@ class AdminLanguageController extends Controller
                 }
             })
             ->addColumn('action', function (AdminLanguage $data) {
-                $delete = $data->id == 1 ? '' : '<a href="javascript:;" data-href="' . route('admin-tlang-delete', $data->id) . '" data-toggle="modal" data-target="#confirm-delete" class="delete"><i class="fas fa-trash-alt"></i> ' . __('Delete') . '</a>';
                 $default = $data->is_default == 1 ? '' : '<a class="status" data-href="' . route('admin-tlang-st', ['id1' => $data->id, 'id2' => 1]) . '"><i class="icofont-globe"></i> ' . __('Set Default') . '</a>';
+                if (empty($default)) {
+                    return '';
+                }
+
                 return '
                 <div class="godropdown">
                     <button class="go-dropdown-toggle"> ' . __('Actions') . '<i class="fas fa-chevron-down"></i></button>
                     <div class="action-list">
-                        <a href="' . route('admin-tlang-edit', $data->id) . '"> <i class="fas fa-edit"></i>' . __('Edit') . '</a>' . $delete . $default . '
+                        <a href="' . route('admin-tlang-edit', $data->id) . '">' . $default . '
                     </div>
                 </div>';
             })
@@ -56,7 +59,6 @@ class AdminLanguageController extends Controller
     //*** GET Request
     public function create()
     {
-
         return view('admin.adminlanguage.create');
     }
 
@@ -103,10 +105,10 @@ class AdminLanguageController extends Controller
         $data->save();
         //--- Logic Section Ends
 
-        //--- Redirect Section        
+        //--- Redirect Section
         $msg = __('New Data Added Successfully.');
         return response()->json($msg);
-        //--- Redirect Section Ends    
+        //--- Redirect Section Ends
     }
 
     //*** GET Request
@@ -129,7 +131,7 @@ class AdminLanguageController extends Controller
             }
             $newKeys = array_diff_key($keys, $langJson);
             $langEdit = array_merge($newKeys, $langJson);
-        } else if (file_exists(resource_path("lang") . '/base_admin_' . $data->name . '.json')) {
+        } elseif (file_exists(resource_path("lang") . '/base_admin_' . $data->name . '.json')) {
             $data_results = file_get_contents(resource_path("lang") . '/base_admin_' . $data->name . '.json');
             $langJson = json_decode($data_results, true);
 
@@ -197,7 +199,7 @@ class AdminLanguageController extends Controller
             if (file_exists(resource_path("lang") . '/' . $oldFile)) {
                 $data_results = file_get_contents(resource_path("lang") . '/' . $oldFile);
                 $langJson = json_decode($data_results, true);
-            } else if (file_exists(resource_path("lang") . '/base_admin_' . $data->name . '.json')) {
+            } elseif (file_exists(resource_path("lang") . '/base_admin_' . $data->name . '.json')) {
                 $data_results = file_get_contents(resource_path("lang") . '/base_admin_' . $data->name . '.json');
                 $langJson = json_decode($data_results, true);
             } else {
@@ -220,10 +222,10 @@ class AdminLanguageController extends Controller
         }
         $data->update();
 
-        //--- Redirect Section     
+        //--- Redirect Section
         $msg = __('Data Updated Successfully.');
         return response()->json($msg);
-        //--- Redirect Section Ends            
+        //--- Redirect Section Ends
     }
 
     public function status($id1, $id2)
@@ -232,10 +234,10 @@ class AdminLanguageController extends Controller
         $data->is_default = $id2;
         $data->update();
         $data = AdminLanguage::where('id', '!=', $id1)->update(['is_default' => 0]);
-        //--- Redirect Section     
+        //--- Redirect Section
         $msg = __('Data Updated Successfully.');
         return response()->json($msg);
-        //--- Redirect Section Ends  
+        //--- Redirect Section Ends
     }
 
     //*** GET Request Delete
@@ -253,10 +255,10 @@ class AdminLanguageController extends Controller
             unlink(resource_path("lang") . '/' . $oldFile);
         }
         $data->delete();
-        //--- Redirect Section     
+        //--- Redirect Section
         $msg = __('Data Deleted Successfully.');
         return response()->json($msg);
-        //--- Redirect Section Ends     
+        //--- Redirect Section Ends
     }
 
     /**

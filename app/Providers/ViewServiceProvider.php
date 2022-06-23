@@ -39,24 +39,23 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if(!app()->runningInConsole()) {
+        if (!app()->runningInConsole()) {
             $storeSettings = resolve('storeSettings');
             $storeLocale = resolve('storeLocale');
             $locales = resolve('locales');
             $storeCurrency = resolve('storeCurrency');
             $currencies = resolve('currencies');
-            app()->instance('adminLocale', AdminLanguage::where('is_default','=',1)->first());
-
-            view()->composer('admin.*', function($settings) {
+            app()->instance('adminLocale', AdminLanguage::where('is_default', '=', 1)->first());
+            view()->composer('admin.*', function ($settings) {
                 $settings->with('notifications_count', Notification::count());
             });
 
             view()->composer('front.themes.*', function ($settings) {
-                $categories = Category::with('subs_order_by.childs_order_by')->orderBy('presentation_position','asc')->where('status',1)->get();
-                
+                $categories = Category::with('subs_order_by.childs_order_by')->orderBy('presentation_position', 'asc')->where('status', 1)->get();
+
                 $settings->with('categories', $categories);
-                $settings->with('pheader', Page::where('header','=',1)->get());
-                $settings->with('pfooter', Page::where('footer','=',1)->get());
+                $settings->with('pheader', Page::where('header', '=', 1)->get());
+                $settings->with('pfooter', Page::where('footer', '=', 1)->get());
                 $settings->with('socials', Socialsetting::find(1));
                 $settings->with('fblogs', Blog::orderBy('created_at', 'desc')->limit(3)->get());
                 $settings->with('twhatsapp', TeamMemberCategory::withWhatsApp()->with('team_members')->get());
@@ -66,7 +65,7 @@ class ViewServiceProvider extends ServiceProvider
                 $settings->with('seo', Seotool::find(1));
                 $settings->with('gs', $storeSettings);
                 $ps = PageSetting::where('store_id', $storeSettings->id)->first();
-                $services = Service::where('user_id','=',0)->get();
+                $services = Service::where('user_id', '=', 0)->get();
                 $settings->with('admstore', Session::has('admstore') ? Session::get('admstore') : $storeSettings);
                 $settings->with('stores', Generalsetting::all());
                 $settings->with('locales', $locales);
@@ -79,8 +78,8 @@ class ViewServiceProvider extends ServiceProvider
 
                 if (Session::has('language') && $storeSettings->is_language && config("features.lang_switcher")) {
                     $data = Language::find(Session::get('language'));
-                } 
-                $settings->with('slocale', $data);           
+                }
+                $settings->with('slocale', $data);
                 App::setlocale($data->locale);
 
                 if (Route::current() && Route::is('admin*')) {
@@ -88,25 +87,25 @@ class ViewServiceProvider extends ServiceProvider
                     App::setlocale("admin_{$admin_lang->name}");
                 }
 
-                $current_locale = strtolower(str_replace('admin_','',App::getLocale()));
+                $current_locale = strtolower(str_replace('admin_', '', App::getLocale()));
                 $datatable_translation = asset('assets/lang/datatable_en.json');
-                if(file_exists(public_path()."/assets/lang/datatable_".$current_locale.".json")){
+                if (file_exists(public_path()."/assets/lang/datatable_".$current_locale.".json")) {
                     $datatable_translation = asset('assets/lang/datatable_'.$current_locale.'.json');
                 }
                 $settings->with('current_locale', $current_locale);
                 $settings->with('datatable_translation', $datatable_translation);
-                
+
                 $str_document = __('Document');
-                if(config('document.cpf')){
+                if (config('document.cpf')) {
                     $str_document = 'CPF';
                 }
-                if(config('document.cnpj')){
+                if (config('document.cnpj')) {
                     $str_document = 'CNPJ';
                 }
-                if(config('document.general')){
+                if (config('document.general')) {
                     $str_document = 'Document';
                 }
-                
+
                 $settings->with('customer_doc_str', $str_document);
 
                 if (!Session::has('popup')) {
@@ -122,7 +121,7 @@ class ViewServiceProvider extends ServiceProvider
 
                 if (Session::has('currency') && $storeSettings->is_currency && config("features.currency_switcher")) {
                     $data = Currency::find(Session::get('currency'));
-                } 
+                }
                 $settings->with('scurrency', $data);
             });
         }
