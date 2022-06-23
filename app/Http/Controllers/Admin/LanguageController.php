@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Validator;
 
 class LanguageController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth:admin');
@@ -29,8 +28,8 @@ class LanguageController extends Controller
         $datas = Language::orderBy('id');
         //--- Integrating This Collection Into Datatables
         return Datatables::of($datas)
-            ->addColumn('language', function(Language $data){
-                if($data->is_default){ 
+            ->addColumn('language', function (Language $data) {
+                if ($data->is_default) {
                     $badge = ' <span class="badge badge-pill badge-primary">'.__("Default").'</span>';
                     return __($data->language).$badge;
                 } else {
@@ -38,20 +37,21 @@ class LanguageController extends Controller
                 }
             })
             ->addColumn('action', function (Language $data) {
-                $delete = $data->id == 1 ? '' : '
-                <a href="javascript:;" data-href="' . route('admin-lang-delete', $data->id) . '" data-toggle="modal" data-target="#confirm-delete" class="delete">
-                    <i class="fas fa-trash-alt"></i> ' . __('Delete') . '
-                </a>';
                 if (Session::has('admstore')) {
                     $default = Session::get('admstore')->lang_id == $data->id ? '' : '<a class="status" data-href="' . route('admin-lang-st', ['id1' => $data->id, 'id2' => 1]) . '"><i class="icofont-globe"></i> ' . __('Set Default') . '</a>';
                 } else {
                     $default = $this->storeSettings->lang_id == $data->id ? '' : '<a class="status" data-href="' . route('admin-lang-st', ['id1' => $data->id, 'id2' => 1]) . '"><i class="icofont-globe"></i> ' . __('Set Default') . '</a>';
                 }
+
+                if (empty($default)) {
+                    return '';
+                }
+
                 return '
                 <div class="godropdown">
                     <button class="go-dropdown-toggle"> ' . __('Actions') . '<i class="fas fa-chevron-down"></i></button>
                     <div class="action-list">
-                        <a href="' . route('admin-lang-edit', $data->id) . '"> <i class="fas fa-edit"></i>' . __('Edit') . '</a>' . $delete . $default . '
+                        <a href="' . route('admin-lang-edit', $data->id) . '">' . $default . '
                     </div>
                 </div>';
             })
@@ -98,16 +98,16 @@ class LanguageController extends Controller
         unset($input['language']);
         unset($input['rtl']);
 
-        if(file_exists(resource_path("lang") . '/base_' . $data->locale . '.json')){
+        if (file_exists(resource_path("lang") . '/base_' . $data->locale . '.json')) {
             copy(resource_path("lang") . '/base_' . $data->locale . '.json', resource_path("lang") . '/' . $data->locale . '.json');
-        }else{
-        $fields = $this->getTranslationKeys();
-        sort($fields, SORT_STRING | SORT_FLAG_CASE);
-        foreach ($fields as $field) {
-            $translations[$field] = "";
-        }
-        $mydata = json_encode($translations);
-        file_put_contents(resource_path("lang") . '/' . $data->file, $mydata);
+        } else {
+            $fields = $this->getTranslationKeys();
+            sort($fields, SORT_STRING | SORT_FLAG_CASE);
+            foreach ($fields as $field) {
+                $translations[$field] = "";
+            }
+            $mydata = json_encode($translations);
+            file_put_contents(resource_path("lang") . '/' . $data->file, $mydata);
         }
 
         $data->save();
@@ -127,27 +127,27 @@ class LanguageController extends Controller
         $keys = array_flip($fields);
 
         $data = Language::findOrFail($id);
-        if(file_exists(resource_path("lang") . '/' . $data->file)){
+        if (file_exists(resource_path("lang") . '/' . $data->file)) {
             $data_results = file_get_contents(resource_path("lang") . '/' . $data->file);
             $langJson = json_decode($data_results, true);
             $langJson = array_filter($langJson);
-            if(file_exists(resource_path("lang") . '/base_' . $data->locale . '.json')){
+            if (file_exists(resource_path("lang") . '/base_' . $data->locale . '.json')) {
                 $data_results_base = file_get_contents(resource_path("lang") . '/base_' . $data->locale . '.json');
                 $langJsonBase = json_decode($data_results_base, true);
-                $newBaseKeys = array_diff_key($langJsonBase,$langJson);
-                $langJson = array_merge($newBaseKeys,$langJson);
+                $newBaseKeys = array_diff_key($langJsonBase, $langJson);
+                $langJson = array_merge($newBaseKeys, $langJson);
             }
-            
+
             $newKeys = array_diff_key($keys, $langJson);
-            
+
             $langEdit = array_merge($newKeys, $langJson);
-        }else if(file_exists(resource_path("lang") . '/base_' . $data->locale . '.json')){
+        } elseif (file_exists(resource_path("lang") . '/base_' . $data->locale . '.json')) {
             $data_results = file_get_contents(resource_path("lang") . '/base_' . $data->locale . '.json');
             $langJson = json_decode($data_results, true);
 
-        $newKeys = array_diff_key($keys, $langJson);
-        $langEdit = array_merge($newKeys, $langJson);
-        }else{
+            $newKeys = array_diff_key($keys, $langJson);
+            $langEdit = array_merge($newKeys, $langJson);
+        } else {
             $langEdit = $keys;
         }
         ksort($langEdit, SORT_STRING | SORT_FLAG_CASE);
@@ -178,7 +178,7 @@ class LanguageController extends Controller
         $data = Language::findOrFail($id);
         $oldFile = $data->file; //the locale can be edited
         $oldLocale = $data->locale;
-        
+
         $data->language = $input['language'];
         $data->locale = $input['locale'];
         $data->rtl = $input['rtl'];
@@ -195,9 +195,9 @@ class LanguageController extends Controller
             if (file_exists(resource_path("lang") . '/' .$oldFile) && !empty($oldFile)) {
                 unlink(resource_path("lang") . '/' . $oldFile);
             }
-            if(file_exists(resource_path("lang") . '/base_' . $data->locale . '.json')){
+            if (file_exists(resource_path("lang") . '/base_' . $data->locale . '.json')) {
                 copy(resource_path("lang") . '/base_' . $data->locale . '.json', resource_path("lang") . '/' . $data->locale . '.json');
-            }else{
+            } else {
                 $fields = $this->getTranslationKeys();
                 sort($fields, SORT_STRING | SORT_FLAG_CASE);
                 foreach ($fields as $field) {
@@ -206,31 +206,31 @@ class LanguageController extends Controller
                 $mydata = json_encode($translations);
                 file_put_contents(resource_path("lang") . '/' . $data->file, $mydata);
             }
-        }else{
-            if(file_exists(resource_path("lang") . '/' . $oldFile)){
+        } else {
+            if (file_exists(resource_path("lang") . '/' . $oldFile)) {
                 $data_results = file_get_contents(resource_path("lang") . '/' . $oldFile);
                 $langJson = json_decode($data_results, true);
-            }else if(file_exists(resource_path("lang") . '/base_' . $data->locale . '.json')){
+            } elseif (file_exists(resource_path("lang") . '/base_' . $data->locale . '.json')) {
                 $data_results = file_get_contents(resource_path("lang") . '/base_' . $data->locale . '.json');
                 $langJson = json_decode($data_results, true);
-            }else{
+            } else {
                 $fields = $this->getTranslationKeys();
                 $langJson = array_flip($fields);
             }
 
-        foreach ($input['fields'] as $field) {
-            $translations[$field["key"]] = (!empty($field["translation"]) ? $field["translation"] : "");
+            foreach ($input['fields'] as $field) {
+                $translations[$field["key"]] = (!empty($field["translation"]) ? $field["translation"] : "");
+            }
+
+            $lang = array_merge($langJson, $translations);
+            ksort($lang, SORT_STRING | SORT_FLAG_CASE);
+
+            $mydata = json_encode($lang);
+            file_put_contents(resource_path("lang") . '/' . $data->file, $mydata);
         }
-
-        $lang = array_merge($langJson, $translations);
-        ksort($lang, SORT_STRING | SORT_FLAG_CASE);
-
-        $mydata = json_encode($lang);
-        file_put_contents(resource_path("lang") . '/' . $data->file, $mydata);
-        }        
         $data->update();
 
-        if($oldLocale !== $data->locale) {
+        if ($oldLocale !== $data->locale) {
             $this->fixContentLocale($oldLocale, $data->locale);
         }
 
