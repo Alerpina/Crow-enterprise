@@ -1239,9 +1239,6 @@ class CreateDatabase extends Migration
         Schema::table('verification_translations', function (Blueprint $table) {
             $table->foreign('verification_id')->references('id')->on('verifications')->onUpdate('RESTRICT')->onDelete('CASCADE');
         });
-
-        Helper::updateAllLanguages(true);
-        Helper::updateAllAdminLanguages(true);
     }
 
     /**
@@ -1473,7 +1470,5 @@ class CreateDatabase extends Migration
         Schema::dropIfExists('verifications');
         Schema::dropIfExists('wishlists');
         Schema::dropIfExists('withdraws');
-      
     }
-
 }

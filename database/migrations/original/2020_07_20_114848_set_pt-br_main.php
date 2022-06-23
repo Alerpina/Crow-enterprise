@@ -21,7 +21,7 @@ class SetPtBrMain extends Migration
                     ->where('id', $row->id)
                     ->update(['lang_id' => 1]);
         }
-        
+
         $rows = DB::table('languages')->get(['id']);
         foreach ($rows as $row) {
             if ($row->id == 1) {
@@ -55,10 +55,6 @@ class SetPtBrMain extends Migration
                 DB::table('admin_languages')->where('id', $row->id)->delete();
             }
         }
-
-        Helper::updateAllLanguages(true);
-        Helper::updateAllAdminLanguages(true);
-
     }
 
     /**
