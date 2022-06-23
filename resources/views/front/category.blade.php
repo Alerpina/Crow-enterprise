@@ -110,7 +110,7 @@
 
     if ($("#prod_name").val() != '') {
       if (filterlink == '') {
-        filterlink += '{{route('front.category', [Request::route('category'), Request::route('subcategory'), Request::route('childcategory')])}}' + '?searchHttp='+$("#prod_name").val();
+        filterlink += '{{route("front.category", [Request::route("category"), Request::route("subcategory"), Request::route("childcategory")])}}' + '?searchHttp='+$("#prod_name").val();
       } else {
         filterlink += '&searchHttp='+$("#prod_name").val();
       }
@@ -119,7 +119,7 @@
     $(".attribute-input").each(function() {
       if ($(this).is(':checked')) {
         if (filterlink == '') {
-          filterlink += '{{route('front.category', [Request::route('category'), Request::route('subcategory'), Request::route('childcategory')])}}' + '?'+$(this).attr('name')+'='+$(this).val();
+          filterlink += '{{route("front.category", [Request::route("category"), Request::route("subcategory"), Request::route("childcategory")])}}' + '?'+$(this).attr('name')+'='+$(this).val();
         } else {
           filterlink += '&'+$(this).attr('name')+'='+$(this).val();
         }
@@ -128,7 +128,7 @@
 
     if( $("#qty").val() != ''){
       if (filterlink == '') {
-        filterlink += '{{route('front.category', [Request::route('category'), Request::route('subcategory'), Request::route('childcategory')])}}' + '?'+$("#qty").attr('name')+'='+$("#qty").val();
+        filterlink += '{{route("front.category", [Request::route("category"), Request::route("subcategory"), Request::route("childcategory")])}}' + '?'+$("#qty").attr('name')+'='+$("#qty").val();
       } else {
         filterlink += '&'+$("#qty").attr('name')+'='+$("#qty").val();
       }
@@ -136,7 +136,7 @@
 
     if ($("#sortby").val() != '') {
       if (filterlink == '') {
-        filterlink += '{{route('front.category', [Request::route('category'), Request::route('subcategory'), Request::route('childcategory')])}}' + '?'+$("#sortby").attr('name')+'='+$("#sortby").val();
+        filterlink += '{{route("front.category", [Request::route("category"), Request::route("subcategory"), Request::route("childcategory")])}}' + '?'+$("#sortby").attr('name')+'='+$("#sortby").val();
       } else {
         filterlink += '&'+$("#sortby").attr('name')+'='+$("#sortby").val();
       }
@@ -144,7 +144,7 @@
 
     if ($("#min_price").val() != '') {
       if (filterlink == '') {
-        filterlink += '{{route('front.category', [Request::route('category'), Request::route('subcategory'), Request::route('childcategory')])}}' + '?'+$("#min_price").attr('name')+'='+$("#min_price").val();
+        filterlink += '{{route("front.category", [Request::route("category"), Request::route("subcategory"), Request::route("childcategory")])}}' + '?'+$("#min_price").attr('name')+'='+$("#min_price").val();
       } else {
         filterlink += '&'+$("#min_price").attr('name')+'='+$("#min_price").val();
       }
@@ -152,12 +152,14 @@
 
     if ($("#max_price").val() != '') {
       if (filterlink == '') {
-        filterlink += '{{route('front.category', [Request::route('category'), Request::route('subcategory'), Request::route('childcategory')])}}' + '?'+$("#max_price").attr('name')+'='+$("#max_price").val();
+        filterlink += '{{route("front.category", [Request::route("category"), Request::route("subcategory"), Request::route("childcategory")])}}' + '?'+$("#max_price").attr('name')+'='+$("#max_price").val();
       } else {
         filterlink += '&'+$("#max_price").attr('name')+'='+$("#max_price").val();
       }
     }
+
     $("#ajaxContent").load(encodeURI(filterlink), function(data) {
+        console.log('ajax content');
       // add query string to pagination
       addToPagination();
       $("#ajaxLoader").fadeOut(1000);
@@ -175,7 +177,7 @@
       let urlParams = new URLSearchParams(queryString);
       let page = urlParams.get('page'); // value of 'page' parameter
 
-      let fullUrl = '{{route('front.category', [Request::route('category'),Request::route('subcategory'),Request::route('childcategory')])}}?page='+page+'&searchHttp='+'{{request()->input('searchHttp')}}';
+      let fullUrl = '{{route("front.category", [Request::route("category"),Request::route("subcategory"),Request::route("childcategory")])}}?page='+page+'&searchHttp='+'{{request()->input("searchHttp")}}';
 
       $(".attribute-input").each(function() {
         if ($(this).is(':checked')) {
