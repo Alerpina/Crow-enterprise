@@ -140,8 +140,7 @@
 @endif
 @if(isset($ajax_check))
 <script type="text/javascript">
-    // Tooltip Section
-	$('[data-toggle="tooltip"]').tooltip({});
+    $('[data-toggle="tooltip"]').tooltip({});
 	$('[data-toggle="tooltip"]').on('click', function() {
 		$(this).tooltip('hide');
 	});
@@ -149,6 +148,5 @@
 	$('[rel-toggle="tooltip"]').on('click', function() {
 		$(this).tooltip('hide');
 	});
-	// Tooltip Section Ends
 </script>
 @endif
