@@ -24,9 +24,9 @@ class Cart extends CachedModel
         $this->storeLocale = (Session::has('language') ? Language::find(Session::get('language')) : Language::find($this->storeSettings->lang_id));
 
         if ($oldCart) {
-            $this->items = $oldCart->items;
-            $this->totalQty = $oldCart->totalQty;
-            $this->totalPrice = $oldCart->totalPrice;
+            $this->items = $oldCart['items'];
+            $this->totalQty = $oldCart['totalQty'];
+            $this->totalPrice = $oldCart['totalPrice'];
         }
     }
 

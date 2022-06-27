@@ -2,15 +2,16 @@
 
 namespace App\Classes;
 
-class MelhorEnvio{
+class MelhorEnvio
+{
+    public $url;
+    public $authorization_code;
 
-    var $url;
-    var $authorization_code;
+    public $productionUrl = "https://www.melhorenvio.com.br";
+    public $sandboxUrl = "https://sandbox.melhorenvio.com.br";
 
-    var $productionUrl = "https://www.melhorenvio.com.br";
-    var $sandboxUrl = "https://sandbox.melhorenvio.com.br";
-
-    function __construct($token, $production = false){
+    public function __construct($token, $production = false)
+    {
         $this->token = $token;
         $this->url = $production ? $this->productionUrl : $this->sandboxUrl;
     }
@@ -18,7 +19,8 @@ class MelhorEnvio{
     /**
      * @return json - Array
      */
-    public function getBalance(){        
+    public function getBalance()
+    {
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => $this->url . "/api/v2/me/balance",
@@ -52,7 +54,8 @@ class MelhorEnvio{
      * @param string $services - Services ids ("1,2")
      * @return json - Array
      */
-    public function getRates($origin,$destination,$package = null, $products = null,$options,$services){
+    public function getRates($origin, $destination, $package = null, $products = null, $options, $services)
+    {
         $request = (object)[
             "from" => (object)[
                 "postal_code" => $origin
@@ -65,7 +68,7 @@ class MelhorEnvio{
             "options" => $options,
             "services" => $services
         ];
-        
+
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => $this->url . "/api/v2/me/shipment/calculate",
@@ -95,7 +98,8 @@ class MelhorEnvio{
      * @param string $coupon - String - Discount Coupon
      * @return json - Array
      */
-    public function addToCart($service,$agency,$from,$to,$products,$package,$options,$coupon){
+    public function addToCart($service, $agency, $from, $to, $products, $package, $options, $coupon)
+    {
         $request = (object)[
             "service" => $service,
             "agency" => $agency,
@@ -106,7 +110,7 @@ class MelhorEnvio{
             "options" => $options,
             "coupon" => $coupon
         ];
-        
+
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => $this->url . "/api/v2/me/cart",
@@ -129,11 +133,12 @@ class MelhorEnvio{
      * @param array    $orders - Array - Orders uuid array
      * @return json - Array
      */
-    public function checkoutCart($orders){
+    public function checkoutCart($orders)
+    {
         $request = (object)[
             "orders" => $orders
         ];
-        
+
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => $this->url . "/api/v2/me/shipment/checkout",
@@ -156,11 +161,12 @@ class MelhorEnvio{
      * @param array    $orders - Array - Orders uuid array
      * @return json - Array
      */
-    public function preview($orders){
+    public function preview($orders)
+    {
         $request = (object)[
             "orders" => $orders
         ];
-        
+
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => $this->url . "/api/v2/me/shipment/preview",
@@ -183,12 +189,13 @@ class MelhorEnvio{
      * @param array    $orders - Array - Orders uuid array
      * @return json - Array
      */
-    public function print($orders){
+    public function print($orders)
+    {
         $request = (object)[
             "mode" => "private",
             "orders" => $orders
         ];
-        
+
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => $this->url . "/api/v2/me/shipment/print",
@@ -211,11 +218,12 @@ class MelhorEnvio{
      * @param array    $orders - Array - Orders uuid array
      * @return json - Array
      */
-    public function generate($orders){
+    public function generate($orders)
+    {
         $request = (object)[
             "orders" => $orders
         ];
-        
+
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => $this->url . "/api/v2/me/shipment/generate",
@@ -240,13 +248,14 @@ class MelhorEnvio{
      * @param string    $description - string - Description
      * @return json - Array
      */
-    public function cancel($order, $description){
+    public function cancel($order, $description)
+    {
         $request = [(object)[
             "id" => $order,
             "reason_id" => 2,
             "description" => $description
         ]];
-        
+
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => $this->url . "/api/v2/me/shipment/cancel",
@@ -269,11 +278,12 @@ class MelhorEnvio{
      * @param array    $orders - Array - Orders uuid array
      * @return json - Array
      */
-    public function getOrderTracking($orders){        
+    public function getOrderTracking($orders)
+    {
         $request = (object)[
             "orders" => $orders
         ];
-        
+
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => $this->url . "/api/v2/me/shipment/tracking",
@@ -293,10 +303,11 @@ class MelhorEnvio{
     }
 
     /**
-     * @param string $order - String - Order uuid 
+     * @param string $order - String - Order uuid
      * @return json - Array
      */
-    public function getOrderInfo($order){        
+    public function getOrderInfo($order)
+    {
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => $this->url . "/api/v2/me/orders/".$order,
@@ -316,8 +327,8 @@ class MelhorEnvio{
     /**
      * @return json - Array - List of companies and services.
      */
-    public static function getCompanies(){
-        
+    public static function getCompanies()
+    {
         $productionUrl = "https://www.melhorenvio.com.br";
 
         $curl = curl_init();
@@ -325,11 +336,11 @@ class MelhorEnvio{
             CURLOPT_URL => $productionUrl . "/api/v2/me/shipment/companies",
             CURLOPT_RETURNTRANSFER => 1
         ));
-        
+
         $resp = curl_exec($curl);
-        
+
         $resp = json_decode($resp, JSON_OBJECT_AS_ARRAY);
-        
+
         return $resp;
     }
 
@@ -339,8 +350,8 @@ class MelhorEnvio{
      * @param string $city - String - City
      * @return json - Array - List of agencies.
      */
-    public static function getAgencies($company_id = null, $state_abbr = null, $city = null){
-        
+    public static function getAgencies($company_id = null, $state_abbr = null, $city = null)
+    {
         $productionUrl = "https://www.melhorenvio.com.br";
 
         $options = "";
@@ -355,10 +366,9 @@ class MelhorEnvio{
         ));
 
         $resp = curl_exec($curl);
-        
+
         $resp = json_decode($resp, JSON_OBJECT_AS_ARRAY);
-        
+
         return $resp;
     }
-
 }
