@@ -19,19 +19,14 @@ class OrderObserver
      */
     public function updated(Order $order)
     {
-        if(config('features.redplay_digital_product'))
-        {
-            if($order->payment_status === 'Completed')
-            {
-                $cart = unserialize(bzdecompress(utf8_decode($order->cart)));
-                foreach($cart->items as $cartItem)
-                {
+        if (config('features.redplay_digital_product')) {
+            if ($order->payment_status === 'Completed') {
+                $cart = $order->cart;
+                foreach ($cart['items'] as $cartItem) {
                     $product = $cartItem['item'];
-                    if($product->licenses)
-                    {
+                    if ($product->licenses) {
                         $licenseToBeSentByEmail = License::where('product_id', $product->id)->where('available', true)->first();
-                        if($licenseToBeSentByEmail)
-                        {
+                        if ($licenseToBeSentByEmail) {
                             Log::debug('License to be Sent: ', [$licenseToBeSentByEmail]);
 
                             Mail::to($order->customer_email)->queue(new RedplayLicenseMail($order, $licenseToBeSentByEmail));
