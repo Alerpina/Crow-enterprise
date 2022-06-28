@@ -7,13 +7,11 @@
                 <div class="section-top">
                     <h2 class="section-title">
                         {{ __("Big Save") }}
-                        @if(env('THEME') == "theme-05" || env('THEME') == "theme-06" ||
-                        env('THEME') == "theme-07")
+
                         <div id="post-title">
-                            <img src="{{ asset('project/resources/views/front/themes/theme-03/storage/images/post-it.png')}}"
+                            <img src="{{ asset('assets/front/themes/theme-03/assets/images/post-it.png')}}"
                                 class="img-fluid" alt="Post it">
                         </div>
-                        @endif
                     </h2>
 
                 </div>
@@ -27,11 +25,8 @@
                     @endif
                     <div class="row row-theme">
                         @foreach($big_products as $prod)
-                        @if(env('THEME','theme-01') == "theme-01" || env('THEME') == "theme-02")
-                        @include('includes.product.home-product')
-                        @else
-                        @include('front.themes.'.env('THEME', 'theme-01').'.components.home-product')
-                        @endif
+
+                        @include('front.themes.theme-03.components.home-product')
                         @endforeach
                     </div>
                 </div>
