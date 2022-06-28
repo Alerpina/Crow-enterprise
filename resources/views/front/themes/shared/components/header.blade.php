@@ -233,7 +233,7 @@
                         </li>
                         @endif
 
-                        <li class="wishlist" data-toggle="tooltip" data-placement="top" title="{{ __(" Wish") }}">
+                        <li class="wishlist" data-toggle="tooltip" data-placement="top" title="{{ __('Wish') }}">
 
                             @if(Auth::guard('web')->check())
                             <a href="{{ route('user-wishlists') }}" class="wish">
@@ -249,7 +249,7 @@
                             @endif
 
                         </li>
-                        <li class="compare" data-toggle="tooltip" data-placement="top" title="{{ __(" Compare") }}">
+                        <li class="compare" data-toggle="tooltip" data-placement="top" title="{{ __('Compare') }}">
                             <a href="{{ route('product.compare') }}" class="wish compare-product">
                                 <div class="icon">
                                     <i class="fas fa-exchange-alt"></i>

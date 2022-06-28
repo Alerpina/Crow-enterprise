@@ -34,7 +34,7 @@
                                 <form class="mloginform" action="{{ route('user.login.submit') }}" method="POST">
                                     {{ csrf_field() }}
                                     <div class="form-input">
-                                        <input type="email" name="email" placeholder="{{ __(" Type Email Address") }}"
+                                        <input type="email" name="email" placeholder="{{ __('Type Email Address') }}"
                                             required>
                                         <i class="icofont-user-alt-5"></i>
                                     </div>
@@ -56,7 +56,7 @@
                                         </div>
                                     </div>
                                     <input type="hidden" name="modal" value="1">
-                                    <input class="mauthdata" type="hidden" value="{{ __(" Authenticating...") }}">
+                                    <input class="mauthdata" type="hidden" value="{{ __('Authenticating...') }}">
                                     <button type="submit" class="submit-btn">{{ __("Login") }}</button>
 
                                     @if($socials->f_check == 1 ||
@@ -104,13 +104,13 @@
 
                                     <div class="form-input">
                                         <input type="text" class="User Name" name="name" pattern="^(\S*)\s+(.*)$"
-                                            placeholder="{{ __(" Full Name") }}" required>
+                                            placeholder="{{ __('Full Name') }}" required>
                                         <i class="icofont-user-alt-5"></i>
                                     </div>
 
                                     <div class="form-input">
-                                        <input type="email" class="User Name" name="email" placeholder="{{ __(" Email
-                                            Address") }}" required>
+                                        <input type="email" class="User Name" name="email"
+                                            placeholder="{{ __('Email Address') }}" required>
                                         <i class="icofont-email"></i>
                                     </div>
 
@@ -122,7 +122,7 @@
 
                                     <div class="form-input">
                                         <input type="password" class="Password" name="password_confirmation"
-                                            placeholder="{{ __(" Confirm Password") }}" required>
+                                            placeholder="{{ __('Confirm Password') }}" required>
                                         <i class="icofont-ui-password"></i>
                                     </div>
 
@@ -137,8 +137,8 @@
                                     </ul>
 
                                     <div class="form-input">
-                                        <input type="text" class="Password" name="codes" placeholder="{{ __(" Enter
-                                            Code") }}" required>
+                                        <input type="text" class="Password" name="codes"
+                                            placeholder="{{ __('Enter Code') }}" required>
                                         <i class="icofont-refresh"></i>
                                     </div>
                                     @endif
@@ -156,7 +156,7 @@
                                         </div>
                                     </div>
 
-                                    <input class="mprocessdata" type="hidden" value="{{ __(" Processing...") }}">
+                                    <input class="mprocessdata" type="hidden" value="{{ __('Processing...') }}">
                                     <button type="submit" class="submit-btn">{{ __("Register") }}</button>
                                 </form>
                             </div>

@@ -5,12 +5,14 @@
         <div class="row">
             @foreach($large_banners->chunk(1) as $chunk)
             @foreach($chunk as $img)
-            <div class="col-lg-12">
+
+            <div class="col-12 p-2">
+
                 <div class="img">
-                    <a class="{{ env('THEME') == " theme-08" ? "" : "banner-effect" }} banner-w100"
-                        href="{{ $img->link }}">
+
+                    <a class=" banner-effect link-banner-larges" href="{{ $img->link }}">
                         <figure>
-                            <img src="{{asset('storage/images/banners/'.$img->photo)}}" alt="Banner">
+                            <img class="banner-larges" src="{{asset('storage/images/banners/'.$img->photo)}}" alt="">
                         </figure>
                     </a>
                 </div>

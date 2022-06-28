@@ -22,11 +22,8 @@
             <div class="col-lg-12 remove-padding">
                 <div class="trending-item-slider">
                     @foreach($feature_products as $prod)
-                    @if(env('THEME', 'theme-01') == "theme-01" || env('THEME') == "theme-02")
-                    @include('includes.product.slider-product')
-                    @else
+
                     @include('front.themes.'.env('THEME', 'theme-01').'.components.slider-product')
-                    @endif
                     @endforeach
                 </div>
             </div>

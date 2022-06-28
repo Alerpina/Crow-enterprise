@@ -26,11 +26,8 @@
                     @endif
                     <div class="row row-theme">
                         @foreach($best_products as $prod)
-                        @if(env('THEME','theme-01') == "theme-01" || env('THEME') == "theme-02")
-                        @include('includes.product.home-product')
-                        @else
+
                         @include('front.themes.'.env('THEME', 'theme-01').'.components.home-product')
-                        @endif
                         @endforeach
                     </div>
                 </div>

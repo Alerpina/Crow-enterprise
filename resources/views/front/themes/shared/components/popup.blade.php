@@ -25,7 +25,7 @@
                 <form action="{{route('front.subscribe')}}" id="subscribeform" method="POST">
                     {{csrf_field()}}
                     <div class="form-group">
-                        <input type="email" name="email" placeholder="{{ __(" Enter Your Email Address") }}" required>
+                        <input type="email" name="email" placeholder="{{ __('Enter Your Email Address') }}" required>
                         <button id="sub-btn" type="submit">{{ __("SUBSCRIBE") }}</button>
                     </div>
                 </form>
