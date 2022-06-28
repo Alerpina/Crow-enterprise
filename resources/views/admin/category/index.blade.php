@@ -320,126 +320,6 @@
 
 {{-- DATA TABLE ENDS--}}
 
-{{-- GALLERY IMAGES STARTS --}}
-
-<script>
-    // Gallery Section Update
-    $(document).on('click', '.set-gallery', function() {
-        var cid = $(this).find('input[type=hidden]').val();
-        $('#cid').val(cid);
-        $('.selected-image .row').html('');
-            $.ajax({
-            type: 'GET',
-            url: '{{ route("admin-categorygallery-show") }}',
-            data: {
-                id: cid
-            },
-            success: function(data) {
-                if (data[0] == 0) {
-	                    $('.selected-image .row').addClass('justify-content-center');
-	      				$('.selected-image .row').html('<h3>{{ __("No Images Found.") }}</h3>');
-                } else {
-                    if (data[2]) {
-                        $('.selected-image .row').removeClass('justify-content-center');
-                        $('.selected-image .row h3').remove();
-                        for (var k in data[2]) {
-                            $('.selected-image .row').append('<div class="col-sm-4">' +
-                                '<div class="img gallery-img">'+
-                                '<span class="remove-img"><i class="fas fa-times"></i>' +
-                                '<input type="hidden" value="' + data[2][k]['id'] + '">' +
-                                '</span>' +
-                                '<a href="' + data[2][k] + '" target="_blank">' +
-                                '<img src="' + data[2][k] + '" alt="gallery image">' +
-                                '<div>' + data[2][k]['id'] + '</div>' +
-                                '</a>' +
-                                '</div>' +
-                                        '</div>');
-                        }
-                    } else {
-                        $('.selected-image .row').removeClass('justify-content-center');
-                        $('.selected-image .row h3').remove();
-                        var arr = $.map(data[1], function(el) {
-                            return el
-                        });
-                        for (var k in arr) {
-                            $('.selected-image .row').append('<div class="col-sm-4">' +
-                                '<div class="img gallery-img">'+
-                                '<span class="remove-img"><i class="fas fa-times"></i>' +
-                                '<input type="hidden" value="' + arr[k]['id'] + '">' +
-                                '</span>' +
-                                '<div class="gallery-img-id"><span>' + arr[k]['id'] + '</span></div>' +
-                                '<a href="' + '{{asset("storage/images/galleries")."/"}}' + arr[k][
-                                    'customizable_gallery'
-                                ] + '" target="_blank">' +
-                                '<img src="' + '{{asset("storage/images/galleries")."/"}}' + arr[k][
-                                    'customizable_gallery'
-                                ] + '" alt="gallery image">' +
-                                '</a>' +
-                                '</div>' +
-                                        '</div>');
-                        }
-                    }
-                }
-            }
-            });
-      });
-    $(document).on('click', '.remove-img', function() {
-    var id = $(this).find('input[type=hidden]').val();
-    $(this).parent().parent().remove();
-	    $.ajax({
-            type: 'GET',
-            url: '{{ route("admin-categorygallery-delete") }}',
-            data: {
-                id: id
-            }
-	    });
-  });
-    $(document).on('click', '#cat_gallery', function() {
-    $('#uploadgallery').click();
-  });
-    $('#uploadgallery').change(function() {
-        $('#form-gallery').submit();
-  });
-    $(document).on('submit', '#form-gallery', function() {
-		  $.ajax({
-            url: '{{ route("admin-categorygallery-store") }}',
-            method: 'POST',
-            data: new FormData(this),
-            dataType: 'JSON',
-		   contentType: false,
-		   cache: false,
-		   processData: false,
-            success: function(data) {
-                if (data != 0) {
-	                    $('.selected-image .row').removeClass('justify-content-center');
-	      				$('.selected-image .row h3').remove();
-		        var arr = $.map(data, function(el) {
-                        return el
-                    });
-                    for (var k in arr) {
-                        $('.selected-image .row').append('<div class="col-sm-4">' +
-                            '<div class="img gallery-img">' +
-                            '<span class="remove-img"><i class="fas fa-times"></i>' +
-                            '<input type="hidden" value="' + arr[k]['id'] + '">' +
-                            '</span>' +
-                            '<a href="' + '{{asset("storage/images/galleries")."/"}}' + arr[k][
-                                'customizable_gallery'
-                            ] + '" target="_blank">' +
-                            '<img src="' + '{{asset("storage/images/galleries")."/"}}' + arr[k][
-                                'customizable_gallery'
-                            ] + '" alt="gallery image">' +
-                            '</a>' +
-                            '</div>' +
-                                  	'</div>');
-		            }
-		    }
-		                       }
-		  });
-		  return false;
- });
-    // Gallery Section Update Ends
-
-</script>
 <script>
     $(document).ready(function(){
         // First access - CurrentPage
@@ -457,7 +337,7 @@
         });
     });
 </script>
-{{-- GALLERY IMAGES ENDS --}}
+
 {{-- CHANGE CATEGORY PRESENTATION POSITION --}}
 <script>
     function changePos(id, val) {

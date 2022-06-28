@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Image;
 use App\Models\Category;
-use App\Models\CategoryGallery;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\CategoryGallery;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
-
+use Intervention\Image\Facades\Image;
 
 class CategoryGalleryController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth:admin');
@@ -28,27 +26,27 @@ class CategoryGalleryController extends Controller
 
     public function show()
     {
-
         $data[0] = 0;
         $id = $_GET['id'];
         $cat = Category::findOrFail($id);
-        if($cat != '') {
-            if(count($cat->categories_galleries)) {
+        if ($cat != '') {
+            if (count($cat->categories_galleries)) {
                 $data[0] = 1;
                 $data[1] = $cat->categories_galleries;
             }
         }
-         return response()->json($data);
+        return response()->json($data);
     }
 
     public function store(Request $request)
     {
+        ds($request->all());
         $data = null;
         $lastid = $request->category_id;
-        if ($files = $request->file('gallery')){
-            foreach ($files as  $key => $file){
+        if ($files = $request->file('gallery')) {
+            foreach ($files as  $key => $file) {
                 $val = $file->getClientOriginalExtension();
-                if($val == 'jpeg'|| $val == 'jpg'|| $val == 'png'|| $val == 'svg'){
+                if ($val == 'jpeg'|| $val == 'jpg'|| $val == 'png'|| $val == 'svg') {
                     $gallery = new CategoryGallery;
 
                     $img = Image::make($file->getRealPath())->resize(800, 800);
@@ -72,17 +70,12 @@ class CategoryGalleryController extends Controller
 
     public function destroy()
     {
-
         $id = $_GET['id'];
         $gal = CategoryGallery::findOrFail($id);
-            if (file_exists(public_path().'/storage/images/galleries/'.$gal->customizable_gallery)) {
-                unlink(public_path().'/storage/images/galleries/'.$gal->customizable_gallery);
-                unlink(public_path().'/storage/images/thumbnails/'.$gal->thumbnail);
-
-            }
+        if (file_exists(public_path().'/storage/images/galleries/'.$gal->customizable_gallery)) {
+            unlink(public_path().'/storage/images/galleries/'.$gal->customizable_gallery);
+            unlink(public_path().'/storage/images/thumbnails/'.$gal->thumbnail);
+        }
         $gal->delete();
-
     }
-
 }
-
