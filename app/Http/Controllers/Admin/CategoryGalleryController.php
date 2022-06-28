@@ -40,7 +40,6 @@ class CategoryGalleryController extends Controller
 
     public function store(Request $request)
     {
-        ds($request->all());
         $data = null;
         $lastid = $request->category_id;
         if ($files = $request->file('gallery')) {

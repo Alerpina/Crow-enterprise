@@ -31,7 +31,6 @@
                     method="POST" enctype="multipart/form-data">
                     {{ csrf_field() }}
 
-                    @ds(session()->all())
                     @include('includes.form-success')
 
                     @if (count($order->melhorenvio_requests) > 0)

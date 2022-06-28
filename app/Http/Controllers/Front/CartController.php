@@ -903,6 +903,7 @@ class CartController extends Controller
         $customProducts = env("ENABLE_CUSTOM_PRODUCT", false);
         $customProductsNumber = env("ENABLE_CUSTOM_PRODUCT_NUMBER", false);
 
+
         if ($customProducts && $customProductsNumber) {
             // Se as duas feature flags estiverem ativadas lança um erro porque não faz sentido.
             // Caso futuramente deva ser implementado algo para tratar isso, é aqui que deverá acontecer.
@@ -1016,6 +1017,7 @@ class CartController extends Controller
             $cart->totalPrice += $item['price'];
         }
         Session::put('cart', $cart);
+
         return redirect()->route('front.cart')->with([
             'pixel_id' => $item['item']['id'],
             'pixel_name' => $item['item']['name'],
