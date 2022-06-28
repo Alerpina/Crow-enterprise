@@ -1,4 +1,4 @@
-@if ($ps->reviews_store == 1)
+@if ($ps->reviews_store === 1)
 <section class="blog-area">
     <div class="container">
         <div class="row">

@@ -17,14 +17,14 @@
 <div class="container">
     <div class="row">
         @if ($ps->blog_posts == 1)
-            <div class="col-md-{{$ps->reviews_store == 1 ? '6' : '12'}}">
-                @include('front.themes.theme-01.components.blog')
-            </div>
+        <div class="col-md-{{$ps->reviews_store == 1 ? '6' : '12'}}">
+            @include('front.themes.theme-02.components.blog')
+        </div>
         @endif
-        @if ($ps->reviews_store == 1)    
-            <div class="col-md-{{$ps->blog_posts == 1 ? '6' : '12'}}">
-                @include('front.themes.theme-01.components.reviews')
-            </div>
+        @if ($ps->reviews_store == 1)
+        <div class="col-md-{{$ps->blog_posts == 1 ? '6' : '12'}}">
+            @include('front.themes.theme-02.components.reviews')
+        </div>
         @endif
     </div>
 </div>
