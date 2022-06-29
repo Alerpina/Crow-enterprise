@@ -7,10 +7,6 @@
                 <div class="section-top">
                     <h2 class="section-title">
                         {{ __("Big Save") }}
-                        <div id="post-title">
-                            <img src="{{ asset('assets/front/themes/theme-07/assets/images/post-it.png')}}"
-                                class="img-fluid" alt="Post it">
-                        </div>
                     </h2>
 
                 </div>

@@ -17,7 +17,7 @@
                             <div class="blog-box">
                                 <img src="{{ $blogg->photo ? asset('storage/images/blogs/'.$blogg->photo):asset('assets/images/noimage.png') }}"
                                     class="img-fluid" alt="">
-                                <a href='{{route(' front.blogshow',$blogg->id)}}'>
+                                <a href="{{route('front.blogshow',$blogg->id)}}">
                                     <h4 class="blog-title">
                                         {{mb_strlen($blogg->title,'utf-8') > 40 ?
                                         mb_substr($blogg->title,0,40,'utf-8')."...":$blogg->title}}

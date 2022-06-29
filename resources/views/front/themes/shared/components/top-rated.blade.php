@@ -7,13 +7,6 @@
                 <div class="section-top">
                     <h2 class="section-title">
                         {{ __("Top Rated") }}
-                        @if(
-                        env('THEME') == "theme-07")
-                        <div id="post-title">
-                            <img src="{{ asset('project/resources/views/front/themes/theme-03/storage/images/post-it.png')}}"
-                                class="img-fluid" alt="Post it">
-                        </div>
-                        @endif
                     </h2>
                 </div>
             </div>

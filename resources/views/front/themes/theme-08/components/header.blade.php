@@ -289,8 +289,9 @@
                                 <input type="hidden" name="maxprice" value="{{ request()->input('maxprice') }}">
                                 @endif
 
-                                <input type="text" id="prod_name" name="searchHttp" placeholder="{{ __(" Search For
-                                    Product") }}" value="{{ request()->input('searchHttp') }}" autocomplete="off">
+                                <input type="text" id="prod_name" name="searchHttp"
+                                    placeholder="{{ __('Search For Product') }}"
+                                    value="{{ request()->input('searchHttp') }}" autocomplete="off">
                                 <div class="autocomplete">
                                     <div id="myInputautocomplete-list" class="autocomplete-items"></div>
                                 </div>
@@ -333,7 +334,7 @@
                             </li>
                             @endif
 
-                            <li class="wishlist" data-toggle="tooltip" data-placement="top" title="{{ __(" Wish") }}">
+                            <li class="wishlist" data-toggle="tooltip" data-placement="top" title="{{ __('Wish') }}">
 
                                 @if(Auth::guard('web')->check())
                                 <a href="{{ route('user-wishlists') }}" class="wish">
@@ -364,7 +365,7 @@
 
                             </li>
 
-                            <li class="compare" data-toggle="tooltip" data-placement="top" title="{{ __(" Compare") }}">
+                            <li class="compare" data-toggle="tooltip" data-placement="top" title="{{ __('Compare') }}">
                                 <a href="{{ route('product.compare') }}" class="wish compare-product">
                                     <div class="icon">
                                         <svg class="img-fluid icons-header" version="1.1" id="Layer_1"

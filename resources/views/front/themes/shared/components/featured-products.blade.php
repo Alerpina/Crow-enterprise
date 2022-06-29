@@ -7,10 +7,6 @@
                 <div class="section-top">
                     <h2 class="section-title">
                         {{ __("Featured") }}
-                        <div id="post-title">
-                            <img src="{{ asset('assets/front/themes/theme-07/assets/images/post-it.png')}}"
-                                class="img-fluid" alt="Post it">
-                        </div>
                     </h2>
                 </div>
             </div>
@@ -19,8 +15,7 @@
             <div class="col-lg-12 remove-padding">
                 <div class="trending-item-slider">
                     @foreach($feature_products as $prod)
-
-                    @include('front.themes.theme-07.components.slider-product')
+                    @include('front.themes.'.env('THEME', 'theme-01').'.components.slider-product')
                     @endforeach
                 </div>
             </div>
