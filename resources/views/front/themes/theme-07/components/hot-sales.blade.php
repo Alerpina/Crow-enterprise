@@ -12,6 +12,10 @@
                                     <div class="section-top">
                                         <h2 class="section-title">
                                             {{ __("Hot") }}
+                                            <div id="post-title">
+                                                <img src="{{ asset('assets/front/themes/theme-07/assets/images/post-it.png')}}"
+                                                    class="img-fluid" alt="Post it">
+                                            </div>
                                         </h2>
                                     </div>
                                     <div class="hot-and-new-item-slider row-theme">
@@ -31,6 +35,10 @@
                                     <div class="section-top">
                                         <h2 class="section-title">
                                             {{ __("New") }}
+                                            <div id="post-title">
+                                                <img src="{{ asset('assets/front/themes/theme-07/assets/images/post-it.png')}}"
+                                                    class="img-fluid" alt="Post it">
+                                            </div>
                                         </h2>
                                     </div>
 
@@ -52,6 +60,10 @@
                                     <div class="section-top">
                                         <h2 class="section-title">
                                             {{ __("Trending") }}
+                                            <div id="post-title">
+                                                <img src="{{ asset('assets/front/themes/theme-07/assets/images/post-it.png')}}"
+                                                    class="img-fluid" alt="Post it">
+                                            </div>
                                         </h2>
                                     </div>
 
@@ -75,6 +87,10 @@
                                     <div class="section-top">
                                         <h2 class="section-title">
                                             {{ __("Sale") }}
+                                            <div id="post-title">
+                                                <img src="{{ asset('assets/front/themes/theme-07/assets/images/post-it.png')}}"
+                                                    class="img-fluid" alt="Post it">
+                                            </div>
                                         </h2>
                                     </div>
 

@@ -7,7 +7,7 @@
                     <h2 class="section-title">
                         {{ __("Recent On Our Blog") }}
                         <div id="post-title">
-                            <img src="{{ asset('project/resources/views/front/themes/theme-03/storage/images/post-it.png')}}"
+                            <img src="{{ asset('assets/front/themes/theme-07/assets/images/post-it.png')}}"
                                 class="img-fluid" alt="Post it">
                         </div>
                     </h2>
@@ -32,7 +32,7 @@
 
                             </div>
                             <div class="details">
-                                <a href='{{route(' front.blogshow',$blogg->id)}}'>
+                                <a href="{{route('front.blogshow',$blogg->id)}}">
                                     <h4 class="blog-title">
                                         {{mb_strlen($blogg->title,'utf-8') > 40 ?
                                         mb_substr($blogg->title,0,40,'utf-8')."...":$blogg->title}}
