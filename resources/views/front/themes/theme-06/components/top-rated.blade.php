@@ -7,13 +7,10 @@
                 <div class="section-top">
                     <h2 class="section-title">
                         {{ __("Top Rated") }}
-                        @if(
-                        env('THEME') == "theme-07")
                         <div id="post-title">
-                            <img src="{{ asset('project/resources/views/front/themes/theme-03/storage/images/post-it.png')}}"
+                            <img src="{{ asset('assets/front/themes/theme-06/assets/images/post-it.png')}}"
                                 class="img-fluid" alt="Post it">
                         </div>
-                        @endif
                     </h2>
                 </div>
             </div>
@@ -22,7 +19,7 @@
             <div class="col-lg-12 row-theme">
                 <div class="row">
                     @foreach($top_products as $prod)
-                    @include('front.themes.'.env('THEME', 'theme-01').'.components.home-product')
+                    @include('front.themes.theme-06.components.home-product')
                     @endforeach
                 </div>
             </div>
