@@ -418,7 +418,7 @@
                                         <span class="cart-quantity" id="cart-count">
                                             {{ Session::has('cart') ? count(Session::get('cart')->items) : '0' }}
                                         </span>
-                                        <img src="{{ asset('project/resources/views/front/themes/theme-04/storage/images/cartheader.png')}}"
+                                        <img src="{{ asset('assets/front/themes/theme-04/assets/images/cartheader.png')}}"
                                             class="img-fluid icons-header" alt="Carrinho">
                                     </div>
                                 </a>
@@ -428,7 +428,7 @@
                             </li>
                             @endif
 
-                            <li class="wishlist" data-toggle="tooltip" data-placement="top" title="{{ __(" Wish") }}">
+                            <li class="wishlist" data-toggle="tooltip" data-placement="top" title="{{ __('Wish') }}">
 
                                 @if(Auth::guard('web')->check())
                                 <a href="{{ route('user-wishlists') }}" class="wish">
@@ -436,7 +436,7 @@
                                         <path d='M 0 10 10 0 30 0 40 10 40 50 30 60 10 60 0 50 Z' />
                                     </svg>
                                     <span id="wishlist-count">{{ count(Auth::user()->wishlists) }}</span>
-                                    <img src="{{ asset('project/resources/views/front/themes/theme-04/storage/images/loveheader.png')}}"
+                                    <img src="{{ asset('assets/front/themes/theme-04/assets/images/loveheader.png')}}"
                                         class="img-fluid icons-header" alt="Amei">
                                 </a>
                                 @else
@@ -446,14 +446,14 @@
                                         <path d='M 0 10 10 0 30 0 40 10 40 50 30 60 10 60 0 50 Z' />
                                     </svg>
                                     <span id="wishlist-count">0</span>
-                                    <img src="{{ asset('project/resources/views/front/themes/theme-04/storage/images/loveheader.png')}}"
+                                    <img src="{{ asset('assets/front/themes/theme-04/assets/images/loveheader.png')}}"
                                         class="img-fluid icons-header" alt="Amei">
                                 </a>
                                 @endif
 
                             </li>
 
-                            <li class="compare" data-toggle="tooltip" data-placement="top" title="{{ __(" Compare") }}">
+                            <li class="compare" data-toggle="tooltip" data-placement="top" title="{{ __('Compare') }}">
                                 <a href="{{ route('product.compare') }}" class="wish compare-product">
                                     <div class="icon">
                                         <svg class='svg-button'>
@@ -462,7 +462,7 @@
                                         <span id="compare-count">
                                             {{ Session::has('compare') ? count(Session::get('compare')->items) : '0' }}
                                         </span>
-                                        <img src="{{ asset('project/resources/views/front/themes/theme-04/storage/images/comparar.png')}}"
+                                        <img src="{{ asset('assets/front/themes/theme-04/assets/images/comparar.png')}}"
                                             class="img-fluid icons-header" alt="Comparar">
                                     </div>
                                 </a>
@@ -498,8 +498,9 @@
                                 <input type="hidden" name="maxprice" value="{{ request()->input('maxprice') }}">
                                 @endif
 
-                                <input type="text" id="prod_name" name="searchHttp" placeholder="{{ __(" Search For
-                                    Product") }}" value="{{ request()->input('searchHttp') }}" autocomplete="off">
+                                <input type="text" id="prod_name" name="searchHttp"
+                                    placeholder="{{ __('Search For Product') }}"
+                                    value="{{ request()->input('searchHttp') }}" autocomplete="off">
                                 <div class="autocomplete">
                                     <div id="myInputautocomplete-list" class="autocomplete-items"></div>
                                 </div>
