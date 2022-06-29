@@ -7,13 +7,12 @@
                 <div class="section-top">
                     <h2 class="section-title">
                         {{ __("Featured") }}
-                        @if(env('THEME') == "theme-06" ||
-                        env('THEME') == "theme-07")
+
                         <div id="post-title">
-                            <img src="{{ asset('project/resources/views/front/themes/theme-03/storage/images/post-it.png')}}"
+                            <img src="{{ asset('assets/front/themes/theme-05/assets/images/post-it.png')}}"
                                 class="img-fluid" alt="Post it">
                         </div>
-                        @endif
+
                     </h2>
                 </div>
             </div>
@@ -23,7 +22,7 @@
                 <div class="trending-item-slider">
                     @foreach($feature_products as $prod)
 
-                    @include('front.themes.'.env('THEME', 'theme-01').'.components.slider-product')
+                    @include('front.themes.theme-05.components.slider-product')
                     @endforeach
                 </div>
             </div>

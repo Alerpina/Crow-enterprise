@@ -12,13 +12,12 @@
                                     <div class="section-top">
                                         <h2 class="section-title">
                                             {{ __("Hot") }}
-                                            @if(env('THEME')
-                                            == "theme-06" || env('THEME') == "theme-07")
+
                                             <div id="post-title">
-                                                <img src="{{ asset('project/resources/views/front/themes/theme-03/storage/images/post-it.png')}}"
+                                                <img src="{{ asset('assets/front/themes/theme-05/assets/images/post-it.png')}}"
                                                     class="img-fluid" alt="Post it">
                                             </div>
-                                            @endif
+
                                         </h2>
                                     </div>
                                     <div class="hot-and-new-item-slider row-theme">
@@ -38,13 +37,12 @@
                                     <div class="section-top">
                                         <h2 class="section-title">
                                             {{ __("New") }}
-                                            @if(env('THEME')
-                                            == "theme-06" || env('THEME') == "theme-07")
+
                                             <div id="post-title">
-                                                <img src="{{ asset('project/resources/views/front/themes/theme-03/storage/images/post-it.png')}}"
+                                                <img src="{{ asset('assets/front/themes/theme-05/assets/images/post-it.png')}}"
                                                     class="img-fluid" alt="Post it">
                                             </div>
-                                            @endif
+
                                         </h2>
                                     </div>
 
@@ -66,13 +64,12 @@
                                     <div class="section-top">
                                         <h2 class="section-title">
                                             {{ __("Trending") }}
-                                            @if(env('THEME')
-                                            == "theme-06" || env('THEME') == "theme-07")
+
                                             <div id="post-title">
-                                                <img src="{{ asset('project/resources/views/front/themes/theme-03/storage/images/post-it.png')}}"
+                                                <img src="{{ asset('assets/front/themes/theme-05/assets/images/post-it.png')}}"
                                                     class="img-fluid" alt="Post it">
                                             </div>
-                                            @endif
+
                                         </h2>
                                     </div>
 
@@ -96,13 +93,12 @@
                                     <div class="section-top">
                                         <h2 class="section-title">
                                             {{ __("Sale") }}
-                                            @if(env('THEME')
-                                            == "theme-06" || env('THEME') == "theme-07")
+
                                             <div id="post-title">
-                                                <img src="{{ asset('project/resources/views/front/themes/theme-03/storage/images/post-it.png')}}"
+                                                <img src="{{ asset('assets/front/themes/theme-05/assets/images/post-it.png')}}"
                                                     class="img-fluid" alt="Post it">
                                             </div>
-                                            @endif
+
                                         </h2>
                                     </div>
 
