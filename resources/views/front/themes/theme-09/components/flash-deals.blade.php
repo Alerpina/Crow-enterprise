@@ -16,7 +16,9 @@
                 <div class="flash-deals">
                     <div class="flas-deal-slider">
                         @foreach($discount_products as $prod)
+
                         @include('front.themes.theme-09.components.flash-product')
+
                         @endforeach
                     </div>
                 </div>

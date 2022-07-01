@@ -318,7 +318,7 @@ $(function ($) {
                 items: 5,
                 loop: true,
                 nav: true,
-                navText: ['<img src="crow/images/Vector(2).png" alt="">', '<img src="crow/images/Vector(3).png" alt="">'],
+                navText: ['<i class=" fas fa-arrow-alt-circle-left"></i>', '<i class="fas fa-arrow-alt-circle-right"></i>'],
                 margin: 5,
                 autoplay: true,
                 autoplayTimeout: 6000,
@@ -394,7 +394,7 @@ $(function ($) {
         // fix not looping when just having 1 item.
         // source: https://github.com/OwlCarousel2/OwlCarousel2/issues/548#issuecomment-74332563
         $hot_new_slider.each(function () {
-            if($(this).find('.item-slide').length > 1) {
+            if ($(this).find('.item-slide').length > 1) {
                 $(this).owlCarousel({
                     items: 5,
                     autoplay: true,
@@ -403,7 +403,7 @@ $(function ($) {
                     dots: true,
                     center: false,
                     autoplayHoverPause: true,
-                    navText: ['<img src="crow/images/Vector(2).png" alt="">', '<img src="crow/images/Vector(3).png" alt="">'],
+                    navText: ['<i class="fas fa-arrow-alt-circle-left"></i>', '<i class="fas fa-arrow-alt-circle-right"></i>'],
                     smartSpeed: 800,
                     responsive: {
                         0: {
@@ -432,7 +432,7 @@ $(function ($) {
         // fix not looping when just having 1 item.
         // source: https://github.com/OwlCarousel2/OwlCarousel2/issues/548#issuecomment-74332563
         $hot_new_slider.each(function () {
-            if($(this).find('.item-slide').length > 1) {
+            if ($(this).find('.item-slide').length > 1) {
                 $(this).owlCarousel({
                     items: 1,
                     autoplay: true,
@@ -465,7 +465,7 @@ $(function ($) {
                     0: {
                     },
                     768: {
-                
+
                     },
                     992: {
                         items: 2
@@ -474,16 +474,16 @@ $(function ($) {
             });
 
         }
-        
+
         //service slider
         var $service_slider = $('#services-carousel'),
             $w = $(window).width();
 
         // fix not looping when just having 1 item.
         // source: https://github.com/OwlCarousel2/OwlCarousel2/issues/548#issuecomment-74332563
-        if ( $w > 768 ) {
+        if ($w > 768) {
             $service_slider.each(function () {
-                if($(this).find('.item-slide').length > 3) {
+                if ($(this).find('.item-slide').length > 3) {
                     $(this).owlCarousel({
                         items: 3,
                         autoplay: true,
@@ -493,7 +493,7 @@ $(function ($) {
                         nav: true,
                         center: false,
                         autoplayHoverPause: true,
-                        navText: ['<img src="crow/images/Vector(2).png" alt="">', '<img src="crow/images/Vector(3).png" alt="">'],
+                        navText: ['<i class="fas fa-arrow-alt-circle-left"></i>', '<i class="fas fa-arrow-alt-circle-right"></i>'],
                         smartSpeed: 800,
                         responsive: {
                             0: {
@@ -516,18 +516,18 @@ $(function ($) {
                 }
             });
         } else {
-                    $service_slider.owlCarousel({
-                        items: 1,
-                        autoplay: true,
-                        margin: 0,
-                        loop: true,
-                        dots: true,
-                        nav: true,
-                        center: false,
-                        autoplayHoverPause: true,
-                        navText: [''],
-                        smartSpeed: 800,
-                    })
+            $service_slider.owlCarousel({
+                items: 1,
+                autoplay: true,
+                margin: 0,
+                loop: true,
+                dots: true,
+                nav: true,
+                center: false,
+                autoplayHoverPause: true,
+                navText: [''],
+                smartSpeed: 800,
+            })
         }
 
 
@@ -614,32 +614,32 @@ $(function ($) {
     //define variable for store last scrolltop
     $(window).on('scroll', function () {
         var $window = $(window);
-        
-        if ( $(window).width() > 991 ) {
+
+        if ($(window).width() > 991) {
 
             if ($window.scrollTop() > 45) {
                 $(".menufixed").addClass('nav-fixed');
-    
+
                 var tamanhomenu = $('.nav-fixed').height() + $('.top-header').height() + 20;
-    
+
                 $('.breadcrumb-area').css('margin-top', tamanhomenu);
-    
+
             } else {
                 $(".menufixed").removeClass('nav-fixed');
-    
+
                 var tamanhomenu = $('.nav-fixed').height();
-    
+
                 $('.breadcrumb-area').css('margin-top', '');
             }
         } else {
             if ($window.scrollTop() > 190) {
                 $(".mainmenu-area").addClass('nav-fixed');
-    
+
             } else {
                 $(".mainmenu-area").removeClass('nav-fixed');
             }
         }
-    
+
 
         /*---------------------------
             back to top show / hide
@@ -713,7 +713,7 @@ $(function ($) {
         loop: false,
         dots: false,
         nav: true,
-        navText: ['<img src="crow/images/Vector(2).png" alt="">', '<img src="crow/images/Vector(3).png" alt="">'],
+        navText: ['<i class="fas fa-arrow-alt-circle-left"></i>', '<i class="fas fa-arrow-alt-circle-right"></i>'],
         margin: 0,
         autoplay: false,
         items: 4,
@@ -731,12 +731,12 @@ $(function ($) {
 
     var $product_color_gallery_slider = $('.all-slider-color-gallery');
     $product_color_gallery_slider.owlCarousel({
-        touchDrag  : false,
-        mouseDrag  : false,
+        touchDrag: false,
+        mouseDrag: false,
         loop: false,
         dots: false,
         nav: false,
-        navText: ['<img src="crow/images/Vector(2).png" alt="">', '<img src="crow/images/Vector(3).png" alt="">'],
+        navText: ['<i class="fas fa-arrow-alt-circle-left"></i>', '<i class="fas fa-arrow-alt-circle-right"></i>'],
         margin: 0,
         autoplay: false,
         items: 4,
@@ -755,12 +755,12 @@ $(function ($) {
 
     var $product_material_gallery_slider = $('.all-slider-material-gallery');
     $product_material_gallery_slider.owlCarousel({
-        touchDrag  : false,
-        mouseDrag  : false,
+        touchDrag: false,
+        mouseDrag: false,
         loop: false,
         dots: false,
         nav: false,
-        navText: ['<img src="crow/images/Vector(2).png" alt="">', '<img src="crow/images/Vector(3).png" alt="">'],
+        navText: ['<i class="fa-solid fa-circle-arrow-left"></i>', '<i class="fa-solid fa-circle-arrow-right"></i>'],
         margin: 0,
         autoplay: false,
         items: 4,
@@ -776,17 +776,17 @@ $(function ($) {
         }
     });
 
-    $(document).on('submit', '#subscribeform', function(e) {
+    $(document).on('submit', '#subscribeform', function (e) {
         e.preventDefault();
         $('#sub-btn').prop('disabled', true);
         $.ajax({
-            method: "POST", 
+            method: "POST",
             url: $(this).prop('action'),
             data: new FormData(this),
             contentType: false,
             cache: false,
             processData: false,
-            success: function(data) {
+            success: function (data) {
                 if ((data.errors)) {
                     toastr.error(data['error']);
                 } else {
@@ -802,36 +802,49 @@ $(function ($) {
         });
 
     });
-$(document).ready(function() {
+    $(document).on('submit', '#subscribeform2', function (e) {
+        e.preventDefault();
+        $('#sub-btn').prop('disabled', true);
+        $.ajax({
+            method: "POST",
+            url: $(this).prop('action'),
+            data: new FormData(this),
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function (data) {
+                if ((data.errors)) {
+                    toastr.error(data['error']);
+                } else {
+                    toastr.success(data['success']);
+                    $('.preload-close').click()
+                }
 
-    var owl = $('.owl-carousel');
-    
-    $('.slidee')
-    owl.owlCarousel({
-        loop:true,
-        margin:0,
-        autoplay: true,
-        responsive:{
-            400:{
-                items:1
+                $('#sub-btn').prop('disabled', false);
+
+
+            }
+
+        });
+
+    });
+    $('.slidee').owlCarousel({
+        loop: true,
+        margin: 10,
+        nav: true,
+        navText: ['<i class="fas fa-caret-left"></i>', '<i class="fas fa-caret-right"></i>'],
+        responsive: {
+            0: {
+                items: 1
             },
-            600:{
-                items:1
+            600: {
+                items: 3
             },
-            1000:{
-                items:6
+            1000: {
+                items: 5
             }
         }
     })
-    $('#botao_proximo').on('click',function(){
-
-        owl.trigger('next.owl.carousel');
-    });
-    $('#botao_anterior').on('click',function() {
-
-        owl.trigger('prev.owl.carousel');
-    })
-})
 });
 
 

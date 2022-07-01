@@ -628,13 +628,13 @@ color: <?php echo $text_color_2; ?>;
 
 .blog-area .blog-box .details .read-more-btn {
     color: <?php echo $text_color_1; ?>;
-    background: <?php echo $theme_color_1; ?>; 
+    background: <?php echo $theme_color_1; ?>;
     border:1px solid <?php echo $text_color_1; ?>;
 }
 
 .blog-area .blog-box .details .read-more-btn:hover {
     color: <?php echo $theme_color_1; ?>;
-    background: <?php echo $text_color_1; ?>; 
+    background: <?php echo $text_color_1; ?>;
     border:1px solid <?php echo $text_color_1; ?>;
 }
 
@@ -841,7 +841,6 @@ font-weight: 600;
 }
 
 .mainmenu-area {
-    background-color: <?php echo $text_color_1; ?>;
     border-bottom: 5px solid <?php echo $theme_color_2; ?> !important;
     height:50px;
     height: 44px;
@@ -917,7 +916,7 @@ color: <?php echo $theme_color_1; ?>;
 }
 
 .blog-area .blog-box .blog-images .img .date p {
-    color: <?php echo $text_color_1; ?>;
+    color: <?php echo $text_color_2; ?>;
 }
 
 .blog-area .blog-box .blog-images .img .date {
@@ -980,7 +979,7 @@ color:  <?php echo $text_color_2; ?>;
     color: <?php echo $text_color_1; ?>;
     border-color: <?php echo $text_color_2; ?>;
     background: <?php echo $text_color_2; ?>;
-} 
+}
 
 #services-carousel .owl-controls .owl-nav .owl-prev, #services-carousel .owl-controls .owl-nav .owl-next {
     color: <?php echo $text_color_1; ?>;

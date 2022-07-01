@@ -222,7 +222,7 @@
                         <li class="my-dropdown">
                             <a href="javascript:;" class="cart carticon">
                                 <div class="icon">
-                                    <img src="assets/front/themes/theme-09/assets/images/Vector(6).png" alt="">
+                                    <img src="{{ asset('assets/front/themes/theme-09/assets/images/car.png')}}" alt="">
                                     <span class="cart-quantity" id="cart-count">
                                         {{ Session::has('cart') ? count(Session::get('cart')->items) : '0' }}
                                     </span>
@@ -244,7 +244,7 @@
                             @else
                             <a href="javascript:;" data-toggle="modal" id="wish-btn" data-target="#comment-log-reg"
                                 class="wish">
-                                <img src="assets/front/themes/theme-09/assets/images/Vector(4).png" alt="">
+                                <img src="{{ asset('assets/front/themes/theme-09/assets/images/heart.png')}}" alt="">
                                 <span id="wishlist-count">0</span>
                             </a>
                             @endif
@@ -253,7 +253,8 @@
                         <li class="compare" data-toggle="tooltip" data-placement="top" title="{{ __('Compare') }}">
                             <a href="{{ route('product.compare') }}" class="wish compare-product">
                                 <div class="icon">
-                                    <img src="assets/front/themes/theme-09/assets/images/Vector(5).png" alt="">
+                                    <img src="{{ asset('assets/front/themes/theme-09/assets/images/arrows.png')}}"
+                                        alt="">
                                     <span id="compare-count">
                                         {{ Session::has('compare') ? count(Session::get('compare')->items) : '0' }}
                                     </span>
@@ -394,10 +395,6 @@
                         <div><a href="{{ route('front.category',$cat->slug) }}"
                                 class="text-center d-block font-weight-bold">{{ $cat->name }}</a></div>
                         @endforeach
-                    </div>
-                    <div class="navegação">
-                        <button id="botao_anterior" class="btn"><i class="fas fa-caret-left"></i></button>
-                        <button id="botao_proximo" class="btn"><i class="fas fa-caret-right"></i></button>
                     </div>
                 </div>
             </div>
