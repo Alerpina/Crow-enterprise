@@ -47,7 +47,7 @@ Route::group([
             Route::get('notf/show', 'NotificationController@conv_notf_show')->name('notf-show');
             Route::get('notf/count', 'NotificationController@conv_notf_count')->name('notf-count');
             Route::get('notf/clear', 'NotificationController@conv_notf_clear')->name('notf-clear');
-        });        
+        });
 
         Route::group([
             'as' => 'product-',
@@ -110,7 +110,7 @@ Route::group([
 
         /** Dashboard **/
         Route::get('/', 'DashboardController@index')->name('dashboard');
-  });
+    });
 
     Route::group([
         'as' => 'admin-'
@@ -137,8 +137,8 @@ Route::group([
                 Route::get('isconfig/{id}/{redirect?}', 'StoreController@isconfig')->name('isconfig');
                 Route::get('datatables', 'StoreController@datatables')->name('datatables');
                 Route::get('/', 'StoreController@index')->name('index');
-  });
-  });
+            });
+        });
 
         /**
          * Catalog Routes
@@ -220,9 +220,9 @@ Route::group([
                     Route::get('status/{id1}/{id2}', 'SubCategoryController@status')->name('status');
                     Route::get('datatables', 'SubCategoryController@datatables')->name('datatables');
                     Route::get('/', 'SubCategoryController@index')->name('index');
-  });
+                });
                 Route::get('load/subcategories/{id}/', 'SubCategoryController@load')->name('load');
-  });
+            });
 
             /** Child Categories */
             Route::group([
@@ -239,9 +239,9 @@ Route::group([
                     Route::get('status/{id1}/{id2}', 'ChildCategoryController@status')->name('status');
                     Route::get('datatables', 'ChildCategoryController@datatables')->name('datatables');
                     Route::get('/', 'ChildCategoryController@index')->name('index');
-  });
+                });
                 Route::get('load/childcategories/{id}/', 'ChildCategoryController@load')->name('load');
-  });
+            });
 
             /** Attributes */
             Route::group([
@@ -259,7 +259,7 @@ Route::group([
                 Route::post('deleteattropt/{id}', 'AttributeController@deleteAttrOpt')->name('deleteattropt');
                 Route::get('{id}/options', 'AttributeController@options')->name('options');
                 Route::get('{id}/manage', 'AttributeController@manage')->name('manage');
-  });
+            });
 
             /** Brands */
             Route::group([
@@ -278,10 +278,10 @@ Route::group([
                     Route::get('/', 'BrandController@index')->name('index');
                     Route::get('generateThumbnails', 'BrandController@generateThumbnails')->name('generatethumbnails');
                     Route::post('/delete-image', 'BrandController@deleteImage')->name('delete-image');
-  });
+                });
                 Route::get('load/brands/{id}/', 'BrandController@load')->name('load');
-  });
-  });
+            });
+        });
 
         /**
          * Sell Routes
@@ -416,7 +416,7 @@ Route::group([
                 Route::get('delete/{id}', 'FaqController@destroy')->name('delete');
                 Route::get('datatables', 'FaqController@datatables')->name('datatables');
                 Route::get('/', 'FaqController@index')->name('index');
-  });
+            });
 
             Route::group([
                 'as' => 'ps-',
@@ -526,8 +526,8 @@ Route::group([
                 Route::post('create', 'SliderController@store')->name('store');
                 Route::get('edit/{id}', 'SliderController@edit')->name('edit');
                 Route::post('edit/{id}', 'SliderController@update')->name('update');
-                Route::get('status/{id1}/{id2}', 'SliderController@status')->name('status');     
-                Route::get('changeSliderPos/{id1}/{pos}', 'SliderController@changeSliderPos')->name('changeSliderPos');     
+                Route::get('status/{id1}/{id2}', 'SliderController@status')->name('status');
+                Route::get('changeSliderPos/{id1}/{pos}', 'SliderController@changeSliderPos')->name('changeSliderPos');
                 Route::get('delete/{id}', 'SliderController@destroy')->name('delete');
                 Route::get('datatables', 'SliderController@datatables')->name('datatables');
                 Route::get('/', 'SliderController@index')->name('index');
@@ -598,7 +598,7 @@ Route::group([
                     Route::get('category/datatables', 'BlogCategoryController@datatables')->name('datatables');
                     Route::get('category', 'BlogCategoryController@index')->name('index');
                 });
-  });
+            });
 
             /** Reviews */
             Route::group([
@@ -635,7 +635,6 @@ Route::group([
         Route::group([
             'middleware' => 'permissions:config'
         ], function () {
-
             Route::group([
                 'as' => 'gs-',
                 'prefix' => 'general-settings'
@@ -691,7 +690,7 @@ Route::group([
                 Route::get('isinvoicephoto/{status}', 'GeneralSettingController@isinvoicephoto')->name('isinvoicephoto');
                 Route::get('showproductswithoutstockbaw/{status}', 'GeneralSettingController@showproductswithoutstockbaw')->name('showproductswithoutstockbaw');
                 Route::get('isbackinstock/{status}', 'GeneralSettingController@isbackinstock')->name('isbackinstock');
-                
+
                 /** Cart */
                 Route::get('cartconf', 'GeneralSettingController@cartconf')->name('cartconf');
                 Route::get('iscart/{status}', 'GeneralSettingController@iscart')->name('iscart');
@@ -809,7 +808,7 @@ Route::group([
 
                 Route::get('deposit', 'GeneralSettingController@paymentsinfoDeposit')->name('deposit');
                 Route::get('/', 'GeneralSettingController@paymentsinfo')->name('index');
-  });
+            });
 
             /** Bank Account */
             Route::group([
@@ -974,8 +973,8 @@ Route::group([
                 Route::get('datatables', 'SubscriberController@datatables')->name('datatables');
                 Route::get('download', 'SubscriberController@download')->name('download');
                 Route::get('/', 'SubscriberController@index')->name('index');
-  });
-  });
+            });
+        });
 
         /**
          * Marketplace Routes
@@ -1049,7 +1048,7 @@ Route::group([
                 Route::get('{id}/show', 'VendorController@show')->name('show');
                 Route::get('datatables', 'VendorController@datatables')->name('datatables');
                 Route::get('/', 'VendorController@index')->name('index');
-  });
+            });
 
             /** Verifications */
             Route::group([
@@ -1078,7 +1077,7 @@ Route::group([
                 /** Marketplace Config **/
                 Route::get('marketplaceconf', 'GeneralSettingController@marketplaceconf')->name('marketplaceconf');
             });
-  });
+        });
 
         /**
          * System Routes
@@ -1206,7 +1205,7 @@ Route::group([
             Route::post('groupemailpost', 'EmailController@groupemailpost')->name('group-submit');
         });
 
-        /** 
+        /**
          * Super Routes
          */
         Route::group([
@@ -1314,8 +1313,8 @@ Route::group([
         });
 
         /** Category Gallery */
-           /** Gallery */
-           Route::group([
+        /** Gallery */
+        Route::group([
             'as' => 'categorygallery-',
             'prefix' => 'categorygallery'
         ], function () {
@@ -1326,7 +1325,7 @@ Route::group([
         });
 
         /** Custom prod */
-           Route::group([
+        Route::group([
             'as' => 'customprod-',
             'prefix' => 'customprod'
         ], function () {
@@ -1434,7 +1433,7 @@ Route::group(['middleware' => 'maintenance'], function () {
             Route::post('pay42-pix-submit', 'Pay42PixController@store')->name('pix-submit');
             /** Pay42 billet*/
             Route::post('pay42-billet-submit', 'Pay42BilletController@store')->name('billet-submit');
-            /** Pay42 card */    
+            /** Pay42 card */
             Route::post('pay42-card-submit', 'Pay42CardController@store')->name('card-submit');
             Route::post('pay42-callback', 'Pay42CardController@pay42Callback')->name('notify');
             Route::get('pay42-call-form/{pedido}', 'Pay42CardController@callForm', function ($pedido) {
@@ -1515,7 +1514,6 @@ Route::group(['middleware' => 'maintenance'], function () {
         Route::group([
             'as' => 'product.'
         ], function () {
-
             Route::group([
                 'prefix' => 'item'
             ], function () {
@@ -1620,7 +1618,7 @@ Route::group(['middleware' => 'maintenance'], function () {
 
     Route::group([
         'namespace' => 'Vendor'
-    ], function(){
+    ], function () {
         Route::group([
             'prefix' => 'vendor',
             'as' => 'vendor.'
@@ -1674,7 +1672,7 @@ Route::group(['middleware' => 'maintenance'], function () {
                 Route::post('withdraw/create', 'WithdrawController@store')->name('wt-store');
                 Route::get('withdraw', 'WithdrawController@index')->name('wt-index');
                 Route::get('products/fastedit/{id}', 'ProductController@fastedit')->name('prod-fastedit');
-                Route::post('products/fastedit/{id}', 'ProductController@fasteditsubmit')->name('prod-fastedit');
+                Route::post('products/fastedit/{id}', 'ProductController@fasteditsubmit')->name('prod-fastedit-submit');
                 Route::post('products/upload/update/{id}', 'ProductController@uploadUpdate')->name('prod-upload-update');
                 Route::get('products/status/{id1}/{id2}', 'ProductController@status')->name('prod-status');
                 //Route::get('products/physical/create', 'ProductController@createPhysical')->name('prod-physical-create');
@@ -1714,7 +1712,7 @@ Route::group(['middleware' => 'maintenance'], function () {
                 Route::post('update/{id}', 'OrderController@update')->name('order-update');
                 Route::post('order/license/', 'OrderController@license')->name('order-license');
                 Route::get('orders', 'OrderController@index')->name('order-index');
-                Route::get('warning/verify/{id}', 'VendorController@warningVerify')->name('warning');            
+                Route::get('warning/verify/{id}', 'VendorController@warningVerify')->name('warning');
                 Route::get('verify', 'VendorController@verify')->name('verify');
                 Route::post('verify', 'VendorController@verifysubmit')->name('verify-submit');
                 Route::get('dashboard', 'VendorController@index')->name('dashboard');
