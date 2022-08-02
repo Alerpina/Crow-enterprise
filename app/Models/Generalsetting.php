@@ -256,4 +256,24 @@ class Generalsetting extends LocalizedModel
     {
         return $this->belongsTo('App\Models\MelhorenvioConf', 'melhorenvio_id')->withDefault();
     }
+
+    public function getFaviconAttribute()
+    {
+        return $this->favicon ?? asset('assets/images/favicon.png');
+    }
+
+    public function getLogoAttribute()
+    {
+        return $this->logo ?? asset('assets/images/logo_azul.png');
+    }
+
+    public function getFooterLogoAttribute()
+    {
+        return $this->footer_logo ?? asset('assets/images/logo_branca.png');
+    }
+
+    public function getAdminLoaderAttribute()
+    {
+        return $this->admin_loader ?? asset('assets/images/loader.gif');
+    }
 }
