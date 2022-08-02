@@ -17,7 +17,7 @@
 
 
     <!-- favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ $gs->favicon }}" />
+    <link rel="icon" type="image/x-icon" href="{{ $gs->faviconUrl }}" />
 
     <!-- stylesheet crow -->
     <link rel="stylesheet" href="{{ asset('assets/front/themes/shared/assets/css/crow.css') }}">
@@ -42,7 +42,7 @@
         <div class="boxmaintenance-infos {{ $gs->is_dark_mode ? ' dark' : '' }}">
             <h2 class="animate__animated">Em manutenção</h2>
             <img class="animate__animated maintenance-image" style="animation-delay:.3s;"
-                src="{{ $gs->is_dark_mode ? $gs->footer_logo : $gs->logo }}" alt="Logo">
+                src="{{ $gs->is_dark_mode ? $gs->footerLogoUrl : $gs->logoUrl }}" alt="Logo">
             <h5 class="animate__animated" style="animation-delay:.5s;">Estamos aperfeiçoando nossa plataforma para você
                 ter uma melhor expêriencia com nosso site. Enquanto isso, confira nossos outros canais de comunicação:
             </h5>

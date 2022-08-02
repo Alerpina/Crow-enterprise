@@ -23,7 +23,7 @@
                         <div class="body-area">
 
                             <div class="gocover"
-                                style="background: url({{ $gs->admin_loader }}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
+                                style="background: url({{ $gs->adminLoaderUrl }}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
                             </div>
                             <form id="geniusform" action="{{ route('admin.profile.update') }}" method="POST"
                                 enctype="multipart/form-data">

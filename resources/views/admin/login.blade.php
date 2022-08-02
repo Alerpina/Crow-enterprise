@@ -90,7 +90,7 @@
         </div>
     </section>
     <div class="submit-loader">
-        <img src="{{ $admstore->admin_loader }}" alt="">
+        <img src="{{ $admstore->adminLoaderUrl }}" alt="">
     </div>
     <!--Login and Sign up Area End -->
 

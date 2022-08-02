@@ -257,22 +257,22 @@ class Generalsetting extends LocalizedModel
         return $this->belongsTo('App\Models\MelhorenvioConf', 'melhorenvio_id')->withDefault();
     }
 
-    public function getFaviconAttribute()
+    public function getFaviconUrlAttribute()
     {
         return $this->favicon ?? asset('assets/images/favicon.png');
     }
 
-    public function getLogoAttribute()
+    public function getLogoUrlAttribute()
     {
         return $this->logo ?? asset('assets/images/logo_azul.png');
     }
 
-    public function getFooterLogoAttribute()
+    public function getFooterLogoUrlAttribute()
     {
         return $this->footer_logo ?? asset('assets/images/logo_branca.png');
     }
 
-    public function getAdminLoaderAttribute()
+    public function getAdminLoaderUrlAttribute()
     {
         return $this->admin_loader ?? asset('assets/images/loader.gif');
     }
