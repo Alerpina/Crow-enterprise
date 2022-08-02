@@ -98,7 +98,7 @@
                                 <li class="login-profile-area">
                                     <a class="dropdown-toggle-1" href="javascript:;">
                                         <div class="user-img">
-                                            <img src="{{ Auth::guard('admin')->user()->photo }}" alt="">
+                                            <img src="{{ Auth::guard('admin')->user()->photoUrl }}" alt="">
                                         </div>
                                     </a>
                                     <div class="dropdown-menu">
