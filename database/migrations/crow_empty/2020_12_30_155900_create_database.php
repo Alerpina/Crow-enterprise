@@ -12,11 +12,11 @@ class CreateDatabase extends Migration
         Schema::create('generalsettings', function (Blueprint $table) {
             $table->integer('id', true);
             $table->string('logo', 191)->nullable();
-            $table->string('favicon', 191);
+            $table->string('favicon', 191)->nullable();
             $table->text('header_email')->nullable();
             $table->text('header_phone')->nullable();
             $table->string('colors', 191)->nullable();
-            $table->string('loader', 191);
+            $table->string('loader', 191)->nullable();
             $table->string('admin_loader', 191)->nullable();
             $table->tinyInteger('is_talkto')->default(1);
             $table->text('talkto')->nullable();
