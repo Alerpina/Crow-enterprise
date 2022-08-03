@@ -192,6 +192,9 @@ class Controller extends BaseController
             imagesetpixel($image, rand()%200, rand()%50, $pixels);
         }
         session(['captcha_string' => $word]);
+        if (!is_dir(public_path().'/storage/images')) {
+            mkdir(public_path().'/storage/images');
+        }
         imagepng($image, public_path() . "/storage/images/capcha_code.png");
     }
 
