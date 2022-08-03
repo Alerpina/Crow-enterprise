@@ -9,7 +9,7 @@
     <!-- Title -->
     <title>{{ $gs->title }}</title>
     <!-- favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ $gs->favicon }}" />
+    <link rel="icon" type="image/x-icon" href="{{ $gs->faviconUrl }}" />
     <!-- Bootstrap -->
     <link href="{{ asset('assets/admin/css/bootstrap.min.css') }}" rel="stylesheet" />
     <!-- Fontawesome -->
@@ -44,7 +44,7 @@
                     <div class="login-area">
                         <div class="row justify-content-center mb-5">
                             <div class="col-md-8">
-                                <img src="{{ $gs->logo }}" alt="">
+                                <img src="{{ $gs->logoUrl }}" alt="">
                             </div>
                         </div>
                         <div class="header-area">
