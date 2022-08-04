@@ -45,7 +45,7 @@ class SetupStorage extends Command
             }
         }
 
-        $this->info('folders created successfuly. Make sure to adjust permissions afterwards, if necessary');
+        $this->info('storage folders ready. Make sure to adjust permissions afterwards, if necessary');
         return 0;
     }
 }
