@@ -296,4 +296,9 @@ class Generalsetting extends LocalizedModel
     {
         return $this->user_image ?? asset('assets/images/user.jpg');
     }
+
+    public function getPopupBackgroundUrlAttribute()
+    {
+        return asset("assets/images/{$this->popup_background}");
+    }
 }
