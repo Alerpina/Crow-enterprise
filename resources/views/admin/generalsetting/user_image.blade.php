@@ -35,13 +35,12 @@
                                     <div class="col-xl-12">
                                         <div class="input-form input-form-center">
                                             <h4 class="heading"> {{ __('Customer Image') }} *</h4>
-                                            <small>{{ __('(This image will be displayed if users do not upload profile
-                                                                                        photo)') }}</small><br>
+                                            <small>{{ __('(This image will be displayed if users do not upload profile photo)') }}</small><br>
                                             <small
                                                 style="padding-bottom:10px;">{{ __('(Preferred Size: 600 X 600 Pixel)') }}</small>
                                             <div class="img-upload">
                                                 <div id="image-preview" class="img-preview"
-                                                    style="background: url({{ $admstore->user_image ? asset('storage/images/' . $admstore->user_image) : asset('assets/images/noimage.png') }});">
+                                                    style="background: url({{ $admstore->userImageUrl }});">
                                                     <label for="image-upload" class="img-label" id="image-label"><i
                                                             class="icofont-upload-alt"></i>{{ __('Upload Image') }}</label>
                                                     <input type="file" name="user_image" class="img-upload"

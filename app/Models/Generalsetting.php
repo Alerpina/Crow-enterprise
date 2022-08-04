@@ -291,4 +291,9 @@ class Generalsetting extends LocalizedModel
     {
         return $this->error_banner ?? asset('assets/images/404.png');
     }
+
+    public function getUserImageUrlAttribute()
+    {
+        return $this->user_image ?? asset('assets/images/user.jpg');
+    }
 }
