@@ -41,13 +41,7 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="user-image">
-                                        @if ($data->is_provider == 1)
-                                            <img src="{{ $data->photo ? asset($data->photo) : asset('storage/images/' . $admstore->user_image) }}"
-                                                alt="No Image">
-                                        @else
-                                            <img src="{{ $data->photo ? asset('storage/images/users/' . $data->photo) : asset('storage/images/' . $admstore->user_image) }}"
-                                                alt="No Image">
-                                        @endif
+                                        <img src="{{ $data->photoUrl }}" alt="No Image">
                                         <a href="javascript:;" class="mybtn1 send" data-email="{{ $data->email }}"
                                             data-toggle="modal" data-target="#vendorform">{{ __('Send Message') }}</a>
                                     </div>
