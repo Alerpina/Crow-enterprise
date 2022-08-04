@@ -73,8 +73,7 @@
 
                             @include('includes.admin.form-both')
                             <div class="currrent-logo">
-                                <img src="{{ $admstore->logo ? asset('storage/images/' . $admstore->logo) : asset('assets/images/noimage.png') }}"
-                                    alt="">
+                                <img src="{{ $admstore->logoUrl }}" alt="">
                             </div>
                             <div class="set-logo">
                                 <input class="img-upload1" type="file" name="logo">
@@ -100,8 +99,7 @@
 
                             @include('includes.admin.form-both')
                             <div class="currrent-logo">
-                                <img src="{{ $admstore->footer_logo ? asset('storage/images/' . $admstore->footer_logo) : asset('assets/images/noimage.png') }}"
-                                    alt="">
+                                <img src="{{ $admstore->footerLogoUrl }}" alt="">
                             </div>
                             <div class="set-logo">
                                 <input class="img-upload1" type="file" name="footer_logo">
@@ -128,8 +126,7 @@
                             @include('includes.admin.form-both')
 
                             <div class="currrent-logo">
-                                <img src="{{ $admstore->invoice_logo ? asset('storage/images/' . $admstore->invoice_logo) : asset('assets/images/noimage.png') }}"
-                                    alt="">
+                                <img src="{{ $admstore->invoiceLogoUrl }}" alt="">
                             </div>
 
                             <div class="set-logo">

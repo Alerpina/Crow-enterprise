@@ -78,8 +78,7 @@
                                 <h4 class="title">
                                     {{ __('Current Loader') }} :
                                 </h4>
-                                <img src="{{ $admstore->loader ? asset('storage/images/' . $admstore->loader) : asset('assets/images/noimage.png') }}"
-                                    alt="">
+                                <img src="{{ $admstore->loaderUrl }}" alt="">
                             </div>
 
                             <div class="container-fluid">

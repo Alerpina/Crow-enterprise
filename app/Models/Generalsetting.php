@@ -267,6 +267,11 @@ class Generalsetting extends LocalizedModel
         return $this->logo ?? asset('assets/images/logo_azul.png');
     }
 
+    public function getInvoiceLogoUrlAttribute()
+    {
+        return $this->invoice_logo ?? asset('assets/images/logo_azul.png');
+    }
+
     public function getFooterLogoUrlAttribute()
     {
         return $this->footer_logo ?? asset('assets/images/logo_branca.png');
@@ -275,6 +280,11 @@ class Generalsetting extends LocalizedModel
     public function getAdminLoaderUrlAttribute()
     {
         return $this->admin_loader ?? asset('assets/images/loader.gif');
+    }
+
+    public function getLoaderUrlAttribute()
+    {
+        return $this->loader ?? asset('assets/images/loader.gif');
     }
 
     public function getErrorBannerUrlAttribute()

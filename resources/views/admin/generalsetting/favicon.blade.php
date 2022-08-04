@@ -71,8 +71,7 @@
                             <h4 class="title">
                                 {{ __('Current Favicon') }} :
                             </h4>
-                            <img src="{{ $admstore->favicon ? asset('storage/images/' . $admstore->favicon) : asset('assets/images/noimage.png') }}"
-                                alt="">
+                            <img src="{{ $admstore->faviconUrl }}" alt="">
                         </div>
                         <div class="set-logo">
                             <h4 class="title">
