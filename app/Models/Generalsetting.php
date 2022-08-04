@@ -276,4 +276,9 @@ class Generalsetting extends LocalizedModel
     {
         return $this->admin_loader ?? asset('assets/images/loader.gif');
     }
+
+    public function getErrorBannerUrlAttribute()
+    {
+        return $this->error_banner ?? asset('assets/images/404.png');
+    }
 }

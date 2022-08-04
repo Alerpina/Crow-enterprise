@@ -78,7 +78,7 @@
 
                                             <div class="img-upload">
                                                 <div id="image-preview" class="img-preview"
-                                                    style="position:relative;background: url({{ $admstore->error_banner ? asset('storage/images/' . $admstore->error_banner) : asset('assets/images/noimage.png') }});">
+                                                    style="position:relative;background: url({{ $admstore->errorBannerUrl }});">
                                                     <label for="image-upload" class="img-label" id="image-label"><i
                                                             class="icofont-upload-alt"></i>{{ __('Upload Image') }}</label>
                                                     <input type="file" name="error_banner" class="img-upload"
