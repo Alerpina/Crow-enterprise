@@ -1694,9 +1694,6 @@
         </div>
         {{-- Final Price Area End --}}
         @endif
-        {{-- <a href="{{ route('front.checkout') }}" class="order-btn mt-4">
-                        {{ __("Place Order") }}
-                    </a> --}}
         <div class="row" id="buttons1">
             <div class="col-lg-12  mt-3">
                 <div class="bottom-area paystack-area-btn button1">
@@ -1789,9 +1786,7 @@
                                             </div>
                                             <div class="form-input">
                                                 <input type="password" class="Password" name="password"
-                                                    placeholder="{{ __("
-                                                                                                                                                    Type Password") }} *"
-                                                    required="">
+                                                    placeholder="{{ __('Type Password') }} *" required="">
                                                 <i class="icofont-ui-password"></i>
                                             </div>
                                             <div class="form-forgot-pass">
@@ -1848,38 +1843,29 @@
                                             {{ csrf_field() }}
                                             <div class="form-input">
                                                 <input type="text" class="User Name" name="name"
-                                                    title="{{ __(" Input first name
-                                                                                                                                                    and last name") }}"
+                                                    title="{{ __('Input first name and last name') }}"
                                                     placeholder="{{ __('Full Name') }} *" required=""
                                                     pattern="^(\S*)\s+(.*)$">
                                                 <i class="icofont-user-alt-5"></i>
                                             </div>
                                             <div class="form-input">
                                                 <input type="email" class="User Name" name="email"
-                                                    placeholder="{{ __(" Email
-                                                                                                                                                    Address") }} *"
-                                                    required="">
+                                                    placeholder="{{ __('Email Address') }} *" required="">
                                                 <i class="icofont-email"></i>
                                             </div>
                                             <div class="form-input">
                                                 <input type="text" class="User Name" name="phone"
-                                                    placeholder="{{ __(" Phone
-                                                                                                                                                    Number") }} *"
-                                                    required="">
+                                                    placeholder="{{ __('Phone Number') }} *" required="">
                                                 <i class="icofont-phone"></i>
                                             </div>
                                             <div class="form-input">
                                                 <input type="text" class="User Name" name="address"
-                                                    placeholder="{{ __("
-                                                                                                                                                    Address") }} *"
-                                                    required="">
+                                                    placeholder="{{ __('Address') }} *" required="">
                                                 <i class="icofont-location-pin"></i>
                                             </div>
                                             <div class="form-input">
                                                 <input type="password" class="Password" name="password"
-                                                    placeholder="{{ __("
-                                                                                                                                                    Password") }} *"
-                                                    required="">
+                                                    placeholder="{{ __('Password') }} *" required="">
                                                 <i class="icofont-ui-password"></i>
                                             </div>
                                             <div class="form-input">
@@ -1898,9 +1884,7 @@
                                                 </ul>
                                                 <div class="form-input">
                                                     <input type="text" class="Password" name="codes"
-                                                        placeholder="{{ __(" Enter
-                                                                                                                                                            Code") }} *"
-                                                        required="">
+                                                        placeholder="{{ __('Enter Code') }} *" required="">
                                                     <i class="icofont-refresh"></i>
                                                 </div>
                                             @endif

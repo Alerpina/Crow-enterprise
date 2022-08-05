@@ -263,8 +263,7 @@
                                     </div>
                                     <div class="col-lg-7">
                                         <input name="youtube" type="text" class="input-field"
-                                            placeholder="{{ __(" Enter
-                                                                                        										Youtube Video URL") }}">
+                                            placeholder="{{ __('Enter Youtube Video URL') }}">
                                         <div class="checkbox-wrapper">
                                             <input type="checkbox" name="seo_check" class="checkclick"
                                                 id="allowProductSEO" value="1">
@@ -298,9 +297,7 @@
                                         </div>
                                         <div class="col-lg-7">
                                             <div class="text-editor">
-                                                <textarea name="meta_description" class="input-field"
-                                                    placeholder="{{ __("
-                                                                                                    												Meta Description") }}"></textarea>
+                                                <textarea name="meta_description" class="input-field" placeholder="{{ __('Meta Description') }}"></textarea>
                                             </div>
                                         </div>
                                     </div>

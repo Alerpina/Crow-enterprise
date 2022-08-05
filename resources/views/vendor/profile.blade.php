@@ -67,8 +67,7 @@
                                                     href="javascript:;">{{ __('Verified') }}</a>
                                             @else
                                                 <span class="verify-link"><a
-                                                        href="{{ route('vendor-verify') }}">{{ __("Verify
-                                                        												Account") }}</a></span>
+                                                        href="{{ route('vendor-verify') }}">{{ __('Verify Account') }}</a></span>
                                             @endif
                                         </h6>
                                     </div>
@@ -82,8 +81,7 @@
                                 </div>
                                 <div class="col-lg-7">
                                     <input type="text" class="input-field" name="vendor_corporate_name"
-                                        placeholder="{{ __("
-                                        									Corporate Name") }}" required=""
+                                        placeholder="{{ __('Corporate Name') }}" required=""
                                         value="{{ $data->vendor_corporate_name }}">
                                 </div>
                             </div>
@@ -107,8 +105,7 @@
                                 </div>
                                 <div class="col-lg-7">
                                     <input type="text" class="input-field" name="vendor_opening_hours"
-                                        placeholder="{{ __("
-                                        									Opening Hours") }}" required=""
+                                        placeholder="{{ __('Opening Hours') }}" required=""
                                         value="{{ $data->vendor_opening_hours }}">
                                 </div>
                             </div>
@@ -132,8 +129,7 @@
                                 </div>
                                 <div class="col-lg-7">
                                     <input type="text" class="input-field" name="vendor_delivery_info"
-                                        placeholder="{{ __("
-                                        									Delivery Info") }}" required=""
+                                        placeholder="{{ __('Delivery Info') }}" required=""
                                         value="{{ $data->vendor_delivery_info }}">
                                 </div>
                             </div>
@@ -145,9 +141,7 @@
                                 </div>
                                 <div class="col-lg-7">
                                     <input type="text" class="input-field" name="reg_number"
-                                        placeholder="{{ __("
-                                        									Registration Number") }}"
-                                        value="{{ $data->reg_number }}">
+                                        placeholder="{{ __('Registration Number') }}" value="{{ $data->reg_number }}">
                                 </div>
                             </div>
                             <div class="row">
@@ -158,8 +152,7 @@
                                 </div>
                                 <div class="col-lg-7">
                                     <input type="text" class="input-field" name="owner_name"
-                                        placeholder="{{ __(" Owner
-                                        									Name") }}" required=""
+                                        placeholder="{{ __('Owner Name') }}" required=""
                                         value="{{ $data->owner_name }}">
                                 </div>
                             </div>
@@ -171,8 +164,7 @@
                                 </div>
                                 <div class="col-lg-7">
                                     <input type="text" class="input-field" name="shop_number"
-                                        placeholder="{{ __(" Shop
-                                        									Number") }}" required=""
+                                        placeholder="{{ __('Shop Number') }}" required=""
                                         value="{{ $data->shop_number }}">
                                 </div>
                             </div>
@@ -184,8 +176,7 @@
                                 </div>
                                 <div class="col-lg-7">
                                     <input type="text" class="input-field" name="shop_address"
-                                        placeholder="{{ __(" Shop
-                                        									Address") }}" required=""
+                                        placeholder="{{ __('Shop Address') }}" required=""
                                         value="{{ $data->shop_address }}">
                                 </div>
                             </div>
@@ -197,8 +188,7 @@
                                 </div>
                                 <div class="col-lg-7">
                                     <input type="text" class="input-field" name="vendor_map_embed"
-                                        placeholder="{{ __("
-                                        									Paste Google Maps Embed here") }}"
+                                        placeholder="{{ __('Paste Google Maps Embed here') }}"
                                         value="{{ $data->vendor_map_embed }}">
                                 </div>
                             </div>

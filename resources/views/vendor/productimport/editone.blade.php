@@ -78,9 +78,8 @@
                                                 <span>{{ __('(External Link)') }}</span>
                                             </h4>
                                             <input type="text" class="input-field"
-                                                placeholder="{{ __(" Product Affiliate
-                                                											Link") }}"
-                                                name="affiliate_link" required="" value="{{ $data->affiliate_link }}">
+                                                placeholder="{{ __('Product Affiliate Link') }}" name="affiliate_link"
+                                                required="" value="{{ $data->affiliate_link }}">
                                         </div>
                                     </div>
 
@@ -601,14 +600,12 @@
                                                                             <label>
                                                                                 {{ __('Size Price') }} :
                                                                                 <span>
-                                                                                    {{ __("(This price will be added with base
-                                                                                    																		price)") }}
+                                                                                    {{ __('(This price will be added with base price)') }}
                                                                                 </span>
                                                                             </label>
                                                                             <input type="number" step="0.01"
                                                                                 name="size_price[]" class="input-field"
-                                                                                placeholder="{{ __(" Size
-                                                                                																	Price") }}"
+                                                                                placeholder="{{ __('Size Price') }}"
                                                                                 min="0"
                                                                                 value="{{ $data->size_price[$key] }}">
                                                                         </div>
@@ -647,14 +644,12 @@
                                                                         <label>
                                                                             {{ __('Size Price') }} :
                                                                             <span>
-                                                                                {{ __("(This price will be added with base
-                                                                                																		price)") }}
+                                                                                {{ __('(This price will be added with base price)') }}
                                                                             </span>
                                                                         </label>
                                                                         <input type="number" step="0.01"
                                                                             name="size_price[]" class="input-field"
-                                                                            placeholder="{{ __(" Size
-                                                                            																	Price") }}"
+                                                                            placeholder="{{ __('Size Price') }}"
                                                                             value="0" min="0">
                                                                     </div>
                                                                 </div>
@@ -723,7 +718,7 @@
                                                                                         value="{{ !empty($data1)
                                                                                             ? $data1
                                                                                             : "
-                                                                                        																				#000000" }}"
+                                                                                                                                                                                																				#000000" }}"
                                                                                         class="input-field cp" />
                                                                                     <span
                                                                                         class="input-group-addon"><i></i></span>
@@ -738,7 +733,7 @@
                                                                             value="{{ isset($data->color_qty[$key])
                                                                                 ? $data->color_qty[$key]
                                                                                 : "
-                                                                            																	0" }}"
+                                                                                                                                                        																	0" }}"
                                                                             min="0" required>
                                                                     </div>
                                                                     <div class="col-md-3">
@@ -748,7 +743,7 @@
                                                                             value="{{ isset($data->color_price[$key])
                                                                                 ? $data->color_price[$key]
                                                                                 : "
-                                                                            																	0" }}"
+                                                                                                                                                        																	0" }}"
                                                                             min="0" required>
                                                                     </div>
                                                                     <div class="col-md-3">
@@ -829,9 +824,7 @@
                                                 <span>{{ __('(Leave Empty will Show Always Available)') }}</span>
                                             </h4>
                                             <input name="stock" type="text" class="input-field"
-                                                placeholder="{{ __(" e.g
-                                                											20") }}"
-                                                value="{{ $data->stock }}">
+                                                placeholder="{{ __('e.g 20') }}" value="{{ $data->stock }}">
                                         </div>
                                     </div>
                                     <!--FINAL ROW COL-XL-6-->
@@ -858,7 +851,7 @@
                                                         @endphp
 
                                                         @php//dd($data['features'])
-                                                        @endphp
+                                                                                                                @endphp ?>
 
                                                         <div class="feature-area mb-3">
                                                             <div class="row mb-0">
@@ -902,7 +895,7 @@
                                                                             value="{{ isset($data->colors[0])
                                                                                 ? $data->colors[0]
                                                                                 : "
-                                                                            																		#000000" }}"
+                                                                                                                                                        																		#000000" }}"
                                                                             class="input-field cp" />
                                                                         <span class="input-group-addon"><i></i></span>
                                                                     </div>
@@ -977,7 +970,7 @@
                                                                             value="{{ isset($data->colors[1])
                                                                                 ? $data->colors[1]
                                                                                 : "
-                                                                            																		#000000" }}"
+                                                                                                                                                        																		#000000" }}"
                                                                             class="input-field cp" />
                                                                         <span class="input-group-addon"><i></i></span>
                                                                     </div>
@@ -1040,7 +1033,7 @@
                                                 <div
                                                     class="{{ $data->meta_tag == null && strip_tags($data->meta_description) == null
                                                         ? "
-                                                    												showbox"
+                                                                                                        												showbox"
                                                         : '' }}">
 
                                                     <div class="input-form">
@@ -1125,7 +1118,8 @@
                             </div>
                             <div class="col-sm-12 text-center">(
                                 <small>{{ __('You can upload multiple Images.') }}</small>
-                                )</div>
+                                )
+                            </div>
                         </div>
                     </div>
                     <div class="gallery-images">
@@ -1178,7 +1172,8 @@
                         @continue
                     @endif
                     '<div role="tabpanel" class="tab-pane" id="{{ $loc->locale }}-features' + current_feature
-                        + '">' +
+                        +
+                        '">' +
                         '<input type="text" name="{{ $loc->locale }}[features][]" class="input-field" placeholder="{{ __('Enter Your Keyword') }}">' +
                         '</div>' +
                 @endforeach
@@ -1323,7 +1318,8 @@
                                 '<span class="remove-img"><i class="fas fa-times"></i>' +
                                 '<input type="hidden" value="' + arr[k]['id'] + '">' +
                                 '</span>' +
-                                '<a href="' + '{{ asset('storage/images/galleries') . '/' }}' + arr[
+                                '<a href="' + '{{ asset('storage/images/galleries') . '/' }}' +
+                                arr[
                                     k][
                                     'photo'
                                 ] + '" target="_blank">' +
@@ -1378,7 +1374,8 @@
                                 '<span class="remove-img"><i class="fas fa-times"></i>' +
                                 '<input type="hidden" value="' + arr[k]['id'] + '">' +
                                 '</span>' +
-                                '<a href="' + '{{ asset('storage/images/galleries') . '/' }}' + arr[
+                                '<a href="' + '{{ asset('storage/images/galleries') . '/' }}' +
+                                arr[
                                     k][
                                     'photo'
                                 ] + '" target="_blank">' +

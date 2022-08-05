@@ -145,11 +145,11 @@
                                     <div class="col-lg-7">
                                         <select id="type_check" name="type_check">
                                             <option value="1" {{ $data->file != null ? 'selected' : '' }}>
-                                                {{ __("Upload By
-                                                											File") }}</option>
+                                                {{ __('Upload By File') }}
+                                            </option>
                                             <option value="2" {{ $data->link != null ? 'selected' : '' }}>
-                                                {{ __("Upload By
-                                                											Link") }}</option>
+                                                {{ __('Upload By Link') }}
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -298,9 +298,7 @@
                                     </div>
                                     <div class="col-lg-7">
                                         <input name="youtube" type="text" class="input-field"
-                                            placeholder="{{ __(" Youtube
-                                            										Video URL") }}"
-                                            value="{{ $data->youtube }}">
+                                            placeholder="{{ __('Youtube Video URL') }}" value="{{ $data->youtube }}">
                                         <div class="checkbox-wrapper">
                                             <input type="checkbox" name="seo_check" value="1" class="checkclick"
                                                 id="allowProductSEO"
@@ -315,7 +313,7 @@
                                 <div
                                     class="{{ $data->meta_tag == null && strip_tags($data->meta_description) == null
                                         ? "
-                                    								showbox"
+                                                                                                            								showbox"
                                         : '' }}">
                                     <div class="row">
                                         <div class="col-lg-4">
@@ -344,8 +342,7 @@
                                         </div>
                                         <div class="col-lg-7">
                                             <div class="text-editor">
-                                                <textarea name="meta_description" class="input-field" placeholder="{{ __("
-                                                												Meta Description") }}">{{ $data->meta_description }}</textarea>
+                                                <textarea name="meta_description" class="input-field" placeholder="{{ __('Meta Description') }}">{{ $data->meta_description }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -484,7 +481,8 @@
                             </div>
                             <div class="col-sm-12 text-center">(
                                 <small>{{ __('You can upload multiple Images.') }}</small>
-                                )</div>
+                                )
+                            </div>
                         </div>
                     </div>
                     <div class="gallery-images">
@@ -533,7 +531,8 @@
                                 '<span class="remove-img"><i class="fas fa-times"></i>' +
                                 '<input type="hidden" value="' + arr[k]['id'] + '">' +
                                 '</span>' +
-                                '<a href="' + '{{ asset('storage/images/galleries') . '/' }}' + arr[
+                                '<a href="' + '{{ asset('storage/images/galleries') . '/' }}' +
+                                arr[
                                     k]['photo'] + '" target="_blank">' +
                                 '<img src="' + '{{ asset('storage/images/galleries') . '/' }}' +
                                 arr[k]['photo'] + '" alt="gallery image">' +
@@ -591,7 +590,8 @@
                                 '<span class="remove-img"><i class="fas fa-times"></i>' +
                                 '<input type="hidden" value="' + arr[k]['id'] + '">' +
                                 '</span>' +
-                                '<a href="' + '{{ asset('storage/images/galleries') . '/' }}' + arr[
+                                '<a href="' + '{{ asset('storage/images/galleries') . '/' }}' +
+                                arr[
                                     k]['photo'] + '" target="_blank">' +
                                 '<img src="' + '{{ asset('storage/images/galleries') . '/' }}' +
                                 arr[k]['photo'] + '" alt="gallery image">' +

@@ -409,8 +409,7 @@
                                                                             <label>
                                                                                 {{ __('Size Price') }} :
                                                                                 <span>
-                                                                                    {{ __("(This price will be added with base
-                                                                                    																		price)") }}
+                                                                                    {{ __('(This price will be added with base price)') }}
                                                                                 </span>
                                                                             </label>
                                                                             <input type="number" step="0.01"
@@ -454,8 +453,7 @@
                                                                         <label>
                                                                             {{ __('Size Price') }} :
                                                                             <span>
-                                                                                {{ __("(This price will be added with base
-                                                                                																		price)") }}
+                                                                                {{ __('(This price will be added with base price)') }}
                                                                             </span>
                                                                         </label>
                                                                         <input type="number" step="0.01"
@@ -617,9 +615,7 @@
                                                 </span>
                                             </h4>
                                             <input name="stock" type="text" class="input-field"
-                                                placeholder="{{ __(" e.g
-                                                											20") }}"
-                                                value="{{ $data->stock }}">
+                                                placeholder="{{ __('e.g 20') }}" value="{{ $data->stock }}">
 
                                         </div>
                                     </div>
@@ -806,8 +802,7 @@
                                                 </span>
                                             </h4>
                                             <input name="youtube" type="text" class="input-field"
-                                                placeholder="{{ __(" Enter
-                                                											Youtube Video URL") }}"
+                                                placeholder="{{ __('Enter Youtube Video URL') }}"
                                                 value="{{ $data->youtube }}">
                                         </div>
 
@@ -823,7 +818,7 @@
                                         <div
                                             class="{{ $data->meta_tag == null && strip_tags($data->meta_description) == null
                                                 ? "
-                                            										showbox"
+                                                                                                                                                                                										showbox"
                                                 : '' }}">
 
                                             <div class="input-form">
@@ -908,7 +903,8 @@
                             </div>
                             <div class="col-sm-12 text-center">(
                                 <small>{{ __('You can upload multiple Images.') }}</small>
-                                )</div>
+                                )
+                            </div>
                         </div>
                     </div>
                     <div class="gallery-images">
@@ -960,7 +956,8 @@
                         @continue
                     @endif
                     '<div role="tabpanel" class="tab-pane" id="{{ $loc->locale }}-features' + current_feature
-                        + '">' +
+                        +
+                        '">' +
                         '<input type="text" name="{{ $loc->locale }}[features][]" class="input-field" placeholder="{{ __('Enter Your Keyword') }}">' +
                         '</div>' +
                 @endforeach
@@ -1105,7 +1102,8 @@
                                 '<span class="remove-img"><i class="fas fa-times"></i>' +
                                 '<input type="hidden" value="' + arr[k]['id'] + '">' +
                                 '</span>' +
-                                '<a href="' + '{{ asset('storage/images/galleries') . '/' }}' + arr[
+                                '<a href="' + '{{ asset('storage/images/galleries') . '/' }}' +
+                                arr[
                                     k]['photo'] + '" target="_blank">' +
                                 '<img src="' + '{{ asset('storage/images/galleries') . '/' }}' +
                                 arr[k]['photo'] + '" alt="gallery image">' +
@@ -1161,7 +1159,8 @@
                                 '<span class="remove-img"><i class="fas fa-times"></i>' +
                                 '<input type="hidden" value="' + arr[k]['id'] + '">' +
                                 '</span>' +
-                                '<a href="' + '{{ asset('storage/images/galleries') . '/' }}' + arr[
+                                '<a href="' + '{{ asset('storage/images/galleries') . '/' }}' +
+                                arr[
                                     k]['photo'] + '" target="_blank">' +
                                 '<img src="' + '{{ asset('storage/images/galleries') . '/' }}' +
                                 arr[k]['photo'] + '" alt="gallery image">' +

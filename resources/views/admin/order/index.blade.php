@@ -59,8 +59,7 @@
                                 <a class="mybtn1 btn-info btn-melhorenvio add-btn"
                                     data-href="{{ route('admin-order-update-melhorenvio-trackings') }}">
                                     <i class="fas fa-sync-alt"></i><span
-                                        class="remove-mobile">{{ __("Update Melhor Envio
-                                                                                                                Trackings") }}</span>
+                                        class="remove-mobile">{{ __('Update Melhor Envio Trackings') }}</span>
                                 </a>
                             @endif
                         </div>

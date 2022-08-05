@@ -119,8 +119,7 @@
                                                 <div class="row justify-content-left">
                                                     <div class="col-lg-12 d-flex justify-content-between">
                                                         <label class="control-label"
-                                                            for="showPrice">{{ __("Show this Product
-                                                                                                                price") }}</label>
+                                                            for="showPrice">{{ __('Show this Product price') }}</label>
                                                         <label class="switch">
                                                             <input type="checkbox" name="show_price" id="showPrice" checked>
                                                             <span class="slider round"></span>
@@ -400,7 +399,7 @@
                                                                         {{ __('Color Gallery') }}
                                                                         <span>
                                                                             {{ __('(These photos will be displayed when this
-                                                                                                                                                color is selected)') }}
+                                                                                                                                                                                                                            color is selected)') }}
                                                                         </span>
                                                                     </label>
                                                                 </div>
@@ -460,7 +459,7 @@
                                                             id="{{ config(' features.color_gallery') ? 'color-btn-with-gallery' : 'color-btn' }}"
                                                             class="add-more mt-4 mb-3"><i
                                                                 class="fas fa-plus"></i>{{ __('Add
-                                                                                                                        More Color') }}
+                                                                                                                                                                                        More Color') }}
                                                         </a>
                                                     </div>
                                                 </div>
@@ -515,7 +514,7 @@
                                                                         {{ __('Material Gallery') }}
                                                                         <span>
                                                                             {{ __('(These photos will be displayed when this
-                                                                                                                                                material is selected)') }}
+                                                                                                                                                                                                                            material is selected)') }}
                                                                         </span>
                                                                     </label>
                                                                 </div>
@@ -565,7 +564,7 @@
                                                             <a href="javascript:;" id="material-btn"
                                                                 class="add-more mt-4 mb-3"><i
                                                                     class="fas fa-plus"></i>{{ __('Add
-                                                                                                                            More Materials') }}
+                                                                                                                                                                                                More Materials') }}
                                                             </a>
                                                         </div>
                                                     </div>
@@ -652,7 +651,7 @@
                                                                         {{ __('Size Price') }} :
                                                                         <span>
                                                                             {{ __('(This price will be added with base
-                                                                                                                                                    price)') }}
+                                                                                                                                                                                                                                price)') }}
                                                                         </span>
                                                                     </label>
                                                                     <input type="number" step="0.01"
@@ -1194,7 +1193,8 @@
                             </div>
                             <div class="col-sm-12 text-center">(
                                 <small>{{ __('You can upload multiple Images.') }}</small>
-                                )</div>
+                                )
+                            </div>
                         </div>
                     </div>
                     <div class="gallery-images">
@@ -1234,7 +1234,8 @@
                             </div>
                             <div class="col-sm-12 text-center">(
                                 <small>{{ __('You can upload multiple Images.') }}</small>
-                                )</div>
+                                )
+                            </div>
                         </div>
                     </div>
                     <div class="gallery-images_color">

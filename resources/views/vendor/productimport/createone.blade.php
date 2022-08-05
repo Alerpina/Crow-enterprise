@@ -88,9 +88,8 @@
                                                 <span>{{ __('(External Link)') }}</span>
                                             </h4>
                                             <input type="text" class="input-field"
-                                                placeholder="{{ __(" Product Affiliate
-                                                                                            Link") }}"
-                                                name="affiliate_link" required="">
+                                                placeholder="{{ __('Product Affiliate Link') }}" name="affiliate_link"
+                                                required="">
                                         </div>
                                     </div>
 
@@ -401,14 +400,12 @@
                                                                     <label>
                                                                         {{ __('Size Price') }} :
                                                                         <span>
-                                                                            {{ __("(This price will be added with base
-                                                                                                                                                    price)") }}
+                                                                            {{ __('(This price will be added with base price)') }}
                                                                         </span>
                                                                     </label>
                                                                     <input type="number" step="0.01"
                                                                         name="size_price[]" class="input-field"
-                                                                        placeholder="{{ __(" Size
-                                                                                                                                            Price") }}"
+                                                                        placeholder="{{ __('Size Price') }}"
                                                                         value="0" min="0">
                                                                 </div>
                                                             </div>
@@ -531,8 +528,7 @@
                                                         <input type="checkbox" name="measure_check" class="checkclick"
                                                             id="allowProductMeasurement" value="1">
                                                         <label
-                                                            for="allowProductMeasurement">{{ __("Allow Product
-                                                                                                                    Measurement") }}</label>
+                                                            for="allowProductMeasurement">{{ __('Allow Product Measurement') }}</label>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -580,8 +576,7 @@
                                                 </span>
                                             </h4>
                                             <input name="stock" type="text" class="input-field"
-                                                placeholder="{{ __(" e.g
-                                                                                            20") }}">
+                                                placeholder="{{ __('e.g 20') }}">
                                         </div>
                                     </div>
                                     <!--FINAL ROW COL-XL-6-->
@@ -746,8 +741,7 @@
                                                 <span>{{ __('(Optional)') }}</span>
                                             </h4>
                                             <input name="youtube" type="text" class="input-field"
-                                                placeholder="{{ __("
-                                                                                            Youtube Video URL") }}">
+                                                placeholder="{{ __('Youtube Video URL') }}">
                                         </div>
 
                                         <div class="row">
@@ -823,7 +817,8 @@
                             </div>
                             <div class="col-sm-12 text-center">(
                                 <small>{{ __('You can upload multiple Images.') }}</small>
-                                )</div>
+                                )
+                            </div>
                         </div>
                     </div>
                     <div class="gallery-images">
@@ -944,7 +939,8 @@
                         @continue
                     @endif
                     '<div role="tabpanel" class="tab-pane" id="{{ $loc->locale }}-features' + current_feature
-                        + '">' +
+                        +
+                        '">' +
                         '<input type="text" name="{{ $loc->locale }}[features][]" class="input-field" placeholder="{{ __('Enter Your Keyword') }}">' +
                         '</div>' +
                 @endforeach

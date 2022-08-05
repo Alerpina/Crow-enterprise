@@ -54,14 +54,12 @@
 
                                 <di class="item form-group">
                                     <label class="control-label col-sm-12"
-                                        for="name">{{ __("Additional
-                                                                            Reference(Optional)") }}
+                                        for="name">{{ __('Additional Reference(Optional)') }}
 
                                     </label>
                                     <div class="col-sm-12">
                                         <textarea class="form-control" name="reference" rows="6"
-                                            placeholder="{{ __("
-                                                                                    Additional Reference(Optional)") }}">{{ old('reference') }}</textarea>
+                                            placeholder="{{ __('Additional Reference(Optional)') }}">{{ old('reference') }}</textarea>
                                     </div>
                                 </di>
 

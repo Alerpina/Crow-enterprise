@@ -118,8 +118,7 @@
                 <!-- Modal body -->
                 <div class="modal-body">
                     <p class="text-center">
-                        {{ __("You are about to delete this Sub Category. Everything under this sub category will be
-                                                                    deleted.") }}
+                        {{ __('You are about to delete this Sub Category. Everything under this sub category will be deleted.') }}
                     </p>
                     <p class="text-center">{{ __('Do you want to proceed?') }}</p>
                 </div>

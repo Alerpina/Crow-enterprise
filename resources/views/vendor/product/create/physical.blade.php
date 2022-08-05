@@ -387,13 +387,12 @@
                                                                         {{ __('Size Price') }} :
                                                                         <span>
                                                                             {{ __("(This price will be added with base
-                                                                            																		price)") }}
+                                                                                                                                                        																		price)") }}
                                                                         </span>
                                                                     </label>
                                                                     <input type="number" step="0.01"
                                                                         name="size_price[]" class="input-field"
-                                                                        placeholder="{{ __(" Size
-                                                                        																	Price") }}"
+                                                                        placeholder="{{ __('Size Price') }}"
                                                                         value="0" min="0">
                                                                 </div>
                                                             </div>
@@ -522,16 +521,14 @@
                                                                     <div class="col-lg-6">
                                                                         <input type="number" name="whole_sell_qty[]"
                                                                             class="input-field"
-                                                                            placeholder="{{ __(" Enter
-                                                                            																		Quantity") }}"
+                                                                            placeholder="{{ __('Enter Quantity') }}"
                                                                             min="0">
                                                                     </div>
 
                                                                     <div class="col-lg-6">
                                                                         <input type="number" name="whole_sell_discount[]"
                                                                             class="input-field"
-                                                                            placeholder="{{ __(" Enter
-                                                                            																		Discount Percentage") }}"
+                                                                            placeholder="{{ __('Enter Discount Percentage') }}"
                                                                             min="0" />
                                                                     </div>
                                                                 </div>
@@ -571,9 +568,7 @@
                                                 </span>
                                             </h4>
                                             <input name="weight" type="number" class="input-field"
-                                                placeholder="{{ __(" e.g
-                                                											20") }}" step="0.01"
-                                                min="0">
+                                                placeholder="{{ __('e.g 20') }}" step="0.01" min="0">
                                         </div>
                                     </div>
                                     <!--FECHAMENTO COL-XL-3-->
@@ -587,9 +582,7 @@
                                                 </span>
                                             </h4>
                                             <input name="width" type="number" class="input-field"
-                                                placeholder="{{ __(" e.g
-                                                											20") }}" step="1"
-                                                min="1">
+                                                placeholder="{{ __('e.g 20') }}" step="1" min="1">
                                         </div>
                                     </div>
                                     <!--FECHAMENTO COL-XL-3-->
@@ -641,8 +634,7 @@
                                                 </span>
                                             </h4>
                                             <input name="stock" type="text" class="input-field"
-                                                placeholder="{{ __(" e.g
-                                                											20") }}">
+                                                placeholder="{{ __('e.g 20') }}">
                                         </div>
                                     </div>
                                     <!--FINAL ROW COL-XL-3-->
@@ -838,8 +830,7 @@
                                                 <span>{{ __('(Optional)') }}</span>
                                             </h4>
                                             <input name="youtube" type="text" class="input-field"
-                                                placeholder="{{ __("
-                                                											Youtube Video URL") }}">
+                                                placeholder="{{ __('Youtube Video URL') }}">
                                         </div>
 
                                         <div class="row">
@@ -915,7 +906,8 @@
                             </div>
                             <div class="col-sm-12 text-center">(
                                 <small>{{ __('You can upload multiple Images.') }}</small>
-                                )</div>
+                                )
+                            </div>
                         </div>
                     </div>
                     <div class="gallery-images">
@@ -1033,7 +1025,8 @@
                         @continue
                     @endif
                     '<div role="tabpanel" class="tab-pane" id="{{ $loc->locale }}-features' + current_feature
-                        + '">' +
+                        +
+                        '">' +
                         '<input type="text" name="{{ $loc->locale }}[features][]" class="input-field" placeholder="{{ __('Enter Your Keyword') }}">' +
                         '</div>' +
                 @endforeach

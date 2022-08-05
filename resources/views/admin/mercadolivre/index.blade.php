@@ -65,10 +65,10 @@
                                                     <div class="input-form">
                                                         <h4 class="heading">
                                                             {{ __('Mercado Livre Authorization Code, Access &
-                                                                                                                Refresh Token') }}
+                                                                                                                                                                            Refresh Token') }}
                                                             *
                                                             <span>({{ __('Get all Mercado Livre credentials by simply clicking
-                                                                                                                    the button below.') }})</span>
+                                                                                                                                                                                the button below.') }})</span>
                                                         </h4>
                                                         <a class="btn btn-success" target="_blank"
                                                             href="https://auth.mercadolivre.com.br/authorization?response_type=code&client_id={{ $meli->app_id }}&redirect_uri={{ $meli->redirect_uri }}">{{ __('Get it here') }}</a>
@@ -89,8 +89,7 @@
                                                     <p>
                                                         <textarea class="input-field" name="redirect_uri" placeholder="Client Secret">{{ $meli->redirect_uri }}</textarea>
                                                     </p>
-                                                    <p>{{ __("This URL is always the same. You need to configure your
-                                                                                                        Redirect URL at Mercado Livre with this URL.") }}
+                                                    <p>{{ __('This URL is always the same. You need to configure your Redirect URL at Mercado Livre with this URL.') }}
                                                     </p>
                                                 </div>
                                             </div>
