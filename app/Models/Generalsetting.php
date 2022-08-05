@@ -259,32 +259,32 @@ class Generalsetting extends LocalizedModel
 
     public function getFaviconUrlAttribute()
     {
-        return $this->favicon ?? asset('assets/images/favicon.png');
+        return $this->favicon ? asset("storage/images/{$this->favicon}") : asset('assets/images/favicon.png');
     }
 
     public function getLogoUrlAttribute()
     {
-        return $this->logo ?? asset('assets/images/logo_azul.png');
+        return $this->logo ? asset("storage/images/{$this->logo}") : asset('assets/images/logo_azul.png');
     }
 
     public function getInvoiceLogoUrlAttribute()
     {
-        return $this->invoice_logo ?? asset('assets/images/logo_azul.png');
+        return $this->invoice_logo ? asset("storage/images/{$this->invoice_logo}") : asset('assets/images/logo_azul.png');
     }
 
     public function getFooterLogoUrlAttribute()
     {
-        return $this->footer_logo ?? asset('assets/images/logo_branca.png');
+        return $this->footer_logo ? asset("storage/images/{$this->footer_logo}") : asset('assets/images/logo_branca.png');
     }
 
     public function getAdminLoaderUrlAttribute()
     {
-        return $this->admin_loader ?? asset('assets/images/loader.gif');
+        return $this->admin_loader ? asset("storage/images/{$this->admin_loader}") : asset('assets/images/loader.gif');
     }
 
     public function getLoaderUrlAttribute()
     {
-        return $this->loader ?? asset('assets/images/loader.gif');
+        return $this->loader ? asset("storage/images/{$this->loader}") : asset('assets/images/loader.gif');
     }
 
     public function getErrorBannerUrlAttribute()
