@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
         $this->call(Database\Seeders\PackagesTableSeeder::class);
         $this->call(Database\Seeders\PackageTranslationsTableSeeder::class);
         $this->call(Database\Seeders\ShippingsTableSeeder::class);
-        $this->call(Database\Seeders\ShippingTranslationsTableSeeder::class);
+        $this->call(Database\Seeders\ShippingsTranslationsTableSeeder::class);
 
         # Clear cache after run all Seeders. It prevents application to start with empty Generalsetting model.
         Artisan::call('cache:clear');
