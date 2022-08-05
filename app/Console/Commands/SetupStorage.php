@@ -30,6 +30,8 @@ class SetupStorage extends Command
     {
         $folders = [
             'images',
+            'images/products',
+            'images/thumbnails',
         ];
 
         foreach ($folders as $folder) {
