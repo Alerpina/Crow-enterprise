@@ -289,7 +289,7 @@ class Generalsetting extends LocalizedModel
 
     public function getErrorBannerUrlAttribute()
     {
-        return $this->error_banner ?? asset('assets/images/404.png');
+        return $this->error_banner ? asset("storage/images/{$this->error_banner}") : asset('assets/images/404.png');
     }
 
     public function getUserImageUrlAttribute()
