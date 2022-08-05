@@ -80,4 +80,9 @@ class Admin extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function getPhotoUrlAttribute()
+    {
+        return $this->photo ? asset("storage/images/admins/{$this->photo}") : asset('assets/images/user.jpg');
+    }
 }
