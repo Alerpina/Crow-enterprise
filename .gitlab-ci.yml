@@ -48,7 +48,7 @@ cache:
     - mysql --version
     - php artisan migrate --path=database/migrations/crow_empty
     - php artisan migrate --force
-    - php artisan migrate:fresh --seed
+    - php artisan db:seed
     - mysqldump --host=mysql --user=root --password="MYSQL_ROOT_PASSWORD" "MYSQL_DATABASE" > db.sql
   allow_failure: true
   artifacts:
