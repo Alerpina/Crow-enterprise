@@ -91,7 +91,7 @@ cache:
     - git remote add production "$USERNAME"@"$HOST":/var/www/crow-enterprise.git
     - git remote -v
     - git status
-    # - git push -f production HEAD:feature/migrate-crow-store
+    - git push -f production HEAD:feature/migrate-crow-store
   only:
     - feature/migrate-crow-store
   when: manual
