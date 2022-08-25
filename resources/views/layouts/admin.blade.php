@@ -8,43 +8,40 @@
     <meta name="author" content="Agência Crow">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Title -->
-    <title>{{$gs->title}}</title>
+    <title>{{ $gs->title }}</title>
     <!-- favicon -->
-    <link rel="icon" type="image/x-icon" href="{{asset('storage/images/'.$gs->favicon)}}" />
+    <link rel="icon" type="image/x-icon" href="{{ $gs->favicon }}" />
     <!-- Bootstrap -->
-    <link href="{{asset('assets/admin/css/bootstrap.min.css')}}" rel="stylesheet" />
+    <link href="{{ asset('assets/admin/css/bootstrap.min.css') }}" rel="stylesheet" />
     <!-- Fontawesome -->
-    <link rel="stylesheet" href="{{asset('assets/admin/css/fontawesome.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/fontawesome.css') }}">
     <!-- icofont -->
-    <link rel="stylesheet" href="{{asset('assets/admin/css/icofont.min.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/admin/css/ionicons.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/icofont.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/ionicons.min.css') }}">
 
     <!-- Sidemenu Css -->
-    <link href="{{asset('assets/admin/plugins/fullside-menu/css/dark-side-style.css')}}" rel="stylesheet" />
-    <link href="{{asset('assets/admin/plugins/fullside-menu/waves.min.css')}}" rel="stylesheet" />
+    <link href="{{ asset('assets/admin/plugins/fullside-menu/css/dark-side-style.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/admin/plugins/fullside-menu/waves.min.css') }}" rel="stylesheet" />
 
-    <link href="{{asset('assets/admin/css/plugin.css')}}" rel="stylesheet" />
+    <link href="{{ asset('assets/admin/css/plugin.css') }}" rel="stylesheet" />
 
-    <link href="{{asset('assets/admin/css/jquery.tagit.css')}}" rel="stylesheet" />
+    <link href="{{ asset('assets/admin/css/jquery.tagit.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('assets/admin/css/bootstrap-coloroicker.css') }}">
     <!-- trumbowyg css -->
-    <link href="{{asset('assets/admin/css/trumbowyg-all.css')}}" rel="stylesheet" />
+    <link href="{{ asset('assets/admin/css/trumbowyg-all.css') }}" rel="stylesheet" />
     <!-- Main Css -->
 
     <!-- stylesheet -->
-    @if(DB::table('admin_languages')->where('is_default','=',1)->first()->rtl == 1)
-
-    <link href="{{asset('assets/admin/css/rtl/style.css')}}" rel="stylesheet" />
-    <link href="{{asset('assets/admin/css/rtl/custom.css')}}" rel="stylesheet" />
-    <link href="{{asset('assets/admin/css/rtl/responsive.css')}}" rel="stylesheet" />
-    <link href="{{asset('assets/admin/css/common.css')}}" rel="stylesheet" />
-
+    @if (DB::table('admin_languages')->where('is_default', '=', 1)->first()->rtl == 1)
+        <link href="{{ asset('assets/admin/css/rtl/style.css') }}" rel="stylesheet" />
+        <link href="{{ asset('assets/admin/css/rtl/custom.css') }}" rel="stylesheet" />
+        <link href="{{ asset('assets/admin/css/rtl/responsive.css') }}" rel="stylesheet" />
+        <link href="{{ asset('assets/admin/css/common.css') }}" rel="stylesheet" />
     @else
-
-    <link href="{{asset('assets/admin/css/style.css')}}" rel="stylesheet" />
-    <link href="{{asset('assets/admin/css/custom.css')}}" rel="stylesheet" />
-    <link href="{{asset('assets/admin/css/responsive.css')}}" rel="stylesheet" />
-    <link href="{{asset('assets/admin/css/common.css')}}" rel="stylesheet" />
+        <link href="{{ asset('assets/admin/css/style.css') }}" rel="stylesheet" />
+        <link href="{{ asset('assets/admin/css/custom.css') }}" rel="stylesheet" />
+        <link href="{{ asset('assets/admin/css/responsive.css') }}" rel="stylesheet" />
+        <link href="{{ asset('assets/admin/css/common.css') }}" rel="stylesheet" />
     @endif
 
     @yield('styles')
@@ -72,8 +69,8 @@
                             <ul class="list">
                                 <li class="bell-area">
                                     <div id="url_adminstore">
-                                        <div>{{$admstore->title}}</div>
-                                        <div>{{$admstore->domain}}</div>
+                                        <div>{{ $admstore->title }}</div>
+                                        <div>{{ $admstore->domain }}</div>
                                     </div>
 
                                 </li>
@@ -92,7 +89,8 @@
                                     </a>
                                     <div class="dropdown-menu">
                                         <div class="dropdownmenu-wrapper"
-                                            data-href="{{ route('admin.notifications-show') }}" id="notifications-show">
+                                            data-href="{{ route('admin.notifications-show') }}"
+                                            id="notifications-show">
                                         </div>
                                     </div>
                                 </li>
@@ -100,8 +98,7 @@
                                 <li class="login-profile-area">
                                     <a class="dropdown-toggle-1" href="javascript:;">
                                         <div class="user-img">
-                                            <img src="{{ Auth::guard('admin')->user()->photo ? asset('storage/images/admins/'.Auth::guard('admin')->user()->photo ):asset('assets/images/noimage.png') }}"
-                                                alt="">
+                                            <img src="{{ Auth::guard('admin')->user()->photoUrl }}" alt="">
                                         </div>
                                     </a>
                                     <div class="dropdown-menu">
@@ -151,68 +148,67 @@
     </div>
 
     @php
-    $curr = \App\Models\Currency::where('is_default','=',1)->first();
+        $curr = \App\Models\Currency::where('is_default', '=', 1)->first();
     @endphp
     <script type="text/javascript">
-        var mainurl = "{{url('/')}}";
-			  var admin_loader = {{ $gs->is_admin_loader }};
-			  var whole_sell = {{ $gs->wholesell }};
-				var getattrUrl = '{{ route('admin-prod-getattributes') }}';
-				var curr = {!! json_encode($curr) !!};
-				// console.log(curr);
-
+        var mainurl = "{{ url('/') }}";
+        var admin_loader = {{ $gs->is_admin_loader }};
+        var whole_sell = {{ $gs->wholesell }};
+        var getattrUrl = '{{ route('admin-prod-getattributes') }}';
+        var curr = {!! json_encode($curr) !!};
+        // console.log(curr);
     </script>
 
 
     <!-- Dashboard Core -->
-    <script src="{{asset('assets/admin/js/vendors/jquery-3.3.1.min.js')}}"></script>
-    <script src="{{asset('assets/admin/js/vendors/vue.js')}}"></script>
-    <script src="{{asset('assets/admin/js/vendors/bootstrap.min.js')}}"></script>
-    <script src="{{asset('assets/admin/js/jquery-ui.min.js')}}"></script>
+    <script src="{{ asset('assets/admin/js/vendors/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/js/vendors/vue.js') }}"></script>
+    <script src="{{ asset('assets/admin/js/vendors/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/js/jquery-ui.min.js') }}"></script>
     <!-- Fullside-menu Js-->
-    <script src="{{asset('assets/admin/plugins/fullside-menu/jquery.slimscroll.min.js')}}"></script>
-    <script src="{{asset('assets/admin/plugins/fullside-menu/waves.min.js')}}"></script>
+    <script src="{{ asset('assets/admin/plugins/fullside-menu/jquery.slimscroll.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/plugins/fullside-menu/waves.min.js') }}"></script>
 
-    <script src="{{asset('assets/admin/js/plugin.js')}}"></script>
-    <script src="{{asset('assets/admin/js/Chart.min.js')}}"></script>
-    <script src="{{asset('assets/admin/js/tag-it.js')}}"></script>
-    <script src="{{asset('assets/admin/js/bootstrap-colorpicker.min.js') }}"></script>
-    <script src="{{asset('assets/admin/js/notify.js') }}"></script>
+    <script src="{{ asset('assets/admin/js/plugin.js') }}"></script>
+    <script src="{{ asset('assets/admin/js/Chart.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/js/tag-it.js') }}"></script>
+    <script src="{{ asset('assets/admin/js/bootstrap-colorpicker.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/js/notify.js') }}"></script>
 
-    <script src="{{asset('assets/admin/js/jquery.canvasjs.min.js')}}"></script>
+    <script src="{{ asset('assets/admin/js/jquery.canvasjs.min.js') }}"></script>
     <!-- Load trumbo -->
-    <script src="{{asset('assets/admin/js/trumbowyg/plugins/resizimg/resizable-resolveconflict.js')}}"></script>
-    <script src="{{asset('assets/admin/js/jquery-resizable.js')}}"></script>
-    <script src="{{asset('assets/admin/js/trumbowyg/trumbowyg.min.js')}}">
+    <script src="{{ asset('assets/admin/js/trumbowyg/plugins/resizimg/resizable-resolveconflict.js') }}"></script>
+    <script src="{{ asset('assets/admin/js/jquery-resizable.js') }}"></script>
+    <script src="{{ asset('assets/admin/js/trumbowyg/trumbowyg.min.js') }}">
         var trumbo_lang = "en";
     </script>
-    @if (file_exists(public_path()."/assets/admin/js/trumbowyg/langs/".$current_locale.".min.js"))
-    <script>
-        trumbo_lang = "{{str_replace('-','_',$current_locale)}}";
-    </script>
-    <script src="{{asset('assets/admin/js/trumbowyg/langs/'.$current_locale.'.min.js')}}"></script>
+    @if (file_exists(public_path() . '/assets/admin/js/trumbowyg/langs/' . $current_locale . '.min.js'))
+        <script>
+            trumbo_lang = "{{ str_replace('-', '_', $current_locale) }}";
+        </script>
+        <script src="{{ asset('assets/admin/js/trumbowyg/langs/' . $current_locale . '.min.js') }}"></script>
     @endif
-    <script src="{{asset('assets/admin/js/trumbowyg/trumbowyg-all-plugins.min.js')}}"></script>
+    <script src="{{ asset('assets/admin/js/trumbowyg/trumbowyg-all-plugins.min.js') }}"></script>
     <!-- -->
-    <script src="{{asset('assets/admin/js/load.js')}}"></script>
+    <script src="{{ asset('assets/admin/js/load.js') }}"></script>
     <!-- Custom Js-->
-    <script src="{{asset('assets/admin/js/custom.js')}}"></script>
+    <script src="{{ asset('assets/admin/js/custom.js') }}"></script>
     <!-- AJAX Js-->
 
     <script type="text/javascript">
-        var categoryAttr = '{{ __('Category attributes')}}';
+        var categoryAttr = '{{ __('Category attributes') }}';
     </script>
 
-    <script src="{{asset('assets/admin/js/myscript.js')}}"></script>
+    <script src="{{ asset('assets/admin/js/myscript.js') }}"></script>
 
     @yield('scripts')
 
-    @if($gs->is_admin_loader == 0)
-    <style>
-        div#geniustable_processing {
-            display: none !important;
-        }
-    </style>
+    @if ($gs->is_admin_loader == 0)
+        <style>
+            div#geniustable_processing {
+                display: none !important;
+            }
+        </style>
     @endif
 
 </body>

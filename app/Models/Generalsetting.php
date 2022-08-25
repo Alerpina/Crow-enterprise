@@ -256,4 +256,49 @@ class Generalsetting extends LocalizedModel
     {
         return $this->belongsTo('App\Models\MelhorenvioConf', 'melhorenvio_id')->withDefault();
     }
+
+    public function getFaviconUrlAttribute()
+    {
+        return $this->favicon ? asset("storage/images/{$this->favicon}") : asset('assets/images/favicon.png');
+    }
+
+    public function getLogoUrlAttribute()
+    {
+        return $this->logo ? asset("storage/images/{$this->logo}") : asset('assets/images/logo_azul.png');
+    }
+
+    public function getInvoiceLogoUrlAttribute()
+    {
+        return $this->invoice_logo ? asset("storage/images/{$this->invoice_logo}") : asset('assets/images/logo_azul.png');
+    }
+
+    public function getFooterLogoUrlAttribute()
+    {
+        return $this->footer_logo ? asset("storage/images/{$this->footer_logo}") : asset('assets/images/logo_branca.png');
+    }
+
+    public function getAdminLoaderUrlAttribute()
+    {
+        return $this->admin_loader ? asset("storage/images/{$this->admin_loader}") : asset('assets/images/loader.gif');
+    }
+
+    public function getLoaderUrlAttribute()
+    {
+        return $this->loader ? asset("storage/images/{$this->loader}") : asset('assets/images/loader.gif');
+    }
+
+    public function getErrorBannerUrlAttribute()
+    {
+        return $this->error_banner ? asset("storage/images/{$this->error_banner}") : asset('assets/images/404.png');
+    }
+
+    public function getUserImageUrlAttribute()
+    {
+        return $this->user_image ? asset("storage/images/{$this->user_image}") : asset('assets/images/user.jpg');
+    }
+
+    public function getPopupBackgroundUrlAttribute()
+    {
+        return asset("assets/images/{$this->popup_background}");
+    }
 }

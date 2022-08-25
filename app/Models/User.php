@@ -235,4 +235,9 @@ class User extends Authenticatable implements TranslatableContract
             return asset("storage/images/users/".$this->photo);
         }
     }
+
+    public function getPhotoUrlAttribute()
+    {
+        return $this->photo ? asset("storage/images/users/{$this->photo}") : asset('assets/images/user.jpg');
+    }
 }
