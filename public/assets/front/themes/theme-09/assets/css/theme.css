@@ -1319,7 +1319,7 @@ h1, h2, h3, h4, h5, h6, p, a, span, li {
     text-align: center;
     margin-right: 10px;
     font-weight: 500;
-    font-size: 26px;
+    font-size: 25px;
     line-height: 28px;
 }
 
@@ -1807,7 +1807,7 @@ S .mainmenu-area {
 
 .footer .footer-widget .title {
     font-weight: 600;
-    text-transform: none;
+    text-transform: uppercase;
 }
 
 @media (max-width:767px) {
