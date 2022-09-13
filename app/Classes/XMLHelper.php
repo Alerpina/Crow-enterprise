@@ -71,10 +71,21 @@ class XMLHelper {
             }
 
             $valor = number_format($product->price, 2,'.','');
-            $photo = "";
-            if(!empty($product->photo) && !filter_var($product->photo, FILTER_VALIDATE_URL)){
-                $photo = $store_url."/storage/images/products/".$product->photo;
-            }
+            $photo = "noimage.jpg";
+
+            if (
+                !empty($product->photo)
+                && $product->photo != "noimage.jpg"
+                && !filter_var($product->photo, FILTER_VALIDATE_URL)
+            ) {
+                if (file_exists("./storage/images/products/".$product->photo)) {
+                    $photo = $store_url."/storage/images/products/".$product->photo;
+                } else {
+                    $files = scandir ("./storage/images/ftp/products_images/".$product->ref_code);
+                    if(isset($files[2])){
+                        $photo = $store_url . "/storage/images/ftp/products_images/" . $product->ref_code . "/" .  $files[2];
+                    }
+                }
 
             $item                    = $xml->createElement("item");
             $item_create             = $channel_create->appendChild($item);
