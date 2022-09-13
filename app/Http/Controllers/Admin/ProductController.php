@@ -116,12 +116,12 @@ class ProductController extends Controller
             $datas = $datas->where('is_catalog', '=', 1)->orderBy('id', 'desc');
         } elseif ($status == "with_tags") {
             $query = DB::table('products')
-            ->select('products.id as id1')
-            ->join('product_translations', function ($join) {
-                $join->on('products.id', '=', 'product_translations.product_id');
-            })
-            ->where('product_translations.features', '!=', null)->where('product_translations.features', '!=', "")
-            ->where('product_translations.locale', '=', $this->lang->locale);
+                ->select('products.id as id1')
+                ->join('product_translations', function ($join) {
+                    $join->on('products.id', '=', 'product_translations.product_id');
+                })
+                ->where('product_translations.features', '!=', null)->where('product_translations.features', '!=', "")
+                ->where('product_translations.locale', '=', $this->lang->locale);
             $datas = $datas->whereIn('id', $query->pluck('id1'))->orderBy('id', 'desc');
         } elseif ($status == "without_tags") {
             $datas = $datas->whereTranslation('features', null, $this->lang->locale)->orderBy('id', 'desc');
@@ -154,8 +154,8 @@ class ProductController extends Controller
                     <button class="go-dropdown-toggle"> ' . __('Actions') . '<i class="fas fa-chevron-down"></i></button>
                     <div class="action-list"><a href="' . route('admin-prod-edit', $data->id) . '"> <i class="fas fa-edit"></i> ' . __('Edit') . '</a>
                         <a href="javascript:;" data-href="' . route('admin-prod-copy', $data->id) . '" data-toggle="modal" data-target="#confirm-copy" class="delete"><i class="fas fa-edit"></i> ' . __('Copy') . '</a>
-                        '. $meli . '
-                        <a href="javascript" data-header="'.__("Image Gallery").'" class="set-gallery-product" data-toggle="modal" data-target="#setgallery">
+                        ' . $meli . '
+                        <a href="javascript" data-header="' . __("Image Gallery") . '" class="set-gallery-product" data-toggle="modal" data-target="#setgallery">
                         <input type="hidden" value="' . $data->id . '"><i class="fas fa-eye"></i> ' . __('View Gallery') . '</a>
                         <a href="javascript:;" data-href="' . route('admin-prod-delete', $data->id) . '" data-toggle="modal" data-target="#confirm-delete" class="delete"><i class="fas fa-trash-alt"></i> ' . __('Delete') . '</a>
                     </div>
@@ -186,7 +186,7 @@ class ProductController extends Controller
                 $name = mb_strlen(strip_tags($data->name), 'utf-8') > 50 ? mb_substr(strip_tags($data->name), 0, 50, 'utf-8') . '...' : strip_tags($data->name);
                 if (config('mercadolivre.is_active') && $data->mercadolivre_id) {
                     $mercadolivre_id = substr($data->mercadolivre_id, 0, 3) . '-' . substr($data->mercadolivre_id, 3, 10);
-                    $text = '<small> Anúncio Mercado Livre <a target="_blank" href="https://produto.mercadolivre.com.br/'.$mercadolivre_id.'">'. $mercadolivre_id .'</a> <i
+                    $text = '<small> Anúncio Mercado Livre <a target="_blank" href="https://produto.mercadolivre.com.br/' . $mercadolivre_id . '">' . $mercadolivre_id . '</a> <i
                     class="fas fa-check"></i></small>';
                     $name .= $text;
                 }
@@ -197,13 +197,13 @@ class ProductController extends Controller
                 }
                 $id3 = $data->type == 'Physical' ? '<small class="ml-2"> SKU: <a href="' . route('front.product', $data->slug) . '?admin-view=true" target="_blank">' . $data->sku . '</a></small>' : '';
                 $id4 = '<small class="ml-2"> ' . __('REF CODE') . ': ' . $data->ref_code . '</small>';
-                $fast_edit_btn = '<a title="'.__("Edit").'" data-href="' . route('admin-prod-fastedit', $data->id) . '" class="fasteditbtn" data-header="'.__("Edit")." ".$data->ref_code.'" data-toggle="modal" data-target="#fast_edit_modal"><i class="fas fa-edit text-primary"></i></a>';
+                $fast_edit_btn = '<a title="' . __("Edit") . '" data-href="' . route('admin-prod-fastedit', $data->id) . '" class="fasteditbtn" data-header="' . __("Edit") . " " . $data->ref_code . '" data-toggle="modal" data-target="#fast_edit_modal"><i class="fas fa-edit text-primary"></i></a>';
                 $this->useAdminLocale();
-                return  $fast_edit_btn.$name . '<br>' . $id . $id3 . $id4 . $id2;
+                return  $fast_edit_btn . $name . '<br>' . $id . $id3 . $id4 . $id2;
             })
 
             ->editColumn('features', function (Product $data) {
-                return !empty($data->features[1]) ? $data->features[0].", ".$data->features[1] : $data->features;
+                return !empty($data->features[1]) ? $data->features[0] . ", " . $data->features[1] : $data->features;
             })
 
             ->editColumn('price', function (Product $data) {
@@ -213,11 +213,15 @@ class ProductController extends Controller
                 return  $price;
             })
             ->editColumn('photo', function (Product $data) {
-                if (file_exists(public_path().'/storage/images/thumbnails/'.$data->thumbnail)) {
-                    return asset('storage/images/thumbnails/'.$data->thumbnail);
-                } else {
-                    return asset('assets/images/noimage.png');
+                if (file_exists(public_path() . '/storage/images/thumbnails/' . $data->thumbnail)) {
+                    return asset('storage/images/thumbnails/' . $data->thumbnail);
                 }
+
+                if ($this->storeSettings->ftp_folder) {
+                    return $data->thumbnail;
+                }
+
+                return asset('assets/images/noimage.png');
             })
             ->editColumn('stock', function (Product $data) {
                 $stck = (string)$data->stock;
@@ -231,16 +235,16 @@ class ProductController extends Controller
             })
             ->addColumn('status', function (Product $data) {
                 $s = $data->status == 1 ? 'checked' : '';
-                return '<div class="fix-social-links-area social-links-area"><label class="switch"><input type="checkbox" class="droplinks drop-sucess checkboxStatus" id="checkbox-status-'.$data->id.'" name="'.route('admin-prod-status', ['id1' => $data->id, 'id2' => $data->status]).'"'.$s.'><span class="slider round"></span></label></div>';
+                return '<div class="fix-social-links-area social-links-area"><label class="switch"><input type="checkbox" class="droplinks drop-sucess checkboxStatus" id="checkbox-status-' . $data->id . '" name="' . route('admin-prod-status', ['id1' => $data->id, 'id2' => $data->status]) . '"' . $s . '><span class="slider round"></span></label></div>';
             })
             ->addColumn('featured', function (Product $data) {
-                return '<a data-href="' . route('admin-prod-feature', $data->id) . '" class="feature add-btn" data-toggle="modal" data-target="#modal2" data-header="'.__('Highlight').'"><i class="icofont-star" data-toggle="tooltip" title=' .__("Featured"). '></i> ' . __('Featured') . '</a>';
+                return '<a data-href="' . route('admin-prod-feature', $data->id) . '" class="feature add-btn" data-toggle="modal" data-target="#modal2" data-header="' . __('Highlight') . '"><i class="icofont-star" data-toggle="tooltip" title=' . __("Featured") . '></i> ' . __('Featured') . '</a>';
             })
             ->addColumn('bulk', function (Product $data) {
                 return '<div class="custom-control custom-checkbox">
-                        <input type="checkbox" name="bulk_'.$data->id.'" class="custom-control-input product-bulk-check"
-                        id="bulk_'.$data->id.'" value="'.$data->id.'">
-                        <label class="custom-control-label" for="bulk_'.$data->id.'"></label>
+                        <input type="checkbox" name="bulk_' . $data->id . '" class="custom-control-input product-bulk-check"
+                        id="bulk_' . $data->id . '" value="' . $data->id . '">
+                        <label class="custom-control-label" for="bulk_' . $data->id . '"></label>
                         </div>';
             })
             ->rawColumns(['bulk', 'photo', 'action', 'name', 'price', 'stock', 'status', 'featured'])
@@ -342,7 +346,7 @@ class ProductController extends Controller
     {
         //--- Validation Section
         $rules = [
-          'image' => 'required',
+            'image' => 'required',
         ];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
@@ -356,28 +360,28 @@ class ProductController extends Controller
         list($type, $image) = explode(';', $image);
         list(, $image)      = explode(',', $image);
         $image = base64_decode($image);
-        $image_name = time().Str::random(8).'.png';
-        $path = 'storage/images/products/'.$image_name;
+        $image_name = time() . Str::random(8) . '.png';
+        $path = 'storage/images/products/' . $image_name;
         file_put_contents($path, $image);
         if ($data->photo != null) {
-            if (file_exists(public_path().'/storage/images/products/'.$data->photo)) {
-                unlink(public_path().'/storage/images/products/'.$data->photo);
+            if (file_exists(public_path() . '/storage/images/products/' . $data->photo)) {
+                unlink(public_path() . '/storage/images/products/' . $data->photo);
             }
         }
         $input['photo'] = $image_name;
         $data->update($input);
         if ($data->thumbnail != null) {
-            if (file_exists(public_path().'/storage/images/thumbnails/'.$data->thumbnail)) {
-                unlink(public_path().'/storage/images/thumbnails/'.$data->thumbnail);
+            if (file_exists(public_path() . '/storage/images/thumbnails/' . $data->thumbnail)) {
+                unlink(public_path() . '/storage/images/thumbnails/' . $data->thumbnail);
             }
         }
 
-        $img = Image::make(public_path().'/storage/images/products/'.$data->photo)->resize(285, 285);
-        $thumbnail = time().Str::random(8).'.png';
-        $img->save(public_path().'/storage/images/thumbnails/'.$thumbnail);
+        $img = Image::make(public_path() . '/storage/images/products/' . $data->photo)->resize(285, 285);
+        $thumbnail = time() . Str::random(8) . '.png';
+        $img->save(public_path() . '/storage/images/thumbnails/' . $thumbnail);
         $data->thumbnail  = $thumbnail;
         $data->update();
-        return response()->json(['status'=>true,'file_name' => $image_name]);
+        return response()->json(['status' => true, 'file_name' => $image_name]);
     }
 
     //*** POST Request
@@ -406,11 +410,11 @@ class ProductController extends Controller
         $data = new Product;
         $sign = Currency::where('id', '=', 1)->first();
         $input = $this->withRequiredFields($request->all(), ['name']);
-        $input['show_price'] = (boolean) $request->show_price ?? false;
+        $input['show_price'] = (bool) $request->show_price ?? false;
 
         // Check File
         if ($file = $request->file('file')) {
-            $name = time().$file->getClientOriginalName();
+            $name = time() . $file->getClientOriginalName();
             $file->move('storage/files', $name);
             $input['file'] = $name;
         }
@@ -420,8 +424,8 @@ class ProductController extends Controller
             list($type, $image) = explode(';', $image);
             list(, $image)      = explode(',', $image);
             $image = base64_decode($image);
-            $image_name = time().Str::random(8).'.png';
-            $path = 'storage/images/products/'.$image_name;
+            $image_name = time() . Str::random(8) . '.png';
+            $path = 'storage/images/products/' . $image_name;
             file_put_contents($path, $image);
             $input['photo'] = $image_name;
         }
@@ -582,7 +586,7 @@ class ProductController extends Controller
                     if ($files_arr = $request->file('color_gallery')) {
                         foreach ($files_arr as  $key => $file_arr) {
                             foreach ($file_arr as $key => $file) {
-                                $name = time().Str::random(8).".".$file->getClientOriginalExtension();
+                                $name = time() . Str::random(8) . "." . $file->getClientOriginalExtension();
                                 $input['color_gallery'] .= $name . "|";
                                 $file->move('storage/images/color_galleries', $name);
                             }
@@ -600,7 +604,7 @@ class ProductController extends Controller
                 $input['material_qty'] = null;
                 $input['material_price'] = null;
             } else {
-                if (in_array(null, $request->material)|| in_array(null, $request->material_qty)) {
+                if (in_array(null, $request->material) || in_array(null, $request->material_qty)) {
                     $input['material'] = null;
                     $input['material_qty'] = null;
                     $input['material_price'] = null;
@@ -618,7 +622,7 @@ class ProductController extends Controller
                     if ($files_arr = $request->file('material_gallery')) {
                         foreach ($files_arr as $key => $file_arr) {
                             foreach ($file_arr as $key => $file) {
-                                $name = time().Str::random(8).".".$file->getClientOriginalExtension();
+                                $name = time() . Str::random(8) . "." . $file->getClientOriginalExtension();
                                 $input['material_gallery'] .= $name . "|";
                                 $file->move("storage/images/material_galleries", $name);
                             }
@@ -659,9 +663,9 @@ class ProductController extends Controller
             if (!empty($catAttrs)) {
                 foreach ($catAttrs as $key => $catAttr) {
                     $in_name = $catAttr->input_name;
-                    if ($request->has("attr_"."$in_name")) {
-                        $attrArr["$in_name"]["values"] = $request["attr_"."$in_name"];
-                        $attrArr["$in_name"]["prices"] = $request["attr_"."$in_name"."_price"];
+                    if ($request->has("attr_" . "$in_name")) {
+                        $attrArr["$in_name"]["values"] = $request["attr_" . "$in_name"];
+                        $attrArr["$in_name"]["prices"] = $request["attr_" . "$in_name" . "_price"];
                         if ($catAttr->details_status) {
                             $attrArr["$in_name"]["details_status"] = 1;
                         } else {
@@ -677,9 +681,9 @@ class ProductController extends Controller
             if (!empty($subAttrs)) {
                 foreach ($subAttrs as $key => $subAttr) {
                     $in_name = $subAttr->input_name;
-                    if ($request->has("attr_"."$in_name")) {
-                        $attrArr["$in_name"]["values"] = $request["attr_"."$in_name"];
-                        $attrArr["$in_name"]["prices"] = $request["attr_"."$in_name"."_price"];
+                    if ($request->has("attr_" . "$in_name")) {
+                        $attrArr["$in_name"]["values"] = $request["attr_" . "$in_name"];
+                        $attrArr["$in_name"]["prices"] = $request["attr_" . "$in_name" . "_price"];
                         if ($subAttr->details_status) {
                             $attrArr["$in_name"]["details_status"] = 1;
                         } else {
@@ -694,9 +698,9 @@ class ProductController extends Controller
             if (!empty($childAttrs)) {
                 foreach ($childAttrs as $key => $childAttr) {
                     $in_name = $childAttr->input_name;
-                    if ($request->has("attr_"."$in_name")) {
-                        $attrArr["$in_name"]["values"] = $request["attr_"."$in_name"];
-                        $attrArr["$in_name"]["prices"] = $request["attr_"."$in_name"."_price"];
+                    if ($request->has("attr_" . "$in_name")) {
+                        $attrArr["$in_name"]["values"] = $request["attr_" . "$in_name"];
+                        $attrArr["$in_name"]["prices"] = $request["attr_" . "$in_name" . "_price"];
                         if ($childAttr->details_status) {
                             $attrArr["$in_name"]["details_status"] = 1;
                         } else {
@@ -753,17 +757,17 @@ class ProductController extends Controller
         }
 
         if ($prod->type != 'Physical') {
-            $prod->slug = Str::slug($data->name, '-').'-'.strtolower(Str::random(3).$data->id.Str::random(3));
+            $prod->slug = Str::slug($data->name, '-') . '-' . strtolower(Str::random(3) . $data->id . Str::random(3));
         } else {
-            $prod->slug = Str::slug($data->name, '-').'-'.strtolower(Str::slug($data->sku));
+            $prod->slug = Str::slug($data->name, '-') . '-' . strtolower(Str::slug($data->sku));
         }
         $prod->update();
 
         if (!empty($input['photo'])) {
             // Set Thumbnail
-            $img = Image::make(public_path().'/storage/images/products/'.$input['photo'])->resize(285, 285);
-            $thumbnail = time().Str::random(8).'.jpg';
-            $img->save(public_path().'/storage/images/thumbnails/'.$thumbnail);
+            $img = Image::make(public_path() . '/storage/images/products/' . $input['photo'])->resize(285, 285);
+            $thumbnail = time() . Str::random(8) . '.jpg';
+            $img->save(public_path() . '/storage/images/thumbnails/' . $thumbnail);
             $prod->thumbnail  = $thumbnail;
             $prod->update();
         }
@@ -774,7 +778,7 @@ class ProductController extends Controller
             foreach ($files as  $key => $file) {
                 if (in_array($key, $request->galval)) {
                     $gallery = new Gallery;
-                    $name = time().$file->getClientOriginalName();
+                    $name = time() . $file->getClientOriginalName();
                     $file->move('storage/images/galleries', $name);
                     $gallery['photo'] = $name;
                     $gallery['product_id'] = $lastid;
@@ -789,7 +793,7 @@ class ProductController extends Controller
             foreach ($files as  $key => $file) {
                 if (in_array($key, $request->galval)) {
                     $gallery360 = new Gallery360;
-                    $name = time().$file->getClientOriginalName();
+                    $name = time() . $file->getClientOriginalName();
                     $file->move('storage/images/galleries360', $name);
                     $gallery360['photo'] = $name;
                     $gallery360['product_id'] = $lastid;
@@ -841,7 +845,7 @@ class ProductController extends Controller
 
     public function prepareImport(Request $request)
     {
-        $rules = ['csvfile'=> 'required|mimes:csv,txt'];
+        $rules = ['csvfile' => 'required|mimes:csv,txt'];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return response()->json(array(
@@ -851,12 +855,12 @@ class ProductController extends Controller
 
         $filename = '';
         if ($file = $request->file('csvfile')) {
-            $filename = time().'-'.$file->getClientOriginalName();
+            $filename = time() . '-' . $file->getClientOriginalName();
             $file->move('storage/temp_files', $filename);
         }
 
         $row = -1; // desconsidere o header
-        if (($fp = fopen(public_path('storage/temp_files/'.$filename), "r")) !== false) {
+        if (($fp = fopen(public_path('storage/temp_files/' . $filename), "r")) !== false) {
             while (($record = fgetcsv($fp)) !== false) {
                 $row++;
             }
@@ -876,12 +880,12 @@ class ProductController extends Controller
         $line = $offset + 2;
         $updateCheck = $request->updateCheck;
 
-        $csv = Reader::createFromPath(public_path('storage/temp_files/'.$filename), 'r');
+        $csv = Reader::createFromPath(public_path('storage/temp_files/' . $filename), 'r');
         $csv->setHeaderOffset(0); //set the CSV header offset
 
         $stmt = (new Statement())
-        ->offset($offset)
-        ->limit(1);
+            ->offset($offset)
+            ->limit(1);
         $records = $stmt->process($csv);
 
         foreach ($records as $record) {
@@ -893,7 +897,7 @@ class ProductController extends Controller
             foreach ($headers as $header) {
                 if (strpos($header, '*') !== false && empty($record[$header])) {
                     return response()->json(array(
-                        'errors' => __("The field: "). $header . __(' in line: '). $line . __(' cannot be empty')
+                        'errors' => __("The field: ") . $header . __(' in line: ') . $line . __(' cannot be empty')
                     ));
                 }
             }
@@ -941,12 +945,12 @@ class ProductController extends Controller
                     return $this->store($request);
                 } else {
                     return response()->json(array(
-                        'errors' => __("No Category Found!") .__('in line') . ": " . $line
+                        'errors' => __("No Category Found!") . __('in line') . ": " . $line
                     ));
                 }
             } else {
                 return response()->json(array(
-                    'errors' => __("Duplicate Product Code! in line: ").$line
+                    'errors' => __("Duplicate Product Code! in line: ") . $line
                 ));
             }
         }
@@ -956,11 +960,11 @@ class ProductController extends Controller
     {
         $filename = $request->fileName;
 
-        unlink(public_path('storage/temp_files/'.$filename));
-        $msg = '<p>'. __('Bulk Product File Imported Successfully.').'<a href="'.route('admin-prod-index').'">'.__('View Product Lists.').'</a></p>';
-        $msg .= '<p>'. __('Total insert data: ').'<span class="insertCount"></span></p>';
-        $msg .= '<p>'. __('Total update products: ').'<span class="updateCount"></span></p>';
-        $msg .= '<p>'. __('Total erros data: ').'<span class="errorCount"></span></p>';
+        unlink(public_path('storage/temp_files/' . $filename));
+        $msg = '<p>' . __('Bulk Product File Imported Successfully.') . '<a href="' . route('admin-prod-index') . '">' . __('View Product Lists.') . '</a></p>';
+        $msg .= '<p>' . __('Total insert data: ') . '<span class="insertCount"></span></p>';
+        $msg .= '<p>' . __('Total update products: ') . '<span class="updateCount"></span></p>';
+        $msg .= '<p>' . __('Total erros data: ') . '<span class="errorCount"></span></p>';
         return response()->json($msg);
     }
 
@@ -1014,15 +1018,15 @@ class ProductController extends Controller
         $storesList = Generalsetting::all();
         $currentStores = $data->stores()->pluck('id')->toArray();
 
-        $ftp_path = public_path('storage/images/ftp/'.$this->storeSettings->ftp_folder.$data->ref_code_int.'/');
-        $ftp_gallery=[];
+        $ftp_path = public_path('storage/images/ftp/' . $this->storeSettings->ftp_folder . $data->ref_code_int . '/');
+        $ftp_gallery = [];
         if (File::exists($ftp_path)) {
             $files = scandir($ftp_path);
-            $extensions = array('.jpg','.jpeg','.gif','.png');
+            $extensions = array('.jpg', '.jpeg', '.gif', '.png');
             foreach ($files as $file) {
                 $file_extension = strtolower(strrchr($file, '.'));
                 if (in_array($file_extension, $extensions) === true) {
-                    $ftp_gallery[]=asset('storage/images/ftp/'.$this->storeSettings->ftp_folder.$data->ref_code_int.'/'.$file);
+                    $ftp_gallery[] = asset('storage/images/ftp/' . $this->storeSettings->ftp_folder . $data->ref_code_int . '/' . $file);
                 }
             }
         }
@@ -1175,8 +1179,8 @@ class ProductController extends Controller
 
         // Replicate into a new product and change what's necessary
         $new = $old->replicateWithTranslations();
-        $new->slug = Str::slug($new->name, '-').'-'.strtolower(Str::random(3).$new->id.Str::random(3));
-        $new->sku = Str::random(3).substr(time(), 6, 8).Str::random(3);
+        $new->slug = Str::slug($new->name, '-') . '-' . strtolower(Str::random(3) . $new->id . Str::random(3));
+        $new->sku = Str::random(3) . substr(time(), 6, 8) . Str::random(3);
         $new->ref_code = $new->sku;
         $new->photo = null;
         $new->thumbnail = null;
@@ -1199,7 +1203,7 @@ class ProductController extends Controller
         $rules = [
             "{$this->lang->locale}.name" => 'required',
             'file'       => 'mimes:zip'
-            ];
+        ];
         $customs = [
             "{$this->lang->locale}.name.required" => __('Product Name in :lang is required', ['lang' => $this->lang->language]),
         ];
@@ -1223,7 +1227,7 @@ class ProductController extends Controller
         $sign = Currency::where('id', '=', 1)->first();
         //$input = $this->removeEmptyTranslations($request->all(), $data);
         $input = $this->withRequiredFields($request->except(['photo', 'thumbnail']), ['name']);
-        $input['show_price'] = (boolean) $request->show_price ?? false;
+        $input['show_price'] = (bool) $request->show_price ?? false;
 
         //-- Translations Section
         // Will check each field in language 1 and then for each other language
@@ -1289,9 +1293,9 @@ class ProductController extends Controller
         if ($request->type_check == 1) {
             $input['link'] = null;
         } else {
-            if ($data->file!=null) {
-                if (file_exists(public_path().'/storage/files/'.$data->file)) {
-                    unlink(public_path().'/storage/files/'.$data->file);
+            if ($data->file != null) {
+                if (file_exists(public_path() . '/storage/files/' . $data->file)) {
+                    unlink(public_path() . '/storage/files/' . $data->file);
                 }
             }
             $input['file'] = null;
@@ -1301,12 +1305,12 @@ class ProductController extends Controller
         // Check Physical
         if ($data->type == "Physical") {
 
-                    //--- Validation Section
+            //--- Validation Section
             $rules = [
-                        'sku' => 'min:1|unique:products,sku,'.$id,
-                        'ref_code' => 'max:50|unique:products,ref_code,'.$id,
-                        'mpn'      => 'max:50'
-                    ];
+                'sku' => 'min:1|unique:products,sku,' . $id,
+                'ref_code' => 'max:50|unique:products,ref_code,' . $id,
+                'mpn'      => 'max:50'
+            ];
 
             $validator = Validator::make($request->all(), $rules);
 
@@ -1405,7 +1409,7 @@ class ProductController extends Controller
                                     if (array_key_exists($current_key, $request->color_gallery)) {
                                         $input['color_gallery_current'][$current_key] = null;
                                         foreach ($request->color_gallery[$current_key] as $file) {
-                                            $name = time().Str::random(8).".".$file->getClientOriginalExtension();
+                                            $name = time() . Str::random(8) . "." . $file->getClientOriginalExtension();
                                             $input['color_gallery_current'][$current_key] .= $name . "|";
                                             $file->move('storage/images/color_galleries', $name);
                                         }
@@ -1413,7 +1417,7 @@ class ProductController extends Controller
                                     } elseif (isset($request->color_gallery[$key])) {
                                         $input['color_gallery_current'][$key] = null;
                                         foreach ($request->color_gallery[$key] as $file) {
-                                            $name = time().Str::random(8).".".$file->getClientOriginalExtension();
+                                            $name = time() . Str::random(8) . "." . $file->getClientOriginalExtension();
                                             $input['color_gallery_current'][$key] .= $name . "|";
                                             $file->move('storage/images/color_galleries', $name);
                                         }
@@ -1425,7 +1429,7 @@ class ProductController extends Controller
                             } else {
                                 foreach ($files_arr as  $key => $file_arr) {
                                     foreach ($file_arr as $file_key => $file) {
-                                        $name = time().Str::random(8).".".$file->getClientOriginalExtension();
+                                        $name = time() . Str::random(8) . "." . $file->getClientOriginalExtension();
                                         $input['color_gallery'] .= $name . "|";
                                         $file->move('storage/images/color_galleries', $name);
                                     }
@@ -1473,7 +1477,7 @@ class ProductController extends Controller
                                     if (array_key_exists($current_key, $request->material_gallery)) {
                                         $input['material_gallery_current'][$current_key] = null;
                                         foreach ($request->material_gallery[$current_key] as $file) {
-                                            $name = time().Str::random(8).".".$file->getClientOriginalExtension();
+                                            $name = time() . Str::random(8) . "." . $file->getClientOriginalExtension();
                                             $input['material_gallery_current'][$current_key] .= $name . "|";
                                             $file->move('storage/images/material_galleries', $name);
                                         }
@@ -1481,7 +1485,7 @@ class ProductController extends Controller
                                     } elseif (isset($request->material_gallery[$key])) {
                                         $input['material_gallery_current'][$key] = null;
                                         foreach ($request->material_gallery[$key] as $file) {
-                                            $name = time().Str::random(8).".".$file->getClientOriginalExtension();
+                                            $name = time() . Str::random(8) . "." . $file->getClientOriginalExtension();
                                             $input['material_gallery_current'][$key] .= $name . "|";
                                             $file->move('storage/images/material_galleries', $name);
                                         }
@@ -1493,7 +1497,7 @@ class ProductController extends Controller
                             } else {
                                 foreach ($files_arr as  $key => $file_arr) {
                                     foreach ($file_arr as $file_key => $file) {
-                                        $name = time().Str::random(8).".".$file->getClientOriginalExtension();
+                                        $name = time() . Str::random(8) . "." . $file->getClientOriginalExtension();
                                         $input['material_gallery'] .= $name . "|";
                                         $file->move('storage/images/material_galleries', $name);
                                     }
@@ -1547,9 +1551,9 @@ class ProductController extends Controller
             if (!empty($catAttrs)) {
                 foreach ($catAttrs as $key => $catAttr) {
                     $in_name = $catAttr->input_name;
-                    if ($request->has("attr_"."$in_name")) {
-                        $attrArr["$in_name"]["values"] = $request["attr_"."$in_name"];
-                        $attrArr["$in_name"]["prices"] = $request["attr_"."$in_name"."_price"];
+                    if ($request->has("attr_" . "$in_name")) {
+                        $attrArr["$in_name"]["values"] = $request["attr_" . "$in_name"];
+                        $attrArr["$in_name"]["prices"] = $request["attr_" . "$in_name" . "_price"];
                         if ($catAttr->details_status) {
                             $attrArr["$in_name"]["details_status"] = 1;
                         } else {
@@ -1565,9 +1569,9 @@ class ProductController extends Controller
             if (!empty($subAttrs)) {
                 foreach ($subAttrs as $key => $subAttr) {
                     $in_name = $subAttr->input_name;
-                    if ($request->has("attr_"."$in_name")) {
-                        $attrArr["$in_name"]["values"] = $request["attr_"."$in_name"];
-                        $attrArr["$in_name"]["prices"] = $request["attr_"."$in_name"."_price"];
+                    if ($request->has("attr_" . "$in_name")) {
+                        $attrArr["$in_name"]["values"] = $request["attr_" . "$in_name"];
+                        $attrArr["$in_name"]["prices"] = $request["attr_" . "$in_name" . "_price"];
                         if ($subAttr->details_status) {
                             $attrArr["$in_name"]["details_status"] = 1;
                         } else {
@@ -1582,9 +1586,9 @@ class ProductController extends Controller
             if (!empty($childAttrs)) {
                 foreach ($childAttrs as $key => $childAttr) {
                     $in_name = $childAttr->input_name;
-                    if ($request->has("attr_"."$in_name")) {
-                        $attrArr["$in_name"]["values"] = $request["attr_"."$in_name"];
-                        $attrArr["$in_name"]["prices"] = $request["attr_"."$in_name"."_price"];
+                    if ($request->has("attr_" . "$in_name")) {
+                        $attrArr["$in_name"]["values"] = $request["attr_" . "$in_name"];
+                        $attrArr["$in_name"]["prices"] = $request["attr_" . "$in_name" . "_price"];
                         if ($childAttr->details_status) {
                             $attrArr["$in_name"]["details_status"] = 1;
                         } else {
@@ -1604,7 +1608,7 @@ class ProductController extends Controller
         $data->update($input);
         $data = Product::findOrFail($id);
 
-        $new_slug = Str::slug($data->name, '-').'-'.strtolower(Str::slug($data->sku));
+        $new_slug = Str::slug($data->name, '-') . '-' . strtolower(Str::slug($data->sku));
 
         if (config("features.marketplace")) {
             $vendor_products = Product::where('slug', $data->slug)->where('user_id', '!=', 0)->get();
@@ -1838,7 +1842,7 @@ class ProductController extends Controller
         $input = $this->withRequiredFields($request->all(), ['name']);
         //-- Logic Section
         $data = Product::findOrFail($id);
-        $new_slug = Str::slug($data->name, '-').'-'.strtolower(Str::slug($data->sku));
+        $new_slug = Str::slug($data->name, '-') . '-' . strtolower(Str::slug($data->sku));
 
 
 
@@ -1915,8 +1919,8 @@ class ProductController extends Controller
 
         if ($data->galleries->count() > 0) {
             foreach ($data->galleries as $gal) {
-                if (file_exists(public_path().'/storage/images/galleries/'.$gal->photo) && !empty($gal->photo)) {
-                    unlink(public_path().'/storage/images/galleries/'.$gal->photo);
+                if (file_exists(public_path() . '/storage/images/galleries/' . $gal->photo) && !empty($gal->photo)) {
+                    unlink(public_path() . '/storage/images/galleries/' . $gal->photo);
                 }
                 $gal->delete();
             }
@@ -1924,8 +1928,8 @@ class ProductController extends Controller
 
         if ($data->galleries360->count() > 0) {
             foreach ($data->galleries360 as $gal) {
-                if (file_exists(public_path().'/storage/images/galleries360/'.$gal->photo) && !empty($gal->photo)) {
-                    unlink(public_path().'/storage/images/galleries360/'.$gal->photo);
+                if (file_exists(public_path() . '/storage/images/galleries360/' . $gal->photo) && !empty($gal->photo)) {
+                    unlink(public_path() . '/storage/images/galleries360/' . $gal->photo);
                 }
                 $gal->delete();
             }
@@ -1965,19 +1969,19 @@ class ProductController extends Controller
 
         if ($data->photo != null) {
             if (!filter_var($data->photo, FILTER_VALIDATE_URL)) {
-                if (file_exists(public_path().'/storage/images/products/'.$data->photo)) {
-                    unlink(public_path().'/storage/images/products/'.$data->photo);
+                if (file_exists(public_path() . '/storage/images/products/' . $data->photo)) {
+                    unlink(public_path() . '/storage/images/products/' . $data->photo);
                 }
             }
         }
 
-        if (file_exists(public_path().'/storage/images/thumbnails/'.$data->thumbnail) && $data->thumbnail != "") {
-            unlink(public_path().'/storage/images/thumbnails/'.$data->thumbnail);
+        if (file_exists(public_path() . '/storage/images/thumbnails/' . $data->thumbnail) && $data->thumbnail != "") {
+            unlink(public_path() . '/storage/images/thumbnails/' . $data->thumbnail);
         }
 
         if ($data->file != null) {
-            if (file_exists(public_path().'/storage/files/'.$data->file)) {
-                unlink(public_path().'/storage/files/'.$data->file);
+            if (file_exists(public_path() . '/storage/files/' . $data->file)) {
+                unlink(public_path() . '/storage/files/' . $data->file);
             }
         }
 
@@ -1990,7 +1994,7 @@ class ProductController extends Controller
         return response()->json($msg);
         //--- Redirect Section Ends
 
-// PRODUCT DELETE ENDS
+        // PRODUCT DELETE ENDS
     }
 
     public function getAttributes(Request $request)
@@ -2022,20 +2026,20 @@ class ProductController extends Controller
         $data = Product::findOrFail($request->id);
         if ($data->photo != null) {
             if (!filter_var($data->photo, FILTER_VALIDATE_URL)) {
-                if (file_exists(public_path().'/storage/images/products/'.$data->photo)) {
-                    unlink(public_path().'/storage/images/products/'.$data->photo);
+                if (file_exists(public_path() . '/storage/images/products/' . $data->photo)) {
+                    unlink(public_path() . '/storage/images/products/' . $data->photo);
                 }
             }
         }
         if ($data->thumbnail != null) {
-            if (file_exists(public_path().'/storage/images/thumbnails/'.$data->thumbnail) && $data->thumbnail != "") {
-                unlink(public_path().'/storage/images/thumbnails/'.$data->thumbnail);
+            if (file_exists(public_path() . '/storage/images/thumbnails/' . $data->thumbnail) && $data->thumbnail != "") {
+                unlink(public_path() . '/storage/images/thumbnails/' . $data->thumbnail);
             }
         }
         //$data->update(['photo' => null, 'thumbnail' => null]);
         $msg = __('Image Deleted Successfully');
         return response()->json([
-            'status'=>true,
+            'status' => true,
             'message' => $msg
         ]);
     }
@@ -2070,7 +2074,7 @@ class ProductController extends Controller
             if ($product->thumbnail == asset("assets/images/noimage.png") && $product->photo != asset("assets/images/noimage.png")) {
                 $product->thumbnail = $product->photo;
                 if ($product->update()) {
-                    $img_dir = public_path().'/storage/images/products/'.$product->photo;
+                    $img_dir = public_path() . '/storage/images/products/' . $product->photo;
                     $thumb_path .= $product->photo;
                     $img = Image::make($img_dir);
                     $thumb = $img->resize(null, 285, function ($constraint) {
