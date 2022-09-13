@@ -394,7 +394,7 @@ $(function ($) {
         // fix not looping when just having 1 item.
         // source: https://github.com/OwlCarousel2/OwlCarousel2/issues/548#issuecomment-74332563
         $hot_new_slider.each(function () {
-            if($(this).find('.item-slide').length > 1) {
+            if ($(this).find('.item-slide').length > 1) {
                 $(this).owlCarousel({
                     items: 5,
                     autoplay: true,
@@ -433,7 +433,7 @@ $(function ($) {
         // fix not looping when just having 1 item.
         // source: https://github.com/OwlCarousel2/OwlCarousel2/issues/548#issuecomment-74332563
         $hot_new_slider.each(function () {
-            if($(this).find('.item-slide').length > 1) {
+            if ($(this).find('.item-slide').length > 1) {
                 $(this).owlCarousel({
                     items: 1,
                     autoplay: true,
@@ -538,32 +538,32 @@ $(function ($) {
     //define variable for store last scrolltop
     $(window).on('scroll', function () {
         var $window = $(window);
-        
-        if ( $(window).width() > 991 ) {
+
+        if ($(window).width() > 991) {
 
             if ($window.scrollTop() > 45) {
                 $(".menufixed").addClass('nav-fixed');
-    
+
                 var tamanhomenu = $('.nav-fixed').height() + $('.top-header').height() + 20;
-    
+
                 $('.breadcrumb-area').css('margin-top', tamanhomenu);
-    
+
             } else {
                 $(".menufixed").removeClass('nav-fixed');
-    
+
                 var tamanhomenu = $('.nav-fixed').height();
-    
+
                 $('.breadcrumb-area').css('margin-top', '');
             }
         } else {
             if ($window.scrollTop() > 190) {
                 $(".mainmenu-area").addClass('nav-fixed');
-    
+
             } else {
                 $(".mainmenu-area").removeClass('nav-fixed');
             }
         }
-    
+
 
         /*---------------------------
             back to top show / hide
