@@ -29,7 +29,7 @@ class VerifyCsrfToken extends Middleware
         '/cielo-callback',
         '/pagarme-callback',
         '/pagseguro-callback',
-        '/pagopar-callback',
+        '/pagopar/callback',
         '/rede-callback',
         '/paypal-callback',
         'admin/category/delete-image'
