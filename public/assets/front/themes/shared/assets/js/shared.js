@@ -631,11 +631,8 @@ $(function ($) {
             if (search == "") {
                 $(".autocomplete").hide();
             } else {
-                // at least 3 characters or any digit with a space or not
-                if (search.match(/\w{3,}|\d{1,}\s?/g)) {
-                    $("#myInputautocomplete-list").load(mainurl + '/autosearch/product/' + search);
-                    $(".autocomplete").show();
-                }
+                $("#myInputautocomplete-list").load(mainurl + '/autosearch/product/' + search);
+                $(".autocomplete").show();
             }
         });
         // Auto Complete Section Ends

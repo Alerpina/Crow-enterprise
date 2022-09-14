@@ -300,43 +300,46 @@ class FrontendController extends Controller
 
     public function autosearch($slug)
     {
-        if (mb_strlen($slug, 'utf-8') > 2) {
-            $search = str_replace(' ', '%', implode(' ', array_reverse(explode(' ', $slug))));
-            $slug = str_replace(' ', '%', trim($slug));
-            $searchLocale = $this->storeLocale->locale;
+        $matches = [];
+        $found = preg_match_all('/\w{3,}|\d{1,}\s?/i', $slug, $matches); //at least 3 characters or any digits with or not space
 
-            if (Session::has('language') && $this->storeSettings->is_language) {
-                $searchLocale = Language::find(Session::get('language'))->locale;
-            }
-            if (!config("features.marketplace")) {
-                $prods = Product::byStore()
-                    ->isActive()
-                    ->where(function ($query) use ($slug) {
-                        $query->where('sku', 'like', "%{$slug}%")
-                        ->orWhere('ref_code', 'like', "%{$slug}%");
-                    })->orWhere(function ($query) use ($slug, $search, $searchLocale) {
-                        $query->whereHas('translations', function ($query) use ($slug, $search, $searchLocale) {
-                            $query->where('locale', $searchLocale)
-                                ->where('name', 'like', "%{$slug}%")
-                                ->orWhere('name', 'like', "%{$search}%")
-                                ->orWhere('features', 'like', "%{$slug}%")
-                                ->orWhere('features', 'like', "%{$search}%");
-                        });
-                    })->take(10)->get();
-            } else {
-                $prods = Product::byStore()
-                    ->isActive()
-                    ->where('being_sold', 1)
-                    ->where('user_id', 0)
-                    ->where(function ($query) use ($slug, $search, $searchLocale) {
-                        $query->whereTranslationLike('name', "%{$slug}%", $searchLocale)
-                        ->orWhereTranslationLike('name', "%{$search}%", $searchLocale);
-                    })->take(10)->get();
-            }
-
-            return view('load.suggest', compact('prods', 'slug'));
+        if (empty($found)) {
+            return "";
         }
-        return "";
+
+        $searchLocale = $this->storeLocale->locale;
+
+        if (Session::has('language') && $this->storeSettings->is_language) {
+            $searchLocale = Language::find(Session::get('language'))->locale;
+        }
+
+        if ($found == 1) {
+            $search = $searchReverse = $matches[0][0];
+        }
+
+        if ($found > 1) {
+            $search = implode('%', $matches[0]);
+            $searchReverse = implode('%', array_reverse($matches[0]));
+        }
+        $prods = Product::byStore()
+            ->isActive()
+            ->where(function ($query) use ($search) {
+                $query->where('sku', 'like', "%{$search}%")
+                    ->orWhere('ref_code', 'like', "%{$search}%");
+            })->orWhere(function ($query) use ($search, $searchReverse, $searchLocale) {
+                $query->whereHas('translations', function ($query) use ($search, $searchReverse, $searchLocale) {
+                    $query->where('locale', $searchLocale)
+                        ->where('name', 'like', "%{$search}%")
+                        ->orWhere('features', 'like', "%{$search}%");
+
+                    if ($search != $searchReverse) {
+                        $query->orWhere('name', 'like', "%{$searchReverse}%")
+                            ->orWhere('features', 'like', "%{$searchReverse}%");
+                    }
+                });
+            })->take(10)->get();
+
+        return view('load.suggest', compact('prods', 'slug'));
     }
 
     public function finalize()
