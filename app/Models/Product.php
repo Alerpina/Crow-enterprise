@@ -1023,28 +1023,28 @@ class Product extends LocalizedModel
     public function getPhotoAttribute($value)
     {
         if (!filter_var($value, FILTER_VALIDATE_URL)) {
-            if (File::exists(public_path('storage/images/products/' . $value))) {
-                return $value;
-            }
-
-            if ($this->storeSettings->ftp_folder) {
-                if ($value) {
-                    return asset('storage/images/ftp/' . $this->storeSettings->ftp_folder . $this->ref_code_int . '/' . $value);
-                }
-                $ftp_path = public_path('storage/images/ftp/' . $this->storeSettings->ftp_folder . $this->ref_code_int . '/');
-                if (File::exists($ftp_path)) {
-                    $files = scandir($ftp_path);
-                    $extensions = array('.jpg', '.jpeg', '.gif', '.png');
-                    foreach ($files as $file) {
-                        $file_extension = strtolower(strrchr($file, '.'));
-                        if (in_array($file_extension, $extensions) === true) {
-                            return asset('storage/images/ftp/' . $this->storeSettings->ftp_folder . $this->ref_code_int . '/' . $file);
+            if (!$value) {
+                if ($this->storeSettings->ftp_folder) {
+                    if ($value) {
+                        return asset('storage/images/ftp/' . $this->storeSettings->ftp_folder . $this->ref_code_int . '/' . $value);
+                    }
+                    $ftp_path = public_path('storage/images/ftp/' . $this->storeSettings->ftp_folder . $this->ref_code_int . '/');
+                    if (File::exists($ftp_path)) {
+                        $files = scandir($ftp_path);
+                        $extensions = array('.jpg', '.jpeg', '.gif', '.png');
+                        foreach ($files as $file) {
+                            $file_extension = strtolower(strrchr($file, '.'));
+                            if (in_array($file_extension, $extensions) === true) {
+                                return asset('storage/images/ftp/' . $this->storeSettings->ftp_folder . $this->ref_code_int . '/' . $file);
+                            }
                         }
                     }
+                    return asset('assets/images/noimage.png');
                 }
                 return asset('assets/images/noimage.png');
-            } elseif (!$value) {
-                return asset('assets/images/noimage.png');
+            }
+            if (File::exists(public_path('storage/images/products/' . $value))) {
+                return $value;
             }
             if (!File::exists(public_path('storage/images/products/' . $value))) {
                 if (Auth::guard('admin')->check()) {
