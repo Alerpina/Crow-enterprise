@@ -25,6 +25,11 @@ class GalleryController extends Controller
         $id = $_GET['id'];
         $prod = Product::findOrFail($id);
 
+        if (count($prod->galleries)) {
+            $data[0] = 1;
+            $data[1] = $prod->galleries;
+        }
+
         if ($this->storeSettings->ftp_folder) {
             $ftp_path = public_path('storage/images/ftp/' . $this->storeSettings->ftp_folder . $prod->ref_code_int . '/');
             $ftp_gallery=[];
@@ -40,12 +45,8 @@ class GalleryController extends Controller
                 $data[0] = 1;
                 $data[2] = $ftp_gallery;
             }
-        } else {
-            if (count($prod->galleries)) {
-                $data[0] = 1;
-                $data[1] = $prod->galleries;
-            }
         }
+
         return response()->json($data);
     }
 

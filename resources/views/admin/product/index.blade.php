@@ -1015,32 +1015,31 @@
                                         '</div>' +
                                         '</div>');
                                 }
-                            } else {
-                                $('.selected-image .row').removeClass('justify-content-center');
-                                $('.selected-image .row h3').remove();
-                                var arr = $.map(data[1], function(el) {
-                                    return el
-                                });
-                                for (var k in arr) {
-                                    $('.selected-image .row').append('<div class="col-sm-6">' +
-                                        '<div class="img gallery-img">' +
-                                        '<span class="remove-img"><i class="fas fa-times"></i>' +
-                                        '<input type="hidden" value="' + arr[k]['id'] + '">' +
-                                        '</span>' +
-                                        '<a href="' + '{{ asset('storage/images/galleries') . '/' }}' +
-                                        arr[k][
-                                            'photo'
-                                        ] + '" target="_blank">' +
-                                        '<img src="' +
-                                        '{{ asset('storage/images/galleries') . '/' }}' +
-                                        arr[k][
-                                            'photo'
-                                        ] + '" alt="gallery image">' +
-                                        '</a>' +
-                                        '</div>' +
-                                        '</div>');
-                                }
                             }
+                        }
+                        $('.selected-image .row').removeClass('justify-content-center');
+                        $('.selected-image .row h3').remove();
+                        var arr = $.map(data[1], function(el) {
+                            return el
+                        });
+                        for (var k in arr) {
+                            $('.selected-image .row').append('<div class="col-sm-6">' +
+                                '<div class="img gallery-img">' +
+                                '<span class="remove-img"><i class="fas fa-times"></i>' +
+                                '<input type="hidden" value="' + arr[k]['id'] + '">' +
+                                '</span>' +
+                                '<a href="' + '{{ asset('storage/images/galleries') . '/' }}' +
+                                arr[k][
+                                    'photo'
+                                ] + '" target="_blank">' +
+                                '<img src="' +
+                                '{{ asset('storage/images/galleries') . '/' }}' +
+                                arr[k][
+                                    'photo'
+                                ] + '" alt="gallery image">' +
+                                '</a>' +
+                                '</div>' +
+                                '</div>');
                         }
                     }
                 });
