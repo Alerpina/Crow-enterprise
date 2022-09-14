@@ -180,7 +180,7 @@ class FrontendController extends Controller
 
         $products = $prepareProducts->get();
 
-        $feature_products = $products->where('featured', 1)->take(10);
+        $feature_products = $products->where('featured', 1)->where('status', 1)->take(10);
 
         $categories = Category::orderBy('slug')->orderBy('presentation_position')->where('status', 1)->where('is_featured', 1)->get();
 
@@ -192,7 +192,7 @@ class FrontendController extends Controller
         $reviews =  Review::all();
         $partners = Partner::all();
 
-        $discount_products = $products->where('is_discount', 1)->take(10)->each(function ($product) {
+        $discount_products = $products->where('is_discount', 1)->where('status', 1)->take(10)->each(function ($product) {
             if (Carbon::now()->format('Y-m-d') > Carbon::parse($product->discount_date)->format('Y-m-d')) {
                 $product->discount_date = null;
                 $product->is_discount = false;
