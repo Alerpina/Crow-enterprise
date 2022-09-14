@@ -200,13 +200,13 @@ class FrontendController extends Controller
             }
         });
 
-        $best_products = $products->where('best', 1)->take(10);
-        $top_products = $products->where('top', 1)->take(10);
-        $big_products = $products->where('big', 1)->take(10);
-        $hot_products = $products->where('hot', 1)->take(10);
-        $latest_products = $products->where('latest', 1)->take(10);
-        $trending_products = $products->where('trending', 1)->take(10);
-        $sale_products = $products->where('sale', 1)->take(10);
+        $best_products = $products->where('best', 1)->where('status', 1)->take(10);
+        $top_products = $products->where('top', 1)->where('status', 1)->take(10);
+        $big_products = $products->where('big', 1)->where('status', 1)->take(10);
+        $hot_products = $products->where('hot', 1)->where('status', 1)->take(10);
+        $latest_products = $products->where('latest', 1)->where('status', 1)->take(10);
+        $trending_products = $products->where('trending', 1)->where('status', 1)->take(10);
+        $sale_products = $products->where('sale', 1)->where('status', 1)->take(10);
 
         $extra_blogs = Blog::orderBy('created_at', 'desc')->limit(2)->get();
 
