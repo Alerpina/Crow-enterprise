@@ -311,13 +311,17 @@ class FrontendController extends Controller
             if (!config("features.marketplace")) {
                 $prods = Product::byStore()
                     ->isActive()
-                    ->where(function ($query) use ($slug, $search, $searchLocale) {
+                    ->where(function ($query) use ($slug) {
                         $query->where('sku', 'like', "%{$slug}%")
-                            ->orWhere('ref_code', 'like', "%{$slug}%")
-                            ->orWhereTranslationLike('name', "%{$slug}%", $searchLocale)
-                            ->orWhereTranslationLike('name', "%{$search}%", $searchLocale)
-                            ->orWhereTranslationLike('features', "%{$slug}%", $searchLocale)
-                            ->orWhereTranslationLike('features', "%{$search}%", $searchLocale);
+                        ->orWhere('ref_code', 'like', "%{$slug}%");
+                    })->orWhere(function ($query) use ($slug, $search, $searchLocale) {
+                        $query->whereHas('translations', function ($query) use ($slug, $search, $searchLocale) {
+                            $query->where('locale', $searchLocale)
+                                ->where('name', 'like', "%{$slug}%")
+                                ->orWhere('name', 'like', "%{$search}%")
+                                ->orWhere('features', 'like', "%{$slug}%")
+                                ->orWhere('features', 'like', "%{$search}%");
+                        });
                     })->take(10)->get();
             } else {
                 $prods = Product::byStore()
