@@ -10,7 +10,6 @@ use App\Helpers\Helper;
 use DOMDocument;
 use App\Classes\XMLHelper;
 
-
 class Kernel extends ConsoleKernel
 {
     /**
@@ -40,7 +39,7 @@ class Kernel extends ConsoleKernel
     {
         /**
          * Only execute the command, if the key in the .ENV is enabled.
-         * 
+         *
          */
         if (env("ENABLE_COMPRAS_PARAGUAI", false)) {
             $schedule->call(function () {
@@ -49,7 +48,7 @@ class Kernel extends ConsoleKernel
             });
         }
 
-        if(Generalsetting::find(1)->is_lojaupdate){
+        if (Generalsetting::find(1)->is_lojaupdate) {
             $schedule->call(function () {
                 $this->xml_helper = new XMLHelper();
                 $this->xml_helper->updateLojaFacebook();
@@ -57,11 +56,13 @@ class Kernel extends ConsoleKernel
             })->hourly();
         }
 
-        if(Generalsetting::where('is_default', 1)->first()->ftp_folder){
-            $schedule->command('generate:thumbnails')->daily();
+        if (config('app.thumbnails')) {
+            if (Generalsetting::where('is_default', 1)->first()->ftp_folder) {
+                $schedule->command('generate:thumbnails')->daily();
+            }
         }
 
-        if(env("ENABLE_MERCADO_LIVRE",  false)) {
+        if (env("ENABLE_MERCADO_LIVRE", false)) {
             $schedule->command('regenerate:token')->cron('0 */4 * * *'); //Every four hours
         }
     }

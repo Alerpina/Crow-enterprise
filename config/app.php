@@ -227,4 +227,5 @@ return [
         'MercadoLivre' => App\Facades\MercadoLivre::class,
     ],
 
+    'thumbnails' => env("ENABLE_GENERATE_THUMBNAILS", true),
 ];
