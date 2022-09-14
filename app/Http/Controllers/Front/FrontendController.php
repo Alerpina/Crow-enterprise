@@ -155,15 +155,32 @@ class FrontendController extends Controller
         $top_small_banners = ($homeSettings->random_banners == 1 ? Banner::byStore()->where('type', '=', 'TopSmall')->inRandomOrder()->get() : Banner::byStore()->where('type', '=', 'TopSmall')->get());
         $sliders = ($homeSettings->random_banners == 1 ? Slider::byStore()->where('status', 1)->inRandomOrder()->get() : Slider::byStore()->where('status', 1)->orderBy('presentation_position')->orderBy('id')->get());
 
+        $prepareProducts =  Product::byStore();
+
         if ($this->storeSettings->show_products_without_stock) {
-            $feature_products =  ($homeSettings->random_products == 1 ?
-            Product::byStore()->where('featured', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->where('featured', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
-        } else {
-            $feature_products =  ($homeSettings->random_products == 1 ?
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('featured', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('featured', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
+            $prepareProducts->whereRaw('(stock > 0 or stock is null)');
         }
+
+        $prepareProducts->where('featured', 1)
+            ->orWhere('best', 1)
+            ->orWhere('top', 1)
+            ->orWhere('big', 1)
+            ->orWhere('hot', 1)
+            ->orWhere('latest', 1)
+            ->orWhere('trending', 1)
+            ->orWhere('is_discount', 1)
+            ->orWhere('sale', 1)
+            ->where('status', 1);
+
+        if ($homeSettings->random_products == 1) {
+            $prepareProducts->inRandomOrder();
+        } else {
+            $prepareProducts->orderBy('id', 'desc');
+        }
+
+        $products = $prepareProducts->get();
+
+        $feature_products = $products->where('featured', 1)->take(10);
 
         $categories = Category::orderBy('slug')->orderBy('presentation_position')->where('status', 1)->where('is_featured', 1)->get();
 
@@ -175,81 +192,21 @@ class FrontendController extends Controller
         $reviews =  Review::all();
         $partners = Partner::all();
 
-        if ($discount_products = Product::byStore()->where('is_discount', 1)->get()) {
-            foreach ($discount_products as $discount_product) {
-                if (Carbon::now()->format('Y-m-d') > Carbon::parse($discount_product->discount_date)->format('Y-m-d')) {
-                    $discount_product->discount_date = null;
-                    $discount_product->is_discount = false;
-                    $discount_product->update();
-                }
+        $discount_products = $products->where('is_discount', 1)->take(10)->each(function ($product) {
+            if (Carbon::now()->format('Y-m-d') > Carbon::parse($product->discount_date)->format('Y-m-d')) {
+                $product->discount_date = null;
+                $product->is_discount = false;
+                $product->update();
             }
-        }
+        });
 
-        if ($this->storeSettings->show_products_without_stock) {
-            $discount_products = ($homeSettings->random_products == 1 ?
-            Product::byStore()->where('is_discount', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->where('is_discount', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
-
-            $best_products = ($homeSettings->random_products == 1 ?
-            Product::byStore()->where('best', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->where('best', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
-
-            $top_products = ($homeSettings->random_products == 1 ?
-            Product::byStore()->where('top', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->where('top', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
-
-            $big_products = ($homeSettings->random_products == 1 ?
-            Product::byStore()->where('big', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->where('big', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
-
-            $hot_products = ($homeSettings->random_products == 1 ?
-            Product::byStore()->where('hot', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->where('hot', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
-
-            $latest_products = ($homeSettings->random_products == 1 ?
-            Product::byStore()->where('latest', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->where('latest', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
-
-            $trending_products = ($homeSettings->random_products == 1 ?
-            Product::byStore()->where('trending', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->where('trending', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
-
-            $sale_products = ($homeSettings->random_products == 1 ?
-            Product::byStore()->where('sale', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->where('sale', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
-        } else {
-            $discount_products = ($homeSettings->random_products == 1 ?
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('is_discount', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('is_discount', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
-
-            $best_products = ($homeSettings->random_products == 1 ?
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('best', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('best', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
-
-            $top_products = ($homeSettings->random_products == 1 ?
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('top', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('top', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
-
-            $big_products = ($homeSettings->random_products == 1 ?
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('big', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('big', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
-
-            $hot_products = ($homeSettings->random_products == 1 ?
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('hot', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('hot', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
-
-            $latest_products = ($homeSettings->random_products == 1 ?
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('latest', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('latest', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
-
-            $trending_products = ($homeSettings->random_products == 1 ?
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('trending', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('trending', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
-
-            $sale_products = ($homeSettings->random_products == 1 ?
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('sale', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('sale', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
-        }
+        $best_products = $products->where('best', 1)->take(10);
+        $top_products = $products->where('top', 1)->take(10);
+        $big_products = $products->where('big', 1)->take(10);
+        $hot_products = $products->where('hot', 1)->take(10);
+        $latest_products = $products->where('latest', 1)->take(10);
+        $trending_products = $products->where('trending', 1)->take(10);
+        $sale_products = $products->where('sale', 1)->take(10);
 
         $extra_blogs = Blog::orderBy('created_at', 'desc')->limit(2)->get();
 
@@ -631,8 +588,7 @@ class FrontendController extends Controller
         $gs = Generalsetting::findOrFail(1);
 
         if ($gs->is_capcha == 1) {
-
-        // Capcha Check
+            // Capcha Check
             $value = session('captcha_string');
             if ($request->codes != $value) {
                 return response()->json(array('errors' => [ 0 => __('Please enter Correct Captcha Code.') ]));
