@@ -6,13 +6,18 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="minimal-ui, width=device-width,initial-scale=1">
-
+    <meta name="author" content="CrowTech - Desenvolvimento e tecnologia">
+    <meta name="description" content="{{ $gs->title }}">
+    <link rel="canonical" href="{{ route('admin-gs-maintenance') }}" />
     <meta name="language" content="{{ $current_locale }}" />
-    @if ($current_locale == 'pt-br')
-        <meta name="country" content="BRA" />
-        <meta name="currency" content="R$" />
-    @endif
-
+    <!-- Open Graph (OG) meta tags are snippets of code that control how URLs are displayed when shared on social media  -->
+    <meta property="og:type" content="Website" />
+    <meta property="og:title" content="{{ $gs->title }}" />
+    <meta property="og:url" content="{{ route('front.index') }}" />
+    <meta property="og:site_name" content="{{ $gs->title }}" />
+    <!-- For the og:image content, replace the # with a link of an image -->
+    <meta property="og:image" content="{{ $gs->logoUrl }}" />
+    <meta property="og:description" content="{{ $gs->title }}" />
     <title>{{ $gs->title }}</title>
 
 
@@ -71,10 +76,9 @@
             </ul>
         </div>
 
-        <p class="copyright-maintenance animate__animated {{ $gs->is_dark_mode ? ' dark' : '' }}"
-            style="animation-delay:.9s;">© 2021 {{ $gs->title }}. Desenvolvido por <a class="link_agencia"
-                href="">Agência
-                Crow</a></p>
+        <p class="copyright-maintenance animate__animated {{ $gs->is_dark_mode ? 'dark' : '' }}"
+            style="animation-delay:.9s;">© 2022 {{ $gs->title }}. Desenvolvido por <a class="link_agencia"
+                href="">CrowTech</a></p>
 
     </section>
 

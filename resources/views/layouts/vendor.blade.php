@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="author" content="Agência Crow">
+    <meta name="author" content="CrowTech">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Title -->
     <title>{{ $gs->title }}</title>

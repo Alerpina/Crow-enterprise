@@ -237,7 +237,7 @@
                                 {{ $gs->company_document ? '| ' . $gs->document_name . ' - ' . $gs->company_document . ' |' : '' }}
                                 {{ __('All Rights Reserved') }}.</p>
                             <p>{{ __('Developed By') }} <a id="agcrow"
-                                    href="https://www.agenciacrow.com.br/">CrowTech</a></p>
+                                    href="https://crowtech.digital/">CrowTech</a></p>
                         </div>
                     </div>
                 </div>

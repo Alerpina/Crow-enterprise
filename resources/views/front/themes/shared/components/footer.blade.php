@@ -146,7 +146,7 @@
                             </p>
                             @if (!config('features.disable_developed_by_us') && !config('features.marketplace'))
                                 <p>{{ __('Developed By') }} <a id="agcrow"
-                                        href="https://www.agenciacrow.com.br/">CrowTech</a></p>
+                                        href="https://crowtech.digital/">CrowTech</a></p>
                             @endif
                         </div>
                     </div>
