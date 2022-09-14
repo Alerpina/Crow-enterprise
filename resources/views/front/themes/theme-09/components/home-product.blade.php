@@ -41,7 +41,7 @@ if ($gs->switch_highlight_currency) {
                         <div
                             class="item-img {{ $gs->show_products_without_stock_baw && !is_null($prod->stock) && $prod->stock == 0
                                 ? "
-                                        baw"
+                                                                    baw"
                                 : '' }}">
                             @if ($admstore->reference_code == 1)
                                 @php $prod = App\Models\Product::findOrFail($prod->id); @endphp
@@ -102,7 +102,7 @@ if ($gs->switch_highlight_currency) {
                                                 data-toggle="modal" id="wish-btn" data-target="#comment-log-reg"
                                                 data-placement="right">
                                                 <img src="{{ asset('assets/front/themes/theme-09/assets/images/car.png') }}"
-                                                    alt="">
+                                                    alt="" loading="lazy">
                                             </span>
                                         @endif
                                     </li>
@@ -111,7 +111,7 @@ if ($gs->switch_highlight_currency) {
                                             href="javascript:;" data-href="{{ route('product.quick', $prod->id) }}"
                                             data-toggle="modal" data-target="#quickview" data-placement="right">
                                             <img src="{{ asset('assets/front/themes/theme-09/assets/images/entypo_eye.png') }}"
-                                                alt="">
+                                                alt="" loading="lazy">
                                         </span>
                                     </li>
                                     <li>
@@ -120,7 +120,7 @@ if ($gs->switch_highlight_currency) {
                                             data-toggle="tooltip" data-placement="right" title="{{ __('Compare') }}"
                                             data-placement="right">
                                             <img src="{{ asset('assets/front/themes/theme-09/assets/images/arrows.png') }}"
-                                                alt="">
+                                                alt="" loading="lazy">
                                         </span>
                                     </li>
                                 </ul>
@@ -129,7 +129,7 @@ if ($gs->switch_highlight_currency) {
                                 src="{{ filter_var($prod->thumbnail, FILTER_VALIDATE_URL)
                                     ? $prod->thumbnail
                                     : asset('storage/images/thumbnails/' . $prod->thumbnail) }}"
-                                alt="">
+                                alt="" loading="lazy">
                             @if ($gs->is_rating == 1)
                                 <div class="stars">
                                     <div class="ratings">
@@ -200,7 +200,7 @@ if ($gs->switch_highlight_currency) {
                     <div
                         class="item-img {{ $gs->show_products_without_stock_baw && !is_null($prod->stock) && $prod->stock == 0
                             ? "
-                                        baw"
+                                                                baw"
                             : '' }}">
                         @if ($admstore->reference_code == 1)
                             @php $prod = App\Models\Product::findOrFail($prod->id); @endphp
@@ -225,14 +225,14 @@ if ($gs->switch_highlight_currency) {
                                             data-toggle="tooltip" data-placement="right"
                                             title="{{ __('Add To Wishlist') }}" data-placement="right">
                                             <img src="{{ asset('assets/front/themes/theme-09/assets/images/car.png') }}"
-                                                alt="">
+                                                alt="" loading="lazy">
                                         </span>
                                     @else
                                         <span rel-toggle="tooltip" title="{{ __('Add To Wishlist') }}"
                                             data-toggle="modal" id="wish-btn" data-target="#comment-log-reg"
                                             data-placement="right">
                                             <img src="{{ asset('assets/front/themes/theme-09/assets/images/car.png') }}"
-                                                alt="">
+                                                alt="" loading="lazy">
                                         </span>
                                     @endif
                                 </li>
@@ -241,7 +241,7 @@ if ($gs->switch_highlight_currency) {
                                         href="javascript:;" data-href="{{ route('product.quick', $prod->id) }}"
                                         data-toggle="modal" data-target="#quickview" data-placement="right">
                                         <img src="{{ asset('assets/front/themes/theme-09/assets/images/entypo_eye.png') }}"
-                                            alt="">
+                                            alt="" loading="lazy">
                                     </span>
                                 </li>
                                 <li>
@@ -250,7 +250,7 @@ if ($gs->switch_highlight_currency) {
                                         data-toggle="tooltip" data-placement="right" title="{{ __('Compare') }}"
                                         data-placement="right">
                                         <img src="{{ asset('assets/front/themes/theme-09/assets/images/arrows.png') }}"
-                                            alt="">
+                                            alt="" loading="lazy">
                                     </span>
                                 </li>
                             </ul>
@@ -259,7 +259,7 @@ if ($gs->switch_highlight_currency) {
                             src="{{ filter_var($prod->thumbnail, FILTER_VALIDATE_URL)
                                 ? $prod->thumbnail
                                 : asset('storage/images/thumbnails/' . $prod->thumbnail) }}"
-                            alt="">
+                            alt="" loading="lazy">
                         @if ($gs->is_rating == 1)
                             <div class="stars">
                                 <div class="ratings">
@@ -345,7 +345,7 @@ if ($gs->switch_highlight_currency) {
             <div
                 class="item-img {{ $gs->show_products_without_stock_baw && !is_null($prod->stock) && $prod->stock == 0
                     ? "
-                                baw"
+                                                baw"
                     : '' }}">
                 @if ($admstore->reference_code == 1)
                     @php $prod = App\Models\Product::findOrFail($prod->id); @endphp
@@ -403,7 +403,7 @@ if ($gs->switch_highlight_currency) {
                                 <span rel-toggle="tooltip" title="{{ __('Add To Wishlist') }}" data-toggle="modal"
                                     id="wish-btn" data-target="#comment-log-reg" data-placement="right">
                                     <img src="{{ asset('assets/front/themes/theme-09/assets/images/car.png') }}"
-                                        alt="">
+                                        alt="" loading="lazy">
                                 </span>
                             @endif
                         </li>
@@ -412,7 +412,7 @@ if ($gs->switch_highlight_currency) {
                                 href="javascript:;" data-href="{{ route('product.quick', $prod->id) }}"
                                 data-toggle="modal" data-target="#quickview" data-placement="right">
                                 <img src="{{ asset('assets/front/themes/theme-09/assets/images/entypo_eye.png') }}"
-                                    alt="">
+                                    alt="" loading="lazy">
                             </span>
                         </li>
                         <li>
@@ -420,7 +420,7 @@ if ($gs->switch_highlight_currency) {
                                 data-toggle="tooltip" data-placement="right" title="{{ __('Compare') }}"
                                 data-placement="right">
                                 <img src="{{ asset('assets/front/themes/theme-09/assets/images/arrows.png') }}"
-                                    alt="">
+                                    alt="" loading="lazy">
                             </span>
                         </li>
                     </ul>
@@ -429,7 +429,7 @@ if ($gs->switch_highlight_currency) {
                     src="{{ filter_var($prod->thumbnail, FILTER_VALIDATE_URL)
                         ? $prod->thumbnail
                         : asset('storage/images/thumbnails/' . $prod->thumbnail) }}"
-                    alt="">
+                    alt="" loading="lazy">
                 @if ($gs->is_rating == 1)
                     <div class="stars">
                         <div class="ratings">
