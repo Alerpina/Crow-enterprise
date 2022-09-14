@@ -57,7 +57,7 @@ if (isset($_GET['text_color_2'])) {
 }
 
 .top-header .content .right-content .list li .nice-select {
-    color: <?php echo $text_color_1; ?> !important; 
+    color: <?php echo $text_color_1; ?> !important;
 }
 
 .right-content .nice-select::after {
@@ -649,13 +649,13 @@ color: <?php echo $theme_color_1; ?>;
 
 .blog-area .blog-box .details .read-more-btn {
     color: <?php echo $text_color_1; ?>;
-    background: <?php echo $theme_color_1; ?>; 
+    background: <?php echo $theme_color_1; ?>;
     border:1px solid <?php echo $text_color_1; ?>;
 }
 
 .blog-area .blog-box .details .read-more-btn:hover {
     color: <?php echo $theme_color_1; ?>;
-    background: <?php echo $text_color_1; ?>; 
+    background: <?php echo $text_color_1; ?>;
     border:1px solid <?php echo $text_color_1; ?>;
 }
 
@@ -1000,4 +1000,9 @@ color: <?php echo $theme_color_1; ?>;
 
 .box-center-text.infos-internas .title, .box-center-text.infos-internas .count {
     color:  <?php echo $text_color_2; ?>;
+}
+
+.badge-primary{
+    background-color: <?php echo $theme_color_1; ?>;
+    color:  <?php echo $text_color_1; ?>;
 }

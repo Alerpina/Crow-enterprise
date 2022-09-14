@@ -326,8 +326,8 @@ color: <?php echo $theme_color_1; ?>; }
 background: <?php echo $theme_color_1; ?>;
 }
 .login-area .submit-btn {
-background:<?php echo $theme_color_2; ?>; 
-color:<?php echo $text_color_2; ?>; 
+background:<?php echo $theme_color_2; ?>;
+color:<?php echo $text_color_2; ?>;
 }
 
 .comment-log-reg-tabmenu .nav-tabs .nav-link {
@@ -344,8 +344,8 @@ color: <?php echo $theme_color_1; ?>;
 background: <?php echo $theme_color_1; ?>; }
 
 .upload-img .file-upload-area .upload-file span {
-background: <?php echo $theme_color_1; ?>; 
-color: <?php echo $text_color_1; ?>; 
+background: <?php echo $theme_color_1; ?>;
+color: <?php echo $text_color_1; ?>;
 }
 .thankyou .content .icon {
 color: <?php echo $theme_color_1; ?>; }
@@ -459,13 +459,13 @@ background: <?php echo $theme_color_2; ?>!important;
 .product-details-page .right-area .product-info .info-meta-3 .meta-list li.addtocart a {
 color: <?php echo $text_color_2; ?>;
 border: 1px solid <?php echo $theme_color_2; ?>;
-background: <?php echo $theme_color_2; ?>; 
+background: <?php echo $theme_color_2; ?>;
 }
 
 .product-details-page .right-area .product-info .info-meta-3 .meta-list li.addtocart a:hover {
-color: <?php echo $theme_color_1; ?>; 
+color: <?php echo $theme_color_1; ?>;
 border: 1px solid <?php echo $text_color_1; ?>;
-background-color: <?php echo $text_color_1; ?>; 
+background-color: <?php echo $text_color_1; ?>;
 }
 
 .product-details-page .right-area .product-info .info-meta-3 .meta-list li.favorite a, .product-details-page .right-area .product-info .info-meta-3 .meta-list li.compare a {
@@ -629,13 +629,13 @@ color: <?php echo $theme_color_1; ?>;
 
 .blog-area .blog-box .details .read-more-btn {
     color: <?php echo $text_color_2; ?>;
-    background: <?php echo $theme_color_2; ?>; 
+    background: <?php echo $theme_color_2; ?>;
     border:1px solid <?php echo $theme_color_2; ?>;
 }
 
 .blog-area .blog-box .details .read-more-btn:hover {
     color: <?php echo $theme_color_1; ?>;
-    background: <?php echo $text_color_1; ?>; 
+    background: <?php echo $text_color_1; ?>;
     border:1px solid <?php echo $text_color_1; ?>;
 }
 
@@ -1028,4 +1028,9 @@ color:  <?php echo $text_color_1; ?>;
 
 .top-area {
     background-color:  <?php echo $theme_color_1; ?>;
+}
+
+.badge-primary{
+    background-color: <?php echo $theme_color_2; ?>;
+    color:  <?php echo $text_color_2; ?>;
 }

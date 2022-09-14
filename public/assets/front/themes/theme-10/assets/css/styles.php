@@ -974,3 +974,8 @@ color: <?php echo $text_color_2; ?>;
 background-color: <?php echo $theme_color_2; ?>;
 color: <?php echo $text_color_2; ?>;
 }
+
+.badge-primary{
+    color: <?php echo $text_color_2; ?>;
+    background: <?php echo $theme_color_2; ?>;
+}

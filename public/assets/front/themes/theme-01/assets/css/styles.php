@@ -70,7 +70,7 @@ background: <?php echo $theme_color_2; ?>; }
 
 .logo-header .helpful-links ul li .wish i,
 .logo-header .helpful-links ul li.my-dropdown .cart .icon i {
-    color: <?php echo $theme_color_2; ?>; 
+    color: <?php echo $theme_color_2; ?>;
 }
 
 .logo-header .search-box .search-form button {
@@ -967,4 +967,9 @@ color: <?php echo $theme_color_1; ?>;
 
 .box-center-text.infos-internas .title, .box-center-text.infos-internas .count {
     color:  <?php echo $text_color_2; ?>;
+}
+
+.badge-primary{
+    background-color: <?php echo $theme_color_1; ?>;
+    color:  <?php echo $text_color_1; ?>;
 }
