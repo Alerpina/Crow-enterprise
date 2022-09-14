@@ -152,7 +152,18 @@ class FrontendController extends Controller
 
         $homeSettings = Pagesetting::findOrFail($this->storeSettings->pageSettings->id);
 
-        $top_small_banners = ($homeSettings->random_banners == 1 ? Banner::byStore()->where('type', '=', 'TopSmall')->inRandomOrder()->get() : Banner::byStore()->where('type', '=', 'TopSmall')->get());
+        $prepareBanners = Banner::byStore();
+
+        if ($homeSettings->random_banners == 1) {
+            $prepareBanners->inRandomOrder();
+        } else {
+            $prepareBanners->orderBy('id', 'desc');
+        }
+
+        $banners = $prepareBanners->get();
+
+        $top_small_banners = $banners->where('type', '=', 'TopSmall');
+
         $sliders = ($homeSettings->random_banners == 1 ? Slider::byStore()->where('status', 1)->inRandomOrder()->get() : Slider::byStore()->where('status', 1)->orderBy('presentation_position')->orderBy('id')->get());
 
         $prepareProducts =  Product::byStore();
@@ -161,16 +172,18 @@ class FrontendController extends Controller
             $prepareProducts->whereRaw('(stock > 0 or stock is null)');
         }
 
-        $prepareProducts->where('featured', 1)
-            ->orWhere('best', 1)
-            ->orWhere('top', 1)
-            ->orWhere('big', 1)
-            ->orWhere('hot', 1)
-            ->orWhere('latest', 1)
-            ->orWhere('trending', 1)
-            ->orWhere('is_discount', 1)
-            ->orWhere('sale', 1)
-            ->where('status', 1);
+        $prepareProducts->where('status', 1)
+            ->where(function ($query) {
+                $query->where('featured', 1)
+                    ->orWhere('best', 1)
+                    ->orWhere('top', 1)
+                    ->orWhere('big', 1)
+                    ->orWhere('hot', 1)
+                    ->orWhere('latest', 1)
+                    ->orWhere('trending', 1)
+                    ->orWhere('is_discount', 1)
+                    ->orWhere('sale', 1);
+            });
 
         if ($homeSettings->random_products == 1) {
             $prepareProducts->inRandomOrder();
@@ -180,19 +193,19 @@ class FrontendController extends Controller
 
         $products = $prepareProducts->get();
 
-        $feature_products = $products->where('featured', 1)->where('status', 1)->take(10);
+        $feature_products = $products->where('featured', 1)->take(10);
 
-        $categories = Category::orderBy('slug')->orderBy('presentation_position')->where('status', 1)->where('is_featured', 1)->get();
+        $categories = Category::orderBy('slug')->orderBy('presentation_position')->where('is_featured', 1)->get();
 
         /**
          * Extra index - former ajax request
          */
-        $bottom_small_banners = ($homeSettings->random_banners == 1 ? Banner::byStore()->where('type', '=', 'BottomSmall')->inRandomOrder()->get() : Banner::byStore()->where('type', '=', 'BottomSmall')->get());
-        $large_banners = ($homeSettings->random_banners == 1 ? Banner::byStore()->where('type', '=', 'Large')->inRandomOrder()->get() : Banner::byStore()->where('type', '=', 'Large')->get());
+        $bottom_small_banners = $banners->where('type', '=', 'BottomSmall');
+        $large_banners = $banners->where('type', '=', 'Large');
         $reviews =  Review::all();
         $partners = Partner::all();
 
-        $discount_products = $products->where('is_discount', 1)->where('status', 1)->take(10)->each(function ($product) {
+        $discount_products = $products->where('is_discount', 1)->take(10)->each(function ($product) {
             if (Carbon::now()->format('Y-m-d') > Carbon::parse($product->discount_date)->format('Y-m-d')) {
                 $product->discount_date = null;
                 $product->is_discount = false;
@@ -200,13 +213,13 @@ class FrontendController extends Controller
             }
         });
 
-        $best_products = $products->where('best', 1)->where('status', 1)->take(10);
-        $top_products = $products->where('top', 1)->where('status', 1)->take(10);
-        $big_products = $products->where('big', 1)->where('status', 1)->take(10);
-        $hot_products = $products->where('hot', 1)->where('status', 1)->take(10);
-        $latest_products = $products->where('latest', 1)->where('status', 1)->take(10);
-        $trending_products = $products->where('trending', 1)->where('status', 1)->take(10);
-        $sale_products = $products->where('sale', 1)->where('status', 1)->take(10);
+        $best_products = $products->where('best', 1)->take(10);
+        $top_products = $products->where('top', 1)->take(10);
+        $big_products = $products->where('big', 1)->take(10);
+        $hot_products = $products->where('hot', 1)->take(10);
+        $latest_products = $products->where('latest', 1)->take(10);
+        $trending_products = $products->where('trending', 1)->take(10);
+        $sale_products = $products->where('sale', 1)->take(10);
 
         $extra_blogs = Blog::orderBy('created_at', 'desc')->limit(2)->get();
 
