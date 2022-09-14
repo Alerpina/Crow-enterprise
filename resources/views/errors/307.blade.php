@@ -37,6 +37,27 @@
         margin: auto;
         background: linear-gradient(-141deg, #001CB0 0%, #057EFF 100%);
     }
+
+    @media only screen and(max-width:480px) {
+        .fullpagina .section#section0 .content-inside-section .container-inside {
+            padding: 19rem 15px;
+        }
+    }
+
+    footer {
+        position: fixed;
+    }
+
+    .fullpagina .section#section0 .content-inside-section .container-inside {
+        position: relative;
+        display: table;
+        height: 100vh;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 100px 80px;
+        text-align: left;
+
+    }
 </style>
 
 <body>
@@ -53,7 +74,7 @@
     <div class="wrap">
         <canvas id="liquid"></canvas>
     </div>
-    <div id="fullpage">
+    <div id="fullpage" class="fullpagina">
         <div class="section" id="section0">
             <section class="content-inside-section">
                 <div class="container">
@@ -68,19 +89,32 @@
                             </p>
                             <br>
                             <div class="command">
-                                <div class="col-12 col-xl-4 footer-nav">
+                                <div class="col-12 col-xl-6 footer-nav">
                                     <ul class="on-right" style="font-size: 2em;">
                                         @php
                                             $social = App\Models\Socialsetting::find(1);
                                         @endphp
-                                        <a href="{{ $social->facebook }}" target="_blank"><i
-                                                class="fab fa-facebook-f padd"></i></a>
-                                        <a href="https://api.whatsapp.com/send?phone={{ $gs->whatsapp_number }}&text=Ol%C3%A1!"
-                                            target="_blank"><i class="fab fa-whatsapp padd"></i></a>
-                                        <a href="{{ $social->linkedin }}" target="_blank"><i
-                                                class="fab fa-linkedin-in padd"></i></a>
-                                        <a href="{{ $social->instagram }}" target="_blank"><i
-                                                class="fab fa-instagram padd"></i></a>
+
+                                        @if ($social->f_status == 1)
+                                            <a href="{{ $social->facebook }}" target="_blank"><i
+                                                    class="fab fa-facebook-f padd"></i></a>
+                                        @endif
+                                        @if ($social->t_status == 1)
+                                            <a href="{{ $social->twitter }}" target="_blank"><i
+                                                    class="fab fa-twitter padd"></i></a>
+                                        @endif
+                                        @if ($social->y_status == 1)
+                                            <a href="{{ $social->youtube }}" target="_blank"><i
+                                                    class="fab fa-youtube padd"></i></a>
+                                        @endif
+                                        @if ($social->l_status == 1)
+                                            <a href="{{ $social->linkedin }}" target="_blank"><i
+                                                    class="fab fa-linkedin-in padd"></i></a>
+                                        @endif
+                                        @if ($social->i_status == 1)
+                                            <a href="{{ $social->instagram }}" target="_blank"><i
+                                                    class="fab fa-instagram padd"></i></a>
+                                        @endif
                                     </ul>
                                 </div>
                                 <div class="clear"></div>
@@ -93,15 +127,12 @@
     </div>
     <footer>
         <div class="line"></div>
-        <div class="row">
-            <div class="col-12 col-xl-4 footer-copyright">
+        <div class="row justify-content-center">
+            <div class="col-md-auto footer-copyright">
                 <p>© 2022 {{ $gs->title }}. Desenvolvido por <a
                         href="https://crowtech.digital/"><strong>CrowTech</strong></a></p>
             </div>
-            <div class="col-12 col-xl-4 footer-nav">
-                <ul class="on-right">
-                </ul>
-            </div>
+
         </div>
     </footer>
     <script src="https://cdn.cloudcrow.com.br/TemplatesEmBreve/Template2/html/js/jquery.min.js"></script>
