@@ -145,6 +145,12 @@
     <script src="https://cdn.cloudcrow.com.br/TemplatesEmBreve/Template2/html/js/featherlight.js"></script>
     <script src="https://cdn.cloudcrow.com.br/TemplatesEmBreve/Template2/html/js/featherlight.gallery.js"></script>
     <script src="https://cdn.cloudcrow.com.br/TemplatesEmBreve/Template2/html/js/main.js"></script>
+
+    <script>
+        // Função que altera cor dos circulos flutuantes
+        lava0 = new LavaLamp(screen.width, screen.height, 5, "{!! $gs->header_color !!}", "{!! $gs->colors !!}");
+        run();
+    </script>
 </body>
 
 </html>
