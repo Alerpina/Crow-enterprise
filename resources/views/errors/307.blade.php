@@ -35,7 +35,7 @@
         width: 100vw;
         height: 100vh;
         margin: auto;
-        background: linear-gradient(-141deg, #001CB0 0%, #057EFF 100%);
+        background: linear-gradient(-141deg, {{ $gs->colors }} 0%, {{ $gs->header_color }} 100%);
     }
 
     @media only screen and(max-width:480px) {
