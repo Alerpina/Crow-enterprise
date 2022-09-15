@@ -102,7 +102,6 @@ z-index: 100;
 .cartpage .right-area .order-box .cupon-box #coupon-form button:hover,
 #freight-form button:hover,
 .cartpage .right-area .order-box .order-btn,
-.blogpagearea .blog-box .blog-images .img .date,
 .blogpagearea .blog-box .details .read-more-btn,
 .blog-details .blog-content .content .tag-social-link .social-links li a,
 .blog-details .comments .comment-box-area li .comment-box .left .replay,
@@ -123,10 +122,15 @@ z-index: 100;
 .user-dashbord .user-profile-details .account-info .edit-info-area .edit-info-area-form .back:hover,
 .user-dashbord .user-profile-details .account-info .edit-info-area .edit-info-area-form .submit-btn,
 .single-wish .remove:hover,
+.blogpagearea .blog-box .blog-images .img .date,
 .sub-categori .right-area .categori-item-area .item .item-img .extra-list ul li a
 {
 background: <?php echo $theme_color_1; ?>;
 color: <?php echo $text_color_1; ?>;
+}
+
+.blogpagearea .blog-box .blog-images .img .date p {
+    color: <?php echo $text_color_1; ?>;
 }
 
 .section-top .link,

@@ -43,7 +43,7 @@
                     </div>
 
                     <div class="bg-section-items">
-                        @foreach ($extra_blogs->chunk(3) as $posts)
+                        @foreach ($extra_blogs->chunk(2) as $posts)
                             @foreach ($posts as $blogg)
                                 <div class="row blog-box">
                                     <div class="col-lg-5">

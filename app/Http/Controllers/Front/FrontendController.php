@@ -221,7 +221,7 @@ class FrontendController extends Controller
         $trending_products = $products->where('trending', 1)->take(10);
         $sale_products = $products->where('sale', 1)->take(10);
 
-        $extra_blogs = Blog::orderBy('created_at', 'desc')->limit(2)->get();
+        $extra_blogs = Blog::orderBy('created_at', 'desc')->limit(5)->get();
 
 
         return view('front.index', compact(
