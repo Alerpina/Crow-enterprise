@@ -31,8 +31,7 @@ use Illuminate\Support\Facades\Session;
 
 class CatalogController extends Controller
 {
-
-  // CATEGORIES SECTOPN
+    // CATEGORIES SECTOPN
 
     public function categories()
     {
@@ -61,10 +60,12 @@ class CatalogController extends Controller
 
         $qty = $request->qty;
         $sort = $request->sort;
+        $data['sort'] = $sort;
 
         $prods = Product::byStore()
       ->where('brand_id', $brand->id)
       ->where('status', '=', 1)
+      ->orderByRaw("stock > 0 DESC")
       ->when($sort, function ($query, $sort) {
           if ($sort == 'date_desc') {
               return $query->orderBy('id', 'DESC');
@@ -74,10 +75,17 @@ class CatalogController extends Controller
               return $query->orderBy('price', 'DESC');
           } elseif ($sort == 'price_asc') {
               return $query->orderBy('price', 'ASC');
+          } elseif ($sort == 'availability') {
+              return $query->orderBy('stock', 'DESC');
           }
       })
-      ->when(empty($sort), function ($query, $sort) {
-          return $query->orderBy('id', 'DESC');
+      ->when(empty($sort), function ($query) use (&$data) {
+          $collumn = config("app.default_sort.collumn");
+          $order = config("app.default_sort.order");
+
+          $data['sort'] = config("app.sort")[$collumn][$order];
+
+          return $query->orderBy($collumn, $order);
       })
       ->paginate(isset($qty) ? $qty : 25);
 
@@ -114,8 +122,6 @@ class CatalogController extends Controller
             $data['ajax_check'] = 1;
             return view('includes.product.filtered-products', $data);
         }
-
-        $data['sort'] = $sort;
 
         return view('front.brand', $data);
     }
@@ -175,6 +181,9 @@ class CatalogController extends Controller
         } else {
             $prods = Product::byStore()->where('status', '=', 1);
         }
+
+        $prods->orderByRaw("stock > 0 DESC");
+
         $prods->when($cat, function ($query, $cat) {
             return $query->where('category_id', $cat->id);
         })
@@ -226,11 +235,16 @@ class CatalogController extends Controller
           } elseif ($sort == 'price_asc') {
               return $query->orderBy('price', 'ASC');
           } elseif ($sort == 'availability') {
-              return $query->orderByRaw('-stock ASC');
+              return $query->orderBy('stock', 'DESC');
           }
       })
-      ->when(empty($sort), function ($query, $sort) {
-          return $query->orderBy('products.id', 'DESC');
+      ->when(empty($sort), function ($query) use (&$data) {
+          $collumn = config("app.default_sort.collumn");
+          $order = config("app.default_sort.order");
+
+          $data['sort'] = config("app.sort")[$collumn][$order];
+
+          return $query->orderBy($collumn, $order);
       });
 
         $prods = $prods->where(function ($query) use ($cat, $subcat, $childcategory, $request) {
@@ -390,8 +404,7 @@ class CatalogController extends Controller
 
     public function report(Request $request)
     {
-
-    //--- Validation Section
+        //--- Validation Section
         $rules = [
       'note' => 'max:400',
     ];
