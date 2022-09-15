@@ -988,3 +988,33 @@ color: <?php echo $theme_color_1; ?>;
     background-color: <?php echo $theme_color_1; ?>;
     color:  <?php echo $text_color_1; ?>;
 }
+
+.menu-lateral-categorias {
+    background-color: <?php echo $theme_color_2; ?>;
+}
+
+.menu-lateral-categorias li a{
+    color:  <?php echo $text_color_2; ?>;
+}
+
+.menu-lateral-categorias .category-item {
+    border-bottom: 1px solid <?php echo $text_color_2; ?>1f;
+}
+
+/* Works on Firefox */
+.menu-lateral-categorias {
+  scrollbar-width: thin;
+  scrollbar-color: <?php echo $text_color_2; ?>1f <?php echo $theme_color_2; ?>1f;
+}
+
+/* Works on Chrome, Edge, and Safari */
+
+.menu-lateral-categorias::-webkit-scrollbar-track {
+  background: <?php echo $theme_color_2; ?>1f;
+}
+
+.menu-lateral-categorias::-webkit-scrollbar-thumb {
+  background-color: <?php echo $text_color_2; ?>1f;
+  border-radius: 20px;
+  border: 3px solid <?php echo $theme_color_2; ?>1f;
+}
