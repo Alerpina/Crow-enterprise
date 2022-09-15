@@ -274,7 +274,7 @@
                     <!--categorie menu start-->
                     <div class="categories_menu vertical">
                         <div class="categories_title">
-                            <h2 class="categori_toggle"><i class="fa fa-bars"></i> {{ __('Categories') }}
+                            <h2 class="categori_toggle"><i class="fas fa-layer-group"></i> {{ __('Categories') }}
                                 <i class="fa fa-angle-down arrow-down"></i>
                             </h2>
                         </div>
