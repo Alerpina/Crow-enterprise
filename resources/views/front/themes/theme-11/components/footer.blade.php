@@ -21,7 +21,7 @@
                         <p>
                             {{ __('Monday to friday - 8h / 17h') }} <br>
                             {{ __('Saturday - 8h / 12h') }} <br>
-                            {{ __('Monday - Closed') }}
+                            {{ __('Sunday - Closed') }}
                         </p>
                     </div>
                 </div>
