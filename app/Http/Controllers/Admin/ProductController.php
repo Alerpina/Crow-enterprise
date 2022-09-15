@@ -218,7 +218,7 @@ class ProductController extends Controller
                 }
 
                 if ($this->storeSettings->ftp_folder) {
-                    return $data->thumbnail;
+                    return htmlentities($data->thumbnail);
                 }
 
                 return asset('assets/images/noimage.png');
@@ -1304,7 +1304,6 @@ class ProductController extends Controller
 
         // Check Physical
         if ($data->type == "Physical") {
-
             //--- Validation Section
             $rules = [
                 'sku' => 'min:1|unique:products,sku,' . $id,
