@@ -1403,6 +1403,7 @@ Route::group(['middleware' => 'maintenance'], function () {
         ], function () {
             Route::post("submit", "PagoparNovoController@store")->name("submit");
             Route::post("callback", "PagoparNovoController@callback")->name("callback");
+            Route::post("check-order-status/{hash}", "PagoparNovoController@checkOrderStatus")->name("check-order-status");
         });
 
         /** Pay42 */

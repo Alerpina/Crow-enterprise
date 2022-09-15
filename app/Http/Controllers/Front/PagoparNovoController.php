@@ -37,7 +37,7 @@ class PagoparNovoController extends Controller
         $this->client = new Client();
 
         $this->baseUrl = 'https://www.pagopar.com';
-        $this->apiUrl = "https://api.pagopar.com/api/comercios/1.1";
+        $this->apiUrl = "https://api.pagopar.com/api";
     }
 
     protected function build_data_structure($items, $order_id, $amount, $token, $currency)
@@ -99,7 +99,7 @@ class PagoparNovoController extends Controller
 
         $data = $this->build_data_structure($items, $order_id, $amount, $token, $currency);
 
-        $request = $this->client->post($this->apiUrl."/iniciar-transaccion", [
+        $request = $this->client->post($this->apiUrl."/comercios/1.1/iniciar-transaccion", [
             'json' => $data
         ]);
 
@@ -144,5 +144,44 @@ class PagoparNovoController extends Controller
 
         Log::debug("Callbak Pagopar", $data);
         return response()->json($data["resultado"]);
+    }
+
+    public function checkOrderStatus($hash)
+    {
+        $data = [
+            "hash_pedido" => $hash,
+            "token" => sha1($this->credentials["privateKey"] . "CONSULTA"),
+            "token_publico" => $this->credentials["publicKey"]
+        ];
+
+        $request = $this->client->post($this->apiUrl."/pedidos/1.1/traer", [
+            'json' => $data
+        ]);
+
+        $response = $request->getBody();
+
+        $decoded_data = json_decode($response);
+
+        if ($decoded_data->respuesta === true) {
+            $order = Order::where("charge_id", $decoded_data->resultado[0]->hash_pedido)->first();
+
+            if (!$order) {
+                return response()->json(["Order not find"], 406);
+            }
+
+            $order->payment_status = $decoded_data->resultado[0]->pagado ? "Completed" : "Pending";
+            $order->save();
+
+            $notification = new Notification;
+            $notification->order_id = $order->id;
+            $notification->save();
+
+            if (Session::has("order")) {
+                Session::forget('order');
+            }
+        }
+
+        Log::debug("Check Order Status Pagopar", [$decoded_data, $data]);
+        return response()->json($decoded_data->resultado);
     }
 }
