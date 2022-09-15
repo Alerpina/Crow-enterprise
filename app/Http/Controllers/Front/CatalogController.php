@@ -65,7 +65,7 @@ class CatalogController extends Controller
         $prods = Product::byStore()
       ->where('brand_id', $brand->id)
       ->where('status', '=', 1)
-      ->orderByRaw("stock > 0 DESC")
+      ->orderByRaw("(stock > 0 or stock is null) DESC")
       ->when($sort, function ($query, $sort) {
           if ($sort == 'date_desc') {
               return $query->orderBy('id', 'DESC');
@@ -182,7 +182,7 @@ class CatalogController extends Controller
             $prods = Product::byStore()->where('status', '=', 1);
         }
 
-        $prods->orderByRaw("stock > 0 DESC");
+        $prods->orderByRaw("(stock > 0 or stock is null) DESC");
 
         $prods->when($cat, function ($query, $cat) {
             return $query->where('category_id', $cat->id);
