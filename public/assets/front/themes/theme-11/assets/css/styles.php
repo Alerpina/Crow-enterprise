@@ -277,7 +277,7 @@ color: <?php echo $theme_color_1; ?>; }
 background: <?php echo $theme_color_1; ?>;
 border-color: <?php echo $theme_color_1; ?>; }
 .product-details-page .right-area .product-info .product-price .price {
-color: <?php echo $text_color_1; ?>;}
+color: <?php echo $theme_color_1; ?>;}
 .product-details-page .right-area .product-info .product-size .siz-list li.active .box {
 border: 1px solid <?php echo $theme_color_1; ?>; }
 
@@ -304,7 +304,7 @@ color: <?php echo $theme_color_1; ?>; }
 color: <?php echo $theme_color_1; ?>; }
 
 .login-area .header-area .title {
-color: <?php echo $text_color_1; ?>; }
+color: <?php echo $theme_color_1; ?>; }
 .login-area .form-input i {
 color: <?php echo $theme_color_2; ?>; }
 .login-area .social-area .title {
@@ -897,15 +897,20 @@ color: <?php echo $theme_color_1; ?>;
     background-color: <?php echo $text_color_2; ?>;
 }
 
-.item .item-img .extra-list ul li span svg {
-    fill: <?php echo $theme_color_2; ?>;
-    transition: .3s all;
-    opacity:.5;
+@media (max-width:768px){
+    .item .extra-list {
+        background-color: <?php echo $text_color_2; ?>b8;
+    }
 }
 
-.item .item-img .extra-list ul li span:hover svg {
-    opacity:1;
+.item .item-img .extra-list ul li span {
+    color: <?php echo $theme_color_2; ?>;
     transition: .3s all;
+}
+
+.item .item-img .extra-list ul li span:hover {
+    filter: brightness(80%);
+    color: <?php echo $theme_color_2; ?>;
 }
 
 .blog-area .aside .slider-wrapper .slide-item .top-area .right .content .name,

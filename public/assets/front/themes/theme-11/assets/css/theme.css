@@ -323,7 +323,7 @@ a {
 
 .item .info {
     text-align: initial;
-    padding: 20px 20px 30px;
+    padding: 20px 20px 50px;
 }
 
 .item .info > * {
@@ -344,13 +344,13 @@ a {
 }
 
 .item .add-to-cart-btn {
-    font-size: 14px;
+    font-size: 16px;
     width: auto;
     border-radius: 0;
     text-transform: uppercase;
     display:inline-block;
     font-weight: 400;
-    font-family: 'Libre Baskerville', sans-serif;
+    font-family: 'Inter', sans-serif;
     padding:5px;
     margin:3px;
 }
@@ -1361,6 +1361,17 @@ h1, h2, h3, h4, h5, h6 {
     transition: all linear .3s;
 }
 
+
+@media (max-width:768px){
+    .item .add-to-cart-btn {
+        opacity: 1;
+    }
+    .item .item-img .extra-list {
+        opacity: 1;
+    }
+
+}
+
 .stars {
     padding: 1rem 0 0;
 }
@@ -1393,8 +1404,8 @@ h1, h2, h3, h4, h5, h6 {
     background: none;
     padding: 8px 5px;
     margin: 0;
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     box-sizing: content-box;
 }
 
@@ -2077,12 +2088,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .phone-and-accessories .item, .clothing-and-Apparel-Area .item {
     border: 1px solid rgba(132, 132, 132, 0.1) !important;
-}
-
-.phone-and-accessories .item .add-to-cart-btn, .clothing-and-Apparel-Area .item .add-to-cart-btn {
-    font-size: 13px;
-    padding: 3px;
-    margin: 1px;
 }
 
 .best-seller {
