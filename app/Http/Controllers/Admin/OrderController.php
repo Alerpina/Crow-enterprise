@@ -72,31 +72,31 @@ class OrderController extends Controller
                 if (empty($order_curr)) {
                     $order_curr = $first_curr;
                 }
-                return $data->currency_sign . number_format($data->pay_amount * $data->currency_value, $order_curr->decimal_digits, $order_curr->decimal_separator, $order_curr->thousands_separator);
+                return $data->currency_sign . number_format($data->pay_amount * $order_curr->value, $order_curr->decimal_digits, $order_curr->decimal_separator, $order_curr->thousands_separator);
             })
             ->editColumn('status', function (Order $data) {
                 switch ($data->status) {
-                     case "pending":
-                         $type = "secondary";
-                         $status = "Pending";
-                     break;
-                     case "processing":
-                         $type = "primary";
-                         $status = "Processing";
-                     break;
-                     case "on delivery":
-                         $type = "warning";
-                         $status = "On Delivery";
-                     break;
-                     case "completed":
-                         $type = "success";
-                         $status = "Completed";
-                     break;
-                     case "declined":
-                         $type = "danger";
-                         $status = "Declined";
-                     break;
-                 }
+                    case "pending":
+                        $type = "secondary";
+                        $status = "Pending";
+                        break;
+                    case "processing":
+                        $type = "primary";
+                        $status = "Processing";
+                        break;
+                    case "on delivery":
+                        $type = "warning";
+                        $status = "On Delivery";
+                        break;
+                    case "completed":
+                        $type = "success";
+                        $status = "Completed";
+                        break;
+                    case "declined":
+                        $type = "danger";
+                        $status = "Declined";
+                        break;
+                }
                 return '<span class="badge badge-'.$type.'">'.__($status).'</span>';
             })
 
@@ -175,27 +175,27 @@ class OrderController extends Controller
             })
             ->editColumn('status', function (Order $data) {
                 switch ($data->status) {
-                     case "pending":
-                         $type = "secondary";
-                         $status = "Pending";
-                     break;
-                     case "processing":
-                         $type = "primary";
-                         $status = "Processing";
-                     break;
-                     case "on delivery":
-                         $type = "warning";
-                         $status = "On Delivery";
-                     break;
-                     case "completed":
-                         $type = "success";
-                         $status = "Completed";
-                     break;
-                     case "declined":
-                         $type = "danger";
-                         $status = "Declined";
-                     break;
-                 }
+                    case "pending":
+                        $type = "secondary";
+                        $status = "Pending";
+                        break;
+                    case "processing":
+                        $type = "primary";
+                        $status = "Processing";
+                        break;
+                    case "on delivery":
+                        $type = "warning";
+                        $status = "On Delivery";
+                        break;
+                    case "completed":
+                        $type = "success";
+                        $status = "Completed";
+                        break;
+                    case "declined":
+                        $type = "danger";
+                        $status = "Declined";
+                        break;
+                }
                 return '<span class="badge badge-'.$type.'">'.__($status).'</span>';
             })
              ->editColumn('payment_status', function (Order $data) {
@@ -254,27 +254,27 @@ class OrderController extends Controller
         })
         ->editColumn('status', function (Order $data) {
             switch ($data->status) {
-                 case "pending":
-                     $type = "secondary";
-                     $status = "Pending";
-                 break;
-                 case "processing":
-                     $type = "primary";
-                     $status = "Processing";
-                 break;
-                 case "on delivery":
-                     $type = "warning";
-                     $status = "On Delivery";
-                 break;
-                 case "completed":
-                     $type = "success";
-                     $status = "Completed";
-                 break;
-                 case "declined":
-                     $type = "danger";
-                     $status = "Declined";
-                 break;
-             }
+                case "pending":
+                    $type = "secondary";
+                    $status = "Pending";
+                    break;
+                case "processing":
+                    $type = "primary";
+                    $status = "Processing";
+                    break;
+                case "on delivery":
+                    $type = "warning";
+                    $status = "On Delivery";
+                    break;
+                case "completed":
+                    $type = "success";
+                    $status = "Completed";
+                    break;
+                case "declined":
+                    $type = "danger";
+                    $status = "Declined";
+                    break;
+            }
             return '<span class="badge badge-'.$type.'">'.__($status).'</span>';
         })
          ->editColumn('payment_status', function (Order $data) {
@@ -312,13 +312,11 @@ class OrderController extends Controller
     //*** POST Request
     public function update(Request $request, $id)
     {
-
         //--- Logic Section
         $data = Order::findOrFail($id);
 
         $input = $request->all();
         if ($data->status == "completed") {
-
             // Then Save Without Changing it.
             $input['status'] = "completed";
             $data->update($input);
@@ -330,7 +328,6 @@ class OrderController extends Controller
             return response()->json($msg);
         //--- Redirect Section Ends
         } else {
-
             // processing -- em andamento
             if ($input['status'] == "processing") {
                 foreach ($data->vendororders as $vorder) {
@@ -597,7 +594,7 @@ class OrderController extends Controller
                 $msg = __('The receipt has been accepted. Order status changed to Completed.');
                 $this->sendReceiptUpdate($id, true);
                 return response()->json(array('msg' => $msg));
-            break;
+                break;
             case "reject":
                 Order::where('id', $id)->update(['receipt' => null]);
                 if (file_exists(public_path().'/storage/images/receipts/'.$data->receipt)) {
@@ -606,7 +603,7 @@ class OrderController extends Controller
                 $msg = __('The receipt has been rejected.');
                 $this->sendReceiptUpdate($id, false);
                 return response()->json(['msg' => $msg, 'redirect' => true]);
-            break;
+                break;
         }
     }
 
@@ -648,13 +645,13 @@ class OrderController extends Controller
             switch ($billet['status_request']['status']) {
                 case "canceled":
                     $order->update(['payment_status' => "Pending", 'status' => "declined"]);
-                break;
+                    break;
                 case "completed":
                     $order->update(['payment_status' => "Completed", 'status' => "processing"]);
-                break;
+                    break;
                 case "paid":
                     $order->update(['payment_status' => "Completed", 'status' => "processing"]);
-                break;
+                    break;
             }
 
             $ddi = strlen($order->customer_phone) == "11" ? "55" : "595";
