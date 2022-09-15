@@ -100,7 +100,7 @@ class SliderController extends Controller
     {
         //--- Validation Section
         $rules = [
-               'photo'      => 'required|mimes:jpeg,jpg,png,svg',
+               'photo'      => 'required|mimes:jpeg,jpg,png,svg,gif',
                "{$this->lang->locale}.name" => 'required',
         ];
 
@@ -149,7 +149,7 @@ class SliderController extends Controller
     {
         //--- Validation Section
         $rules = [
-               'photo'      => 'mimes:jpeg,jpg,png,svg',
+               'photo'      => 'mimes:jpeg,jpg,png,svg,gif',
                 ];
 
         $customs = ["{$this->lang->locale}.name.required" => __('Slider Name in :lang is required', ['lang' => $this->lang->language])];
