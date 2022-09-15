@@ -323,19 +323,21 @@ class FrontendController extends Controller
         }
         $prods = Product::byStore()
             ->isActive()
-            ->where(function ($query) use ($search) {
-                $query->where('sku', 'like', "%{$search}%")
-                    ->orWhere('ref_code', 'like', "%{$search}%");
-            })->orWhere(function ($query) use ($search, $searchReverse, $searchLocale) {
-                $query->whereHas('translations', function ($query) use ($search, $searchReverse, $searchLocale) {
-                    $query->where('locale', $searchLocale)
-                        ->where('name', 'like', "%{$search}%")
-                        ->orWhere('features', 'like', "%{$search}%");
+            ->where(function ($query) use ($searchReverse, $search, $searchLocale) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('sku', 'like', "%{$search}%")
+                        ->orWhere('ref_code', 'like', "%{$search}%");
+                })->orWhere(function ($query) use ($search, $searchReverse, $searchLocale) {
+                    $query->whereHas('translations', function ($query) use ($search, $searchReverse, $searchLocale) {
+                        $query->where('locale', $searchLocale)
+                            ->where('name', 'like', "%{$search}%")
+                            ->orWhere('features', 'like', "%{$search}%");
 
-                    if ($search != $searchReverse) {
-                        $query->orWhere('name', 'like', "%{$searchReverse}%")
-                            ->orWhere('features', 'like', "%{$searchReverse}%");
-                    }
+                        if ($search != $searchReverse) {
+                            $query->orWhere('name', 'like', "%{$searchReverse}%")
+                                ->orWhere('features', 'like', "%{$searchReverse}%");
+                        }
+                    });
                 });
             })->take(10)->get();
 
