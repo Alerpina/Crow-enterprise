@@ -238,7 +238,7 @@ trait Gateway
         $cart = new Cart($oldCart);
 
         // Check credentials for gateway
-        if (array_search(null, $this->credentials)) {
+        if (array_search(null, $this->credentials, true)) {
             if ($request->ajax()) {
                 return response()->json([
                     'unsuccess' => __("{$this->name} Error")
