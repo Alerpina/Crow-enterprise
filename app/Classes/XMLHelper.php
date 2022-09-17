@@ -74,7 +74,7 @@ class XMLHelper
             $photo = ($product->photo ? $product->photo : "{$store_url}/assets/images/noimage.png");
 
             if ($product->photo != "noimage.jpg" && !filter_var($product->photo, FILTER_VALIDATE_URL)) {
-                if (!empty($product->photo) && file_exists(public_path()."storage/images/products/".$product->photo)) {
+                if (!empty($product->photo) && file_exists(public_path()."/storage/images/products/".$product->photo)) {
                     $photo = $store_url."/storage/images/products/".$product->photo;
                 } else {
                     if (is_dir(public_path()."/storage/images/ftp/products_images/{$product->ref_code}")) {
