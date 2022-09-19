@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Schema;
@@ -27,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         if (!app()->runningInConsole()) {
+            Paginator::useBootstrap();
+
             $currentUrl = str_replace(
                 ['http://', 'https://'],
                 '',
