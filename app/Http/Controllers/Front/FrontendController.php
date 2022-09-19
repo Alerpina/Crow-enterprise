@@ -152,106 +152,76 @@ class FrontendController extends Controller
 
         $homeSettings = Pagesetting::findOrFail($this->storeSettings->pageSettings->id);
 
-        $top_small_banners = ($homeSettings->random_banners == 1 ? Banner::byStore()->where('type', '=', 'TopSmall')->inRandomOrder()->get() : Banner::byStore()->where('type', '=', 'TopSmall')->get());
-        $sliders = ($homeSettings->random_banners == 1 ? Slider::byStore()->where('status', 1)->inRandomOrder()->get() : Slider::byStore()->where('status', 1)->orderBy('presentation_position')->orderBy('id')->get());
+        $prepareBanners = Banner::byStore();
 
-        if ($this->storeSettings->show_products_without_stock) {
-            $feature_products =  ($homeSettings->random_products == 1 ?
-            Product::byStore()->where('featured', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->where('featured', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
+        if ($homeSettings->random_banners == 1) {
+            $prepareBanners->inRandomOrder();
         } else {
-            $feature_products =  ($homeSettings->random_products == 1 ?
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('featured', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('featured', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
+            $prepareBanners->orderBy('id', 'desc');
         }
 
-        $categories = Category::orderBy('slug')->orderBy('presentation_position')->where('status', 1)->where('is_featured', 1)->get();
+        $banners = $prepareBanners->get();
+
+        $top_small_banners = $banners->where('type', '=', 'TopSmall');
+
+        $sliders = ($homeSettings->random_banners == 1 ? Slider::byStore()->where('status', 1)->inRandomOrder()->get() : Slider::byStore()->where('status', 1)->orderBy('presentation_position')->orderBy('id')->get());
+
+        $prepareProducts =  Product::byStore();
+
+        if ($this->storeSettings->show_products_without_stock) {
+            $prepareProducts->whereRaw('(stock > 0 or stock is null)');
+        }
+
+        $prepareProducts->where('status', 1)
+            ->where(function ($query) {
+                $query->where('featured', 1)
+                    ->orWhere('best', 1)
+                    ->orWhere('top', 1)
+                    ->orWhere('big', 1)
+                    ->orWhere('hot', 1)
+                    ->orWhere('latest', 1)
+                    ->orWhere('trending', 1)
+                    ->orWhere('is_discount', 1)
+                    ->orWhere('sale', 1);
+            });
+
+        if ($homeSettings->random_products == 1) {
+            $prepareProducts->inRandomOrder();
+        } else {
+            $prepareProducts->orderBy('id', 'desc');
+        }
+
+        $products = $prepareProducts->get();
+
+        $feature_products = $products->where('featured', 1)->take(10);
+
+        $categories = Category::orderBy('slug')->orderBy('presentation_position')->where('is_featured', 1)->get();
 
         /**
          * Extra index - former ajax request
          */
-        $bottom_small_banners = ($homeSettings->random_banners == 1 ? Banner::byStore()->where('type', '=', 'BottomSmall')->inRandomOrder()->get() : Banner::byStore()->where('type', '=', 'BottomSmall')->get());
-        $large_banners = ($homeSettings->random_banners == 1 ? Banner::byStore()->where('type', '=', 'Large')->inRandomOrder()->get() : Banner::byStore()->where('type', '=', 'Large')->get());
+        $bottom_small_banners = $banners->where('type', '=', 'BottomSmall');
+        $large_banners = $banners->where('type', '=', 'Large');
         $reviews =  Review::all();
         $partners = Partner::all();
 
-        if ($discount_products = Product::byStore()->where('is_discount', 1)->get()) {
-            foreach ($discount_products as $discount_product) {
-                if (Carbon::now()->format('Y-m-d') > Carbon::parse($discount_product->discount_date)->format('Y-m-d')) {
-                    $discount_product->discount_date = null;
-                    $discount_product->is_discount = false;
-                    $discount_product->update();
-                }
+        $discount_products = $products->where('is_discount', 1)->take(10)->each(function ($product) {
+            if (Carbon::now()->format('Y-m-d') > Carbon::parse($product->discount_date)->format('Y-m-d')) {
+                $product->discount_date = null;
+                $product->is_discount = false;
+                $product->update();
             }
-        }
+        });
 
-        if ($this->storeSettings->show_products_without_stock) {
-            $discount_products = ($homeSettings->random_products == 1 ?
-            Product::byStore()->where('is_discount', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->where('is_discount', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
+        $best_products = $products->where('best', 1)->take(10);
+        $top_products = $products->where('top', 1)->take(10);
+        $big_products = $products->where('big', 1)->take(10);
+        $hot_products = $products->where('hot', 1)->take(10);
+        $latest_products = $products->where('latest', 1)->take(10);
+        $trending_products = $products->where('trending', 1)->take(10);
+        $sale_products = $products->where('sale', 1)->take(10);
 
-            $best_products = ($homeSettings->random_products == 1 ?
-            Product::byStore()->where('best', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->where('best', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
-
-            $top_products = ($homeSettings->random_products == 1 ?
-            Product::byStore()->where('top', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->where('top', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
-
-            $big_products = ($homeSettings->random_products == 1 ?
-            Product::byStore()->where('big', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->where('big', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
-
-            $hot_products = ($homeSettings->random_products == 1 ?
-            Product::byStore()->where('hot', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->where('hot', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
-
-            $latest_products = ($homeSettings->random_products == 1 ?
-            Product::byStore()->where('latest', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->where('latest', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
-
-            $trending_products = ($homeSettings->random_products == 1 ?
-            Product::byStore()->where('trending', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->where('trending', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
-
-            $sale_products = ($homeSettings->random_products == 1 ?
-            Product::byStore()->where('sale', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->where('sale', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
-        } else {
-            $discount_products = ($homeSettings->random_products == 1 ?
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('is_discount', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('is_discount', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
-
-            $best_products = ($homeSettings->random_products == 1 ?
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('best', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('best', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
-
-            $top_products = ($homeSettings->random_products == 1 ?
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('top', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('top', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
-
-            $big_products = ($homeSettings->random_products == 1 ?
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('big', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('big', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
-
-            $hot_products = ($homeSettings->random_products == 1 ?
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('hot', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('hot', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
-
-            $latest_products = ($homeSettings->random_products == 1 ?
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('latest', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('latest', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
-
-            $trending_products = ($homeSettings->random_products == 1 ?
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('trending', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('trending', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
-
-            $sale_products = ($homeSettings->random_products == 1 ?
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('sale', '=', 1)->where('status', '=', 1)->inRandomOrder()->take(10)->get() :
-            Product::byStore()->whereRaw('(stock > 0 or stock is null)')->where('sale', '=', 1)->where('status', '=', 1)->orderBy('id', 'desc')->take(10)->get());
-        }
-
-        $extra_blogs = Blog::orderBy('created_at', 'desc')->limit(2)->get();
+        $extra_blogs = Blog::orderBy('created_at', 'desc')->limit(5)->get();
 
 
         return view('front.index', compact(
@@ -330,39 +300,48 @@ class FrontendController extends Controller
 
     public function autosearch($slug)
     {
-        if (mb_strlen($slug, 'utf-8') > 2) {
-            $search = str_replace(' ', '%', implode(' ', array_reverse(explode(' ', $slug))));
-            $slug = str_replace(' ', '%', trim($slug));
-            $searchLocale = $this->storeLocale->locale;
+        $matches = [];
+        $found = preg_match_all('/\w{3,}|\d{1,}\s?/i', $slug, $matches); //at least 3 characters or any digits with or not space
 
-            if (Session::has('language') && $this->storeSettings->is_language) {
-                $searchLocale = Language::find(Session::get('language'))->locale;
-            }
-            if (!config("features.marketplace")) {
-                $prods = Product::byStore()
-                    ->isActive()
-                    ->where(function ($query) use ($slug, $search, $searchLocale) {
-                        $query->where('sku', 'like', "%{$slug}%")
-                            ->orWhere('ref_code', 'like', "%{$slug}%")
-                            ->orWhereTranslationLike('name', "%{$slug}%", $searchLocale)
-                            ->orWhereTranslationLike('name', "%{$search}%", $searchLocale)
-                            ->orWhereTranslationLike('features', "%{$slug}%", $searchLocale)
-                            ->orWhereTranslationLike('features', "%{$search}%", $searchLocale);
-                    })->take(10)->get();
-            } else {
-                $prods = Product::byStore()
-                    ->isActive()
-                    ->where('being_sold', 1)
-                    ->where('user_id', 0)
-                    ->where(function ($query) use ($slug, $search, $searchLocale) {
-                        $query->whereTranslationLike('name', "%{$slug}%", $searchLocale)
-                        ->orWhereTranslationLike('name', "%{$search}%", $searchLocale);
-                    })->take(10)->get();
-            }
-
-            return view('load.suggest', compact('prods', 'slug'));
+        if (empty($found)) {
+            return "";
         }
-        return "";
+
+        $searchLocale = $this->storeLocale->locale;
+
+        if (Session::has('language') && $this->storeSettings->is_language) {
+            $searchLocale = Language::find(Session::get('language'))->locale;
+        }
+
+        if ($found == 1) {
+            $search = $searchReverse = $matches[0][0];
+        }
+
+        if ($found > 1) {
+            $search = implode('%', $matches[0]);
+            $searchReverse = implode('%', array_reverse($matches[0]));
+        }
+        $prods = Product::byStore()
+            ->isActive()
+            ->where(function ($query) use ($searchReverse, $search, $searchLocale) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('sku', 'like', "%{$search}%")
+                        ->orWhere('ref_code', 'like', "%{$search}%");
+                })->orWhere(function ($query) use ($search, $searchReverse, $searchLocale) {
+                    $query->whereHas('translations', function ($query) use ($search, $searchReverse, $searchLocale) {
+                        $query->where('locale', $searchLocale)
+                            ->where('name', 'like', "%{$search}%")
+                            ->orWhere('features', 'like', "%{$search}%");
+
+                        if ($search != $searchReverse) {
+                            $query->orWhere('name', 'like', "%{$searchReverse}%")
+                                ->orWhere('features', 'like', "%{$searchReverse}%");
+                        }
+                    });
+                });
+            })->take(10)->get();
+
+        return view('load.suggest', compact('prods', 'slug'));
     }
 
     public function finalize()
@@ -631,8 +610,7 @@ class FrontendController extends Controller
         $gs = Generalsetting::findOrFail(1);
 
         if ($gs->is_capcha == 1) {
-
-        // Capcha Check
+            // Capcha Check
             $value = session('captcha_string');
             if ($request->codes != $value) {
                 return response()->json(array('errors' => [ 0 => __('Please enter Correct Captcha Code.') ]));

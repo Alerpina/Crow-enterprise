@@ -666,7 +666,7 @@
                                                                                         value="{{ !empty($data1)
                                                                                             ? $data1
                                                                                             : "
-                                                                                                                                                                                                                                                                #000000" }}"
+                                                                                                                                                                                                                                                                                                                                                        #000000" }}"
                                                                                         class="input-field cp" />
                                                                                     <span
                                                                                         class="input-group-addon"><i></i></span>
@@ -730,7 +730,7 @@
                                                             id="{{ config(' features.color_gallery') ? 'color-btn-with-gallery' : 'color-btn' }}"
                                                             class="add-more mt-4 mb-3"><i
                                                                 class="fas fa-plus"></i>{{ __('Add
-                                                                                                                                                                                        More Color') }}
+                                                                                                                                                                                                                                                        More Color') }}
                                                         </a>
                                                     </div>
                                                 </div>
@@ -785,7 +785,7 @@
                                                                         {{ __('Material Gallery') }}
                                                                         <span>
                                                                             {{ __('(These photos will be displayed when this
-                                                                                                                                                                                                                            material is selected)') }}
+                                                                                                                                                                                                                                                                                                        material is selected)') }}
                                                                         </span>
                                                                     </label>
                                                                 </div>
@@ -813,7 +813,7 @@
                                                                                 value="{{ isset($data->material_qty[$key])
                                                                                     ? $data->material_qty[$key]
                                                                                     : "
-                                                                                                                                                                                                                                    0" }}"
+                                                                                                                                                                                                                                                                                                                    0" }}"
                                                                                 min="0" required>
                                                                         </div>
                                                                         <div class="col-md-3">
@@ -824,7 +824,7 @@
                                                                                 value="{{ isset($data->material_price[$key])
                                                                                     ? $data->material_price[$key]
                                                                                     : "
-                                                                                                                                                                                                                                    0" }}"
+                                                                                                                                                                                                                                                                                                                    0" }}"
                                                                                 min="0" required>
                                                                         </div>
                                                                         <div class="col-md-3 delete-button">
@@ -861,7 +861,7 @@
                                                             <a href="javascript:;" id="material-btn"
                                                                 class="add-more mt-4 mb-3"><i
                                                                     class="fas fa-plus"></i>{{ __('Add
-                                                                                                                                                                                                More Materials') }}
+                                                                                                                                                                                                                                                                    More Materials') }}
                                                             </a>
                                                         </div>
                                                     </div>
@@ -958,7 +958,7 @@
                                                                                 {{ __('Size Price') }} :
                                                                                 <span>
                                                                                     {{ __('(This price will be added with base
-                                                                                                                                                                                                                                                price)') }}
+                                                                                                                                                                                                                                                                                                                                    price)') }}
                                                                                 </span>
                                                                             </label>
                                                                             <input type="number" step="0.01"
@@ -1003,7 +1003,7 @@
                                                                             {{ __('Size Price') }} :
                                                                             <span>
                                                                                 {{ __('(This price will be added with base
-                                                                                                                                                                                                                                        price)') }}
+                                                                                                                                                                                                                                                                                                                        price)') }}
                                                                             </span>
                                                                         </label>
                                                                         <input type="number" step="0.01"
@@ -1260,7 +1260,7 @@
                                                 @endphp
 
                                                 @php//dd($data['features'])
-                                                                                                @endphp ?>
+                                                                                                                                                @endphp ?> ?>
 
                                                 <div class="feature-area mb-3">
                                                     <div class="row mb-0">
@@ -1303,7 +1303,7 @@
                                                                     value="{{ isset($data->colors[0])
                                                                         ? $data->colors[0]
                                                                         : "
-                                                                                                                                                                                                        #000000" }}"
+                                                                                                                                                                                                                                                                            #000000" }}"
                                                                     class="input-field cp" />
                                                                 <span class="input-group-addon"><i></i></span>
                                                             </div>
@@ -1377,7 +1377,7 @@
                                                                     value="{{ isset($data->colors[1])
                                                                         ? $data->colors[1]
                                                                         : "
-                                                                                                                                                                                                        #000000" }}"
+                                                                                                                                                                                                                                                                            #000000" }}"
                                                                     class="input-field cp" />
                                                                 <span class="input-group-addon"><i></i></span>
                                                             </div>
@@ -1443,7 +1443,7 @@
                                         <div
                                             class="{{ $data->meta_tag == null && strip_tags($data->meta_description) == null
                                                 ? "
-                                                                                                                                showbox"
+                                                                                                                                                                            showbox"
                                                 : '' }}"">
 
                                             <div class="input-form">
@@ -1557,7 +1557,7 @@
                                                                     <span
                                                                         class="badge badge-{{ $redplayLicense->available
                                                                             ? "
-                                                                                                                                                                                                            success"
+                                                                                                                                                                                                                                                                                    success"
                                                                             : 'danger' }} ml-2">{{ $redplayLicense->available ? 'Disponível' : 'Usado' }}</span>
                                                                 </div>
 
@@ -1651,15 +1651,15 @@
                             </div>
                         </div>
                     </div>
-                    @if (empty($ftp_gallery))
-                        <div class="gallery-images">
-                            <div class="selected-image">
-                                <div class="row">
 
-                                </div>
+                    <div class="gallery-images">
+                        <div class="selected-image">
+                            <div class="row">
+
                             </div>
                         </div>
-                    @else
+                    </div>
+                    @if (!empty($ftp_gallery))
                         <div class="gallery-images">
                             <div class="">
                                 <div class="row">

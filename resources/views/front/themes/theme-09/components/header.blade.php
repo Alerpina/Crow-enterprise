@@ -6,72 +6,75 @@
                     <div class="left-content">
                         <div class="list">
                             <ul>
-                                @if(config("features.lang_switcher") && $gs->is_language == 1)
-                                <li>
-                                    <div class="language-selector">
-                                        <i class="fas fa-globe-americas"></i>
-                                        <select name="language" class="language selectors nice">
-                                            @foreach($locales as $language)
-                                            <option value="{{route('front.language',$language->id)}}" {{$slocale->id ==
-                                                $language->id ? 'selected' : ''}}>
-                                                {{$language->language}}
-                                            </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </li>
+                                @if (config('features.lang_switcher') && $gs->is_language == 1)
+                                    <li>
+                                        <div class="language-selector">
+                                            <i class="fas fa-globe-americas"></i>
+                                            <select name="language" class="language selectors nice">
+                                                @foreach ($locales as $language)
+                                                    <option value="{{ route('front.language', $language->id) }}"
+                                                        {{ $slocale->id == $language->id ? 'selected' : '' }}>
+                                                        {{ $language->language }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </li>
                                 @endif
 
-                                @if(config("features.currency_switcher") && $gs->is_currency == 1)
-                                <li>
-                                    <div class="currency-selector">
-                                        <span>{{ $scurrency->sign }}</span>
-                                        <select name="currency" class="currency selectors nice">
-                                            @foreach($currencies as $currency)
-                                            <option value="{{route('front.currency',$currency->id)}}" {{ $scurrency->id
-                                                == $currency->id ? 'selected' : ''}}>
-                                                {{$currency->name}}
-                                            </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </li>
+                                @if (config('features.currency_switcher') && $gs->is_currency == 1)
+                                    <li>
+                                        <div class="currency-selector">
+                                            <span>{{ $scurrency->sign }}</span>
+                                            <select name="currency" class="currency selectors nice">
+                                                @foreach ($currencies as $currency)
+                                                    <option value="{{ route('front.currency', $currency->id) }}"
+                                                        {{ $scurrency->id == $currency->id ? 'selected' : '' }}>
+                                                        {{ $currency->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </li>
                                 @endif
 
-                                @if($gs->show_currency_values == 1)
-                                @php
-                                $top_first_curr = $curr;
-                                $top_curr = $scurrency;
-                                @endphp
+                                @if ($gs->show_currency_values == 1)
+                                    @php
+                                        $top_first_curr = $curr;
+                                        $top_curr = $scurrency;
+                                    @endphp
 
-                                @if($scurrency->id != 1)
-                                <li>
-                                    <div class="currency-selector">
-                                        <span><i class="fas fa-coins"></i>
-                                            {{ __("Currency Rate") }}:
-                                            {{
-                                            $top_first_curr->sign.number_format($top_first_curr->value,$top_first_curr->decimal_digits,$top_first_curr->decimal_separator,$top_first_curr->thousands_separator)
-                                            }}
-                                            =
-                                            {{ $top_curr->sign . ' ' .number_format($top_curr->value
-                                            ,$top_curr->decimal_digits,$top_curr->decimal_separator,$top_curr->thousands_separator)
-                                            }}
-                                        </span>
-                                    </div>
-                                </li>
-                                @endif
+                                    @if ($scurrency->id != 1)
+                                        <li>
+                                            <div class="currency-selector">
+                                                <span><i class="fas fa-coins"></i>
+                                                    {{ __('Currency Rate') }}:
+                                                    {{ $top_first_curr->sign . number_format($top_first_curr->value, $top_first_curr->decimal_digits, $top_first_curr->decimal_separator, $top_first_curr->thousands_separator) }}
+                                                    =
+                                                    {{ $top_curr->sign .
+                                                        ' ' .
+                                                        number_format(
+                                                            $top_curr->value,
+                                                            $top_curr->decimal_digits,
+                                                            $top_curr->decimal_separator,
+                                                            $top_curr->thousands_separator,
+                                                        ) }}
+                                                </span>
+                                            </div>
+                                        </li>
+                                    @endif
                                 @endif
 
-                                @if(Auth::guard('admin')->check())
-                                <li>
-                                    <div class="mybadge1">
-                                        <a href="{{ route('admin.logout') }}">
-                                            {{ __('Viewing as Admin')}}
-                                            <i class="fas fa-power-off"></i>
-                                            {{ __('Logout') }}
-                                        </a>
-                                    </div>
-                                </li>
+                                @if (Auth::guard('admin')->check())
+                                    <li>
+                                        <div class="mybadge1">
+                                            <a href="{{ route('admin.logout') }}">
+                                                {{ __('Viewing as Admin') }}
+                                                <i class="fas fa-power-off"></i>
+                                                {{ __('Logout') }}
+                                            </a>
+                                        </div>
+                                    </li>
                                 @endif
                             </ul>
                         </div>
@@ -79,91 +82,90 @@
                     <div class="right-content">
                         <div class="list">
                             <ul>
-                                @if(!Auth::guard('web')->check())
-                                <li class="login">
-                                    <a href="{{ route('user.login') }}" class="sign-log">
-                                        <div class="links">
-                                            <span class="sign-in">{{ __("Sign in") }}</span> <span>|</span>
-                                            <span class="join">{{ __("Join") }}</span>
-                                        </div>
-                                    </a>
-                                </li>
+                                @if (!Auth::guard('web')->check())
+                                    <li class="login">
+                                        <a href="{{ route('user.login') }}" class="sign-log">
+                                            <div class="links">
+                                                <span class="sign-in">{{ __('Sign in') }}</span> <span>|</span>
+                                                <span class="join">{{ __('Join') }}</span>
+                                            </div>
+                                        </a>
+                                    </li>
                                 @else
-                                <li class="profilearea my-dropdown">
-                                    <a href="javascript: ;" id="profile-icon" class="profile carticon">
-                                        <span class="text">
-                                            <i class="far fa-user"></i> {{ __("My Account") }}
-                                            <i class="fas fa-chevron-down"></i>
-                                        </span>
-                                    </a>
-                                    <div class="my-dropdown-menu profile-dropdown">
-                                        <ul class="profile-links">
-                                            @if(!Auth::user()->IsVendor())
-                                            <li>
-                                                <a href="{{ route('user-dashboard') }}">
-                                                    <i class="fas fa-angle-double-right"></i>
-                                                    {{ __("User Panel") }}
-                                                </a>
-                                            </li>
-                                            @endif
+                                    <li class="profilearea my-dropdown">
+                                        <a href="javascript: ;" id="profile-icon" class="profile carticon">
+                                            <span class="text">
+                                                <i class="far fa-user"></i> {{ __('My Account') }}
+                                                <i class="fas fa-chevron-down"></i>
+                                            </span>
+                                        </a>
+                                        <div class="my-dropdown-menu profile-dropdown">
+                                            <ul class="profile-links">
+                                                @if (!Auth::user()->IsVendor())
+                                                    <li>
+                                                        <a href="{{ route('user-dashboard') }}">
+                                                            <i class="fas fa-angle-double-right"></i>
+                                                            {{ __('User Panel') }}
+                                                        </a>
+                                                    </li>
+                                                @endif
 
-                                            @if(config("features.marketplace"))
-                                            @if(Auth::user()->IsVendor())
-                                            <li>
-                                                <a href="{{ route('vendor-dashboard') }}">
-                                                    <i class="fas fa-angle-double-right"></i>
-                                                    {{ __("Vendor Panel") }}
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a
-                                                    href="{{ route('front.vendor',str_replace(' ', '-', Auth::user()->shop_name)) }}">
-                                                    <i class="fas fa-angle-double-right"></i>
-                                                    {{ __("My Store") }}
-                                                </a>
-                                            </li>
-                                            @endif
-                                            @endif
-                                            @if(!Auth::user()->IsVendor())
-                                            <li>
-                                                <a href="{{ route('user-profile') }}">
-                                                    <i class="fas fa-angle-double-right"></i>
-                                                    {{ __("Edit Profile") }}
-                                                </a>
-                                            </li>
-                                            @endif
-                                            <li>
-                                                <a href="{{ route('user-logout') }}">
-                                                    <i class="fas fa-angle-double-right"></i>
-                                                    {{ __("Logout") }}
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                @endif
-                                @if(config("features.marketplace"))
-                                @if(!Auth::guard('web')->check() || (Auth::guard('web')->check() &&
-                                !Auth::user()->IsVendor()) )
-                                <li class="login ml-0">
-                                    <a href="{{ route('vendor.login') }}">
-                                        <div class="links">
-                                            | {{ __("Start Selling") }}
-                                            <i class="fas fa-store"></i>
+                                                @if (config('features.marketplace'))
+                                                    @if (Auth::user()->IsVendor())
+                                                        <li>
+                                                            <a href="{{ route('vendor-dashboard') }}">
+                                                                <i class="fas fa-angle-double-right"></i>
+                                                                {{ __('Vendor Panel') }}
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a
+                                                                href="{{ route('front.vendor', str_replace(' ', '-', Auth::user()->shop_name)) }}">
+                                                                <i class="fas fa-angle-double-right"></i>
+                                                                {{ __('My Store') }}
+                                                            </a>
+                                                        </li>
+                                                    @endif
+                                                @endif
+                                                @if (!Auth::user()->IsVendor())
+                                                    <li>
+                                                        <a href="{{ route('user-profile') }}">
+                                                            <i class="fas fa-angle-double-right"></i>
+                                                            {{ __('Edit Profile') }}
+                                                        </a>
+                                                    </li>
+                                                @endif
+                                                <li>
+                                                    <a href="{{ route('user-logout') }}">
+                                                        <i class="fas fa-angle-double-right"></i>
+                                                        {{ __('Logout') }}
+                                                    </a>
+                                                </li>
+                                            </ul>
                                         </div>
-                                    </a>
-                                </li>
+                                    </li>
                                 @endif
+                                @if (config('features.marketplace'))
+                                    @if (!Auth::guard('web')->check() || (Auth::guard('web')->check() && !Auth::user()->IsVendor()))
+                                        <li class="login ml-0">
+                                            <a href="{{ route('vendor.login') }}">
+                                                <div class="links">
+                                                    | {{ __('Start Selling') }}
+                                                    <i class="fas fa-store"></i>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    @endif
                                 @endif
-                                @if(config("features.productsListPdf"))
-                                <li class="login ml-0">
-                                    <a target="_blank" href="{{ route('download-list-pdf') }}">
-                                        <div class="links">
-                                            | {{ __("Products list - PDF") }}
-                                            <i class="fas fa-download"></i>
-                                        </div>
-                                    </a>
-                                </li>
+                                @if (config('features.productsListPdf'))
+                                    <li class="login ml-0">
+                                        <a target="_blank" href="{{ route('download-list-pdf') }}">
+                                            <div class="links">
+                                                | {{ __('Products list - PDF') }}
+                                                <i class="fas fa-download"></i>
+                                            </div>
+                                        </a>
+                                    </li>
                                 @endif
                             </ul>
                         </div>
@@ -182,25 +184,26 @@
             <div class="col-lg-3 col-sm-6 col-5 remove-padding">
                 <div class="logo">
                     <a href="{{ route('front.index') }}">
-                        <img src="{{asset('storage/images/'.$gs->logo)}}" alt="">
+                        <img src="{{ asset('storage/images/' . $gs->logo) }}" alt="" loading="lazy">
                     </a>
                 </div>
             </div>
             <div class="col-lg-7 col-sm-12 remove-padding order-last order-sm-2 order-md-2">
                 <div class="search-box-wrapper">
                     <div class="search-box">
-                        <form id="searchForm" class="search-form" action="{{ route('front.category') }}" method="GET">
+                        <form id="searchForm" class="search-form" action="{{ route('front.category') }}"
+                            method="GET">
 
                             @if (!empty(request()->input('sort')))
-                            <input type="hidden" name="sort" value="{{ request()->input('sort') }}">
+                                <input type="hidden" name="sort" value="{{ request()->input('sort') }}">
                             @endif
 
                             @if (!empty(request()->input('minprice')))
-                            <input type="hidden" name="minprice" value="{{ request()->input('minprice') }}">
+                                <input type="hidden" name="minprice" value="{{ request()->input('minprice') }}">
                             @endif
 
                             @if (!empty(request()->input('maxprice')))
-                            <input type="hidden" name="maxprice" value="{{ request()->input('maxprice') }}">
+                                <input type="hidden" name="maxprice" value="{{ request()->input('maxprice') }}">
                             @endif
 
                             <input type="text" id="prod_name" name="searchHttp"
@@ -218,43 +221,46 @@
                 <div class="helpful-links">
                     <ul class="helpful-links-inner">
 
-                        @if($gs->is_cart)
-                        <li class="my-dropdown">
-                            <a href="javascript:;" class="cart carticon">
-                                <div class="icon">
-                                    <img src="{{ asset('assets/front/themes/theme-09/assets/images/car.png')}}" alt="">
-                                    <span class="cart-quantity" id="cart-count">
-                                        {{ Session::has('cart') ? count(Session::get('cart')->items) : '0' }}
-                                    </span>
+                        @if ($gs->is_cart)
+                            <li class="my-dropdown">
+                                <a href="javascript:;" class="cart carticon">
+                                    <div class="icon">
+                                        <img src="{{ asset('assets/front/themes/theme-09/assets/images/car.png') }}"
+                                            alt="" loading="lazy">
+                                        <span class="cart-quantity" id="cart-count">
+                                            {{ Session::has('cart') ? count(Session::get('cart')->items) : '0' }}
+                                        </span>
+                                    </div>
+                                </a>
+                                <div class="my-dropdown-menu" id="cart-items">
+                                    @include('load.cart')
                                 </div>
-                            </a>
-                            <div class="my-dropdown-menu" id="cart-items">
-                                @include('load.cart')
-                            </div>
-                        </li>
+                            </li>
                         @endif
 
-                        <li class="wishlist" data-toggle="tooltip" data-placement="top" title="{{ __('Wish') }}">
+                        <li class="wishlist" data-toggle="tooltip" data-placement="top"
+                            title="{{ __('Wish') }}">
 
-                            @if(Auth::guard('web')->check())
-                            <a href="{{ route('user-wishlists') }}" class="wish">
+                            @if (Auth::guard('web')->check())
+                                <a href="{{ route('user-wishlists') }}" class="wish">
 
-                                <span id="wishlist-count">{{ count(Auth::user()->wishlists) }}</span>
-                            </a>
+                                    <span id="wishlist-count">{{ count(Auth::user()->wishlists) }}</span>
+                                </a>
                             @else
-                            <a href="javascript:;" data-toggle="modal" id="wish-btn" data-target="#comment-log-reg"
-                                class="wish">
-                                <img src="{{ asset('assets/front/themes/theme-09/assets/images/heart.png')}}" alt="">
-                                <span id="wishlist-count">0</span>
-                            </a>
+                                <a href="javascript:;" data-toggle="modal" id="wish-btn"
+                                    data-target="#comment-log-reg" class="wish">
+                                    <img src="{{ asset('assets/front/themes/theme-09/assets/images/heart.png') }}"
+                                        alt="" loading="lazy">
+                                    <span id="wishlist-count">0</span>
+                                </a>
                             @endif
 
                         </li>
                         <li class="compare" data-toggle="tooltip" data-placement="top" title="{{ __('Compare') }}">
                             <a href="{{ route('product.compare') }}" class="wish compare-product">
                                 <div class="icon">
-                                    <img src="{{ asset('assets/front/themes/theme-09/assets/images/arrows.png')}}"
-                                        alt="">
+                                    <img src="{{ asset('assets/front/themes/theme-09/assets/images/arrows.png') }}"
+                                        alt="" loading="lazy">
                                     <span id="compare-count">
                                         {{ Session::has('compare') ? count(Session::get('compare')->items) : '0' }}
                                     </span>
@@ -277,128 +283,127 @@
                 <!--categorie menu start-->
                 <div class="categories_menu">
                     <div class="categories_title">
-                        <h2 class="categori_toggle"><i class="fa fa-bars"></i> {{ __("CATEGORIAS") }}
+                        <h2 class="categori_toggle"><i class="fa fa-bars"></i> {{ __('CATEGORIAS') }}
                             <i class="fa fa-angle-down arrow-down"></i>
                         </h2>
                     </div>
                     <div class="categories_menu_inner">
                         <ul class="categories_menu">
                             @php
-                            $i=1;
+                                $i = 1;
                             @endphp
 
-                            @foreach($categories as $category)
-                            @php
-                            $count = count($category->subs_order_by);
-                            @endphp
-                            <li class="{{$count ? 'dropdown_list':''}}
+                            @foreach ($categories as $category)
+                                @php
+                                    $count = count($category->subs_order_by);
+                                @endphp
+                                <li
+                                    class="{{ $count ? 'dropdown_list' : '' }}
                                         {{ $i >= 15 ? 'rx-child' : '' }} qntd">
 
-                                @if($count)
-                                @if($category->photo)
-                                <div class="img">
-                                    <img src="{{ asset('storage/images/categories/'.$category->photo) }}" alt="">
-                                </div>
-                                @endif
-                                <div class="link-area">
-                                    <span><a href="{{ route('front.category',$category->slug) }}">
-                                            {{ $category->name }}</a>
-                                    </span>
+                                    @if ($count)
+                                        @if ($category->photo)
+                                            <div class="img">
+                                                <img src="{{ asset('storage/images/categories/' . $category->photo) }}"
+                                                    alt="" loading="lazy">
+                                            </div>
+                                        @endif
+                                        <div class="link-area">
+                                            <span><a href="{{ route('front.category', $category->slug) }}">
+                                                    {{ $category->name }}</a>
+                                            </span>
 
-                                    @if($count)
-                                    <a href="javascript:;">
-                                        <i class="fa fa-angle-right" aria-hidden="true"></i>
-                                    </a>
+                                            @if ($count)
+                                                <a href="javascript:;">
+                                                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                                                </a>
+                                            @endif
+                                        </div>
+                                    @else
+                                        <a href="{{ route('front.category', $category->slug) }}">
+                                            @if ($category->photo)
+                                                <img src="{{ asset('storage/images/categories/' . $category->photo) }}"
+                                                    loading="lazy">
+                                            @endif
+                                            {{ $category->name }}
+                                        </a>
                                     @endif
-                                </div>
-                                @else
-                                <a href="{{ route('front.category',$category->slug) }}">
-                                    @if($category->photo)
-                                    <img src="{{ asset('storage/images/categories/'.$category->photo) }}">
-                                    @endif
-                                    {{ $category->name }}
-                                </a>
-                                @endif
 
-                                @if($count)
+                                    @if ($count)
+                                        @php
+                                            $ck = 0;
+
+                                            foreach ($category->subs_order_by as $subcat):
+                                                if (count($subcat->childs_order_by) > 0):
+                                                    $ck = 1;
+                                                    break;
+                                                endif;
+                                            endforeach;
+
+                                        @endphp
+
+                                        <ul
+                                            class="{{ $ck == 1 ? 'categories_mega_menu' : 'categories_mega_menu column_1' }}">
+
+                                            @foreach ($category->subs_order_by as $subcat)
+                                                <li>
+                                                    <a
+                                                        href="{{ route('front.subcat', ['slug1' => $category->slug, 'slug2' => $subcat->slug]) }}">
+                                                        {{ $subcat->name }}
+                                                    </a>
+
+                                                    @if (count($subcat->childs_order_by) > 0)
+                                                        <div class="categorie_sub_menu">
+                                                            <ul>
+                                                                @foreach ($subcat->childs_order_by as $childcat)
+                                                                    <li>
+                                                                        <a
+                                                                            href="{{ route('front.childcat', ['slug1' => $category->slug, 'slug2' => $subcat->slug, 'slug3' => $childcat->slug]) }}">
+                                                                            {{ $childcat->name }}
+                                                                        </a>
+                                                                    </li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </div>
+                                                    @endif
+                                                </li>
+                                            @endforeach
+
+                                        </ul>
+                                    @endif
+
+                                </li>
+
                                 @php
-                                $ck = 0;
-
-                                foreach($category->subs_order_by as $subcat):
-                                if(count($subcat->childs_order_by) > 0):
-                                $ck = 1;
-                                break;
-                                endif;
-                                endforeach;
-
+                                    $i++;
                                 @endphp
 
-                                <ul class="{{ $ck == 1 ? 'categories_mega_menu' : 'categories_mega_menu column_1' }}">
-
-                                    @foreach($category->subs_order_by as $subcat)
+                                @if ($i == 15)
                                     <li>
-                                        <a href="{{ route('front.subcat',
-                                                            ['slug1' => $category->slug,
-                                                            'slug2' => $subcat->slug]) }}">
-                                            {{$subcat->name}}
+                                        <a href="{{ route('front.categories') }}"><i class="fas fa-plus"></i>
+                                            {{ __('See All Categories') }}
                                         </a>
-
-                                        @if(count($subcat->childs_order_by) > 0)
-                                        <div class="categorie_sub_menu">
-                                            <ul>
-                                                @foreach($subcat->childs_order_by as $childcat)
-                                                <li>
-                                                    <a href="{{ route('front.childcat',
-                                                                                ['slug1' => $category->slug,
-                                                                                'slug2' => $subcat->slug,
-                                                                                'slug3' => $childcat->slug]) }}">
-                                                        {{$childcat->name}}
-                                                    </a>
-                                                </li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-                                        @endif
                                     </li>
-                                    @endforeach
-
-                                </ul>
-
-                                @endif
-
-                            </li>
-
-                            @php
-                            $i++;
-                            @endphp
-
-                            @if($i == 15)
-                            <li>
-                                <a href="{{ route('front.categories') }}"><i class="fas fa-plus"></i>
-                                    {{ __("See All Categories") }}
-                                </a>
-                            </li>
-                            @break
+                                @break
                             @endif
-
-                            @endforeach
-
-                        </ul>
-                    </div>
-                </div>
-                <!--categorie menu end-->
-            </div>
-            <div class="col-lg-9 col-md-6 col-6 mainmenu-wrapper remove-padding">
-                <div class="container">
-                    <div class="owl-carousel owl-theme slidee">
-                        @foreach($categories->where('is_featured','=',1) as $cat)
-                        <div><a href="{{ route('front.category',$cat->slug) }}"
-                                class="text-center d-block font-weight-bold">{{ $cat->name }}</a></div>
                         @endforeach
-                    </div>
+
+                    </ul>
+                </div>
+            </div>
+            <!--categorie menu end-->
+        </div>
+        <div class="col-lg-9 col-md-6 col-6 mainmenu-wrapper remove-padding">
+            <div class="container">
+                <div class="owl-carousel owl-theme slidee">
+                    @foreach ($categories->where('is_featured', '=', 1) as $cat)
+                        <div><a href="{{ route('front.category', $cat->slug) }}"
+                                class="text-center d-block font-weight-bold">{{ $cat->name }}</a></div>
+                    @endforeach
                 </div>
             </div>
         </div>
     </div>
-    <!--Main-Menu Area End-->
+</div>
+<!--Main-Menu Area End-->
 </div>

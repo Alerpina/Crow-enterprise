@@ -631,8 +631,8 @@ $(function ($) {
             if (search == "") {
                 $(".autocomplete").hide();
             } else {
-                $(".autocomplete").show();
                 $("#myInputautocomplete-list").load(mainurl + '/autosearch/product/' + search);
+                $(".autocomplete").show();
             }
         });
         // Auto Complete Section Ends

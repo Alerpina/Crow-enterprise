@@ -10,8 +10,8 @@ use DOMDocument;
 use App\Models\Generalsetting;
 use App\Models\Product;
 
-class XMLHelper {
-
+class XMLHelper
+{
     public function updateComprasParaguai()
     {
         $main_store = Generalsetting::first();
@@ -35,25 +35,25 @@ class XMLHelper {
                 ->leftJoin('brands', 'brands.id', '=', 'products.brand_id')
                 ->where('product_store.store_id', '=', $comprasparaguai_store->id)
                 ->where('product_translations.locale', '=', $comprasparaguai_locale)
-                ->where('products.status',1)
-                ->Where(function($query) {
+                ->where('products.status', 1)
+                ->Where(function ($query) {
                     return $query->where('products.stock', '>', 0)
                         ->orWhereNull('products.stock');
-                    })
+                })
                 ->get();
         //clock($products);
 
         $xml = new DOMDocument("1.0", "UTF-8");
         $rss = $xml->createElement("rss");
         $rss_create = $xml->appendChild($rss);
-        $rss_create->setAttribute("version","2.0");
+        $rss_create->setAttribute("version", "2.0");
 
         $channel = $xml->createElement("channel");
         $channel_create = $rss->appendChild($channel);
         $store_name = $xml->createElement("title", $comprasparaguai_store->translate($comprasparaguai_locale)->title);
         $store_name_create = $channel->appendChild($store_name);
         $store_url = $comprasparaguai_store->domain;
-        if(!filter_var($store_url, FILTER_VALIDATE_URL)){
+        if (!filter_var($store_url, FILTER_VALIDATE_URL)) {
             $store_url = "https://".$store_url;
         }
         $xml_store_url = $xml->createElement("link", $store_url);
@@ -64,16 +64,26 @@ class XMLHelper {
         $valor = '';
 
         $disponivel = 0;
-        foreach($products as $product){
+        foreach ($products as $product) {
             $disponivel = "em estoque";
-            if(!empty($product->stock) && $product->stock == 0){
+            if (!empty($product->stock) && $product->stock == 0) {
                 $disponivel = "fora de estoque";
             }
 
-            $valor = number_format($product->price, 2,'.','');
-            $photo = "";
-            if(!empty($product->photo) && !filter_var($product->photo, FILTER_VALIDATE_URL)){
-                $photo = $store_url."/storage/images/products/".$product->photo;
+            $valor = number_format($product->price, 2, '.', '');
+            $photo = ($product->photo ? $product->photo : "{$store_url}/assets/images/noimage.png");
+
+            if ($product->photo != "noimage.jpg" && !filter_var($product->photo, FILTER_VALIDATE_URL)) {
+                if (!empty($product->photo) && file_exists(public_path()."/storage/images/products/".$product->photo)) {
+                    $photo = $store_url."/storage/images/products/".$product->photo;
+                } else {
+                    if (is_dir(public_path()."/storage/images/ftp/products_images/{$product->ref_code}")) {
+                        $files = scandir(public_path()."/storage/images/ftp/products_images/".$product->ref_code);
+                        if (isset($files[2])) {
+                            $photo = $store_url . "/storage/images/ftp/products_images/" . $product->ref_code . "/" .  $files[2];
+                        }
+                    }
+                }
             }
 
             $item                    = $xml->createElement("item");
@@ -108,7 +118,6 @@ class XMLHelper {
 
     public function updateLojaGoogle()
     {
-
         $main_store = Generalsetting::first();
         $comprasparaguai_store = Generalsetting::find($main_store->store_comprasparaguai);
         $comprasparaguai_locale = $comprasparaguai_store->defaultLang->locale;
@@ -135,14 +144,14 @@ class XMLHelper {
                 ->leftJoin('brands', 'brands.id', '=', 'products.brand_id')
                 ->where('product_store.store_id', '=', $comprasparaguai_store->id)
                 ->where('product_translations.locale', '=', $comprasparaguai_locale)
-                ->where('products.status',1)->get();
+                ->where('products.status', 1)->get();
 
         //clock($products);
 
         $xml = new DOMDocument("1.0", "UTF-8");
         $rss = $xml->createElement("rss");
         $rss_create = $xml->appendChild($rss);
-        $rss_create->setAttribute("version","2.0");
+        $rss_create->setAttribute("version", "2.0");
         $rss_create->setAttribute("xmlns:g", "http://base.google.com/ns/1.0");
 
         $channel = $xml->createElement("channel");
@@ -150,7 +159,7 @@ class XMLHelper {
         $store_name = $xml->createElement("title", $comprasparaguai_store->translate($comprasparaguai_locale)->title);
         $store_name_create = $channel->appendChild($store_name);
         $store_url = $comprasparaguai_store->domain;
-        if(!filter_var($store_url, FILTER_VALIDATE_URL)){
+        if (!filter_var($store_url, FILTER_VALIDATE_URL)) {
             $store_url = "https://".$store_url;
         }
         $xml_store_url = $xml->createElement("link", $store_url);
@@ -161,21 +170,21 @@ class XMLHelper {
         $valor = '';
 
         $disponivel = 0;
-        foreach($products as $product){
+        foreach ($products as $product) {
             $disponivel = "in stock";
-            if(!empty($product->stock) && $product->stock == 0){
+            if (!empty($product->stock) && $product->stock == 0) {
                 $disponivel = "Out Of Stock!";
             }
 
             $brand = $product->brand;
 
-            if(empty($product->brand)){
+            if (empty($product->brand)) {
                 $brand = $main_store->title;
             }
 
-            $valor = number_format($product->price, 2,'.','');
+            $valor = number_format($product->price, 2, '.', '');
             $photo = "";
-            if(!empty($product->photo) && !filter_var($product->photo, FILTER_VALIDATE_URL)){
+            if (!empty($product->photo) && !filter_var($product->photo, FILTER_VALIDATE_URL)) {
                 $photo = $store_url."/storage/images/products/".$product->photo;
             }
 
@@ -263,21 +272,21 @@ class XMLHelper {
                 ->leftJoin('brands', 'brands.id', '=', 'products.brand_id')
                 ->where('product_store.store_id', '=', $comprasparaguai_store->id)
                 ->where('product_translations.locale', '=', $comprasparaguai_locale)
-                ->where('products.status',1)->get();
+                ->where('products.status', 1)->get();
 
         //clock($products);
 
         $xml = new DOMDocument("1.0", "UTF-8");
         $rss = $xml->createElement("rss");
         $rss_create = $xml->appendChild($rss);
-        $rss_create->setAttribute("version","2.0");
+        $rss_create->setAttribute("version", "2.0");
 
         $channel = $xml->createElement("channel");
         $channel_create = $rss->appendChild($channel);
         $store_name = $xml->createElement("title", $comprasparaguai_store->translate($comprasparaguai_locale)->title);
         $store_name_create = $channel->appendChild($store_name);
         $store_url = $comprasparaguai_store->domain;
-        if(!filter_var($store_url, FILTER_VALIDATE_URL)){
+        if (!filter_var($store_url, FILTER_VALIDATE_URL)) {
             $store_url = "https://".$store_url;
         }
         $xml_store_url = $xml->createElement("link", $store_url);
@@ -288,21 +297,21 @@ class XMLHelper {
         $valor = '';
 
         $disponivel = 0;
-        foreach($products as $product){
+        foreach ($products as $product) {
             $disponivel = "in stock";
-            if(!empty($product->stock) && $product->stock == 0){
+            if (!empty($product->stock) && $product->stock == 0) {
                 $disponivel = "Out Of Stock!";
             }
 
             $brand = $product->brand;
 
-            if(empty($product->brand)){
+            if (empty($product->brand)) {
                 $brand = $main_store->title;
             }
 
-            $valor = number_format($product->price, 2,'.','');
+            $valor = number_format($product->price, 2, '.', '');
             $photo = "";
-            if(!empty($product->photo) && !filter_var($product->photo, FILTER_VALIDATE_URL)){
+            if (!empty($product->photo) && !filter_var($product->photo, FILTER_VALIDATE_URL)) {
                 $photo = $store_url."/storage/images/products/".$product->photo;
             }
 

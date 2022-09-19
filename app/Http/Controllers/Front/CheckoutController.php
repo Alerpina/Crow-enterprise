@@ -266,6 +266,19 @@ class CheckoutController extends Controller
             }
         }
 
+        if (env('ENABLE_REDPLAY_DIGITAL_PRODUCT', false)) {
+            return view('front.checkout_redplay', [
+                'customer' => $request->session()->get('temporder'),
+                'products' => $cart->items, 'totalPrice' => $total, 'pickups' => $pickups, 'totalQty' => $cart->totalQty,
+                'gateways' => $gateways, 'shipping_cost' => 0, 'checked' => $ck, 'digital' => $dp, 'curr_checkout' => $curr, 'first_curr' => $first_curr,
+                'shipping_data' => $shipping_data, 'package_data' => $package_data, 'vendor_shipping_id' => $vendor_shipping_id,
+                'vendor_packing_id' => $vendor_packing_id,
+                'bank_accounts' => $bankAccounts, 'countries' => $countries, 'cities' => $city, 'city_id' => $city_id, 'state_id' => $state_id,
+                'country_id' => $country_id, 'state_name' => $state_name, 'country_name' => $country_name, 'city_name' => $city_name,
+                'aex_cities' => $aex_cities
+            ]);
+        }
+
         return view('front.checkout', [
             'customer' => $request->session()->get('temporder'),
             'products' => $cart->items, 'totalPrice' => $total, 'pickups' => $pickups, 'totalQty' => $cart->totalQty,

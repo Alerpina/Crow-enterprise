@@ -8,7 +8,7 @@
     @foreach ($seos as $seo)
         <meta name="keywords" content="{{ $seo->meta_keys }}">
     @endforeach
-    <meta name="author" content="Agência Crow">
+    <meta name="author" content="CrowTech">
     <title>{{ $gs->title }}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -205,7 +205,7 @@
                                                     {{ str_replace(
                                                         '-',
                                                         '
-                                                                                                ',
+                                                                                                                                                    ',
                                                         $product['size'],
                                                     ) }}
                                                 </p>
@@ -215,7 +215,7 @@
                                                     <strong>{{ __('color') }} :</strong> <span
                                                         style="width: 20px; height: 5px; display: block; border: 10px solid {{ $product['color'] == ''
                                                             ? "
-                                                                                                        white"
+                                                                                                                                                                white"
                                                             : '#' . $product['color'] }};"></span>
                                                 </p>
                                             @endif

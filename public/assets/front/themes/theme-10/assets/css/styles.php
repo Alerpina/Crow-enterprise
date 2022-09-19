@@ -32,37 +32,37 @@ if (isset($_GET['text_color_2'])) {
 ?>
 
 .top-header .content .right-content .list li.login .links {
-    color: <?php echo $text_color_2; ?> !important;
+color: <?php echo $text_color_2; ?> !important;
 }
 
 .categories_menu_inner_horizontal > ul > li > a, .categories_menu_inner_horizontal > ul > li span > a {
-    color: <?php echo $text_color_1; ?> !important;
+color: <?php echo $text_color_1; ?> !important;
 }
 
 .top-header .left-content .list ul li .language-selector i {
-    color: <?php echo $text_color_2; ?>;
+color: <?php echo $text_color_2; ?>;
 }
 
-.top-header ul li.my-dropdown.profilearea  .profile .text, .top-header .content .left-content .list ul li a {
-    color: <?php echo $text_color_2; ?> !important;
+.top-header ul li.my-dropdown.profilearea .profile .text, .top-header .content .left-content .list ul li a {
+color: <?php echo $text_color_2; ?> !important;
 }
 
 .top-header .left-content .list ul li .nice-select::after {
-    border-bottom: 2px solid <?php echo $text_color_2; ?>;
-    border-right: 2px solid <?php echo $text_color_2; ?>;
+border-bottom: 2px solid <?php echo $text_color_2; ?>;
+border-right: 2px solid <?php echo $text_color_2; ?>;
 }
 
 .top-header .left-content .list ul li .nice-select {
-    color: <?php echo $text_color_2; ?> !important;
+color: <?php echo $text_color_2; ?> !important;
 }
 
 .top-header .content .right-content .list li .nice-select {
-    color: <?php echo $text_color_2; ?> !important; 
+color: <?php echo $text_color_2; ?> !important;
 }
 
 .right-content .nice-select::after {
-    border-bottom: 2px solid <?php echo $text_color_2; ?>;
-    border-right: 2px solid <?php echo $text_color_2; ?>;
+border-bottom: 2px solid <?php echo $text_color_2; ?>;
+border-right: 2px solid <?php echo $text_color_2; ?>;
 }
 
 .top-header .content .right-content .list ul li .language-selector .language {
@@ -330,7 +330,7 @@ color: <?php echo $theme_color_1; ?>;}
 color: <?php echo $theme_color_2; ?>; }
 
 .info-link-widget .link-list li a i {
-    color: <?php echo $theme_color_1; ?>;
+color: <?php echo $theme_color_1; ?>;
 }
 
 .login-area .header-area .title {
@@ -644,15 +644,15 @@ color: <?php echo $theme_color_1; ?>;
 }
 
 .blog-area .blog-box .details .read-more-btn {
-    color: <?php echo $text_color_1; ?>;
-    background: <?php echo $theme_color_1; ?>; 
-    border:1px solid <?php echo $text_color_1; ?>;
+color: <?php echo $text_color_1; ?>;
+background: <?php echo $theme_color_1; ?>;
+border:1px solid <?php echo $text_color_1; ?>;
 }
 
 .blog-area .blog-box .details .read-more-btn:hover {
-    color: <?php echo $theme_color_1; ?>;
-    background: <?php echo $text_color_1; ?>; 
-    border:1px solid <?php echo $text_color_1; ?>;
+color: <?php echo $theme_color_1; ?>;
+background: <?php echo $text_color_1; ?>;
+border:1px solid <?php echo $text_color_1; ?>;
 }
 
 .info-big-box {
@@ -823,41 +823,41 @@ font-weight: 600;
 }
 
 .mainmenu-area {
-    background-color: <?php echo $theme_color_1; ?>;
+background-color: <?php echo $theme_color_1; ?>;
 }
 
 .hero-area .hero-area-slider .owl-controls .owl-dots .owl-dot {
-    background:<?php echo $theme_color_2; ?>;
+background:<?php echo $theme_color_2; ?>;
 }
 
 .hero-area .hero-area-slider .owl-controls .owl-dots .owl-dot.active{
-    background: <?php echo $text_color_2; ?>;
+background: <?php echo $text_color_2; ?>;
 }
 
 .info-area .info-box .icon .title, .info-area .info-box .info .details .text {
-    color: <?php echo $text_color_1; ?>;
+color: <?php echo $text_color_1; ?>;
 }
 
-.section-title #post-title::after,.section-title #post-title::before  {
-    border: 1px solid <?php echo $theme_color_1; ?>;
+.section-title #post-title::after,.section-title #post-title::before {
+border: 1px solid <?php echo $theme_color_1; ?>;
 }
 
 .item .info .price {
-    color: <?php echo $theme_color_2; ?>;
+color: <?php echo $theme_color_2; ?>;
 }
 
 .hot-and-new-item .categori .item-list li .single-box .right-area .price {
-    color: <?php echo $theme_color_1; ?>;
+color: <?php echo $theme_color_1; ?>;
 }
 
 .blog-area .owl-carousel .owl-controls .owl-nav .owl-prev, .blog-area .owl-carousel .owl-controls .owl-nav .owl-next {
-    color: <?php echo $theme_color_1; ?>;
+color: <?php echo $theme_color_1; ?>;
 }
 
 .logo-header .helpful-links ul li.my-dropdown .cart .icon span {
-    color: <?php echo $text_color_2; ?>;
-    border:none;
-    background-color:<?php echo $theme_color_2; ?>;
+color: <?php echo $text_color_2; ?>;
+border:none;
+background-color:<?php echo $theme_color_2; ?>;
 }
 
 .toggle-password{
@@ -870,107 +870,112 @@ color: <?php echo $theme_color_1; ?>;
 
 
 .item .item-img .sell-area .sale {
-    color: <?php echo $text_color_2; ?>;
-    background: <?php echo $theme_color_2; ?>;
+color: <?php echo $text_color_2; ?>;
+background: <?php echo $theme_color_2; ?>;
 }
 
 .blog-area .blog-box .blog-images .img .date p {
-    color: <?php echo $text_color_2; ?>;
+color: <?php echo $text_color_2; ?>;
 }
 
 .blog-area .blog-box .blog-images .img .date {
-    border: 1px solid <?php echo $text_color_1; ?>;
+border: 1px solid <?php echo $text_color_1; ?>;
 }
 
 .item .item-img .extra-list ul li span svg {
-    fill: <?php echo $theme_color_1; ?> ;
+fill: <?php echo $theme_color_1; ?> ;
 }
 .footer {
-    background: <?php echo $text_color_1; ?> ;
+background: <?php echo $text_color_1; ?> ;
 }
 
 .footer .footer-widget ul li a,
 .footer .footer-info-area .text p
 {
-    color: <?php echo $theme_color_1; ?>;
+color: <?php echo $theme_color_1; ?>;
 }
 
 .footer .fotter-social-links ul li a {
-    color: <?php echo $theme_color_2; ?>;
-    border: 1px solid <?php echo $theme_color_2; ?>;
+color: <?php echo $theme_color_2; ?>;
+border: 1px solid <?php echo $theme_color_2; ?>;
 }
 
 .footer .fotter-social-links ul li a:hover {
-    color: <?php echo $text_color_2; ?>;
-    border: 1px solid transparent;
-    background: <?php echo $theme_color_2; ?>;
+color: <?php echo $text_color_2; ?>;
+border: 1px solid transparent;
+background: <?php echo $theme_color_2; ?>;
 }
 
 
 .footer .footer-widget .title,
 .footer .title {
-    color: <?php echo $theme_color_1; ?>;
+color: <?php echo $theme_color_1; ?>;
 }
 
 .icon-filter {
-    background-color: <?php echo $theme_color_1; ?>;
-    fill: <?php echo $text_color_1; ?>;
+background-color: <?php echo $theme_color_1; ?>;
+fill: <?php echo $text_color_1; ?>;
 }
 
 .ui-slider .ui-slider-handle, .ui-widget-header {
-    background: <?php echo $theme_color_1; ?>;
+background: <?php echo $theme_color_1; ?>;
 }
 .cookie-alert .bg-custom{
-    background-color: <?php echo $theme_color_1; ?>;
+background-color: <?php echo $theme_color_1; ?>;
 }
 
 .cookie-alert h4{
-    color: <?php echo $text_color_1; ?>;
+color: <?php echo $text_color_1; ?>;
 }
 .cookie-alert p{
-    font-size: 14px;
-    color: <?php echo $text_color_1; ?>;
+font-size: 14px;
+color: <?php echo $text_color_1; ?>;
 }
 
 .cookie-alert .button-fixed{
-    bottom: 0;
-    position: fixed;
-    right: 0;
-    border: 1px solid <?php echo $theme_color_1; ?>;
-    background-color: <?php echo $theme_color_1; ?>;
+bottom: 0;
+position: fixed;
+right: 0;
+border: 1px solid <?php echo $theme_color_1; ?>;
+background-color: <?php echo $theme_color_1; ?>;
 }
 .cookie-alert .fas{
-    cursor: pointer;
-    font-size: 24px;
-    color: <?php echo $text_color_1; ?>;
+cursor: pointer;
+font-size: 24px;
+color: <?php echo $text_color_1; ?>;
 }
 
 .cookie-alert .btn{
-    background-color: <?php echo $text_color_1; ?>;
-    color: <?php echo $theme_color_1; ?>;
-    border: none;
+background-color: <?php echo $text_color_1; ?>;
+color: <?php echo $theme_color_1; ?>;
+border: none;
 }
 
 .cookie-alert .btn:focus{
-    background-color: <?php echo $theme_color_1; ?>;
-    color: <?php echo $text_color_1; ?>;
-    border: 1px solid <?php echo $text_color_1; ?>;
+background-color: <?php echo $theme_color_1; ?>;
+color: <?php echo $text_color_1; ?>;
+border: 1px solid <?php echo $text_color_1; ?>;
 }
 
 .cookie-alert a{
-    color: <?php echo $text_color_1; ?>;
-    font-weight: 600;
+color: <?php echo $text_color_1; ?>;
+font-weight: 600;
 }
 
 .box-center-text.infos-internas {
-    background-color: <?php echo $theme_color_2; ?>;
+background-color: <?php echo $theme_color_2; ?>;
 }
 
 .box-center-text.infos-internas .title, .box-center-text.infos-internas .count {
-    color:  <?php echo $text_color_2; ?>;
+color: <?php echo $text_color_2; ?>;
 }
 
 .section-top .section-title.title-oferta {
-    background-color: <?php echo $theme_color_2; ?>;
+background-color: <?php echo $theme_color_2; ?>;
+color: <?php echo $text_color_2; ?>;
+}
+
+.badge-primary{
     color: <?php echo $text_color_2; ?>;
+    background: <?php echo $theme_color_2; ?>;
 }

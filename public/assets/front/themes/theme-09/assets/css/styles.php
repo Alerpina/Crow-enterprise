@@ -1045,3 +1045,8 @@ color:  <?php echo $text_color_2; ?>;
 .badge-danger.descont-card {
     background-color: <?php echo $theme_color_1; ?>;
 }
+
+.badge-primary{
+    background-color: <?php echo $theme_color_1; ?>;
+    color:  <?php echo $text_color_1; ?>;
+}

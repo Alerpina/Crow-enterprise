@@ -86,11 +86,11 @@
                                     {{ $order->shipping_address_number == null
                                         ? $order->customer_address_number .
                                             "
-                                                                " .
+                                                                                                    " .
                                             $order->customer_complement
                                         : $order->shipping_address_number .
                                             "
-                                                                " .
+                                                                                                    " .
                                             $order->shipping_complement }}</span><br>
                                 <span><strong>{{ __('District') }}</strong>:
                                     {{ $order->shipping_district == null ? $order->customer_district : $order->shipping_district }}</span><br>
@@ -145,7 +145,9 @@
                                         <tbody>
                                             @php
                                                 $subtotal = 0;
+                                                $subtotal_original = 0;
                                                 $tax = 0;
+                                                $tax_original = 0;
                                             @endphp
                                             @foreach ($cart['items'] as $product)
                                                 <tr>
@@ -239,7 +241,8 @@
                                                     </td>
                                                     </td>
                                                     @php
-                                                        $subtotal += round($product['price'] * $order->currency_value, 2);
+                                                        $subtotal += $product['price'] * $order->currency_value;
+                                                        $subtotal_original += $product['price'];
                                                     @endphp
                                                 </tr>
                                             @endforeach
@@ -250,12 +253,8 @@
                                                     <td></td>
                                                 @endif
                                                 <td colspan="2">{{ __('Subtotal') }}</td>
-                                                <td>{{ $order->currency_sign }}{{ number_format(
-                                                    $subtotal,
-                                                    $order_curr->decimal_digits,
-                                                    $order_curr->decimal_separator,
-                                                    $order_curr->thousands_separator,
-                                                ) }}
+                                                <td>{{ $order->currency_sign }}{{ number_format($subtotal, $order_curr->decimal_digits, $order_curr->decimal_separator, $order_curr->thousands_separator) }}
+                                                    <br><small>{{ $first_curr->sign }}{{ number_format($subtotal_original, $first_curr->decimal_digits, $first_curr->decimal_separator, $first_curr->thousands_separator) }}</small>
                                                 </td>
                                             </tr>
                                             @if ($order->shipping_cost != 0)
@@ -264,12 +263,9 @@
                                                         <td></td>
                                                     @endif
                                                     <td colspan="2">{{ __('Shipping') }}</td>
-                                                    <td>{{ $order->currency_sign }}{{ number_format(
-                                                        $order->shipping_cost * $order->currency_value,
-                                                        $order_curr->decimal_digits,
-                                                        $order_curr->decimal_separator,
-                                                        $order_curr->thousands_separator,
-                                                    ) }}
+                                                    <td>
+                                                        {{ $order->currency_sign }}{{ number_format($order->shipping_cost * $order->currency_value, $order_curr->decimal_digits, $order_curr->decimal_separator, $order_curr->thousands_separator) }}
+                                                        <br><small>{{ $first_curr->sign }}{{ number_format($order->shipping_cost, $first_curr->decimal_digits, $first_curr->decimal_separator, $first_curr->thousands_separator) }}</small>
                                                     </td>
                                                 </tr>
                                             @endif
@@ -295,14 +291,12 @@
                                                     @endif
                                                     <td colspan="2">{{ __('TAX') }}</td>
                                                     @php
-                                                        $tax = ($subtotal / 100) * $order->tax;
+                                                        $tax_original = ($subtotal_original / 100) * $order->tax;
+                                                        $tax = $order->currency_value != 1 ? floor($tax_original * $order->currency_value) : $tax_original;
                                                     @endphp
-                                                    <td>{{ $order->currency_sign }}{{ number_format(
-                                                        $tax,
-                                                        $order_curr->decimal_digits,
-                                                        $order_curr->decimal_separator,
-                                                        $order_curr->thousands_separator,
-                                                    ) }}
+                                                    <td>
+                                                        {{ $order->currency_sign }}{{ number_format($tax, $order_curr->decimal_digits, $order_curr->decimal_separator, $order_curr->thousands_separator) }}
+                                                        <br><small>{{ $first_curr->sign }}{{ number_format($tax_original, $first_curr->decimal_digits, $first_curr->decimal_separator, $first_curr->thousands_separator) }}</small>
                                                     </td>
                                                 </tr>
                                             @endif
@@ -329,18 +323,9 @@
                                                 <td colspan="1"></td>
                                                 <td>{{ __('Total') }}<br><small>{{ $first_curr->sign . ' ' . __('Total') }}</small>
                                                 </td>
-                                                <td>{{ $order->currency_sign }}{{ number_format(
-                                                    $order->pay_amount * $order->currency_value,
-                                                    $order_curr->decimal_digits,
-                                                    $order_curr->decimal_separator,
-                                                    $order_curr->thousands_separator,
-                                                ) }}
-                                                    <br><small>{{ $first_curr->sign }}{{ number_format(
-                                                        $order->pay_amount,
-                                                        $first_curr->decimal_digits,
-                                                        $first_curr->decimal_separator,
-                                                        $first_curr->thousands_separator,
-                                                    ) }}</small>
+                                                <td>
+                                                    {{ $order->currency_sign }}{{ number_format($order->pay_amount * $order->currency_value, $order_curr->decimal_digits, $order_curr->decimal_separator, $order_curr->thousands_separator) }}
+                                                    <br><small>{{ $first_curr->sign }}{{ number_format($order->pay_amount, $first_curr->decimal_digits, $first_curr->decimal_separator, $first_curr->thousands_separator) }}</small>
                                                 </td>
                                             </tr>
                                         </tfoot>

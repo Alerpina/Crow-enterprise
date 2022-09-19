@@ -536,7 +536,7 @@ color: <?php echo $theme_color_1; ?>; }
 }
 .cartpage .left-area .table tbody tr td.quantity .qty ul li .qtminus1:hover, .cartpage .left-area .table tbody tr td.quantity .qty ul li .qtplus1:hover {
 background: <?php echo $theme_color_1; ?>;
-border-color: <?php echo $theme_color_1; ?>; 
+border-color: <?php echo $theme_color_1; ?>;
 color: <?php echo $text_color_1; ?> !important;
 }
 .cupon-box #coupon-form button:hover,
@@ -623,7 +623,7 @@ color: <?php echo $text_color_1; ?> ;}
 
 .product-details-page .right-area .product-info .info-meta-3 .meta-list li.favorite a:hover, .product-details-page .right-area .product-info .info-meta-3 .meta-list li.compare a:hover {
 background: <?php echo $text_color_1; ?> ;
-color: <?php echo $theme_color_1; ?>; 
+color: <?php echo $theme_color_1; ?>;
 border: 1px solid <?php echo $text_color_1; ?>;}
 
 .seller-info .content .title {
@@ -671,7 +671,7 @@ background: <?php echo $theme_color_1; ?>c7;
 }
 
 html body div.core-content section.sub-categori div.container div.row div.col-lg-3.col-md-6 div.left-area div.filter-result-area div.body-area form#catalogForm button.filter-btn {
-    border: 1px solid #333; 
+    border: 1px solid #333;
 }
 
 html body div.core-content section.sub-categori div.container div.row div.col-lg-3.col-md-6 div.left-area div.filter-result-area div.body-area form#catalogForm button.filter-btn:hover {
@@ -774,7 +774,7 @@ background: <?php echo $theme_color_1; ?>;
 background-color: <?php echo $theme_color_1; ?>;
 }
 .logo-header .helpful-links ul li.wishlist .wish span {
-    background: <?php echo $theme_color_1; ?>;  
+    background: <?php echo $theme_color_1; ?>;
 }
 
 #cart-count {
@@ -1045,4 +1045,9 @@ color: <?php echo $theme_color_1; ?>;
 
 .box-center-text.infos-internas .title, .box-center-text.infos-internas .count {
     color:  <?php echo $text_color_2; ?>;
+}
+
+.badge-primary{
+    background-color: <?php echo $theme_color_1; ?>;
+    color:  <?php echo $text_color_1; ?>;
 }

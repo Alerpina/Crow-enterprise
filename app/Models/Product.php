@@ -257,7 +257,7 @@ class Product extends LocalizedModel
     {
         $price = $this->price;
         if ($this->user_id != 0) {
-            $price = $this->price + $this->storeSettings->fixed_commission + ($this->price/100) * $this->storeSettings->percentage_commission ;
+            $price = $this->price + $this->storeSettings->fixed_commission + ($this->price / 100) * $this->storeSettings->percentage_commission;
         }
         $price += $price * (($this->storeSettings->product_percent) / 100);
         return $price;
@@ -267,7 +267,7 @@ class Product extends LocalizedModel
     {
         $price = $this->price;
         if ($this->user_id != 0) {
-            $price = $this->price + $this->storeSettings->fixed_commission + ($this->price/100) * $this->storeSettings->percentage_commission ;
+            $price = $this->price + $this->storeSettings->fixed_commission + ($this->price / 100) * $this->storeSettings->percentage_commission;
         }
         if (!empty($this->size)) {
             foreach ($this->size as $key => $size) {
@@ -331,9 +331,9 @@ class Product extends LocalizedModel
         $price += $price * (($this->storeSettings->product_percent) / 100);
         $price = number_format($price, $curr->decimal_digits, $curr->decimal_separator, $curr->thousands_separator);
         if ($this->storeSettings->currency_format == 0) {
-            return $curr->sign.$price;
+            return $curr->sign . $price;
         } else {
-            return $price.$curr->sign;
+            return $price . $curr->sign;
         }
     }
     public function setCurrencyFirst()
@@ -354,9 +354,9 @@ class Product extends LocalizedModel
         $price += $price * (($this->storeSettings->product_percent) / 100);
         $price = number_format($price, $curr->decimal_digits, $curr->decimal_separator, $curr->thousands_separator);
         if ($this->storeSettings->currency_format == 0) {
-            return $curr->sign.$price;
+            return $curr->sign . $price;
         } else {
-            return $price.$curr->sign;
+            return $price . $curr->sign;
         }
     }
 
@@ -371,7 +371,7 @@ class Product extends LocalizedModel
         $price = $this->price;
 
         if ($this->user_id != 0) {
-            $price = $this->price + $this->storeSettings->fixed_commission + ($this->price/100) * $this->storeSettings->percentage_commission ;
+            $price = $this->price + $this->storeSettings->fixed_commission + ($this->price / 100) * $this->storeSettings->percentage_commission;
         }
 
         if (!empty($this->size) && isset($this->size_price[0])) {
@@ -412,9 +412,9 @@ class Product extends LocalizedModel
         $price = round(($price) * $curr->value, 2);
         $price = number_format($price, $curr->decimal_digits, $curr->decimal_separator, $curr->thousands_separator);
         if ($this->storeSettings->currency_format == 0) {
-            return $curr->sign.$price;
+            return $curr->sign . $price;
         } else {
-            return $price.$curr->sign;
+            return $price . $curr->sign;
         }
     }
 
@@ -423,7 +423,7 @@ class Product extends LocalizedModel
         $price = $this->vendor_min_price;
 
         if ($this->user_id != 0) {
-            $price = $this->price + $this->storeSettings->fixed_commission + ($this->price/100) * $this->storeSettings->percentage_commission ;
+            $price = $this->price + $this->storeSettings->fixed_commission + ($this->price / 100) * $this->storeSettings->percentage_commission;
         }
 
         if (!empty($this->size)) {
@@ -479,9 +479,9 @@ class Product extends LocalizedModel
         $price += $price * (($this->storeSettings->product_percent) / 100);
         $price = number_format($price, $curr->decimal_digits, $curr->decimal_separator, $curr->thousands_separator);
         if ($this->storeSettings->currency_format == 0) {
-            return $curr->sign.$price;
+            return $curr->sign . $price;
         } else {
-            return $price.$curr->sign;
+            return $price . $curr->sign;
         }
     }
 
@@ -490,7 +490,7 @@ class Product extends LocalizedModel
         $price = $this->vendor_max_price;
 
         if ($this->user_id != 0) {
-            $price = $this->price + $this->storeSettings->fixed_commission + ($this->price/100) * $this->storeSettings->percentage_commission ;
+            $price = $this->price + $this->storeSettings->fixed_commission + ($this->price / 100) * $this->storeSettings->percentage_commission;
         }
 
         if (!empty($this->size)) {
@@ -546,9 +546,9 @@ class Product extends LocalizedModel
         $price += $price * (($this->storeSettings->product_percent) / 100);
         $price = number_format($price, $curr->decimal_digits, $curr->decimal_separator, $curr->thousands_separator);
         if ($this->storeSettings->currency_format == 0) {
-            return $curr->sign.$price;
+            return $curr->sign . $price;
         } else {
-            return $price.$curr->sign;
+            return $price . $curr->sign;
         }
     }
 
@@ -557,7 +557,7 @@ class Product extends LocalizedModel
         $price = $this->price;
 
         if ($this->user_id != 0) {
-            $price = $this->price + $this->storeSettings->fixed_commission + ($this->price/100) * $this->storeSettings->percentage_commission ;
+            $price = $this->price + $this->storeSettings->fixed_commission + ($this->price / 100) * $this->storeSettings->percentage_commission;
         }
 
         if (!empty($this->size)) {
@@ -613,9 +613,9 @@ class Product extends LocalizedModel
         $price += $price * (($this->storeSettings->product_percent) / 100);
         $price = number_format($price, $curr->decimal_digits, $curr->decimal_separator, $curr->thousands_separator);
         if ($this->storeSettings->currency_format == 0) {
-            return $curr->sign.$price;
+            return $curr->sign . $price;
         } else {
-            return $price.$curr->sign;
+            return $price . $curr->sign;
         }
     }
 
@@ -628,7 +628,7 @@ class Product extends LocalizedModel
         $price = $this->price;
 
         if ($this->user_id != 0) {
-            $price = $this->price + $this->storeSettings->fixed_commission + ($this->price/100) * $this->storeSettings->percentage_commission ;
+            $price = $this->price + $this->storeSettings->fixed_commission + ($this->price / 100) * $this->storeSettings->percentage_commission;
         }
 
         if (!empty($this->size)) {
@@ -692,9 +692,9 @@ class Product extends LocalizedModel
         $price += $price * (($this->storeSettings->product_percent) / 100);
         $price = number_format($price, $curr->decimal_digits, $curr->decimal_separator, $curr->thousands_separator);
         if ($this->storeSettings->currency_format == 0) {
-            return $curr->sign.$price;
+            return $curr->sign . $price;
         } else {
-            return $price.$curr->sign;
+            return $price . $curr->sign;
         }
     }
 
@@ -709,7 +709,7 @@ class Product extends LocalizedModel
             return '';
         }
         if ($this->user_id != 0) {
-            $price = $this->previous_price + $this->storeSettings->fixed_commission + ($this->previous_price/100) * $this->storeSettings->percentage_commission ;
+            $price = $this->previous_price + $this->storeSettings->fixed_commission + ($this->previous_price / 100) * $this->storeSettings->percentage_commission;
         }
 
         //     if(!empty($this->size)){
@@ -751,9 +751,9 @@ class Product extends LocalizedModel
         $price += $price * (($this->storeSettings->product_percent) / 100);
         $price = number_format($price, $curr->decimal_digits, $curr->decimal_separator, $curr->thousands_separator);
         if ($this->storeSettings->currency_format == 0) {
-            return $curr->sign.$price;
+            return $curr->sign . $price;
         } else {
-            return $price.$curr->sign;
+            return $price . $curr->sign;
         }
     }
 
@@ -766,9 +766,9 @@ class Product extends LocalizedModel
         $curr = Currency::where('id', '=', 1)->first();
         $price = number_format($price, $curr->decimal_digits, $curr->decimal_separator, $curr->thousands_separator);
         if ($storeSettings->currency_format == 0) {
-            return $curr->sign.$price;
+            return $curr->sign . $price;
         } else {
-            return $price.$curr->sign;
+            return $price . $curr->sign;
         }
     }
 
@@ -784,9 +784,9 @@ class Product extends LocalizedModel
         $price = round($price / $curr->value, 2);
         $price = number_format($price, $first_curr->decimal_digits, $first_curr->decimal_separator, $first_curr->thousands_separator);
         if ($storeSettings->currency_format == 0) {
-            return $first_curr->sign.$price;
+            return $first_curr->sign . $price;
         } else {
-            return $price.$first_curr->sign;
+            return $price . $first_curr->sign;
         }
     }
 
@@ -801,9 +801,9 @@ class Product extends LocalizedModel
         $price = round($price * $curr->value, 2);
         $price = number_format($price, $curr->decimal_digits, $curr->decimal_separator, $curr->thousands_separator);
         if ($storeSettings->currency_format == 0) {
-            return $curr->sign.$price;
+            return $curr->sign . $price;
         } else {
-            return $price.$curr->sign;
+            return $price . $curr->sign;
         }
     }
 
@@ -814,9 +814,9 @@ class Product extends LocalizedModel
         $price = round($price * $curr->value, 2);
         $price = number_format($price, $curr->decimal_digits, $curr->decimal_separator, $curr->thousands_separator);
         if ($storeSettings->currency_format == 0) {
-            return $curr->sign.$price;
+            return $curr->sign . $price;
         } else {
-            return $price.$curr->sign;
+            return $price . $curr->sign;
         }
     }
 
@@ -828,15 +828,15 @@ class Product extends LocalizedModel
         $price = round($price * $curr->value, 2);
         $price = number_format($price, $curr->decimal_digits, $curr->decimal_separator, $curr->thousands_separator);
         if ($storeSettings->currency_format == 0) {
-            return $curr->sign.$price;
+            return $curr->sign . $price;
         } else {
-            return $price.$curr->sign;
+            return $price . $curr->sign;
         }
     }
 
     public function showName()
     {
-        $name = mb_strlen($this->name, 'utf-8') > 55 ? mb_substr($this->name, 0, 55, 'utf-8').'...' : $this->name;
+        $name = mb_strlen($this->name, 'utf-8') > 55 ? mb_substr($this->name, 0, 55, 'utf-8') . '...' : $this->name;
         return $name;
     }
 
@@ -857,7 +857,7 @@ class Product extends LocalizedModel
         foreach ($name as $nm) {
             if (!empty($nm)) {
                 foreach ($nm as $n) {
-                    $tagz .= $n.',';
+                    $tagz .= $n . ',';
                 }
             }
         }
@@ -1023,31 +1023,32 @@ class Product extends LocalizedModel
     public function getPhotoAttribute($value)
     {
         if (!filter_var($value, FILTER_VALIDATE_URL)) {
-            if ($this->storeSettings->ftp_folder) {
-                if ($value) {
-                    return asset('storage/images/ftp/'.$this->storeSettings->ftp_folder.$this->ref_code_int.'/'.$value);
-                }
-                $ftp_path = public_path('storage/images/ftp/'.$this->storeSettings->ftp_folder.$this->ref_code_int.'/');
-                if (File::exists($ftp_path)) {
-                    $files = scandir($ftp_path);
-                    $extensions = array('.jpg','.jpeg','.gif','.png');
-                    foreach ($files as $file) {
-                        $file_extension = strtolower(strrchr($file, '.'));
-                        if (in_array($file_extension, $extensions) === true) {
-                            return asset('storage/images/ftp/'.$this->storeSettings->ftp_folder.$this->ref_code_int.'/'.$file);
+            if (!$value) {
+                if ($this->storeSettings->ftp_folder) {
+                    if ($value) {
+                        return asset('storage/images/ftp/' . $this->storeSettings->ftp_folder . $this->ref_code_int . '/' . $value);
+                    }
+                    $ftp_path = public_path('storage/images/ftp/' . $this->storeSettings->ftp_folder . $this->ref_code_int . '/');
+                    if (File::exists($ftp_path)) {
+                        $files = scandir($ftp_path);
+                        $extensions = array('.jpg', '.jpeg', '.gif', '.png');
+                        foreach ($files as $file) {
+                            $file_extension = strtolower(strrchr($file, '.'));
+                            if (in_array($file_extension, $extensions) === true) {
+                                return asset('storage/images/ftp/' . $this->storeSettings->ftp_folder . $this->ref_code_int . '/' . $file);
+                            }
                         }
                     }
+                    return asset('assets/images/noimage.png');
                 }
                 return asset('assets/images/noimage.png');
-            } elseif (!$value) {
-                return asset('assets/images/noimage.png');
             }
-            if (File::exists(public_path('storage/images/products/'.$value))) {
+            if (File::exists(public_path('storage/images/products/' . $value))) {
                 return $value;
             }
-            if (!File::exists(public_path('storage/images/products/'.$value))) {
+            if (!File::exists(public_path('storage/images/products/' . $value))) {
                 if (Auth::guard('admin')->check()) {
-                    Product::where('id', $this->id)->update(['photo'=>null]);
+                    Product::where('id', $this->id)->update(['photo' => null]);
                 }
                 return asset('assets/images/noimage.png');
             }
@@ -1059,25 +1060,25 @@ class Product extends LocalizedModel
     {
         if (!filter_var($value, FILTER_VALIDATE_URL)) {
             if (!$value) {
-                $ftp_path = public_path('storage/images/ftp/'.$this->storeSettings->ftp_folder.$this->ref_code_int.'/');
+                $ftp_path = public_path('storage/images/ftp/' . $this->storeSettings->ftp_folder . $this->ref_code_int . '/');
                 if (File::exists($ftp_path)) {
                     $files = scandir($ftp_path);
-                    $extensions = array('.jpg','.jpeg','.gif','.png');
+                    $extensions = array('.jpg', '.jpeg', '.gif', '.png');
                     foreach ($files as $file) {
                         $file_extension = strtolower(strrchr($file, '.'));
                         if (in_array($file_extension, $extensions) === true) {
-                            return asset('storage/images/ftp/'.$this->storeSettings->ftp_folder.$this->ref_code_int.'/'.$file);
+                            return asset('storage/images/ftp/' . $this->storeSettings->ftp_folder . $this->ref_code_int . '/' . $file);
                         }
                     }
                 }
                 return asset('assets/images/noimage.png');
             }
-            if (File::exists(public_path('storage/images/thumbnails/'.$value))) {
+            if (File::exists(public_path('storage/images/thumbnails/' . $value))) {
                 return $value;
             }
-            if (!File::exists(public_path('storage/images/thumbnails/'.$value))) {
+            if (!File::exists(public_path('storage/images/thumbnails/' . $value))) {
                 if (Auth::guard('admin')->check()) {
-                    Product::where('id', $this->id)->update(['thumbnail'=>null]);
+                    Product::where('id', $this->id)->update(['thumbnail' => null]);
                 }
                 return asset('assets/images/noimage.png');
             }
@@ -1086,7 +1087,7 @@ class Product extends LocalizedModel
     }
     public function getDiscountPercentAttribute($value)
     {
-        if ($this->previous_price!=null && $this->previous_price > $this->price) {
+        if ($this->previous_price != null && $this->previous_price > $this->price) {
             $discount_percent = $this->previous_price -  $this->price;
             $discount_percent = $discount_percent / $this->previous_price;
             $discount_percent = $discount_percent * 100;
@@ -1099,7 +1100,7 @@ class Product extends LocalizedModel
 
     public static function scopeMercadoLivreProducts($query)
     {
-        return $query-> whereNotNull('mercadolivre_id');
+        return $query->whereNotNull('mercadolivre_id');
     }
 
     /**

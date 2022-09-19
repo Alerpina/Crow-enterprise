@@ -25,7 +25,6 @@ Route::group([
     Route::group([
         'as' => 'admin.'
     ], function () {
-
         /**
          * Notification Routes
          */
@@ -115,14 +114,12 @@ Route::group([
     Route::group([
         'as' => 'admin-'
     ], function () {
-
         /**
          * Stores Routes
          */
         Route::group([
             'middleware' => 'permissions:stores'
         ], function () {
-
             /** Stores */
             Route::group([
                 'as' => 'stores-',
@@ -146,7 +143,6 @@ Route::group([
         Route::group([
             'middleware' => 'permissions:catalog'
         ], function () {
-
             /** Products */
             Route::group([
                 'as' => 'prod-',
@@ -289,7 +285,6 @@ Route::group([
         Route::group([
             'middleware' => 'permissions:sell'
         ], function () {
-
             /** Orders */
             Route::group([
                 'as' => 'order-'
@@ -403,7 +398,6 @@ Route::group([
         Route::group([
             'middleware' => 'permissions:content'
         ], function () {
-
             /** Faq */
             Route::group([
                 'as' => 'faq-',
@@ -422,7 +416,6 @@ Route::group([
                 'as' => 'ps-',
                 'prefix' => 'page-settings'
             ], function () {
-
                 /** Contact Page **/
                 Route::get('contact', 'PageSettingController@contact')->name('contact');
 
@@ -438,7 +431,6 @@ Route::group([
                 'as' => 'gs-',
                 'prefix' => 'general-settings'
             ], function () {
-
                 /** Popup **/
                 Route::get('popup', 'GeneralSettingController@popup')->name('popup');
                 Route::post('popup/delete/', 'GeneralSettingController@removePopUpImage')->name('delete-pop');
@@ -489,7 +481,6 @@ Route::group([
             Route::group([
                 'prefix' => 'team_member'
             ], function () {
-
                 /** Team Members */
                 Route::group([
                     'as' => 'team_member-'
@@ -572,7 +563,6 @@ Route::group([
             Route::group([
                 'prefix' => 'blog'
             ], function () {
-
                 /** Blog */
                 Route::group([
                     'as' => 'blog-'
@@ -639,7 +629,6 @@ Route::group([
                 'as' => 'gs-',
                 'prefix' => 'general-settings'
             ], function () {
-
                 /** Logo **/
                 Route::get('logo', 'GeneralSettingController@logo')->name('logo');
 
@@ -788,7 +777,6 @@ Route::group([
                 'as' => 'gs-payments-',
                 'prefix' => 'payment-informations'
             ], function () {
-
                 /** Gateways */
                 Route::group([
                     'prefix' => 'gateway'
@@ -886,7 +874,6 @@ Route::group([
             Route::group([
                 'as' => 'mail-'
             ], function () {
-
                 /** Email Templates */
                 Route::group([
                     'prefix' => 'email-templates'
@@ -927,7 +914,6 @@ Route::group([
         Route::group([
             'middleware' => 'permissions:marketing'
         ], function () {
-
             /** Coupons */
             Route::group([
                 'as' => 'coupon-',
@@ -982,7 +968,6 @@ Route::group([
         Route::group([
             'middleware' => 'permissions:marketplace'
         ], function () {
-
             /** Affiliate Products */
             Route::group([
                 'as' => 'import-',
@@ -1066,7 +1051,6 @@ Route::group([
                 'as' => 'gs-',
                 'prefix' => 'general-settings'
             ], function () {
-
                 /** Affiliate Info **/
                 Route::get('affilate/{status}', 'GeneralSettingController@isaffilate')->name('isaffilate');
                 Route::get('affilate', 'GeneralSettingController@affilate')->name('affilate');
@@ -1085,7 +1069,6 @@ Route::group([
         Route::group([
             'middleware' => 'permissions:system'
         ], function () {
-
             /** Users */
             Route::group([
                 'as' => 'staff-',
@@ -1137,7 +1120,6 @@ Route::group([
                 'as' => 'gs-',
                 'prefix' => 'general-settings'
             ], function () {
-
                 /** Compras Paraguai Settings */
                 Route::get('comprasparaguai/{status}', 'GeneralSettingController@iscomprasparaguai')->name('iscomprasparaguai');
                 Route::get('storecomprasparaguai/{id}', 'GeneralSettingController@storecomprasparaguai')->name('storecomprasparaguai');
@@ -1154,7 +1136,6 @@ Route::group([
         Route::group([
             'middleware' => 'permissions:support'
         ], function () {
-
             /** Ratings */
             Route::group([
                 'as' => 'rating-',
@@ -1344,7 +1325,6 @@ Route::group(['middleware' => 'maintenance'], function () {
     Route::group([
         'namespace' => 'Front'
     ], function () {
-
         //  CRONJOB
         Route::get('/vendor/subscription/check', 'FrontendController@subcheck');
 
@@ -1418,11 +1398,12 @@ Route::group(['middleware' => 'maintenance'], function () {
         });
         /** Pagopar */
         Route::group([
-            'as' => 'pagopar.',
+            "as" => "pagopar.",
+            "prefix" => "pagopar"
         ], function () {
-            Route::get('pagopar-finish', 'PagoparController@pagoparFinish')->name('finish');
-            Route::post('pagopar-submit', 'PagoparController@store')->name('submit');
-            Route::post('pagopar-callback', 'PagoparController@pagoparCallback')->name('notify');
+            Route::post("submit", "PagoparNovoController@store")->name("submit");
+            Route::post("callback", "PagoparNovoController@callback")->name("callback");
+            Route::post("check-order-status/{hash}", "PagoparNovoController@checkOrderStatus")->name("check-order-status");
         });
 
         /** Pay42 */

@@ -56,7 +56,7 @@ a {
         top: 50%;
         height: 99%;
     }
-    
+
 }
 
 .logo-header .helpful-links ul li.my-dropdown .cart .icon i {
@@ -219,7 +219,7 @@ a {
 .item {
     position: relative;
     margin: 10px;
-    padding: 3rem 0;
+    padding: 2rem 0 0;
     overflow: hidden;
     display: block;
     -webkit-transition: unset;
@@ -781,7 +781,7 @@ a {
     }
 }
 
-/* Style FAB Whatsapp button - Team - START */ 
+/* Style FAB Whatsapp button - Team - START */
 
 @-webkit-keyframes fadeIn {
     from {
@@ -1045,7 +1045,7 @@ h1, h2, h3, h4, h5, h6, p, a, span {
     height:42px;
     background: white;
     border-radius: 3px;
-    margin-right: 3px; 
+    margin-right: 3px;
 }
 
 .logo-header .search-box .search-form input::-webkit-placeholder {
@@ -1264,10 +1264,10 @@ h1, h2, h3, h4, h5, h6, p, a, span {
     font-size: 26px;
     line-height: 28px;
 }
-      
+
 .flash-deals .flas-deal-slider .deal-counter span:last-child {
     margin-right: 0px; }
-      
+
 .flash-deals .flas-deal-slider .deal-counter span small {
     display: block;
     font-weight: 400;
@@ -1278,7 +1278,7 @@ h1, h2, h3, h4, h5, h6, p, a, span {
     .flash-deals .flas-deal-slider .deal-counter span {
         font-size: 18px;
         line-height: 28px;
-    }          
+    }
 }
 
 
@@ -1479,8 +1479,8 @@ h1, h2, h3, h4, h5, h6, p, a, span {
     border-radius: 0;
 }
 
-.logo-header .helpful-links ul li.wishlist .wish span, 
-.logo-header .helpful-links ul li.compare .compare-product .icon span, 
+.logo-header .helpful-links ul li.wishlist .wish span,
+.logo-header .helpful-links ul li.compare .compare-product .icon span,
 .logo-header .helpful-links ul li.my-dropdown .cart .icon span {
     width: auto;
     height: 21px;
@@ -1507,16 +1507,6 @@ h1, h2, h3, h4, h5, h6, p, a, span {
 
 .top-header ul li.my-dropdown.profilearea .my-dropdown-menu {
     padding: 10px 5px;
-}
-
-.trending .item, .flash-deals .item {
-    min-height: 405px;
-}
-
-@media (min-width:768px) {
-    .trending .item, .flash-deals .item {
-        min-height: 495px;
-    }
 }
 
 .flash-deals.no-prod-found .item {
@@ -1757,3 +1747,48 @@ h1, h2, h3, h4, h5, h6, p, a, span {
     top: 0;
     transition: initial;
   }
+
+  .box-menu-lateral-categorias {
+    position: fixed;
+    z-index: 99999;
+    right: -100%;
+    opacity: 0;
+    display: flex;
+    top: 0;
+    height: 100vh;
+    width:100%;
+    transition: opacity .1s, right .4s;
+}
+.menu-lateral-categorias {
+    overflow-y: auto;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    max-width: 320px;
+}
+
+.box-menu-lateral-categorias .bg-fade-menu-lateral {
+    width: 100%;
+    display: inline-block;
+    height: 100%;
+    background-color: #0000006b;
+}
+
+.menu-lateral-categorias .category-item > a {
+    font-weight: bold;
+}
+
+.menu-lateral-categorias .category-item {
+    padding:15px;
+}
+
+.menu-lateral-categorias .category-item ul {
+    padding-left: 15px;
+}
+
+.menu-lateral-categorias .category-item > ul {
+    padding-left: 29px;
+}
+
+.menu-lateral-categorias .category-item ul li a{
+    font-size: 14px;
+}

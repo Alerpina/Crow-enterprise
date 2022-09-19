@@ -227,4 +227,26 @@ return [
         'MercadoLivre' => App\Facades\MercadoLivre::class,
     ],
 
+    'thumbnails' => env("ENABLE_GENERATE_THUMBNAILS", true),
+
+    "default_sort" => [
+        "collumn" => env("DEFAULT_SORT_COLLUMN", "id"),
+        "order" => env("DEFAULT_SORT_ORDER", "desc"),
+    ],
+
+    'sort' => [
+        'price' => [
+            'asc' => 'price_asc',
+            'desc' => 'price_desc',
+        ],
+
+        'id' => [
+            'asc' => 'date_asc',
+            'desc' => 'date_desc',
+        ],
+
+        'stock' => [
+            'desc' => 'availability',
+        ],
+    ],
 ];

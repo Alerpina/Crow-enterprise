@@ -35,7 +35,7 @@
         {{-- BRAND --}}
         <meta property="og:title" content="{{ ucfirst($brand->name) }} - {{ $gs->title }}" />
         <meta property="og:image" content="{{ asset('storage/images/brands/' . $brand->image) }}">
-        <meta name="author" content="Agência Crow">
+        <meta name="author" content="CrowTech">
         <title>{{ $brand->name }} - {{ $gs->title }}</title>
     @elseif(isset($productt))
         {{-- PRODUCT --}}
@@ -52,37 +52,37 @@
             <meta property="og:image" content="{{ asset('storage/images/thumbnails/' . $productt->thumbnail) }}">
         @endif
 
-        <meta name="author" content="Agência Crow">
+        <meta name="author" content="CrowTech">
         <title>{{ $productt->name }}</title>
     @elseif(request()->is('privacy-policy'))
         <meta property="og:image" content="{{ $gs->logoUrl }}" />
         <meta name="keywords" content="{{ $seo->meta_keys }}">
         <meta name="description" content="{{ $seo->meta_description }}">
-        <meta name="author" content="Agência Crow">
+        <meta name="author" content="CrowTech">
         <title>{{ __('Privacy Policy') }} - {{ $gs->title }}</title>
     @elseif(request()->is('terms-of-service'))
         <meta property="og:image" content="{{ $gs->logoUrl }}" />
         <meta name="keywords" content="{{ $seo->meta_keys }}">
         <meta name="description" content="{{ $seo->meta_description }}">
-        <meta name="author" content="Agência Crow">
+        <meta name="author" content="CrowTech">
         <title>{{ __('General Terms of Service') }} - {{ $gs->title }}</title>
     @elseif(request()->is('vendor-terms-of-service'))
         <meta property="og:image" content="{{ $gs->logoUrl }}" />
         <meta name="keywords" content="{{ $seo->meta_keys }}">
         <meta name="description" content="{{ $seo->meta_description }}">
-        <meta name="author" content="Agência Crow">
+        <meta name="author" content="CrowTech">
         <title>{{ __('Seller Terms of Service') }} - {{ $gs->title }}</title>
     @elseif(request()->is('policy'))
         <meta property="og:image" content="{{ $gs->logoUrl }}" />
         <meta name="keywords" content="{{ $seo->meta_keys }}">
         <meta name="description" content="{{ $seo->meta_description }}">
-        <meta name="author" content="Agência Crow">
+        <meta name="author" content="CrowTech">
         <title>{{ __('Buy & Return Policy') }} - {{ $gs->title }}</title>
     @else
         <meta property="og:image" content="{{ $gs->logoUrl }}" />
         <meta name="keywords" content="{{ $seo->meta_keys }}">
         <meta name="description" content="{{ $seo->meta_description }}">
-        <meta name="author" content="Agência Crow">
+        <meta name="author" content="CrowTech">
         <title>{{ $gs->title }}</title>
     @endif
 

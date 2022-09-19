@@ -34,7 +34,6 @@ use App\Models\CartAbandonment;
  */
 trait Gateway
 {
-
     /**
      * Gateway allowed currency.
      * null means all currency are allowed.
@@ -239,7 +238,7 @@ trait Gateway
         $cart = new Cart($oldCart);
 
         // Check credentials for gateway
-        if (array_search(null, $this->credentials)) {
+        if (array_search(null, $this->credentials, true)) {
             if ($request->ajax()) {
                 return response()->json([
                     'unsuccess' => __("{$this->name} Error")
@@ -525,7 +524,7 @@ trait Gateway
         $this->order['user_id'] = $request->user_id;
         $this->order['cart'] = $cartArray;
         $this->order['totalQty'] = $request->totalQty;
-        $this->order['pay_amount'] = round($this->cartTotal["after_costs"], 2);
+        $this->order['pay_amount'] = $curr->value != 1 ? $this->cartTotal["after_costs"] : round($this->cartTotal["after_costs"], 2);
         $this->order['method'] = $this->name;
         $this->order['order_number'] = Str::random(4) . time();
         $this->order['shipping'] = $request->shipping;

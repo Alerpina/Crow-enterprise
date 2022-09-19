@@ -89,7 +89,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-5 col-lg-5 col-md-6">
+                <div class="col-xl-5 col-lg-5 col-md-6 mt-4">
                     <div class="right-area">
 
                         @if ($ps->site != null || $ps->email != null)

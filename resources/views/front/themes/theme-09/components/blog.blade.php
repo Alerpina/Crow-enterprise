@@ -16,7 +16,7 @@
                                         <div class="blog-images">
                                             <div class="img">
                                                 <img src="{{ $blogg->photo ? asset('storage/images/blogs/' . $blogg->photo) : asset('assets/images/noimage.png') }}"
-                                                    class="img-fluid" alt="">
+                                                    class="img-fluid" alt="" loading="lazy">
                                                 <div class="date d-flex justify-content-center">
                                                     <div class="box align-self-center">
                                                         <p>{{ date('d', strtotime($blogg->created_at)) }}</p>

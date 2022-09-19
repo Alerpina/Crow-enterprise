@@ -2261,5 +2261,13 @@
     "Zip Code": "C\u00f3digo Postal.",
     "Zip:": "C\u00f3digo postal:",
     "{$this->name} Error": "{$this->name} Erro",
-    "{$title}": "{$title}"
+    "{$title}": "{$title}",
+    "Browse the site": "Navegue pelo site",
+    "Enter or register": "Entre ou registre-se",
+    "Social networks": "Redes sociais",
+    "Departaments": "Departamentos",
+    "Opening hours": "Horário de Funcionamento",
+    "Monday to friday - 8h / 17h": "Seg à terça - 8h / 17h",
+    "Saturday - 8h / 12h": "Sábado - 8h / 12h",
+    "Sunday - Closed": "Domingo - Fechado"
 }

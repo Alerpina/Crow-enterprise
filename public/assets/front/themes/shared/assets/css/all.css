@@ -9371,7 +9371,7 @@ a.text-dark:focus, a.text-dark:hover {
 
 /*# sourceMappingURL=bootstrap.min.css.map */
 
-/* 
+/*
 
 1. animate.css
 2. icofont
@@ -12577,11 +12577,11 @@ a.text-dark:focus, a.text-dark:hover {
   }
 }
 
-/*! 
- * @package IcoFont 
- * @version 1.0.1 
- * @author IcoFont https://icofont.com 
- * @copyright Copyright (c) 2015 - 2018 IcoFont 
+/*!
+ * @package IcoFont
+ * @version 1.0.1
+ * @author IcoFont https://icofont.com
+ * @copyright Copyright (c) 2015 - 2018 IcoFont
  * @license - https://icofont.com/license/
  */
 
@@ -28428,7 +28428,7 @@ a.meanmenu-reveal {
   color: black;
 }
 
-/* 
+/*
   *  Owl Carousel - Animate Plugin
   */
 
@@ -28470,7 +28470,7 @@ a.meanmenu-reveal {
   }
 }
 
-/* 
+/*
  * 	Owl Carousel - Auto Height Plugin
  */
 
@@ -28482,7 +28482,7 @@ a.meanmenu-reveal {
   transition: height 500ms ease-in-out;
 }
 
-/* 
+/*
  *  Core Owl Carousel CSS File
  */
 
@@ -28592,7 +28592,7 @@ a.meanmenu-reveal {
   display: block;
 }
 
-/* 
+/*
  * 	Owl Carousel - Lazy Load Plugin
  */
 
@@ -28609,7 +28609,7 @@ a.meanmenu-reveal {
   transform-style: preserve-3d;
 }
 
-/* 
+/*
  * 	Owl Carousel - Video Plugin
  */
 
@@ -39323,7 +39323,7 @@ nav button {
   font-size: 14px;
   line-height: 24px;
   margin-bottom: 0px;
-  color: #ff0;
+  color: #d00132;
   font-weight: 700;
 }
 
@@ -46634,7 +46634,7 @@ nav .menu li a {
 
 .subscribePreloader__text {
   width: 100%;
-  padding: 15px; 
+  padding: 15px;
   padding-bottom:0;
   padding-top:0;
   backdrop-filter: blur(5px);
@@ -46653,9 +46653,9 @@ nav .menu li a {
   border: none;
   height: 40px;
   color: #514f4f40;
-  border-radius:5px; 
+  border-radius:5px;
   margin-left:0px;
-  border-radius:5px; 
+  border-radius:5px;
   margin-right:5px;
 }
 
@@ -46678,7 +46678,7 @@ nav .menu li a {
 .subscribePreloader__text button:hover {
   background: #ffffff;
   color: #333333;
- 
+
 }
 
 .subscribePreloader__thumb span {
