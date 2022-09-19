@@ -28,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         if (!app()->runningInConsole()) {
+            // use bootstrap instead of tailwind
             Paginator::useBootstrap();
 
             $currentUrl = str_replace(
