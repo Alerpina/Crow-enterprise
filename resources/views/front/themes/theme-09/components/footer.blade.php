@@ -25,40 +25,25 @@
                     </h4>
                     <ul class="link-list">
                         @if ($gs->is_home == 1)
-                            <li><a href="{{ route('front.page', 'seja-prime-11') }}"
-                                    class="ft">{{ __('Be Prime') }}</a></li>
-                        @endif
-
-                        @if ($gs->is_home == 1)
-                            <li><a href="{{ route('front.page', 'black-friday-12') }}"
+                            <li><a href="{{ route('front.page', 'black-friday-25') }}"
                                     class="ft">{{ __('black friday') }}</a></li>
                         @endif
 
-                        @if ($gs->is_home == 1)
-                            <li><a href="{{ route('front.page', 'mega-maio-13') }}"
-                                    class="ft">{{ __('Mega May') }}</a></li>
-                        @endif
-
                         @if ($gs->is_blog == 1)
-                            <li><a href="{{ route('front.page', 'julho-gamer-14') }}"
-                                    class="ft">{{ __('july gamer') }}</a></li>
-                        @endif
-
-                        @if ($gs->is_blog == 1)
-                            <li><a href="{{ route('front.page', 'pix-15') }}" class="ft">{{ __('pix') }}</a>
-                            </li>
-                        @endif
-
-                        @if ($gs->is_blog == 1)
-                            <li><a href="{{ route('front.page', 'compra-segura-16') }}"
+                            <li><a href="{{ route('front.page', 'compra-segura-20') }}"
                                     class="ft">{{ __('safe buy') }}</a></li>
                         @endif
 
                         @if ($gs->is_contact == 1)
-                            <li><a href="{{ route('front.page', 'garantia-estendida-e-roubo-quebra-adicional-17') }}"
-                                    class="ft">{{ __('Extended Warranty and Theft + Additional Breakage') }}</a>
-                            </li>
+                            <li><a href="{{ route('front.page', 'pioneer-channel-8') }}"
+                                    class="ft">{{ __('pioneer channel') }}</a></li>
                         @endif
+
+                        @if ($gs->is_contact == 1)
+                            <li><a href="{{ route('front.page', 'natal-pioneer-24') }}"
+                                    class="ft">{{ __('Natal') }}</a></li>
+                        @endif
+
                     </ul>
                     <div class="fotter-social-links">
                         <ul style="width:200px;">
@@ -131,24 +116,8 @@
                     </h3>
                     <ul class="link-list">
                         @if ($gs->is_home == 1)
-                            <li><a href="{{ route('front.page', 'sobre-a-pioneer-international-shop-1') }}"
+                            <li><a href="{{ route('front.page', 'sobre-a-pioneer-1') }}"
                                     class="ft">{{ __('About Pioneer International Shop') }}</a></li>
-                        @endif
-
-                        @if ($gs->is_home == 1)
-                            <li><a href="{{ route('front.page', 'politicas-de-sites-e-mercados-2') }}"
-                                    class="ft">{{ __('Site and Marketplace Policies') }}</a></li>
-                        @endif
-
-                        @if ($gs->is_home == 1)
-                            <li><a href="{{ route('front.page', 'politicas-de-privacidade-3') }}"
-                                    class="ft">{{ __('Privacy Policies') }}</a>
-                            </li>
-                        @endif
-
-                        @if ($gs->is_blog == 1)
-                            <li><a href="{{ route('front.page', 'premios-4') }}"
-                                    class="ft">{{ __('awards') }}</a></li>
                         @endif
 
                         @if ($gs->is_blog == 1)
@@ -157,30 +126,15 @@
                         @endif
 
                         @if ($gs->is_blog == 1)
-                            <li><a href="{{ route('front.page', 'codigo-de-defesa-do-consumidor-6') }}"
-                                    class="ft">{{ __('Consumer Protection Code') }}</a></li>
+                            <li><a href="{{ route('front.page', 'devolucao-etrocas') }}"
+                                    class="ft">{{ __('Return and exchange policy') }}</a></li>
                         @endif
 
-                        @if ($gs->is_contact == 1)
-                            <li><a href="{{ route('front.page', 'codigo-de-conduta-e-etica-7') }}"
-                                    class="ft">{{ __('Code of Conduct and Ethics') }}</a>
-                            </li>
+                        @if ($gs->is_blog == 1)
+                            <li><a href="{{ route('front.page', 'devolucao-etrocas') }}"
+                                    class="ft">{{ __('Unified Taxation Regime') }}</a></li>
                         @endif
 
-                        @if ($gs->is_contact == 1)
-                            <li><a href="{{ route('front.page', 'pioneer-channel-8') }}"
-                                    class="ft">{{ __('pioneer channel') }}</a></li>
-                        @endif
-
-                        @if ($gs->is_home == 1)
-                            <li><a href="{{ route('front.page', 'faq-9') }}" class="ft">{{ __('faq') }}</a>
-                            </li>
-                        @endif
-
-                        @if ($gs->is_home == 1)
-                            <li><a href="{{ route('front.page', 'perguntas-frequentes-diretrizes-10') }}"
-                                    class="ft">{{ __('FAQ - Guidelines') }}</a></li>
-                        @endif
                     </ul>
                 </div>
             </div>
@@ -191,27 +145,29 @@
                     </h3>
                     <ul class="link-list">
                         @if ($gs->is_home == 1)
-                            <li><a href="" class="ft">{{ __('Opening hours: 08:00 to 20:00') }}</a>
+                            <li class="ft">{{ __('Opening hours: 08:00 to 20:00') }}
                             </li>
                         @endif
 
                         @if ($gs->is_home == 1)
-                            <li><a href=""
-                                    class="ft">{{ __('Monday to Saturday, Brasilia time (Except Sunday and holidays, in Limeira - SP)') }}</a>
+                            <li class="ft">{{ __('Monday to Saturday, Brasilia time (Except Sunday and holidays, in Limeira - SP)') }}
                             </li>
                         @endif
 
                         @if ($gs->is_home == 1)
-                            <li><a href=""
-                                    class="ft">{{ __('Address: Rua Carlos Gomes, 1321 - Ninth floor - Centro Limeira / SP - Zip code: 13480-010') }}</a>
+                            <li class="ft">{{ __('Address: Rua Carlos Gomes, 1321 - Ninth floor - Centro Limeira / SP - Zip code: 13480-010') }}
                             </li>
                         @endif
+                        
+                        <li class="ft">{{ __('+595 61 504 590') }}
+                        </li>
+
                         <h4 style="text-align:left;" class="title m-0">
                             {{ __('email:') }}
                         </h4>
 
                         @if ($gs->is_home == 1)
-                            <li><a href="" class="ft">{{ __('faleconosco@pioneer.com.br') }}</a></li>
+                            <li class="ft">{{ __('faleconosco@pioneer.com.br') }}</li>
                         @endif
                     </ul>
                 </div>
