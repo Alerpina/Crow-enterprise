@@ -654,11 +654,6 @@ color: <?php echo $text_color_2; ?>;
     border:1px solid <?php echo $text_color_1; ?>;
 }
 
-.info-area {
-background: <?php echo $white; ?>;
-}
-<!--Alterado do dinâmico ($theme_color_1) com uma variável inexistente pois foi a melhor forma que encontrei de estilizar sem quebrar o resto do layout-->
-
 .blogpagearea .blog-box .details .read-more-btn {
 border: 1px solid <?php echo $theme_color_1; ?>;
 
@@ -678,10 +673,15 @@ color: <?php echo $theme_color_1; ?>;
 background: <?php echo $theme_color_1; ?>;
 }
 .sub-categori .left-area .filter-result-area .body-area .filter-btn {
-border: 1px solid <?php echo $theme_color_1; ?>;
+    color:  <?php echo $text_color_1; ?>;
+    border: 1px solid transparent;
+    background-color:  <?php echo $theme_color_1; ?>;
 }
+
 .sub-categori .left-area .filter-result-area .body-area .filter-btn:hover {
-color: <?php echo $theme_color_1; ?>;
+    color:  <?php echo $theme_color_1; ?>;
+    border: 1px solid <?php echo $theme_color_1; ?>;
+    background-color:  <?php echo $text_color_1; ?>;
 }
 .category-page .bg-white .sub-category-menu .category-name a{
 color: <?php echo $theme_color_1; ?>;
