@@ -13,21 +13,21 @@
                                 @foreach ($chunk as $service)
                                     <div class="item-slide">
                                         <div class="info-box">
-                                            <div class="icon">
-                                                <a target="_blank" href="{{ $service->link }}">
+                                            <a target="_blank" href="{{ $service->link }}">
+                                                <div class="icon">
                                                     <img class="img-fluid-service"
                                                         src="{{ asset('storage/images/services/' . $service->photo) }}"
                                                         loading="lazy">
-                                                </a>
-                                                <h4 class="title">{{ $service->title }}</h4>
-                                            </div>
-                                            <div class="info">
-                                                <div class="details">
-                                                    <p class="text">
-                                                        {!! $service->details !!}
-                                                    </p>
+                                                    <h4 class="title">{{ $service->title }}</h4>
                                                 </div>
-                                            </div>
+                                                <div class="info">
+                                                    <div class="details">
+                                                        <p class="text">
+                                                            {!! $service->details !!}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </a>
                                         </div>
                                     </div>
                                 @endforeach
