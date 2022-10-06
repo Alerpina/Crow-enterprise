@@ -1259,9 +1259,6 @@
                                                     $featureCount = !empty($data['features']) ? count($data['features']) : 0;
                                                 @endphp
 
-                                                @php//dd($data['features'])
-                                                                                                                                                @endphp ?> ?>
-
                                                 <div class="feature-area mb-3">
                                                     <div class="row mb-0">
                                                         <div class="col-lg-6">
