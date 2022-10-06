@@ -16,7 +16,7 @@
                         placeholder="Seu email?">
                 </div>
                 <button type="submit" class="btn btn-dark buttonForm">{{ __('register') }}</button>
+            </div>
         </form>
     </div>
-</div>
 </div>

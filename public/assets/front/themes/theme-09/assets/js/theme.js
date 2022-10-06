@@ -362,11 +362,10 @@ $(function ($) {
             autoplay: false,
             margin: 0,
             loop: true,
-            dots: true,
             nav: true,
             center: false,
             autoplayHoverPause: true,
-            navText: [''],
+            navText: ['<i class=" fas fa-arrow-alt-circle-left"></i>', '<i class="fas fa-arrow-alt-circle-right"></i>'],
             smartSpeed: 800,
             responsive: {
                 0: {
@@ -400,7 +399,7 @@ $(function ($) {
                     autoplay: true,
                     margin: 0,
                     loop: true,
-                    dots: true,
+                    nav:true,
                     center: false,
                     autoplayHoverPause: true,
                     navText: ['<i class="fas fa-arrow-alt-circle-left"></i>', '<i class="fas fa-arrow-alt-circle-right"></i>'],
@@ -438,42 +437,14 @@ $(function ($) {
                     autoplay: true,
                     margin: 0,
                     loop: true,
-                    dots: true,
                     nav: true,
                     center: false,
                     autoplayHoverPause: true,
-                    navText: [''],
+                    navText: ['<i class="fas fa-arrow-alt-circle-left"></i>', '<i class="fas fa-arrow-alt-circle-right"></i>'],
                     smartSpeed: 800,
                 })
             }
         });
-
-        // aside_review_slider
-        var $aside_review_slider = $('.aside-review-slider');
-
-        if ($aside_review_slider.children().length > 1) {
-
-            $aside_review_slider.owlCarousel({
-                nav: true,
-                navText: [''],
-                dots: false,
-                margin: 30,
-                autoplay: true,
-                autoplayTimeout: 6000,
-                smartSpeed: 1000,
-                responsive: {
-                    0: {
-                    },
-                    768: {
-
-                    },
-                    992: {
-                        items: 2
-                    }
-                }
-            });
-
-        }
 
         //service slider
         var $service_slider = $('#services-carousel'),
@@ -489,7 +460,6 @@ $(function ($) {
                         autoplay: true,
                         margin: 0,
                         loop: true,
-                        dots: true,
                         nav: true,
                         center: false,
                         autoplayHoverPause: true,
@@ -582,7 +552,6 @@ $(function ($) {
             loop: true,
             nav: false,
             dots: true,
-            margin: 30,
             autoplay: true,
             autoplayTimeout: 6000,
             smartSpeed: 1000,

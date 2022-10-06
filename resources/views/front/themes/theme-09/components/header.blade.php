@@ -176,7 +176,6 @@
     </div>
 </section>
 <!-- Top Header Area End -->
-<!-- Top Header Area End -->
 <!-- Logo Header Area Start -->
 <section class="logo-header">
     <div class="container">
@@ -225,8 +224,12 @@
                             <li class="my-dropdown">
                                 <a href="javascript:;" class="cart carticon">
                                     <div class="icon">
-                                        <img src="{{ asset('assets/front/themes/theme-09/assets/images/car.png') }}"
-                                            alt="" loading="lazy">
+                                        <svg width="28" height="28" viewBox="0 0 30 30" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M26.35 8.75C26.134 8.37577 25.8247 8.06392 25.4523 7.84484C25.0799 7.62577 24.657 7.50696 24.225 7.5H8.225L7.5 4.675C7.42675 4.4023 7.26333 4.16243 7.03635 3.99447C6.80937 3.8265 6.5322 3.74033 6.25 3.75H3.75C3.41848 3.75 3.10054 3.8817 2.86612 4.11612C2.6317 4.35054 2.5 4.66848 2.5 5C2.5 5.33152 2.6317 5.64946 2.86612 5.88388C3.10054 6.1183 3.41848 6.25 3.75 6.25H5.3L8.75 19.075C8.82325 19.3477 8.98667 19.5876 9.21365 19.7555C9.44063 19.9235 9.7178 20.0097 10 20H21.25C21.4808 19.9993 21.707 19.9347 21.9033 19.8133C22.0997 19.692 22.2586 19.5186 22.3625 19.3125L26.4625 11.1125C26.6402 10.74 26.7229 10.3293 26.7033 9.9171C26.6837 9.50487 26.5623 9.10391 26.35 8.75Z" fill="currentColor"/>
+                                            <path d="M9.375 26.25C10.4105 26.25 11.25 25.4105 11.25 24.375C11.25 23.3395 10.4105 22.5 9.375 22.5C8.33947 22.5 7.5 23.3395 7.5 24.375C7.5 25.4105 8.33947 26.25 9.375 26.25Z" fill="currentColor"/>
+                                            <path d="M21.875 26.25C22.9105 26.25 23.75 25.4105 23.75 24.375C23.75 23.3395 22.9105 22.5 21.875 22.5C20.8395 22.5 20 23.3395 20 24.375C20 25.4105 20.8395 26.25 21.875 26.25Z" fill="currentColor"/>
+                                        </svg>                                            
+                                       
                                         <span class="cart-quantity" id="cart-count">
                                             {{ Session::has('cart') ? count(Session::get('cart')->items) : '0' }}
                                         </span>
@@ -249,8 +252,9 @@
                             @else
                                 <a href="javascript:;" data-toggle="modal" id="wish-btn"
                                     data-target="#comment-log-reg" class="wish">
-                                    <img src="{{ asset('assets/front/themes/theme-09/assets/images/heart.png') }}"
-                                        alt="" loading="lazy">
+                                    <svg width="28" height="28" viewBox="0 0 30 30" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M2.5 10.5C2.49985 9.60296 2.67849 8.71489 3.0255 7.88768C3.37251 7.06048 3.88092 6.31074 4.52102 5.68228C5.16111 5.05383 5.92005 4.55926 6.75348 4.22748C7.58691 3.89571 8.47811 3.73339 9.375 3.75C10.4362 3.74436 11.4865 3.96433 12.4562 4.39534C13.426 4.82634 14.2931 5.45853 15 6.25C15.7069 5.45853 16.574 4.82634 17.5438 4.39534C18.5135 3.96433 19.5638 3.74436 20.625 3.75C21.5219 3.73339 22.4131 3.89571 23.2465 4.22748C24.0799 4.55926 24.8389 5.05383 25.479 5.68228C26.1191 6.31074 26.6275 7.06048 26.9745 7.88768C27.3215 8.71489 27.5002 9.60296 27.5 10.5C27.5 17.195 19.5262 22.25 15 26.25C10.4837 22.2163 2.5 17.2 2.5 10.5Z" fill="currentColor"/>
+                                    </svg>                                        
                                     <span id="wishlist-count">0</span>
                                 </a>
                             @endif
@@ -259,8 +263,9 @@
                         <li class="compare" data-toggle="tooltip" data-placement="top" title="{{ __('Compare') }}">
                             <a href="{{ route('product.compare') }}" class="wish compare-product">
                                 <div class="icon">
-                                    <img src="{{ asset('assets/front/themes/theme-09/assets/images/arrows.png') }}"
-                                        alt="" loading="lazy">
+                                    <svg width="28" height="28" viewBox="0 0 30 30" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 17.5L13.75 11.25L20 5L21.75 6.78125L18.5313 10H27.5V12.5H18.5313L21.75 15.7188L20 17.5ZM10 25L16.25 18.75L10 12.5L8.25 14.2813L11.4688 17.5H2.5V20H11.4688L8.25 23.2188L10 25Z" fill="currentColor"/>
+                                    </svg>                                        
                                     <span id="compare-count">
                                         {{ Session::has('compare') ? count(Session::get('compare')->items) : '0' }}
                                     </span>
@@ -279,7 +284,7 @@
 <div class="mainmenu-area mainmenu-bb">
     <div class="container">
         <div class="row align-items-center mainmenu-area-innner">
-            <div class="col-lg-3 col-md-6 categorimenu-wrapper remove-padding">
+            <div class="col-lg-3 col-md-6 col-6 categorimenu-wrapper remove-padding">
                 <!--categorie menu start-->
                 <div class="categories_menu">
                     <div class="categories_title">
@@ -393,12 +398,14 @@
             </div>
             <!--categorie menu end-->
         </div>
-        <div class="col-lg-9 col-md-6 col-6 mainmenu-wrapper remove-padding">
+        <div class="col-lg-9 col-md-6 col-6 mainmenu-wrapper">
             <div class="container">
                 <div class="owl-carousel owl-theme slidee">
                     @foreach ($categories->where('is_featured', '=', 1) as $cat)
-                        <div><a href="{{ route('front.category', $cat->slug) }}"
-                                class="text-center d-block font-weight-bold">{{ $cat->name }}</a></div>
+                        <div>
+                            <a href="{{ route('front.category', $cat->slug) }}"
+                                class="text-center d-block font-weight-bold">{{ $cat->name }}</a>
+                        </div>
                     @endforeach
                 </div>
             </div>
