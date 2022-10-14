@@ -11,7 +11,7 @@
 
 # Pronto pra uso em Laravel 9
 
-- testando o pipeline novamentee
+- testando o pipeline
 
 ## About Laravel
 
