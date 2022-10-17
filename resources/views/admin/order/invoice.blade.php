@@ -160,12 +160,11 @@
                                                                 {{ $prod->sku }}</p>
                                                             <p style="font-size: 10px"> {{ __('Reference Code') }} -
                                                                 {{ $prod->ref_code }}</p>
-                                                            <p>{!! $product['item']['details'] !!}</p>
                                                         @endif
                                                     </td>
                                                     @if ($gs->is_invoice_photo)
                                                         <td width="10%">
-                                                            <img src="{{ asset(' storage/images/products') . '/' . $prod->photo }}"
+                                                            <img src="{{ asset('storage/images/products') . '/' . $prod->photo }}"
                                                                 width="285" alt="">
                                                         </td>
                                                     @endif

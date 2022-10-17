@@ -187,13 +187,12 @@
                                             @endif
                                             @php $prod = App\Models\Product::find($product['item']['id']); @endphp
                                             @if (isset($prod))
-                                                <p>{!! $product['item']['details'] !!}</p>
                                                 <p style="margin-bottom: 0; font-size: 10px"> {{ __('Product SKU') }} -
                                                     {{ $prod->sku }}</p>
                                                 <p style="font-size: 10px"> {{ __('Reference Code') }} -
                                                     {{ $prod->ref_code }}</p>
                                                 @if ($gs->is_invoice_photo)
-                                                    <p><img src="{{ asset(' storage/images/products') . '/' . $prod->photo }}"
+                                                    <p><img src="{{ asset('storage/images/products') . '/' . $prod->photo }}"
                                                             width="200" alt=""></p>
                                                 @endif
                                             @endif
