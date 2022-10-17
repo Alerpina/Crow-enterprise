@@ -249,4 +249,6 @@ return [
             'desc' => 'availability',
         ],
     ],
+
+    'hide_pick_up' => env("HIDE_PICK_UP", false)
 ];
