@@ -25,55 +25,55 @@ class Helper
 
     public static function generateProductThumbnailsFtp($ftp_folder, $ref_code_int)
     {
-        $ftp_path = public_path('storage/images/ftp/'.$ftp_folder.$ref_code_int);
-        $thumb_path = public_path('storage/images/thumbnails/');
-        if (is_dir($ftp_path) && !Helper::dir_is_empty($ftp_path)) {
-            $thumb = Product::where('ref_code', $ref_code_int)->get('thumbnail')->pluck('thumbnail')->first();
-            $files = scandir($ftp_path);
-            $first_file = $files[2];
-            if (File::size($ftp_path.'/'.$first_file) > 4096) {
-                $extensions = array('.jpg','.jpeg','.gif','.png');
-                $file_extension = strtolower(strrchr($first_file, '.'));
-                if (in_array($file_extension, $extensions) === true) {
-                    // Tipo de arquivo realmente é imagem?
-                    $first_file_mime = mime_content_type($ftp_path.'/'.$first_file);
-                    if ($first_file_mime == "image/jpeg" || $first_file_mime == "image/png" || $first_file_mime == "image/gif") {
-                        $hash = md5($first_file);
-                        $ftp_hash = Product::where('ref_code', $ref_code_int)->get('ftp_hash')->pluck('ftp_hash')->first();
-                        // Se a hash no banco existir e o accessor da thumb estiver retornando null, elimina o ftp_hash do banco
-                        if ($thumb == asset('assets/images/noimage.png') && $ftp_hash != null) {
-                            Product::where('ref_code', $ref_code_int)->update(['thumbnail' => null, 'photo' => null, 'ftp_hash' => null]);
-                        }
-                        // Hash diferente da que está no DB? || Thumbnail não existe?
-                        if ($hash != $ftp_hash || !File::exists($thumb_path.$thumb)) {
-                            // Thumb é diferente de NULL no DB? && Existe a thumbnail na pasta?
-                            if ($thumb != asset('assets/images/noimage.png') && File::exists($thumb_path.$thumb)) {
-                                unlink($thumb_path.$thumb);
-                                Product::where('ref_code', $ref_code_int)->update(['thumbnail' => null, 'photo' => null, 'ftp_hash' => null]);
-                            }
-                            // Não existe thumbnail correspondente ao arquivo?
-                            if (!File::exists(public_path('storage/images/thumbnails/'.$first_file))) {
-                                Product::where('ref_code', $ref_code_int)->update(['thumbnail' => $first_file, 'photo' => $first_file, 'ftp_hash' => $hash]);
-                                $img = Image::make(public_path('storage/images/ftp/'.$ftp_folder.$ref_code_int.'/'.$first_file))->resize(285, 285);
-                                $img->save(public_path('storage/images/thumbnails/'.$first_file));
-                                return asset('storage/images/thumbnails/'.$first_file);
-                            }
-                        } else {
-                            // Hashes iguais e Thumbnail existente, seta Foto no banco também para o filtro funcionar
-                            Product::where('ref_code', $ref_code_int)->update(['photo' => $first_file]);
-                        }
-                    }
-                }
-            }
-        } else {
-            // Se a pasta FTP estiver vazia, exclui a thumbnail referente a ele e zera no banco.
-            $thumb = Product::where('ref_code', $ref_code_int)->pluck('thumbnail')->first();
-            if ($thumb != asset('assets/images/noimage.png') && File::exists($thumb_path.$thumb)) {
-                unlink($thumb_path.$thumb);
-                Product::where('ref_code', $ref_code_int)->update(['thumbnail' => null, 'photo' => null, 'ftp_hash' => null]);
-            }
-            return asset('assets/images/noimage.png');
-        }
+        // $ftp_path = public_path('storage/images/ftp/'.$ftp_folder.$ref_code_int);
+        // $thumb_path = public_path('storage/images/thumbnails/');
+        // if (is_dir($ftp_path) && !Helper::dir_is_empty($ftp_path)) {
+        //     $thumb = Product::where('ref_code', $ref_code_int)->get('thumbnail')->pluck('thumbnail')->first();
+        //     $files = scandir($ftp_path);
+        //     $first_file = $files[2];
+        //     if (File::size($ftp_path.'/'.$first_file) > 4096) {
+        //         $extensions = array('.jpg','.jpeg','.gif','.png');
+        //         $file_extension = strtolower(strrchr($first_file, '.'));
+        //         if (in_array($file_extension, $extensions) === true) {
+        //             // Tipo de arquivo realmente é imagem?
+        //             $first_file_mime = mime_content_type($ftp_path.'/'.$first_file);
+        //             if ($first_file_mime == "image/jpeg" || $first_file_mime == "image/png" || $first_file_mime == "image/gif") {
+        //                 $hash = md5($first_file);
+        //                 $ftp_hash = Product::where('ref_code', $ref_code_int)->get('ftp_hash')->pluck('ftp_hash')->first();
+        //                 // Se a hash no banco existir e o accessor da thumb estiver retornando null, elimina o ftp_hash do banco
+        //                 if ($thumb == asset('assets/images/noimage.png') && $ftp_hash != null) {
+        //                     Product::where('ref_code', $ref_code_int)->update(['thumbnail' => null, 'photo' => null, 'ftp_hash' => null]);
+        //                 }
+        //                 // Hash diferente da que está no DB? || Thumbnail não existe?
+        //                 if ($hash != $ftp_hash || !File::exists($thumb_path.$thumb)) {
+        //                     // Thumb é diferente de NULL no DB? && Existe a thumbnail na pasta?
+        //                     if ($thumb != asset('assets/images/noimage.png') && File::exists($thumb_path.$thumb)) {
+        //                         unlink($thumb_path.$thumb);
+        //                         Product::where('ref_code', $ref_code_int)->update(['thumbnail' => null, 'photo' => null, 'ftp_hash' => null]);
+        //                     }
+        //                     // Não existe thumbnail correspondente ao arquivo?
+        //                     if (!File::exists(public_path('storage/images/thumbnails/'.$first_file))) {
+        //                         Product::where('ref_code', $ref_code_int)->update(['thumbnail' => $first_file, 'photo' => $first_file, 'ftp_hash' => $hash]);
+        //                         $img = Image::make(public_path('storage/images/ftp/'.$ftp_folder.$ref_code_int.'/'.$first_file))->resize(285, 285);
+        //                         $img->save(public_path('storage/images/thumbnails/'.$first_file));
+        //                         return asset('storage/images/thumbnails/'.$first_file);
+        //                     }
+        //                 } else {
+        //                     // Hashes iguais e Thumbnail existente, seta Foto no banco também para o filtro funcionar
+        //                     Product::where('ref_code', $ref_code_int)->update(['photo' => $first_file]);
+        //                 }
+        //             }
+        //         }
+        //     }
+        // } else {
+        //     // Se a pasta FTP estiver vazia, exclui a thumbnail referente a ele e zera no banco.
+        //     $thumb = Product::where('ref_code', $ref_code_int)->pluck('thumbnail')->first();
+        //     if ($thumb != asset('assets/images/noimage.png') && File::exists($thumb_path.$thumb)) {
+        //         unlink($thumb_path.$thumb);
+        //         Product::where('ref_code', $ref_code_int)->update(['thumbnail' => null, 'photo' => null, 'ftp_hash' => null]);
+        //     }
+        //     return asset('assets/images/noimage.png');
+        // }
     }
 
     /**
