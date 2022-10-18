@@ -132,7 +132,7 @@
 
                         @if ($gs->is_blog == 1)
                             <li><a href="{{ route('front.page', 'regime-de-tributacao-unificada-rtu-2') }}"
-                                    class="ft">{{ __('Unified Taxation Regime') }}</a></li>
+                                    class="ft">{{ __('Unified Taxation RTU') }}</a></li>
                         @endif
 
                     </ul>
