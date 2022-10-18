@@ -25,12 +25,12 @@
                     </h4>
                     <ul class="link-list">
                         @if ($gs->is_home == 1)
-                            <li><a href="{{ route('front.page', 'black-friday-25') }}"
+                            <li><a href="{{ route('front.page', 'black-friday-16') }}"
                                     class="ft">{{ __('black friday') }}</a></li>
                         @endif
 
                         @if ($gs->is_blog == 1)
-                            <li><a href="{{ route('front.page', 'compra-segura-20') }}"
+                            <li><a href="{{ route('front.page', 'compra-segura-16') }}"
                                     class="ft">{{ __('safe buy') }}</a></li>
                         @endif
 
@@ -40,7 +40,7 @@
                         @endif
 
                         @if ($gs->is_contact == 1)
-                            <li><a href="{{ route('front.page', 'natal-pioneer-24') }}"
+                            <li><a href="{{ route('front.page', 'natal-24') }}"
                                     class="ft">{{ __('Natal') }}</a></li>
                         @endif
 
@@ -116,22 +116,22 @@
                     </h3>
                     <ul class="link-list">
                         @if ($gs->is_home == 1)
-                            <li><a href="{{ route('front.page', 'sobre-a-pioneer-1') }}"
+                            <li><a href="{{ route('front.page', 'sobre-a-pioneer-international-shop-6') }}"
                                     class="ft">{{ __('About Pioneer International Shop') }}</a></li>
                         @endif
 
                         @if ($gs->is_blog == 1)
-                            <li><a href="{{ route('front.page', 'trabalhe-conosco-5') }}"
+                            <li><a href="{{ route('front.page', 'trabalhe-conosco-21') }}"
                                     class="ft">{{ __('Work with us') }}</a></li>
                         @endif
 
                         @if ($gs->is_blog == 1)
-                            <li><a href="{{ route('front.page', 'devolucao-etrocas') }}"
+                            <li><a href="{{ route('front.page', 'politicas-de-devolucao-e-troca-25') }}"
                                     class="ft">{{ __('Return and exchange policy') }}</a></li>
                         @endif
 
                         @if ($gs->is_blog == 1)
-                            <li><a href="{{ route('front.page', 'devolucao-etrocas') }}"
+                            <li><a href="{{ route('front.page', 'regime-de-tributacao-unificada-rtu-2') }}"
                                     class="ft">{{ __('Unified Taxation Regime') }}</a></li>
                         @endif
 
