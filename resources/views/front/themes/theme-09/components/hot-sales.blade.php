@@ -11,7 +11,7 @@
                                 <div class="categori">
                                     <div class="section-top">
                                         <h2 class="section-title">
-                                            {{ __("Hot") }}
+                                        <i class="icofont-halloween-pumpkin"></i>{{ __("Hot") }}
                                         </h2>
                                     </div>
                                     <div class="hot-and-new-item-slider row-theme">

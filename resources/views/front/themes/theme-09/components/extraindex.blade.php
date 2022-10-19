@@ -6,7 +6,7 @@
                 <div class="col-lg-12 remove-padding">
                     <div class="section-top">
                         <h2 class="section-title">
-                            {{ __('Best Seller') }}
+                        <i class="icofont-halloween-pumpkin"></i>{{ __('Best Seller') }}
                         </h2>
                     </div>
                 </div>

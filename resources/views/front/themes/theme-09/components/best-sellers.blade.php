@@ -6,7 +6,7 @@
             <div class="col-lg-12 remove-padding">
                 <div class="section-top">
                     <h2 class="section-title">
-                        ELETRÔNICOS E DJS
+                    <i class="icofont-halloween-pumpkin"></i>ÁUDIO E ELETRÔNICOS 
                     </h2>
                 </div>
             </div>

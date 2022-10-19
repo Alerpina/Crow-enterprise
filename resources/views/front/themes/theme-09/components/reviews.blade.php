@@ -5,7 +5,7 @@
                 <div class="col-lg-12">
                     <div class="section-top">
                         <h2 class="section-title">
-                            {{ __('Testimony') }}
+                        <i class="icofont-halloween-pumpkin"></i>{{ __('Testimony') }}
                         </h2>
                     </div>
                     <div class="aside bg-section-items">
