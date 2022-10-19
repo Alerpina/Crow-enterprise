@@ -169,7 +169,9 @@
                                                         <select class="form-control" id="shipop" name="shipping"
                                                             required="" style="margin-bottom: 10px;">
                                                             <option value="shipto">{{ __('Ship To Address') }}</option>
-                                                            <option value="pickup">{{ __('Pick Up') }}</option>
+                                                            @if($pickups->count() > 0)
+                                                                <option value="pickup">{{ __('Pick Up') }}</option>
+                                                            @endif
                                                         </select>
                                                     </div>
 
@@ -455,7 +457,9 @@
                                                     <select class="form-control" id="shipop" name="shipping"
                                                         required="" style="margin-bottom: 10px;">
                                                         <option value="shipto">{{ __('Ship To Address') }}</option>
-                                                        <option value="pickup">{{ __('Pick Up') }}</option>
+                                                        @if($pickups->count() > 0)
+                                                            <option value="pickup">{{ __('Pick Up') }}</option>
+                                                        @endif
                                                     </select>
                                                 </div>
                                                 <div class="col-lg-6 d-none" id="shipshow">
