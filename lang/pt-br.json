@@ -1,4 +1,10 @@
 {
+    "attendance": "atendimento",
+    "institutional": "institucional",
+    "NEWS": "NOTÍCIAS",
+    "departaments": "departamentos",
+    "Receive exclusive offers in your email": "Receba ofertas exclusivas em seu e-mail",
+    "What are you looking for?": "O que você está procurando?",
     " cannot be empty": " n\u00e3o pode estar vazia",
     " in line: ": " na linha: ",
     "#Order": "#Pedido",
