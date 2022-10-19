@@ -19,7 +19,7 @@
                     @endif
                     <div class="row row-theme col-lg-12">
                     @foreach($feature_products as $prod)
-                    @include('front.themes.'.env('THEME', 'theme-09').'.components.slider-product')
+                    @include('front.themes.theme-09.components.slider-product')
                     @endforeach
                     </div>
                 </div>
