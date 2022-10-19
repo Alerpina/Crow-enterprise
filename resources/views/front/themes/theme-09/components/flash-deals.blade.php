@@ -6,15 +6,18 @@
             <div class="col-lg-12 remove-padding">
                 <div class="section-top">
                     <h2 class="section-title title-oferta">
-                        {{ __("Flash Deal") }}
+                        VAPES
                     </h2>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-12 row-theme">
-                <div class="flash-deals">
-                    <div class="flas-deal-slider">
+            @if ($ps->flash_deal_banner or $ps->flash_deal_banner1)
+            <div class="col-lg-10 row-theme">
+                @else
+                <div class="col-lg-12">
+                    @endif
+                    <div class="row row-theme col-lg-12">
                         @foreach($discount_products as $prod)
 
                         @include('front.themes.theme-09.components.flash-product')
@@ -22,9 +25,24 @@
                         @endforeach
                     </div>
                 </div>
+                <div class="col-lg-2 remove-padding d-none d-lg-block">
+                    <div class="aside">
+                        @if ($ps->flash_deal_banner)
+                        <a class="banner-effect sider-bar-align" href="{{ $ps->flash_deal_banner_link }}">
+                            <img src="{{ asset('storage/images/banners/' . $ps->flash_deal_banner) }}" alt=""
+                                style="width:100%;border-radius: 5px;" loading="lazy">
+                        </a>
+                        @endif
+                        @if ($ps->flash_deal_banner1)
+                        <a class="banner-effect sider-bar-align" href="{{ $ps->flash_deal_banner_link1 }}">
+                            <img src="{{ asset('storage/images/banners/' . $ps->flash_deal_banner1) }}" alt=""
+                                style="width:100%;border-radius: 5px;" loading="lazy">
+                        </a>
+                        @endif
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 </section>
-<!-- Electronics Area start-->
+<!-- Phone and Accessories Area start-->
 @endif
