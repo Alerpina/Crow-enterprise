@@ -39,10 +39,7 @@ if ($gs->switch_highlight_currency) {
                         </div>
 
                         <div
-                            class="item-img {{ $gs->show_products_without_stock_baw && !is_null($prod->stock) && $prod->stock == 0
-                                ? "
-                                                                    baw"
-                                : '' }}">
+                        class="item-img {{ $gs->show_products_without_stock_baw && !is_null($prod->stock) && $prod->stock == 0 ? 'baw' : '' }}">
                             @if ($admstore->reference_code == 1)
                                 @php $prod = App\Models\Product::findOrFail($prod->id); @endphp
                                 <div class="sell-area ref">
@@ -182,10 +179,7 @@ if ($gs->switch_highlight_currency) {
 
 
                     <div
-                        class="item-img {{ $gs->show_products_without_stock_baw && !is_null($prod->stock) && $prod->stock == 0
-                            ? "
-                                                                baw"
-                            : '' }}">
+                    class="item-img {{ $gs->show_products_without_stock_baw && !is_null($prod->stock) && $prod->stock == 0 ? 'baw' : '' }}">
                         @if ($admstore->reference_code == 1)
                             @php $prod = App\Models\Product::findOrFail($prod->id); @endphp
                             <div class="sell-area ref">
@@ -338,10 +332,7 @@ if ($gs->switch_highlight_currency) {
             @endif
 
             <div
-                class="item-img {{ $gs->show_products_without_stock_baw && !is_null($prod->stock) && $prod->stock == 0
-                    ? "
-                                                baw"
-                    : '' }}">
+            class="item-img {{ $gs->show_products_without_stock_baw && !is_null($prod->stock) && $prod->stock == 0 ? 'baw' : '' }}">
                 @if ($admstore->reference_code == 1)
                     @php $prod = App\Models\Product::findOrFail($prod->id); @endphp
                     <div class="sell-area ref">
