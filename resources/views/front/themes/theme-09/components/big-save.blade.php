@@ -6,7 +6,7 @@
                 <div class="col-lg-12 remove-padding">
                     <div class="section-top">
                         <h2 class="section-title">
-                          PERFUMES
+                        <i class="icofont-halloween-pumpkin"></i>PERFUMARIA
                         </h2>
 
                     </div>

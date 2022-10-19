@@ -5,7 +5,7 @@
                 <div class="col-lg-12">
                     <div class="section-top">
                         <h2 class="section-title">
-                            {{ __('Recent On Our Blog') }}
+                        <i class="icofont-halloween-pumpkin"></i>{{ __('Recent On Our Blog') }}
                         </h2>
                     </div>
                     <div class="bg-section-items">

@@ -6,7 +6,7 @@
             <div class="col-lg-12 remove-padding">
                 <div class="section-top">
                     <h2 class="section-title title-oferta">
-                        VAPES
+                    <i class="icofont-halloween-pumpkin"></i>VAPES E PODS
                     </h2>
                 </div>
             </div>
