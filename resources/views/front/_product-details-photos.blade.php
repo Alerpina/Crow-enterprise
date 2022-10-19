@@ -29,14 +29,13 @@
                                 </a>
                             @endif
                         @endforeach
-                    @else
-                        @foreach ($productt->galleries as $gal)
-                            <a href="{{ $gal->photo_url }}">
-                                <img class="xzoom-gallery5" width="80" src="{{ $gal->photo_url }}"
-                                    title="The description goes here">
-                            </a>
-                        @endforeach
                     @endif
+                    @foreach ($productt->galleries as $gal)
+                        <a href="{{ $gal->photo_url }}">
+                            <img class="xzoom-gallery5" width="80" src="{{ $gal->photo_url }}"
+                                title="The description goes here">
+                        </a>
+                    @endforeach
                 </div>
             </div>
         </div>
