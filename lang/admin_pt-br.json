@@ -1,4 +1,6 @@
 {
+    "Mark All as Read": "Marcar todos como lido",
+    "Deleted": "Deletado",
     "#Sl": "#Sl",
     "( You can upload multiple Images. )": "(Voc\u00ea pode carregar v\u00e1rias imagens.)",
     "(10 - 12 days)": "(10 - 12 dias)",
@@ -301,7 +303,7 @@
     "Cielo MerchantId": "MerchantId da Cielo",
     "Cielo Text": "Texto da Cielo",
     "City": "Cidade",
-    "Clear": "",
+    "Clear": "Limpar",
     "Clear All": "Limpar tudo",
     "Clear Cache": "Limpar cache",
     "Clickable": "Clic\u00e1vel",
