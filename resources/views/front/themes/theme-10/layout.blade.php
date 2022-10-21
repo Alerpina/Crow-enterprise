@@ -2,7 +2,7 @@
 
 @section('styles')
     <link rel="stylesheet"
-        href="{{ asset('project/resources/views/front/themes/theme-10/assets/css/categorie_horizontal.css') }}">
+        href="{{ asset('assets/front/themes/theme-10/assets/css/categorie_horizontal.css') }}">
 
 
     <!--FONT-->

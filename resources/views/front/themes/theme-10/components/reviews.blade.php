@@ -7,7 +7,7 @@
                         <h2 class="section-title">
                             {{ __('Testimony') }}
                             <div id="post-title">
-                                <img src="{{ asset('project/resources/views/front/themes/theme-03/assets/images/post-it.png') }}"
+                                <img src="{{ asset('assets/front/themes/theme-10/assets/images/post-it.png') }}"
                                     class="img-fluid" alt="Post it">
                             </div>
                         </h2>

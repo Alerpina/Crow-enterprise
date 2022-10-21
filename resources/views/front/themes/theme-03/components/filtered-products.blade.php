@@ -53,14 +53,14 @@
                             data-toggle="tooltip" data-placement="right" title="{{ __('Add To Wishlist') }}"
                             data-placement="right">
                             <img class="img-fluid"
-                                src="{{ asset('project/resources/views/front/themes/theme-03/storage/images/coracao.png')}}"
+                                src="{{ asset('assets/front/themes/theme-03/assets/images/coracao.png')}}"
                                 alt="">
                         </span>
                         @else
                         <span rel-toggle="tooltip" title="{{ __('Add To Wishlist') }}" data-toggle="modal" id="wish-btn"
                             data-target="#comment-log-reg" data-placement="right">
                             <img class="img-fluid"
-                                src="{{ asset('project/resources/views/front/themes/theme-03/storage/images/coracao.png')}}"
+                                src="{{ asset('assets/front/themes/theme-03/assets/images/coracao.png')}}"
                                 alt="">
                         </span>
                         @endif
@@ -70,7 +70,7 @@
                             data-href="{{ route('product.quick',$prod->id) }}" data-toggle="modal"
                             data-target="#quickview" data-placement="right">
                             <img class="img-fluid"
-                                src="{{ asset('project/resources/views/front/themes/theme-03/storage/images/olho.png')}}"
+                                src="{{ asset('assets/front/themes/theme-03/assets/images/olho.png')}}"
                                 alt="">
                         </span>
                     </li>
@@ -79,7 +79,7 @@
                             data-toggle="tooltip" data-placement="right" title="{{ __('Compare') }}"
                             data-placement="right">
                             <img class="img-fluid"
-                                src="{{ asset('project/resources/views/front/themes/theme-03/storage/images/comparar.png')}}"
+                                src="{{ asset('assets/front/themes/theme-03/assets/images/comparar.png')}}"
                                 alt="">
                         </span>
                     </li>
