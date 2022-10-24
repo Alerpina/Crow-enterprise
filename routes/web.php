@@ -148,6 +148,7 @@ Route::group([
                 'as' => 'prod-',
                 'prefix' => 'products'
             ], function () {
+                Route::get('read-xml', 'ProductController@getXML')->name('read-xml');
                 Route::post('edit-meli/{id}', 'ProductController@updateMeli')->name('update-meli');
                 Route::get('edit-meli/{id}', 'ProductController@editMeli')->name('edit-meli');
                 Route::get('meli-update/{id}', 'MercadoLivreController@updateItem')->name('meli-update');
