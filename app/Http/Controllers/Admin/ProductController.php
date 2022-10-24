@@ -2064,6 +2064,27 @@ class ProductController extends Controller
         }
     }
 
+    public function getXML()
+    {
+        $content = File::get(storage_path("app/public/xml/Produtos.xml"));
+        $collection = collect(xml_decode($content)["Item"]);
+
+        foreach($collection->chunk(500) as $item) {
+            Category::updateOrInsert(['slug' => Str::slug($item['VESTUARIO'])]);
+
+            Product::updateOrInsert(
+                ['id' => $item['Codigo']],
+                [
+                    'external_name' => $item['Nome'],
+                    'price' => $item['Valor'],
+                    'stock' => $item['Estoque'],
+                ]
+            );
+        }
+
+        return response($collection, 200);
+    }
+
     public function generateThumbnails()
     {
         $updated = 0;
