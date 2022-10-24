@@ -96,7 +96,12 @@ class CheckoutSimplifiedController extends Controller
         $cart_total = $cart_total + $order['packing_cost'] + $order['shipping_cost'];   //Cart total on currency 1
         $cart_total_currency = $cart_total * $curr->value;  // Cart total on default currency
 
-        $order['cart'] = utf8_encode(bzcompress(serialize($cart), 9));
+        $order['cart'] = [
+            'items' => $cart->items,
+            'totalQty' => $cart->totalQty,
+            'totalPrice' => $cart->totalPrice
+        ];
+
         $order['totalQty'] = $totalQty;
         $order['pay_amount'] = round($cart_total, 2);
         $order['method'] = 'Simplified';
