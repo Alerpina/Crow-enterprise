@@ -2068,18 +2068,50 @@ class ProductController extends Controller
     {
         $content = File::get(storage_path("app/public/xml/Produtos.xml"));
         $collection = collect(xml_decode($content)["Item"]);
+        foreach($collection->chunk(500) as $items) {
+            foreach ($items as $item) {
+                $category = Category::where("slug", "LIKE", Str::slug($item['Categoria']))->first();
+                if (!$category) {
+                    $category = new Category;
+                    $category->name = $item['Categoria'];
+                    $category->slug = Str::slug($item['Categoria']);
+                    $category->save();
+                }
 
-        foreach($collection->chunk(500) as $item) {
-            Category::updateOrInsert(['slug' => Str::slug($item['VESTUARIO'])]);
+                $subcategory = Subcategory::where("slug", "LIKE", Str::slug($item['SubCategoria']))->first();
+                if (!$subcategory) {
+                    $subcategory = new Subcategory;
+                    $subcategory->name = $item['SubCategoria'];
+                    $subcategory->slug = Str::slug($item['SubCategoria']);
+                    $subcategory->category_id = $category->id;
+                    $subcategory->save();
+                }
 
-            Product::updateOrInsert(
-                ['id' => $item['Codigo']],
-                [
-                    'external_name' => $item['Nome'],
-                    'price' => $item['Valor'],
-                    'stock' => $item['Estoque'],
-                ]
-            );
+                $brand = Brand::where("name", "LIKE", $item['Marca'])->first();
+                if (!$brand) {
+                    $brand = new Brand;
+                    $brand->name = $item['Marca'];
+                    $brand->slug = Str::slug($item['Marca']);
+                    $brand->save();
+                }
+
+                $product = Product::find($item['Codigo']);
+                if (!$product) {
+                    $product = new Product;
+                }
+
+                $product->id = $item['Codigo'];
+                $product->name = $item['Nome'];
+                $product->slug = Str::slug($item['Nome']);
+                $product->details = $item['Descricao'];
+                $product->price = $item['Valor'];
+                $product->stock = $item['Estoque'];
+                $product->category_id = $category->id;
+                $product->subcategory_id = $subcategory->id;
+                $product->brand_id = $brand->id;
+                $product->save();
+                $product->stores()->sync([1]);
+            }
         }
 
         return response($collection, 200);
