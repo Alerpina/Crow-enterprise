@@ -13,6 +13,7 @@ use App\Models\VendorOrder;
 use Yajra\DataTables\DataTables;
 use App\Models\Currency;
 use App\Classes\MelhorEnvio;
+use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Seotool;
 use Illuminate\Http\Request;
@@ -431,11 +432,11 @@ class OrderController extends Controller
                     }
 
                     # Rollback Products stock
-                    $cart = unserialize(bzdecompress(utf8_decode($data->cart)));
+                    $cart = new Cart($data->cart);
                     foreach ($cart->items as $item) {
                         $soldQuantity = $item['qty'];
 
-                        $product = Product::find($item['item']->id);
+                        $product = Product::find($item['item']['id']);
                         $product->stock += $soldQuantity;
 
                         if (isset($item['color_key'])) {
