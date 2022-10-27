@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Services\XmlProduct;
+use App\Services\XmlService;
 use Illuminate\Console\Command;
 
 class ReadProductXml extends Command
@@ -12,7 +12,7 @@ class ReadProductXml extends Command
 
     public function __construct()
     {
-        $this->controller = new XmlProduct;
+        $this->controller = new XmlService;
         parent::__construct();
     }
 
@@ -37,8 +37,6 @@ class ReadProductXml extends Command
      */
     public function handle()
     {
-        $this->info("Importando produtos");
-
         $this->controller->importProductsByXml($this);
 
         return 0;
