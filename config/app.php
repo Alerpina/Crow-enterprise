@@ -249,6 +249,4 @@ return [
             'desc' => 'availability',
         ],
     ],
-
-    'xml_product_file' => env('XML_PRODUCT_FILE', 'Produtos.xml')
 ];
