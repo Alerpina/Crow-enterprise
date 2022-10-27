@@ -7,12 +7,12 @@ use Illuminate\Console\Command;
 
 class ReadProductXml extends Command
 {
-    public $controller;
+    public $service;
     public $output;
 
     public function __construct()
     {
-        $this->controller = new XmlService;
+        $this->service = new XmlService;
         parent::__construct();
     }
 
@@ -38,7 +38,7 @@ class ReadProductXml extends Command
     public function handle()
     {
         $file_name = $this->argument('file');
-        $this->controller->importProductsByXml($this, $file_name);
+        $this->service->importProductsByXml($this, $file_name);
 
         return 0;
     }
