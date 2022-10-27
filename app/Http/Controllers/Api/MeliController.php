@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Log;
 
 class MeliController extends Controller
 {
-
     /**
      * Treatment for Meli callback. It can for example be used to save authorization code at database.
      *
@@ -24,10 +23,10 @@ class MeliController extends Controller
     */
     public function callback(Request $request)
     {
-        if(!$request->code) {
+        if (!$request->code) {
             return redirect()->route('front.index');
         }
-        if($request->code){
+        if ($request->code) {
             $meli = MercadoLivre::first();
             $meli->authorization_code = $request->code;
             $meli->update();
@@ -54,11 +53,11 @@ class MeliController extends Controller
         $data = FacadesMercadoLivre::curlGet($url, $headers);
 
         $mercadolivre_id = null;
-        if(array_key_exists('id', $data)) {
+        if (array_key_exists('id', $data)) {
             $mercadolivre_id = $data['id'];
         }
 
-        if($request->topic == "items") {
+        if ($request->topic == "items") {
             $new_stock = $data['available_quantity'];
             $new_price = $data['price'];
             Product::where('mercadolivre_id', $data['id'])->update([
@@ -69,14 +68,14 @@ class MeliController extends Controller
             Log::notice("Modificações no Produto via Mercado Livre detectadas. O produto com ID: ". $data['id'] . " foi atualizado.");
         }
 
-        if($request->topic == "items_prices") {
+        if ($request->topic == "items_prices") {
             $new_price = $data['prices'][0]->amount;
             Product::where('mercadolivre_id', $data['id'])->update(['price' => $new_price]);
             Log::notice("Preço do Produto ID: ". $data['id'] . " foi modificado e atualizado no e-Commerce.");
         }
 
-        if($request->topic == "orders_v2") {
-            if(Order::where('order_number', $data['id'])->first()) {
+        if ($request->topic == "orders_v2") {
+            if (Order::where('order_number', $data['id'])->first()) {
                 return;
             }
             $order = new Order;
@@ -95,7 +94,7 @@ class MeliController extends Controller
             $order->pay_amount = $data['paid_amount'];
 
             $items = [];
-            foreach($data['order_items'] as $key => $item) {
+            foreach ($data['order_items'] as $key => $item) {
                 $product =  $this->convertMeliProductToStore($item->item);
                 $items[$key+1]['item'] = $product;
                 $items[$key+1]['qty'] = $item->quantity;
@@ -122,13 +121,12 @@ class MeliController extends Controller
                 $items[$key+1]['values'] = '';
             }
 
-            $oldCart = new \StdClass;
-            $oldCart->items = $items;
-            $oldCart->totalQty = count($data['order_items']);
-            $oldCart->totalPrice = (double) $data['paid_amount'];
-            $cart = new Cart($oldCart);
+            $cartArray = [];
+            $cartArray['items'] = $items;
+            $cartArray['totalQty'] = count($data['order_items']);
+            $cartArray['totalPrice'] = (double) $data['paid_amount'];
 
-            $order->cart = utf8_encode(bzcompress(serialize($cart), 9));
+            $order->cart = $cartArray;
             $order->order_number = $data['id'];
             $order->payment_status = $data['status'] == 'paid' ? 'paid' : 'unpaid';
 
@@ -143,7 +141,7 @@ class MeliController extends Controller
 
     private function convertMeliProductToStore($item)
     {
-        if(!$product = Product::where('mercadolivre_id', $item->id)->first()) {
+        if (!$product = Product::where('mercadolivre_id', $item->id)->first()) {
             return null;
         }
         return $product;

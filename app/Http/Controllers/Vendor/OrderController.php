@@ -19,45 +19,44 @@ class OrderController extends Controller
     public function __construct()
     {
         parent::__construct();
-        
+
         $this->middleware('auth');
-        
+
         $this->middleware(function ($request, $next) {
             $user = Auth::guard('web')->user();
-            if($user->checkWarning())
-            {
-                return redirect()->route('vendor-warning',$user->verifies()->where('admin_warning','=','1')->orderBy('id','desc')->first()->id);
+            if ($user->checkWarning()) {
+                return redirect()->route('vendor-warning', $user->verifies()->where('admin_warning', '=', '1')->orderBy('id', 'desc')->first()->id);
             }
-            if(!$user->checkStatus())
-            {
+            if (!$user->checkStatus()) {
                 return redirect()->route('vendor-verify');
             }
             return $next($request);
         });
     }
 
-    public function datatables(){
+    public function datatables()
+    {
         $user = Auth::user();
         $datas = VendorOrder::where('user_id', $user->id)->orderBy('id', 'desc');
         return Datatables::of($datas)
-        ->editColumn('customer_email', function(VendorOrder $data){
+        ->editColumn('customer_email', function (VendorOrder $data) {
             $customer_email = $data->order->customer_email;
             return $customer_email;
         })
-        ->editColumn('totalQty', function(VendorOrder $data){
+        ->editColumn('totalQty', function (VendorOrder $data) {
             $totalQty = $data->order->totalQty;
             return $totalQty;
         })
-        ->editColumn('customer_name', function(VendorOrder $data){
+        ->editColumn('customer_name', function (VendorOrder $data) {
             $customer_name = $data->order->customer_name;
             return $customer_name;
         })
-        ->editColumn('method', function(VendorOrder $data){
+        ->editColumn('method', function (VendorOrder $data) {
             $method = __($data->order->method);
             $type = ($method == __("Simplified")) ? "success" : "info";
             return '<span class="badge badge-'.$type.'">'.__(ucwords($method)).'</span>';
         })
-        ->editColumn('customer_phone', function(VendorOrder $data){
+        ->editColumn('customer_phone', function (VendorOrder $data) {
             $customer_phone = $data->order->customer_phone;
             return $customer_phone;
         })
@@ -73,32 +72,32 @@ class OrderController extends Controller
             }
             return $data->order->currency_sign . number_format($data->order->pay_amount * $data->order->currency_value, $order_curr->decimal_digits, $order_curr->decimal_separator, $order_curr->thousands_separator);
         })
-        ->editColumn('status', function (VendorOrder $data){
-            switch($data->order->status){
-                 case "pending":
-                     $type = "secondary";
-                     $status = "Pending";
-                 break;
-                 case "processing":
-                     $type = "primary";
-                     $status = "Processing";
-                 break;
-                 case "on delivery":
-                     $type = "warning";
-                     $status = "On Delivery";
-                 break;
-                 case "completed":
-                     $type = "success";
-                     $status = "Completed";
-                 break;
-                 case "declined":
-                     $type = "danger";
-                     $status = "Declined";
-                 break;
-             }
-             return '<span class="badge badge-'.$type.'">'.__($status).'</span>';
+        ->editColumn('status', function (VendorOrder $data) {
+            switch($data->order->status) {
+                case "pending":
+                    $type = "secondary";
+                    $status = "Pending";
+                    break;
+                case "processing":
+                    $type = "primary";
+                    $status = "Processing";
+                    break;
+                case "on delivery":
+                    $type = "warning";
+                    $status = "On Delivery";
+                    break;
+                case "completed":
+                    $type = "success";
+                    $status = "Completed";
+                    break;
+                case "declined":
+                    $type = "danger";
+                    $status = "Declined";
+                    break;
+            }
+            return '<span class="badge badge-'.$type.'">'.__($status).'</span>';
         })
-        ->editColumn('payment_status', function(VendorOrder $data){
+        ->editColumn('payment_status', function (VendorOrder $data) {
             $type = $data->order->payment_status != 'Pending' ? "success" : "danger";
             $status = $data->order->payment_status != 'Pending' ? "Paid" : "Unpaid";
             return '<span class="badge badge-'.$type.'">'.__(ucfirst($status)).'</span>';
@@ -114,41 +113,37 @@ class OrderController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $orders = VendorOrder::where('user_id','=',$user->id)->orderBy('id','desc')->get()->groupBy('order_number');
-        return view('vendor.order.index',compact('user','orders'));
+        $orders = VendorOrder::where('user_id', '=', $user->id)->orderBy('id', 'desc')->get()->groupBy('order_number');
+        return view('vendor.order.index', compact('user', 'orders'));
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $data = Order::find($id);
-        return view('vendor.order.delivery',compact('data'));
+        return view('vendor.order.delivery', compact('data'));
     }
 
     //*** POST Request
     public function update(Request $request, $id)
     {
-
         //--- Logic Section
         $data = Order::findOrFail($id);
 
         $input = $request->all();
         if ($data->status == "completed") {
-
             // Then Save Without Changing it.
             $input['status'] = "completed";
             $data->update($input);
             //--- Logic Section Ends
 
 
-            //--- Redirect Section          
+            //--- Redirect Section
             $msg = __('Status Updated Successfully.');
             return response()->json($msg);
-            //--- Redirect Section Ends     
-
+        //--- Redirect Section Ends
         } else {
-
             // processing -- em andamento
             if ($input['status'] == "processing") {
-
                 foreach ($data->vendororders as $vorder) {
                     $uprice = User::findOrFail($vorder->user_id);
                     $uprice->current_balance = $uprice->current_balance + $vorder->price;
@@ -177,7 +172,6 @@ class OrderController extends Controller
 
             //on delivery
             if ($input['status'] == "on delivery") {
-
                 foreach ($data->vendororders as $vorder) {
                     $uprice = User::findOrFail($vorder->user_id);
                     $uprice->current_balance = $uprice->current_balance + $vorder->price;
@@ -206,7 +200,6 @@ class OrderController extends Controller
 
 
             if ($input['status'] == "completed") {
-
                 foreach ($data->vendororders as $vorder) {
                     $uprice = User::findOrFail($vorder->user_id);
                     $uprice->current_balance = $uprice->current_balance + $vorder->price;
@@ -275,35 +268,33 @@ class OrderController extends Controller
 
             $order = VendorOrder::where('order_id', '=', $id)->update(['status' => $input['status']]);
 
-            //--- Redirect Section          
+            //--- Redirect Section
             $msg = __('Status Updated Successfully.');
             return response()->json($msg);
-            //--- Redirect Section Ends    
-
+            //--- Redirect Section Ends
         }
 
-        //--- Redirect Section          
+        //--- Redirect Section
         $msg = __('Status Updated Successfully.');
         return response()->json($msg);
-        //--- Redirect Section Ends  
-
+        //--- Redirect Section Ends
     }
 
     public function show($id)
     {
         $user = Auth::user();
-        $order = Order::where('id','=',$id)->first();
+        $order = Order::where('id', '=', $id)->first();
         $cart = unserialize(bzdecompress(utf8_decode($order->cart)));
-        return view('vendor.order.details',compact('user','order','cart'));
+        return view('vendor.order.details', compact('user', 'order', 'cart'));
     }
 
     public function license(Request $request, $slug)
     {
-        $order = Order::where('order_number','=',$slug)->first();
+        $order = Order::where('order_number', '=', $slug)->first();
         $cart = unserialize(bzdecompress(utf8_decode($order->cart)));
         $cart->items[$request->license_key]['license'] = $request->license;
-        $order->cart = utf8_encode(bzcompress(serialize($cart), 9));
-        $order->update();         
+        $order->cart = $cart;
+        $order->update();
         $msg = __('Successfully Changed The License Key.');
         return response()->json($msg);
     }
@@ -313,30 +304,28 @@ class OrderController extends Controller
     public function invoice($slug)
     {
         $user = Auth::user();
-        $order = Order::where('order_number','=',$slug)->first();
+        $order = Order::where('order_number', '=', $slug)->first();
         $cart = unserialize(bzdecompress(utf8_decode($order->cart)));
-        return view('vendor.order.invoice',compact('user','order','cart'));
+        return view('vendor.order.invoice', compact('user', 'order', 'cart'));
     }
 
     public function printpage($slug)
     {
         $user = Auth::user();
-        $order = Order::where('order_number','=',$slug)->first();
+        $order = Order::where('order_number', '=', $slug)->first();
         $cart = unserialize(bzdecompress(utf8_decode($order->cart)));
-        return view('vendor.order.print',compact('user','order','cart'));
+        return view('vendor.order.print', compact('user', 'order', 'cart'));
     }
 
-    public function status($slug,$status)
+    public function status($slug, $status)
     {
-        $mainorder = VendorOrder::where('order_number','=',$slug)->first();
-        if ($mainorder->status == "completed"){
-            return redirect()->back()->with('success',__('This Order is Already Completed'));
-        }else{
-
-        $user = Auth::user();
-        $order = VendorOrder::where('order_number','=',$slug)->where('user_id','=',$user->id)->update(['status' => $status]);
-        return redirect()->route('vendor-order-index')->with('success',__('Order Status Updated Successfully'));
+        $mainorder = VendorOrder::where('order_number', '=', $slug)->first();
+        if ($mainorder->status == "completed") {
+            return redirect()->back()->with('success', __('This Order is Already Completed'));
+        } else {
+            $user = Auth::user();
+            $order = VendorOrder::where('order_number', '=', $slug)->where('user_id', '=', $user->id)->update(['status' => $status]);
+            return redirect()->route('vendor-order-index')->with('success', __('Order Status Updated Successfully'));
+        }
     }
-    }
-
 }

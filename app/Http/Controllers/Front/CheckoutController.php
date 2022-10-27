@@ -255,12 +255,12 @@ class CheckoutController extends Controller
             if ($cas->count() == 0) {
                 $ca = new CartAbandonment();
                 $ca->user_id = Auth::user()->id;
-                $ca->temp_cart = utf8_encode(bzcompress(serialize($request->session()->get('cart')), 9));
+                $ca->temp_cart = $request->session()->get('cart');
                 $ca->save();
             } else {
                 $ca = $cas->first();
                 // Update Cart if user already has a Cart Abandonment in progress
-                $ca->temp_cart = utf8_encode(bzcompress(serialize($request->session()->get('cart')), 9));
+                $ca->temp_cart = $request->session()->get('cart');
                 $ca->email_sent = false;
                 $ca->update();
             }
