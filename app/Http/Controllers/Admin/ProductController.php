@@ -31,11 +31,11 @@ use App\Models\ProductTranslation;
 use App\Models\CategoryTranslation;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 use App\Models\SubcategoryTranslation;
 use Illuminate\Support\Facades\Session;
 use App\Models\ChildcategoryTranslation;
-use Illuminate\Support\Facades\File;
 
 use function League\Csv\delimiter_detect;
 
