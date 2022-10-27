@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Helpers;
 
 use App\Models\Brand;
 use App\Models\Category;
@@ -10,14 +10,13 @@ use App\Models\ProductTranslation;
 use App\Models\Subcategory;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
-use App\Http\Controllers\Controller;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class XmlController extends Controller
+class XmlHelper
 {
-    public function importProductXml(Command $command, $file_name)
+    public static function importProductXml(Command $command, $file_name)
     {
         $file_path = storage_path("app/public/xml/" . $file_name);
         if (!File::exists($file_path)) {
