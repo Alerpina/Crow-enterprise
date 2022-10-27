@@ -17,7 +17,15 @@ class XmlController extends Controller
 {
     public function importProductXml(Command $command)
     {
-        $content = File::get(storage_path("app/public/xml/".config('app.xml_product_file')));
+        $file_path = storage_path("app/public/xml/".config('app.xml_product_file'));
+        if (!File::exists($file_path)) {
+            $command->info("Arquivo não encontrado");
+            return 1;
+        }
+
+        $command->info("Importando produtos");
+
+        $content = File::get($file_path);
         $collection = collect(xml_decode($content)["Item"]);
         $languages = Language::all();
 
