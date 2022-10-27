@@ -7,9 +7,9 @@ use Illuminate\Console\Command;
 
 class XmlService
 {
-    public function importProductsByXml(Command $command)
+    public function importProductsByXml(Command $command, $file_name)
     {
        $controller = new XmlController;
-       $controller->importProductXml($command);
+       $controller->importProductXml($command, $file_name);
     }
 }

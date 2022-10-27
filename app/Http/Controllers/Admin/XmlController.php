@@ -17,9 +17,9 @@ use Illuminate\Support\Facades\Log;
 
 class XmlController extends Controller
 {
-    public function importProductXml(Command $command)
+    public function importProductXml(Command $command, $file_name)
     {
-        $file_path = storage_path("app/public/xml/" . config('app.xml_product_file'));
+        $file_path = storage_path("app/public/xml/" . $file_name);
         if (!File::exists($file_path)) {
             $command->info("Arquivo não encontrado");
             return 1;
