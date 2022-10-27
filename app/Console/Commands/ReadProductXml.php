@@ -21,7 +21,7 @@ class ReadProductXml extends Command
      *
      * @var string
      */
-    protected $signature = 'xml:product';
+    protected $signature = 'xml:product {file=Produtos.xml}';
 
     /**
      * The console command description.
@@ -37,7 +37,8 @@ class ReadProductXml extends Command
      */
     public function handle()
     {
-        $this->controller->importProductsByXml($this);
+        $file_name = $this->argument('file');
+        $this->controller->importProductsByXml($this, $file_name);
 
         return 0;
     }
