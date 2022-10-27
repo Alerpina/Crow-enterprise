@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\Services\XmlService;
 use Illuminate\Console\Command;
 
-class ReadProductXml extends Command
+class ProductImport extends Command
 {
     public $service;
     public $output;
