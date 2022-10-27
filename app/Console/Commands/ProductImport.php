@@ -21,7 +21,7 @@ class ReadProductXml extends Command
      *
      * @var string
      */
-    protected $signature = 'xml:product {file=Produtos.xml}';
+    protected $signature = 'product:import {file=Produtos.xml}';
 
     /**
      * The console command description.
