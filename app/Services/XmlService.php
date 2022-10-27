@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Http\Controllers\Admin\XmlController;
 use Illuminate\Console\Command;
 
-class XmlProduct
+class XmlService
 {
     public function importProductsByXml(Command $command)
     {
