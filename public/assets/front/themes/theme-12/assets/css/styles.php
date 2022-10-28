@@ -878,10 +878,6 @@ color: <?php echo $theme_color_1; ?>;
     background: <?php echo $theme_color_1; ?>;
 }
 
-.blog-area .blog-box {
-    background-color: <?php echo $text_color_2; ?>;
-}
-
 .blog-area .blog-box .blog-title, .blog-area .blog-box .details .blog-text {
     color: <?php echo $theme_color_2; ?>;
 }
