@@ -98,6 +98,9 @@ class XmlHelper
 
                     $product = [];
                     $product['id'] = $item['Codigo'];
+                    $product['sku'] = $item['Codigo'];
+                    $product['ref_code'] = $item['Codigo'];
+                    $product['ref_code_int'] = $item['Codigo'];
                     $product['external_name'] = $item['Nome'];
                     $product['slug'] = Str::slug($item['Nome']);
                     $product['price'] = $item['Valor'];
