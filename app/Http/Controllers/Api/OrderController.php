@@ -18,11 +18,11 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $orders = new Order();
-        if($request->input('date')){
+        if ($request->input('date')) {
             $orders = $orders
-                ->Where(function($query) use ($request) {
-                    $query->Where('created_at','>=',$request->input('date'))
-                        ->orWhere('updated_at','>=',$request->input('date'));
+                ->Where(function ($query) use ($request) {
+                    $query->Where('created_at', '>=', $request->input('date'))
+                        ->orWhere('updated_at', '>=', $request->input('date'));
                 });
         };
         $orders = $orders->get();
@@ -37,7 +37,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        return response()->json([array('errors' => ['Not found'])],Response::HTTP_NOT_FOUND);
+        return response()->json([array('errors' => ['Not found'])], Response::HTTP_NOT_FOUND);
     }
 
     /**
@@ -49,11 +49,11 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = Order::find($id);
-        if(!empty($order)){
+        if (!empty($order)) {
             return new OrderResource($order);
-        }else{
-            return response()->json(array('errors' => ['Not found']),Response::HTTP_BAD_REQUEST);
-        }        
+        } else {
+            return response()->json(array('errors' => ['Not found']), Response::HTTP_BAD_REQUEST);
+        }
     }
 
     /**
@@ -65,7 +65,7 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return response()->json([array('errors' => ['Not found'])],Response::HTTP_NOT_FOUND);
+        return response()->json([array('errors' => ['Not found'])], Response::HTTP_NOT_FOUND);
     }
 
     /**
@@ -76,6 +76,6 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        return response()->json([array('errors' => ['Not found'])],Response::HTTP_NOT_FOUND);
+        return response()->json([array('errors' => ['Not found'])], Response::HTTP_NOT_FOUND);
     }
 }

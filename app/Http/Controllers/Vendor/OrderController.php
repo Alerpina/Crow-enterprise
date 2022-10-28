@@ -284,14 +284,14 @@ class OrderController extends Controller
     {
         $user = Auth::user();
         $order = Order::where('id', '=', $id)->first();
-        $cart = unserialize(bzdecompress(utf8_decode($order->cart)));
+        $cart = $order->cart;
         return view('vendor.order.details', compact('user', 'order', 'cart'));
     }
 
     public function license(Request $request, $slug)
     {
         $order = Order::where('order_number', '=', $slug)->first();
-        $cart = unserialize(bzdecompress(utf8_decode($order->cart)));
+        $cart = $order->cart;
         $cart->items[$request->license_key]['license'] = $request->license;
         $order->cart = $cart;
         $order->update();
@@ -305,7 +305,7 @@ class OrderController extends Controller
     {
         $user = Auth::user();
         $order = Order::where('order_number', '=', $slug)->first();
-        $cart = unserialize(bzdecompress(utf8_decode($order->cart)));
+        $cart = $order->cart;
         return view('vendor.order.invoice', compact('user', 'order', 'cart'));
     }
 
@@ -313,7 +313,7 @@ class OrderController extends Controller
     {
         $user = Auth::user();
         $order = Order::where('order_number', '=', $slug)->first();
-        $cart = unserialize(bzdecompress(utf8_decode($order->cart)));
+        $cart = $order->cart;
         return view('vendor.order.print', compact('user', 'order', 'cart'));
     }
 

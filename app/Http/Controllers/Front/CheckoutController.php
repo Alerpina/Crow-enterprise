@@ -75,7 +75,7 @@ class CheckoutController extends Controller
         if ($request->abandonment && Auth::guard('web')->check()) {
             $ca = CartAbandonment::where('user_id', Auth::user()->id)->first();
             if ($ca != null) {
-                Session::put('cart', unserialize(bzdecompress(utf8_decode($ca->temp_cart))));
+                Session::put('cart', $ca->temp_cart;
                 return redirect()->route('front.checkout');
             }
         }

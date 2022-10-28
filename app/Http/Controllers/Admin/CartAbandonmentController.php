@@ -11,22 +11,23 @@ use App\Models\Currency;
 
 class CartAbandonmentController extends Controller
 {
-    public function __construct(){
+    public function __construct()
+    {
         {
             $this->middleware('auth:admin');
             parent::__construct();
         }
     }
 
-    public function datatables(){
+    public function datatables()
+    {
         $datas = CartAbandonment::all();
         return Datatables::of($datas)
         ->addColumn('action', function (CartAbandonment $data) {
-
             return '
             <div class="godropdown">
                 <button class="go-dropdown-toggle">' . __('Actions') . '<i class="fas fa-chevron-down"></i></button>
-        
+
                 <div class="action-list">
                     <a class="sendAbandonmentEmail" data-href="' . route('admin-cartabandonment-sendmail', $data->id) . '"><i class="fas fa-envelope"></i> ' . __('Email') . '</a>
                     <a href="' . route('admin-cartabandonment-details', $data->id) . '"><i class="fas fa-search"></i> ' . __('Details') . '</a>
@@ -43,33 +44,36 @@ class CartAbandonmentController extends Controller
         ->editColumn('email_sent', function (CartAbandonment $data) {
             return ($data->email_sent) ? __("Yes") : __("No");
         })
-        ->addColumn('qty', function (CartAbandonment $data){
-            $cart = unserialize(bzdecompress(utf8_decode($data->temp_cart)));
+        ->addColumn('qty', function (CartAbandonment $data) {
+            $cart = $data->temp_cart;
             return count($cart->items);
         })
         ->rawColumns(['action'])
-        ->toJson(); //--- 
+        ->toJson(); //---
     }
 
-    public function index(){
-        if(!$this->storeSettings->is_cart_abandonment){
+    public function index()
+    {
+        if (!$this->storeSettings->is_cart_abandonment) {
             return redirect()->route('admin.dashboard');
         }
         return view('admin.cartabandonment.index');
     }
 
 
-    public function details($id){
+    public function details($id)
+    {
         $ca = CartAbandonment::where('id', $id)->first();
-        $cart = unserialize(bzdecompress(utf8_decode($ca->temp_cart)));
+        $cart = $ca->temp_cart;
         $first_curr = Currency::where('id', '=', 1)->first();
         $order_curr = Currency::where('sign', '=', $first_curr->sign)->first();
         return view('admin.cartabandonment.cart', compact('cart', 'first_curr', 'order_curr', 'id'));
     }
 
-    public function sendMail($id){
+    public function sendMail($id)
+    {
         $ca = CartAbandonment::where('id', $id)->first();
-        if($ca->email_sent){
+        if ($ca->email_sent) {
             return response()->json(array('errors' => [__("E-mail already sent!")]));
         }
         $user = $ca->user;
@@ -92,7 +96,8 @@ class CartAbandonmentController extends Controller
         }
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $ca = CartAbandonment::findOrFail($id);
         $ca->delete();
         $msg = __('Data Deleted Successfully.');

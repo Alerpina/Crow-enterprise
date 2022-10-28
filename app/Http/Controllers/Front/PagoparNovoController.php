@@ -95,7 +95,7 @@ class PagoparNovoController extends Controller
         $token = sha1($this->credentials["privateKey"] . $order_id."{$amount}");
         $currency = Currency::where("name", $this->checkCurrency)->first();
 
-        $items = (unserialize(bzdecompress(utf8_decode($this->order->cart))))->items;
+        $items = $this->order->cart->items;
 
         $data = $this->build_data_structure($items, $order_id, $amount, $token, $currency);
 
