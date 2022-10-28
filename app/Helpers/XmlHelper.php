@@ -4,10 +4,12 @@ namespace App\Helpers;
 
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\CategoryTranslation;
 use App\Models\Language;
 use App\Models\Product;
 use App\Models\ProductTranslation;
 use App\Models\Subcategory;
+use App\Models\SubcategoryTranslation;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Illuminate\Console\Command;
@@ -43,6 +45,9 @@ class XmlHelper
             $product_translations = [];
             $products = [];
 
+            $category_translations = [];
+            $subcategory_translations = [];
+
             foreach ($collection->chunk(500) as $items) {
                 foreach ($items as $item) {
                     $brand = Brand::where("name", "LIKE", $item['Marca'])->first();
@@ -53,36 +58,38 @@ class XmlHelper
                         $brand->save();
                     }
 
-                    $category_data = [];
-                    $subcategory_data = [];
+                    $category = Category::where("slug", "LIKE", Str::slug($item['Categoria']))->first();
+                    if (!$category) {
+                        $category = Category::create([
+                            "slug" => Str::slug($item['Categoria'])
+                        ]);
+                    }
+
+                    $subcategory = Subcategory::where("slug", "LIKE", Str::slug($item['SubCategoria']))->first();
+                    if (!$subcategory) {
+                        $subcategory = Subcategory::create([
+                            'slug' => Str::slug($item['SubCategoria']),
+                            'category_id' => $category->id
+                        ]);
+                    }
+
                     foreach ($languages as $language) {
                         $product_translation['locale'] = $language->locale;
                         $product_translation['name'] = $item['Nome'];
                         $product_translation["product_id"] = $item['Codigo'];
                         $product_translation["details"] = $item['Descricao'];
 
-                        $category_data[$language->locale] = [
-                            "name" => $item['Categoria']
-                        ];
+                        $category_translation["locale"] = $language->locale;
+                        $category_translation["name"] = $item['Categoria'];
+                        $category_translation["category_id"] = $category->id;
 
-                        $subcategory_data[$language->locale] = [
-                            "name" => $item['SubCategoria']
-                        ];
+                        $subcategory_translation["locale"] = $language->locale;
+                        $subcategory_translation["name"] = $item['SubCategoria'];
+                        $subcategory_translation["subcategory_id"] = $subcategory->id;
 
                         $product_translations[] = $product_translation;
-                    }
-
-                    $category = Category::where("slug", "LIKE", Str::slug($item['Categoria']))->first();
-                    if (!$category) {
-                        $category_data['slug'] = Str::slug($item['Categoria']);
-                        $category = Category::create($category_data);
-                    }
-
-                    $subcategory = Subcategory::where("slug", "LIKE", Str::slug($item['SubCategoria']))->first();
-                    if (!$subcategory) {
-                        $subcategory_data['slug'] = Str::slug($item['SubCategoria']);
-                        $subcategory_data['category_id'] = $category->id;
-                        $subcategory = Subcategory::create($subcategory_data);
+                        $category_translations[] = $category_translation;
+                        $subcategory_translations[] = $subcategory_translation;
                     }
 
                     $product = new Product;
@@ -109,7 +116,9 @@ class XmlHelper
             Product::upsert($products, ["id"]);
 
             $command->info("Salvando traduções");
-            ProductTranslation::upsert($product_translations, ["id"]);
+            ProductTranslation::upsert($product_translations, ['id']);
+            CategoryTranslation::upsert($category_translations, ['id']);
+            SubcategoryTranslation::upsert($subcategory_translations, ['id']);
 
             $progress->finish();
             $command->info("Produtos importados com sucesso");
