@@ -27,14 +27,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $locales = Language::all();
-        $transLocales = App::make('translatable.locales');
-
-        foreach ($locales as $locale) {
-            $transLocales->add($locale->locale);
-        }
-        $transLocales->forget('en999');
-
         if (!app()->runningInConsole()) {
             // use bootstrap instead of tailwind
             Paginator::useBootstrap();
@@ -91,9 +83,16 @@ class AppServiceProvider extends ServiceProvider
                     URL::forceScheme('https');
                 }
 
+                $locales = Language::all();
                 $storeLocale = $locales->find($storeSettings->lang_id);
                 $currencies = Currency::all();
                 $storeCurrency = $currencies->find($storeSettings->currency_id);
+                $transLocales = App::make('translatable.locales');
+
+                foreach ($locales as $locale) {
+                    $transLocales->add($locale->locale);
+                }
+                $transLocales->forget('en999');
 
                 $lang = Language::find(1);
                 Config::set('translatable.fallback_locale', $lang->locale);
