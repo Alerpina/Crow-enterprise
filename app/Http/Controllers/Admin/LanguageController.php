@@ -43,15 +43,11 @@ class LanguageController extends Controller
                     $default = $this->storeSettings->lang_id == $data->id ? '' : '<a class="status" data-href="' . route('admin-lang-st', ['id1' => $data->id, 'id2' => 1]) . '"><i class="icofont-globe"></i> ' . __('Set Default') . '</a>';
                 }
 
-                if (empty($default)) {
-                    return '';
-                }
-
                 return '
                 <div class="godropdown">
                     <button class="go-dropdown-toggle"> ' . __('Actions') . '<i class="fas fa-chevron-down"></i></button>
                     <div class="action-list">
-                        <a href="' . route('admin-lang-edit', $data->id) . '">' . $default . '
+                        <a href="' . route('admin-lang-edit', $data->id) . '"> <i class="fas fa-edit"></i>' . __('Edit') . '</a>' . $default . '
                     </div>
                 </div>';
             })
@@ -127,32 +123,52 @@ class LanguageController extends Controller
         $keys = array_flip($fields);
 
         $data = Language::findOrFail($id);
-        if (file_exists(resource_path("lang") . '/' . $data->file)) {
-            $data_results = file_get_contents(resource_path("lang") . '/' . $data->file);
-            $langJson = json_decode($data_results, true);
+
+        $currentFile = lang_path($data->file);
+        $baseFile = lang_path("base/{$data->locale}.json");
+
+        $langEdit = $keys;
+
+        if (file_exists($currentFile)) {
+            $data_results = file_get_contents($currentFile);
+            $langJson = json_decode(trim($data_results), true);
             $langJson = array_filter($langJson);
-            if (file_exists(resource_path("lang") . '/base_' . $data->locale . '.json')) {
-                $data_results_base = file_get_contents(resource_path("lang") . '/base_' . $data->locale . '.json');
-                $langJsonBase = json_decode($data_results_base, true);
-                $newBaseKeys = array_diff_key($langJsonBase, $langJson);
-                $langJson = array_merge($newBaseKeys, $langJson);
-            }
 
             $newKeys = array_diff_key($keys, $langJson);
 
             $langEdit = array_merge($newKeys, $langJson);
-        } elseif (file_exists(resource_path("lang") . '/base_' . $data->locale . '.json')) {
-            $data_results = file_get_contents(resource_path("lang") . '/base_' . $data->locale . '.json');
-            $langJson = json_decode($data_results, true);
-
-            $newKeys = array_diff_key($keys, $langJson);
-            $langEdit = array_merge($newKeys, $langJson);
-        } else {
-            $langEdit = $keys;
         }
+
+
         ksort($langEdit, SORT_STRING | SORT_FLAG_CASE);
 
+        ds($langEdit);
         return view('admin.language.edit', compact('data', 'langEdit'));
+
+        // if (file_exists($currentFile)) {
+        //     $data_results = file_get_contents($currentFile);
+        //     $langJson = json_decode($data_results, true);
+        //     ds($langJson);
+        //     $langJson = array_filter($langJson);
+        //     if (file_exists($baseFile)) {
+        //         $data_results_base = file_get_contents($baseFile);
+        //         $langJsonBase = json_decode($data_results_base, true);
+        //         $newBaseKeys = array_diff_key($langJsonBase, $langJson);
+        //         $langJson = array_merge($newBaseKeys, $langJson);
+        //     }
+
+        //     $newKeys = array_diff_key($keys, $langJson);
+
+        //     $langEdit = array_merge($newKeys, $langJson);
+        // } elseif (file_exists($baseFile)) {
+        //     $data_results = file_get_contents($baseFile);
+        //     $langJson = json_decode($data_results, true);
+
+        //     $newKeys = array_diff_key($keys, $langJson);
+        //     $langEdit = array_merge($newKeys, $langJson);
+        // } else {
+        //     $langEdit = $keys;
+        // }
     }
 
     //*** POST Request
@@ -316,7 +332,7 @@ class LanguageController extends Controller
             if (!strstr(strtolower($file), "admin")) {
                 if (preg_match_all("/$matchingPattern/siU", $file->getContents(), $matches)) {
                     foreach ($matches[2] as $key) {
-                        $temp[] = $key;
+                        $temp[] = trim($key);
                     }
                 }
             }
