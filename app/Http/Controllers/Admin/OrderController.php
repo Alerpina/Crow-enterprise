@@ -577,7 +577,7 @@ class OrderController extends Controller
     public function receipt($id)
     {
         $order = Order::findOrFail($id);
-        $cart = unserialize(bzdecompress(utf8_decode($order->cart)));
+        $cart = $order->cart;
         $first_curr = Currency::where('id', '=', 1)->first();
         $order_curr = Currency::where('sign', '=', $order->currency_sign)->first();
         if (empty($order_curr)) {
@@ -709,9 +709,9 @@ class OrderController extends Controller
     public function license(Request $request, $id)
     {
         $order = Order::findOrFail($id);
-        $cart = unserialize(bzdecompress(utf8_decode($order->cart)));
+        $cart = $order->cart;
         $cart->items[$request->license_key]['license'] = $request->license;
-        $order->cart = utf8_encode(bzcompress(serialize($cart), 9));
+        $order->cart = $cart;
         $order->update();
         $msg = __('Successfully Changed The License Key.');
         return response()->json($msg);
