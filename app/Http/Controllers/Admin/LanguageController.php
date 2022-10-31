@@ -124,13 +124,12 @@ class LanguageController extends Controller
 
         $data = Language::findOrFail($id);
 
-        $currentFile = lang_path($data->file);
-        $baseFile = lang_path("base/{$data->locale}.json");
+        $file = lang_path("{$data->locale}.json");
 
         $langEdit = $keys;
 
-        if (file_exists($currentFile)) {
-            $data_results = file_get_contents($currentFile);
+        if (file_exists($file)) {
+            $data_results = file_get_contents($file);
             $langJson = json_decode(trim($data_results), true);
             $langJson = array_filter($langJson);
 
@@ -139,36 +138,9 @@ class LanguageController extends Controller
             $langEdit = array_merge($newKeys, $langJson);
         }
 
-
         ksort($langEdit, SORT_STRING | SORT_FLAG_CASE);
 
-        ds($langEdit);
         return view('admin.language.edit', compact('data', 'langEdit'));
-
-        // if (file_exists($currentFile)) {
-        //     $data_results = file_get_contents($currentFile);
-        //     $langJson = json_decode($data_results, true);
-        //     ds($langJson);
-        //     $langJson = array_filter($langJson);
-        //     if (file_exists($baseFile)) {
-        //         $data_results_base = file_get_contents($baseFile);
-        //         $langJsonBase = json_decode($data_results_base, true);
-        //         $newBaseKeys = array_diff_key($langJsonBase, $langJson);
-        //         $langJson = array_merge($newBaseKeys, $langJson);
-        //     }
-
-        //     $newKeys = array_diff_key($keys, $langJson);
-
-        //     $langEdit = array_merge($newKeys, $langJson);
-        // } elseif (file_exists($baseFile)) {
-        //     $data_results = file_get_contents($baseFile);
-        //     $langJson = json_decode($data_results, true);
-
-        //     $newKeys = array_diff_key($keys, $langJson);
-        //     $langEdit = array_merge($newKeys, $langJson);
-        // } else {
-        //     $langEdit = $keys;
-        // }
     }
 
     //*** POST Request
