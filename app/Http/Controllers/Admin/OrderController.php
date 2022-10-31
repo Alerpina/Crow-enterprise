@@ -706,6 +706,17 @@ class OrderController extends Controller
         return view('admin.order.print', compact('order', 'cart', 'first_curr', 'order_curr', 'seos'));
     }
 
+    public function license(Request $request, $id)
+    {
+        $order = Order::findOrFail($id);
+        $cart = $order->cart;
+        $cart->items[$request->license_key]['license'] = $request->license;
+        $order->cart = $cart;
+        $order->update();
+        $msg = __('Successfully Changed The License Key.');
+        return response()->json($msg);
+    }
+
     public function sendOrder($id)
     {
         $order = Order::findOrFail($id);

@@ -309,6 +309,7 @@ Route::group([
                     Route::get('{id}/billetStatus', 'OrderController@billetStatus')->name('billet-status');
                     Route::get('{id}/receipt', 'OrderController@receipt')->name('receipt');
                     Route::get('order/managereceipt/{id}/{action}', 'OrderController@manageReceipt')->name('manage-receipt');
+                    Route::post('{id}/license', 'OrderController@license')->name('license');
                     Route::get('{id}/print', 'OrderController@printpage')->name('print');
                     Route::get('datatables/{slug}', 'OrderController@datatables')->name('datatables');
                     Route::get('datatablesAll/{slug}', 'OrderController@datatablesAll')->name('datatablesAll');
