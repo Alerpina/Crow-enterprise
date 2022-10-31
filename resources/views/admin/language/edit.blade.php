@@ -32,13 +32,7 @@
                             <form id="geniusform" action="{{ route('admin-lang-update', $data->id) }}" method="POST"
                                 enctype="multipart/form-data">
                                 {{ csrf_field() }}
-                                <div class="row">
-                                    <div class="col-xl-12">
-                                        <div class="input-form">
-                                            <p><small>* @lang('indicates a required field')</small></p>
-                                        </div>
-                                    </div>
-                                </div>
+
                                 @include('includes.admin.form-both')
 
                                 <div class="row">
@@ -46,30 +40,22 @@
                                     <div class="col-xl-4">
                                         <div class="input-form">
                                             <h4 class="heading">@lang('Language') *</h4>
-                                            <input type="text" class="input-field" name="language"
-                                                placeholder="@lang('English')" value="{{ $data->language }}" required>
+                                            <p class="input-field">{{ $data->language }}</p>
                                         </div>
                                     </div>
 
                                     <div class="col-xl-4">
                                         <div class="input-form">
-                                            <h4 class="heading">@lang('Locale') *
-                                                <span>@lang('Ex: en, pt-br, es')</span>
-                                            </h4>
-                                            <input type="text" class="input-field" name="locale" placeholder="en"
-                                                value="{{ $data->locale }}" required>
+                                            <h4 class="heading">@lang('Locale') *</h4>
+                                            <p class="input-field">{{ $data->locale }}</p>
                                         </div>
                                     </div>
 
                                     <div class="col-xl-4">
                                         <div class="input-form">
                                             <h4 class="heading">@lang('Language Direction') *</h4>
-                                            <select name="rtl" class="input-field" required="">
-                                                <option value="0" {{ $data->rtl == '0' ? 'selected' : '' }}>
-                                                    @lang('Left To Right')</option>
-                                                <option value="1" {{ $data->rtl == '1' ? 'selected' : '' }}>
-                                                    @lang('Right To Left')</option>
-                                            </select>
+                                            <p class="input-field">
+                                                {{ $data->rtl == '0' ? __('Left To Right') : __('Right To Left') }}</p>
                                         </div>
                                     </div>
 
@@ -85,7 +71,7 @@
 
                                             <hr>
 
-                                            <h4 class="text-center">@lang('FIELDS')</h4>
+                                            <h4 class="text-center">@lang('Translations')</h4>
 
                                             <hr>
                                             <div class="mr-table allproduct">
