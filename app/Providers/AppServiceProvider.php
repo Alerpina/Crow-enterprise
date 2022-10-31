@@ -2,21 +2,24 @@
 
 namespace App\Providers;
 
+use Exception;
+use Carbon\Carbon;
+use App\Models\Order;
 use App\Models\Currency;
 use App\Models\Language;
 use App\Models\Generalsetting;
-use App\Models\Order;
 use App\Observers\OrderObserver;
-use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -87,15 +90,11 @@ class AppServiceProvider extends ServiceProvider
                 $storeLocale = $locales->find($storeSettings->lang_id);
                 $currencies = Currency::all();
                 $storeCurrency = $currencies->find($storeSettings->currency_id);
-                $transLocales = App::make('translatable.locales');
 
-                foreach ($locales as $locale) {
-                    $transLocales->add($locale->locale);
-                }
-                $transLocales->forget('en999');
+                $lang = $locales->find(1);
 
-                $lang = Language::find(1);
-                Config::set('translatable.fallback_locale', $lang->locale);
+                $this->prepareLocaleFiles($locales);
+
                 app()->instance('storeLocale', $storeLocale);
                 app()->instance('locales', $locales);
                 app()->instance('storeCurrency', $storeCurrency);
@@ -155,5 +154,21 @@ class AppServiceProvider extends ServiceProvider
         }
         $storeSettings = $this->getStoreSettings();
         return $storeSettings;
+    }
+
+    private function prepareLocaleFiles($locales)
+    {
+        $locales->each(function ($data) {
+            $currentFile = lang_path($data->file);
+            $baseFile = lang_path("base/{$data->locale}.json");
+
+            if (!file_exists($baseFile)) {
+                throw new Exception("No base file found for {$data->locale}. Please make sure to add the file to /lang/base/{$data->locale}.json.");
+            }
+
+            if (!file_exists($currentFile)) {
+                File::copy($baseFile, $currentFile);
+            }
+        });
     }
 }
