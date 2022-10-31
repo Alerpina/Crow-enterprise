@@ -15,7 +15,6 @@ yarn-error.log
 .docker.env
 .docker/dbdata
 /lang/*.json
-!/lang/pt-br.json
-!/lang/es.json
 !/lang/admin_pt-br.json
 !/lang/admin_es.json
+!/lang/base/*
