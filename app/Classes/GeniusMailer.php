@@ -119,7 +119,7 @@ class GeniusMailer
 
         try {
             $ca = CartAbandonment::find($id);
-            $cart = unserialize(bzdecompress(utf8_decode($ca->temp_cart)));
+            $cart = $ca->temp_cart;
             $first_curr = Currency::where('id', '=', 1)->first();
             $bankAccounts =  BankAccount::where('status', '=', 1)->get();
 

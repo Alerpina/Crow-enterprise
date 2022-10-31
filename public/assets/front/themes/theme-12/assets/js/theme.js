@@ -57,6 +57,8 @@ $(function ($) {
             $('.box-menu-lateral-categorias').css('opacity', '0');
         })
 
+        $('.menufixed').css('top', $('.top-header').innerHeight());
+        
         /*------addClass/removeClass categories-------*/
         var w = window.innerWidth;
 

@@ -14,12 +14,12 @@ class OrderResource extends JsonResource
      */
     public function toArray($request)
     {
-        $data = bzdecompress(utf8_decode($this->cart));
-        $cart = @unserialize($data);
+        $data = $this->cart;
+        $cart = $data;
         $cart_items = [];
-        if($cart != null){
-            foreach($cart->items as $item){
-                if($item != null){
+        if ($cart != null) {
+            foreach ($cart->items as $item) {
+                if ($item != null) {
                     $cart_item = [
                         "sku" => $item['item']['sku'],
                         "ref_code" => $item['item']['ref_code'],
@@ -36,7 +36,7 @@ class OrderResource extends JsonResource
                 }
             }
         }
-        
+
         $order = [
             "id" => $this->id,
             "method" => $this->method,
@@ -85,7 +85,7 @@ class OrderResource extends JsonResource
             "cart_items" => $cart_items,
             "puntoentrega" => $this->puntoentrega
         ];
-        
+
         return $order;
     }
 }

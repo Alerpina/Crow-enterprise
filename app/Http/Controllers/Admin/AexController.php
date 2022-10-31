@@ -12,9 +12,10 @@ use App\Models\Order;
 use App\Models\Cart;
 use App\Models\Currency;
 use App\Models\OrderTrack;
+
 class AexController extends Controller
 {
-    var $aex;
+    public $aex;
 
     public function __construct()
     {
@@ -29,10 +30,10 @@ class AexController extends Controller
     public function updateAexCities()
     {
         $updated_cities = $this->aex->GetCities();
-        
-        if(isset($updated_cities->datos)){
+
+        if (isset($updated_cities->datos)) {
             $cities_codes = [];
-            foreach($updated_cities->datos as $updated_city){
+            foreach ($updated_cities->datos as $updated_city) {
                 $aex_city = AexCity::firstOrCreate([
                     'codigo_ciudad'=>$updated_city->codigo_ciudad
                 ]);
@@ -49,72 +50,72 @@ class AexController extends Controller
             AexCity::whereNotIn('codigo_ciudad', $cities_codes)->delete();
             $msg = __('AEX cities updated.');
             return response()->json($msg);
-        }else{
+        } else {
             $error = isset($updated_cities->mensaje) ? __('AEX').': '.$updated_cities->mensaje : __('AEX cities not updated.');
             return response()->json(array('errors' => [0 => $error]));
         }
-
     }
 
     public function loadAexCities()
     {
         $aex_cities = AexCity::orderBy('denominacion')->get();
-        return view('load.aex-cities',compact('aex_cities'));
+        return view('load.aex-cities', compact('aex_cities'));
     }
 
-    public function selectAexCity($order_id){
+    public function selectAexCity($order_id)
+    {
         $order = Order::Find($order_id);
-        if(!isset($order)){
-            return redirect()->route('admin.dashboard')->with('unsuccess',__('Sorry the page does not exist.'));
+        if (!isset($order)) {
+            return redirect()->route('admin.dashboard')->with('unsuccess', __('Sorry the page does not exist.'));
         }
-        $aex_track = explode(';',trim(strstr(strstr($order->internal_note, 'AEXCODE:['), ']',true),'AEXCODE:['))[0];
-        
-        $aex_destination = explode(';',trim(strstr(strstr($order->internal_note, 'AEX:['), ']',true),'AEX:['))[0];
+        $aex_track = explode(';', trim(strstr(strstr($order->internal_note, 'AEXCODE:['), ']', true), 'AEXCODE:['))[0];
+
+        $aex_destination = explode(';', trim(strstr(strstr($order->internal_note, 'AEX:['), ']', true), 'AEX:['))[0];
         $aex_cities = AexCity::orderBy('denominacion')->get();
-        
-        return view('admin.order.aex-select-city',compact('order','aex_destination','aex_cities','aex_track'));
+
+        return view('admin.order.aex-select-city', compact('order', 'aex_destination', 'aex_cities', 'aex_track'));
     }
 
     public function requestAex(Request $request)
     {
         $order_id = $request->order_id;
         $order = Order::Find($order_id);
-        if(!isset($order)){
-            return redirect()->route('admin.dashboard')->with('unsuccess',__('Sorry the page does not exist.'));
+        if (!isset($order)) {
+            return redirect()->route('admin.dashboard')->with('unsuccess', __('Sorry the page does not exist.'));
         }
-        $order_store_id = explode(';',trim(strstr(strstr($order->internal_note, '#:['), ']',true),'#:['))[0];
-        
+        $order_store_id = explode(';', trim(strstr(strstr($order->internal_note, '#:['), ']', true), '#:['))[0];
+
         $orderStoreSettings = Generalsetting::find($order_store_id);
-        if(!isset($orderStoreSettings)){
+        if (!isset($orderStoreSettings)) {
             $orderStoreSettings = $this->storeSettings;
         }
 
-        $aex_track = explode(';',trim(strstr(strstr($order->internal_note, 'AEXCODE:['), ']',true),'AEXCODE:['))[0];
+        $aex_track = explode(';', trim(strstr(strstr($order->internal_note, 'AEXCODE:['), ']', true), 'AEXCODE:['))[0];
 
-        $oldCart = unserialize(bzdecompress(utf8_decode($order->cart)));
+        $oldCart = $order->cart;
         $cart = new Cart($oldCart);
         $aex = new Aex($orderStoreSettings->aex_public, $orderStoreSettings->aex_private, $orderStoreSettings->is_aex_production);
-        
+
         $aex_origin = $orderStoreSettings->aex_origin;
         $aex_destination = $request->aex_destination;
 
         $aex_cities = AexCity::orderBy('denominacion')->get();
         $aex_city = AexCity::where('codigo_ciudad', '=', $aex_destination)->first();
 
-        if(isset(explode(';',trim(strstr(strstr($order->internal_note, 'AEX:['), ']',true),'AEX:['))[1])){
-            $aex_service = explode(';',trim(strstr(strstr($order->internal_note, 'AEX:['), ']',true),'AEX:['))[1];
-        }else{
+        if (isset(explode(';', trim(strstr(strstr($order->internal_note, 'AEX:['), ']', true), 'AEX:['))[1])) {
+            $aex_service = explode(';', trim(strstr(strstr($order->internal_note, 'AEX:['), ']', true), 'AEX:['))[1];
+        } else {
             $aex_service = null;
         }
 
         $aex_value = 0;
         $curr_pyg  = Currency::where('name', '=', "PYG")->first();
         if (empty($curr_pyg->value)) {
-            return redirect()->route('admin-order-select-aex-city',$order_id)->with('unsuccess','PYG '.__('Unavaiable'));
+            return redirect()->route('admin-order-select-aex-city', $order_id)->with('unsuccess', 'PYG '.__('Unavaiable'));
         }
-        
+
         $aex_value = $cart->totalPrice * $curr_pyg->value;
-        
+
         $obj = (object)array();
         $obj->peso = $cart->getWeight();
         $obj->largo = $cart->getLenght();
@@ -125,26 +126,26 @@ class AexController extends Controller
 
         $aex_request = $aex->requestService($aex_origin, $aex_destination, $order->order_number, $package, 'P');
 
-        if($aex_request->codigo != 0){
-            return redirect()->route('admin-order-select-aex-city',$order_id)->with('unsuccess',$aex_request->mensaje);
+        if ($aex_request->codigo != 0) {
+            return redirect()->route('admin-order-select-aex-city', $order_id)->with('unsuccess', $aex_request->mensaje);
         }
 
-        return view('admin.order.aex-request',compact('aex_request','curr_pyg', 'orderStoreSettings','aex_service','order','aex_destination','aex_cities','aex_track', 'aex_city'));
+        return view('admin.order.aex-request', compact('aex_request', 'curr_pyg', 'orderStoreSettings', 'aex_service', 'order', 'aex_destination', 'aex_cities', 'aex_track', 'aex_city'));
     }
 
     public function confirmAex(Request $request)
     {
         $order = Order::Find($request->order_id);
-        if(!isset($order)){
-            return redirect()->route('admin.dashboard')->with('unsuccess',__('Sorry the page does not exist.'));
+        if (!isset($order)) {
+            return redirect()->route('admin.dashboard')->with('unsuccess', __('Sorry the page does not exist.'));
         }
-        $order_store_id = explode(';',trim(strstr(strstr($order->internal_note, '#:['), ']',true),'#:['))[0];
-        
+        $order_store_id = explode(';', trim(strstr(strstr($order->internal_note, '#:['), ']', true), '#:['))[0];
+
         $orderStoreSettings = Generalsetting::find($order_store_id);
-        if(!isset($orderStoreSettings)){
+        if (!isset($orderStoreSettings)) {
             $orderStoreSettings = $this->storeSettings;
         }
-        
+
         $aex = new Aex($orderStoreSettings->aex_public, $orderStoreSettings->aex_private, $orderStoreSettings->is_aex_production);
         $aex_origin = $orderStoreSettings->aex_origin;
         $aex_destination = $request->aex_destination;
@@ -160,7 +161,7 @@ class AexController extends Controller
             'codigo_ciudad' => $aex_origin,
             'telefono' => $orderStoreSettings->aex_telefono
         ];
-        
+
         // Delivery
         $delivery = [
             // 'id_punto_entrega' => '',
@@ -172,8 +173,8 @@ class AexController extends Controller
             'telefono' => $request->delivery_telefono
         ];
 
-        if(isset($request->incluye_envio[$aex_service]) && $request->incluye_envio[$aex_service] == 'f'){
-            if(isset($request->point[$aex_service])){
+        if (isset($request->incluye_envio[$aex_service]) && $request->incluye_envio[$aex_service] == 'f') {
+            if (isset($request->point[$aex_service])) {
                 $delivery['id_punto_entrega'] = $request->point[$aex_service];
             }
         }
@@ -190,19 +191,18 @@ class AexController extends Controller
         ];
 
         $additional = [];
-        if(isset($request->additional[$aex_service])){
-            foreach($request->additional[$aex_service] as $key=>$value)
-            {
-                if($value == 1){
+        if (isset($request->additional[$aex_service])) {
+            foreach ($request->additional[$aex_service] as $key=>$value) {
+                if ($value == 1) {
                     $additional[] = $key;
                 }
             }
         }
-        
-        $aex_confirm = $aex->confirmService($id_solicitud,$aex_service,$pickup,$recipient,$delivery,$additional);
 
-        if($aex_confirm->codigo != 0){
-            return redirect()->route('admin-order-select-aex-city',$order->id)->with('unsuccess',$aex_confirm->mensaje);
+        $aex_confirm = $aex->confirmService($id_solicitud, $aex_service, $pickup, $recipient, $delivery, $additional);
+
+        if ($aex_confirm->codigo != 0) {
+            return redirect()->route('admin-order-select-aex-city', $order->id)->with('unsuccess', $aex_confirm->mensaje);
         }
 
         $track = new OrderTrack;
@@ -214,7 +214,6 @@ class AexController extends Controller
         $order->internal_note = $order->internal_note.' | AEXCODE:['.$aex_confirm->datos->numero_guia.']';
         $order->save();
 
-        return redirect()->route('admin-order-show',$order->id)->with('success',__('Successfuly requested AEX'));
-        
+        return redirect()->route('admin-order-show', $order->id)->with('success', __('Successfuly requested AEX'));
     }
 }

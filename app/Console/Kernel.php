@@ -23,6 +23,7 @@ class Kernel extends ConsoleKernel
         Commands\UpdatePhotoReferences::class,
         Commands\CheckDiscrepancies::class,
         Commands\GenerateAccessToken::class,
+        Commands\ProductImport::class,
         //
     ];
 
