@@ -79,8 +79,7 @@
 <div class="row mb-2">
     <div class="col-lg-12">
         <input type="checkbox" name="agree_terms" id="agreeCustomTerms" value="" class="checkclick">
-        <label for="agreeCustomTerms" style="font-weight:500;">{{ __('I reviewed
-            my choices.') }}</label>
+        <label for="agreeCustomTerms" style="font-weight:500;">{{ __('I reviewed my choices.') }}</label>
     </div>
 </div>
 @endif
