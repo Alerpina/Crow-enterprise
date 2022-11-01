@@ -6,7 +6,7 @@
             <div class="col-lg-12 remove-padding">
                 <div class="section-top">
                     <h2 class="section-title">
-                    <i class="icofont-halloween-pumpkin"></i>GAMES
+                    GAMES
                     </h2>
                 </div>
             </div>
