@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Yajra\DataTables\DataTables;
 use App\Models\Language;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Generalsetting;
 use Illuminate\Validation\Rule;
+use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Filesystem\Filesystem;
@@ -130,12 +131,10 @@ class LanguageController extends Controller
 
         if (file_exists($file)) {
             $data_results = file_get_contents($file);
-            $langJson = json_decode(trim($data_results), true);
-            $langJson = array_filter($langJson);
 
-            $newKeys = array_diff_key($keys, $langJson);
+            $langJson = json_decode($data_results, true);
 
-            $langEdit = array_merge($newKeys, $langJson);
+            $langEdit = array_merge($keys, array_filter($langJson));
         }
 
         ksort($langEdit, SORT_STRING | SORT_FLAG_CASE);
@@ -146,24 +145,13 @@ class LanguageController extends Controller
     //*** POST Request
     public function update(Request $request, $id)
     {
-        //--- Validation Section
-        $rules = [
-            'locale' => [
-                'required',
-                Rule::unique('languages')->ignore($id)
-            ]
-        ];
-
-        $validator = Validator::make($request->all(), $rules);
-
-        if ($validator->fails()) {
-            return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
-        }
-        //--- Validation Section Ends
-
-        //--- Logic Section
         $input = $request->all();
         $data = Language::findOrFail($id);
+
+        ds($input);
+
+        dd('aqui');
+
         $oldFile = $data->file; //the locale can be edited
         $oldLocale = $data->locale;
 
@@ -304,7 +292,7 @@ class LanguageController extends Controller
             if (!strstr(strtolower($file), "admin")) {
                 if (preg_match_all("/$matchingPattern/siU", $file->getContents(), $matches)) {
                     foreach ($matches[2] as $key) {
-                        $temp[] = trim($key);
+                        $temp[] = Str::squish($key);
                     }
                 }
             }
