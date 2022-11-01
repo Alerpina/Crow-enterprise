@@ -18,7 +18,7 @@
         $product['item']['id'].$product['size'].$product['material'].$product['color'].$product['customizable_gallery'].$product['customizable_name'].$product['customizable_number'].$product['customizable_logo'].str_replace(str_split('
         ,'),'',$product['values']);
         $custom_item_id = str_replace( array( '\'', '"', ',', '.', ' ', ';', '<', '>' ), '' , $custom_item_id); @endphp
-            <li class="product cremove{{ str_replace('~','',$custom_item_id) }}">
+            <li class="product cremove{{ str_replace(['~', '/', '-'],'',$custom_item_id) }}">
             <div class="product-details">
                 <div class="content">
                     <a href="{{ route('front.product',$product['item']['slug']) }}">
@@ -42,7 +42,7 @@
                     <img src="{{filter_var($product['item']['photo'], FILTER_VALIDATE_URL) ? $product['item']['photo'] :
 					asset('storage/images/products/'.$product['item']['photo'])}}" alt="product">
                 </a>
-                <div class="cart-remove" data-class="cremove{{ str_replace('~','',$custom_item_id) }}"
+                <div class="cart-remove" data-class="cremove{{ str_replace(['~', '/', '-'],'',$custom_item_id) }}"
                     data-href="{{ route('product.cart.remove',$custom_item_id) }}" title="Remove Product">
                     <i class="icofont-close"></i>
                 </div>

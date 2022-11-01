@@ -116,7 +116,7 @@
                                                         '',
                                                         $product['values'],
                                                     );
-                                            $custom_item_id = str_replace(['\'', '"', ',', '.', ' ', ';', '<', '>'], '', $custom_item_id); @endphp <tr class="cremove{{ str_replace('~', '', $custom_item_id) }}">
+                                            $custom_item_id = str_replace(['\'', '"', ',', '.', ' ', ';', '<', '>'], '', $custom_item_id); @endphp <tr class="cremove{{ str_replace(['~', '/', '-'],'',$custom_item_id) }}">
                                                 <td class="product-img">
                                                     <div class="item">
                                                         <img src="{{ filter_var($product['item']['photo'], FILTER_VALIDATE_URL)
@@ -262,7 +262,7 @@
                                                 </td>
                                                 <td>
                                                     <span class="removecart cart-remove"
-                                                        data-class="cremove{{ str_replace('~', '', $custom_item_id) }}"
+                                                        data-class="cremove{{ str_replace(['~', '/', '-'],'',$custom_item_id) }}"
                                                         data-href="{{ route('product.cart.remove', $custom_item_id) }}"><i
                                                             class="icofont-ui-delete"></i>
                                                     </span>
