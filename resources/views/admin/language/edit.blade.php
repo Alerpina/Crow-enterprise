@@ -5,17 +5,17 @@
         <div class="mr-breadcrumb">
             <div class="row">
                 <div class="col-lg-12">
-                    <h4 class="heading">{{ __('Edit Language') }} <a class="add-btn" href="{{ route('admin-lang-index') }}"><i
-                                class="fas fa-arrow-left"></i> {{ __('Back') }}</a></h4>
+                    <h4 class="heading">@lang('Edit Language') <a class="add-btn" href="{{ route('admin-lang-index') }}"><i
+                                class="fas fa-arrow-left"></i> @lang('Back')</a></h4>
                     <ul class="links">
                         <li>
-                            <a href="{{ route('admin.dashboard') }}">{{ __('Dashboard') }} </a>
+                            <a href="{{ route('admin.dashboard') }}">@lang('Dashboard') </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin-lang-index') }}">{{ __('Languages') }} </a>
+                            <a href="{{ route('admin-lang-index') }}">@lang('Languages') </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin-lang-edit', $data->id) }}">{{ __('Edit Language') }}</a>
+                            <a href="{{ route('admin-lang-edit', $data->id) }}">@lang('Edit Language')</a>
                         </li>
                     </ul>
                 </div>
@@ -32,44 +32,30 @@
                             <form id="geniusform" action="{{ route('admin-lang-update', $data->id) }}" method="POST"
                                 enctype="multipart/form-data">
                                 {{ csrf_field() }}
-                                <div class="row">
-                                    <div class="col-xl-12">
-                                        <div class="input-form">
-                                            <p><small>* {{ __('indicates a required field') }}</small></p>
-                                        </div>
-                                    </div>
-                                </div>
+
                                 @include('includes.admin.form-both')
 
                                 <div class="row">
 
                                     <div class="col-xl-4">
                                         <div class="input-form">
-                                            <h4 class="heading">{{ __('Language') }} *</h4>
-                                            <input type="text" class="input-field" name="language"
-                                                placeholder="{{ __('English') }}" value="{{ $data->language }}" required>
+                                            <h4 class="heading">@lang('Language') *</h4>
+                                            <p class="input-field">{{ $data->language }}</p>
                                         </div>
                                     </div>
 
                                     <div class="col-xl-4">
                                         <div class="input-form">
-                                            <h4 class="heading">{{ __('Locale') }} *
-                                                <span>{{ __('Ex: en, pt-br, es') }}</span>
-                                            </h4>
-                                            <input type="text" class="input-field" name="locale"
-                                                placeholder="{{ __('en') }}" value="{{ $data->locale }}" required>
+                                            <h4 class="heading">@lang('Locale') *</h4>
+                                            <p class="input-field">{{ $data->locale }}</p>
                                         </div>
                                     </div>
 
                                     <div class="col-xl-4">
                                         <div class="input-form">
-                                            <h4 class="heading">{{ __('Language Direction') }} *</h4>
-                                            <select name="rtl" class="input-field" required="">
-                                                <option value="0" {{ $data->rtl == '0' ? 'selected' : '' }}>
-                                                    {{ __('Left To Right') }}</option>
-                                                <option value="1" {{ $data->rtl == '1' ? 'selected' : '' }}>
-                                                    {{ __('Right To Left') }}</option>
-                                            </select>
+                                            <h4 class="heading">@lang('Language Direction') *</h4>
+                                            <p class="input-field">
+                                                {{ $data->rtl == '0' ? __('Left To Right') : __('Right To Left') }}</p>
                                         </div>
                                     </div>
 
@@ -85,7 +71,7 @@
 
                                             <hr>
 
-                                            <h4 class="text-center">{{ __('FIELDS') }}</h4>
+                                            <h4 class="text-center">@lang('Translations')</h4>
 
                                             <hr>
                                             <div class="mr-table allproduct">
@@ -97,8 +83,8 @@
                                                         cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
-                                                                <th style="width:50%;">{{ __('Original') }}</th>
-                                                                <th>{{ __('Translation') }}</th>
+                                                                <th style="width:50%;">@lang('Original')</th>
+                                                                <th>@lang('Translation')</th>
                                                                 <th></th>
                                                             </tr>
                                                         </thead>
@@ -138,7 +124,7 @@
 
                                 <div class="row justify-content-center">
 
-                                    <button class="addProductSubmit-btn" type="submit">{{ __('Save') }}</button>
+                                    <button class="addProductSubmit-btn" type="submit">@lang('Save')</button>
 
                                 </div>
                             </form>
@@ -173,8 +159,8 @@
             },
             initComplete: function(settings, json) {
                 $(".btn-area").append('<div class="col-sm-4 table-contents">' +
-                    '<a class="add-btn" id="btn-empty-search">{{ __('Show Empty') }}</a>' +
-                    '<a class="add-btn" id="btn-all-search" style="display: none;">{{ __('Show All') }}</a></div>'
+                    '<a class="add-btn" id="btn-empty-search">@lang('Show Empty')</a>' +
+                    '<a class="add-btn" id="btn-all-search" style="display: none;">@lang('Show All')</a></div>'
                 );
                 $('#btn-empty-search').on('click', function() {
                     var regex = "^$";

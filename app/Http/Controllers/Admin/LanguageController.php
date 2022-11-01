@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Yajra\DataTables\DataTables;
 use App\Models\Language;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Generalsetting;
 use Illuminate\Validation\Rule;
+use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Filesystem\Filesystem;
@@ -43,15 +44,11 @@ class LanguageController extends Controller
                     $default = $this->storeSettings->lang_id == $data->id ? '' : '<a class="status" data-href="' . route('admin-lang-st', ['id1' => $data->id, 'id2' => 1]) . '"><i class="icofont-globe"></i> ' . __('Set Default') . '</a>';
                 }
 
-                if (empty($default)) {
-                    return '';
-                }
-
                 return '
                 <div class="godropdown">
                     <button class="go-dropdown-toggle"> ' . __('Actions') . '<i class="fas fa-chevron-down"></i></button>
                     <div class="action-list">
-                        <a href="' . route('admin-lang-edit', $data->id) . '">' . $default . '
+                        <a href="' . route('admin-lang-edit', $data->id) . '"> <i class="fas fa-edit"></i>' . __('Edit') . '</a>' . $default . '
                     </div>
                 </div>';
             })
@@ -127,29 +124,19 @@ class LanguageController extends Controller
         $keys = array_flip($fields);
 
         $data = Language::findOrFail($id);
-        if (file_exists(resource_path("lang") . '/' . $data->file)) {
-            $data_results = file_get_contents(resource_path("lang") . '/' . $data->file);
-            $langJson = json_decode($data_results, true);
-            $langJson = array_filter($langJson);
-            if (file_exists(resource_path("lang") . '/base_' . $data->locale . '.json')) {
-                $data_results_base = file_get_contents(resource_path("lang") . '/base_' . $data->locale . '.json');
-                $langJsonBase = json_decode($data_results_base, true);
-                $newBaseKeys = array_diff_key($langJsonBase, $langJson);
-                $langJson = array_merge($newBaseKeys, $langJson);
-            }
 
-            $newKeys = array_diff_key($keys, $langJson);
+        $file = lang_path("{$data->locale}.json");
 
-            $langEdit = array_merge($newKeys, $langJson);
-        } elseif (file_exists(resource_path("lang") . '/base_' . $data->locale . '.json')) {
-            $data_results = file_get_contents(resource_path("lang") . '/base_' . $data->locale . '.json');
+        $langEdit = $keys;
+
+        if (file_exists($file)) {
+            $data_results = file_get_contents($file);
+
             $langJson = json_decode($data_results, true);
 
-            $newKeys = array_diff_key($keys, $langJson);
-            $langEdit = array_merge($newKeys, $langJson);
-        } else {
-            $langEdit = $keys;
+            $langEdit = array_merge($keys, array_filter($langJson));
         }
+
         ksort($langEdit, SORT_STRING | SORT_FLAG_CASE);
 
         return view('admin.language.edit', compact('data', 'langEdit'));
@@ -158,91 +145,31 @@ class LanguageController extends Controller
     //*** POST Request
     public function update(Request $request, $id)
     {
-        //--- Validation Section
-        $rules = [
-            'locale' => [
-                'required',
-                Rule::unique('languages')->ignore($id)
-            ]
-        ];
-
-        $validator = Validator::make($request->all(), $rules);
-
-        if ($validator->fails()) {
-            return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
-        }
-        //--- Validation Section Ends
-
-        //--- Logic Section
         $input = $request->all();
         $data = Language::findOrFail($id);
-        $oldFile = $data->file; //the locale can be edited
-        $oldLocale = $data->locale;
 
-        $data->language = $input['language'];
-        $data->locale = $input['locale'];
-        $data->rtl = $input['rtl'];
-        $data->file = $data->locale . '.json';
+        $file = lang_path("{$data->locale}.json");
 
-        unset($input['_token']);
-        unset($input['language']);
-        unset($input['rtl']);
+        foreach ($input['fields'] as $field) {
+            $translations[$field["key"]] = $field["translation"] ?? "";
+        }
 
-        if ($input['locale'] != $oldLocale) {
-            if ($id == 1) {
-                return __("You don't have access to change this locale");
-            }
-            if (file_exists(resource_path("lang") . '/' .$oldFile) && !empty($oldFile)) {
-                unlink(resource_path("lang") . '/' . $oldFile);
-            }
-            if (file_exists(resource_path("lang") . '/base_' . $data->locale . '.json')) {
-                copy(resource_path("lang") . '/base_' . $data->locale . '.json', resource_path("lang") . '/' . $data->locale . '.json');
-            } else {
-                $fields = $this->getTranslationKeys();
-                sort($fields, SORT_STRING | SORT_FLAG_CASE);
-                foreach ($fields as $field) {
-                    $translations[$field] = "";
-                }
-                $mydata = json_encode($translations);
-                file_put_contents(resource_path("lang") . '/' . $data->file, $mydata);
-            }
-        } else {
-            if (file_exists(resource_path("lang") . '/' . $oldFile)) {
-                $data_results = file_get_contents(resource_path("lang") . '/' . $oldFile);
-                $langJson = json_decode($data_results, true);
-            } elseif (file_exists(resource_path("lang") . '/base_' . $data->locale . '.json')) {
-                $data_results = file_get_contents(resource_path("lang") . '/base_' . $data->locale . '.json');
-                $langJson = json_decode($data_results, true);
-            } else {
-                $fields = $this->getTranslationKeys();
-                $langJson = array_flip($fields);
-            }
+        if (file_exists($file)) {
+            $data_results = file_get_contents($file);
 
-            foreach ($input['fields'] as $field) {
-                $translations[$field["key"]] = (!empty($field["translation"]) ? $field["translation"] : "");
-            }
+            $langJson = json_decode($data_results, true);
 
             $lang = array_merge($langJson, $translations);
+
             ksort($lang, SORT_STRING | SORT_FLAG_CASE);
 
-            $mydata = json_encode($lang);
-            file_put_contents(resource_path("lang") . '/' . $data->file, $mydata);
-        }
-        $data->update();
+            $myData = json_encode($lang);
 
-        if ($oldLocale !== $data->locale) {
-            $this->fixContentLocale($oldLocale, $data->locale);
+            file_put_contents($file, $myData);
         }
 
-        // if (file_exists(public_path().'/assets/languages/'.$old_file) && !empty($old_file)) {
-        //     unlink(public_path().'/assets/languages/'.$old_file);
-        // }
-        //--- Logic Section Ends
-
-        //--- Redirect Section
         $msg = __('Data Updated Successfully.');
         return response()->json($msg);
-        //--- Redirect Section Ends
     }
 
     public function status($id1, $id2)
@@ -291,7 +218,7 @@ class LanguageController extends Controller
     {
         // Traversal logic based and adapted from https://github.com/joedixon/laravel-translation
 
-        $translationMethods = ['trans', '__'];
+        $translationMethods = ['trans', '__', '@lang'];
         $scanPaths = [implode(",", config("view.paths")), app_path("Http/Controllers"), app_path("Providers"), app_path("Traits")];
         $disk = new Filesystem;
 
@@ -316,7 +243,7 @@ class LanguageController extends Controller
             if (!strstr(strtolower($file), "admin")) {
                 if (preg_match_all("/$matchingPattern/siU", $file->getContents(), $matches)) {
                     foreach ($matches[2] as $key) {
-                        $temp[] = $key;
+                        $temp[] = Str::squish($key);
                     }
                 }
             }
