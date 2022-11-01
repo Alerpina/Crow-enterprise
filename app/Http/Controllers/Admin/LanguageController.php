@@ -148,77 +148,28 @@ class LanguageController extends Controller
         $input = $request->all();
         $data = Language::findOrFail($id);
 
-        ds($input);
+        $file = lang_path("{$data->locale}.json");
 
-        dd('aqui');
+        foreach ($input['fields'] as $field) {
+            $translations[$field["key"]] = $field["translation"] ?? "";
+        }
 
-        $oldFile = $data->file; //the locale can be edited
-        $oldLocale = $data->locale;
+        if (file_exists($file)) {
+            $data_results = file_get_contents($file);
 
-        $data->language = $input['language'];
-        $data->locale = $input['locale'];
-        $data->rtl = $input['rtl'];
-        $data->file = $data->locale . '.json';
-
-        unset($input['_token']);
-        unset($input['language']);
-        unset($input['rtl']);
-
-        if ($input['locale'] != $oldLocale) {
-            if ($id == 1) {
-                return __("You don't have access to change this locale");
-            }
-            if (file_exists(resource_path("lang") . '/' .$oldFile) && !empty($oldFile)) {
-                unlink(resource_path("lang") . '/' . $oldFile);
-            }
-            if (file_exists(resource_path("lang") . '/base_' . $data->locale . '.json')) {
-                copy(resource_path("lang") . '/base_' . $data->locale . '.json', resource_path("lang") . '/' . $data->locale . '.json');
-            } else {
-                $fields = $this->getTranslationKeys();
-                sort($fields, SORT_STRING | SORT_FLAG_CASE);
-                foreach ($fields as $field) {
-                    $translations[$field] = "";
-                }
-                $mydata = json_encode($translations);
-                file_put_contents(resource_path("lang") . '/' . $data->file, $mydata);
-            }
-        } else {
-            if (file_exists(resource_path("lang") . '/' . $oldFile)) {
-                $data_results = file_get_contents(resource_path("lang") . '/' . $oldFile);
-                $langJson = json_decode($data_results, true);
-            } elseif (file_exists(resource_path("lang") . '/base_' . $data->locale . '.json')) {
-                $data_results = file_get_contents(resource_path("lang") . '/base_' . $data->locale . '.json');
-                $langJson = json_decode($data_results, true);
-            } else {
-                $fields = $this->getTranslationKeys();
-                $langJson = array_flip($fields);
-            }
-
-            foreach ($input['fields'] as $field) {
-                $translations[$field["key"]] = (!empty($field["translation"]) ? $field["translation"] : "");
-            }
+            $langJson = json_decode($data_results, true);
 
             $lang = array_merge($langJson, $translations);
+
             ksort($lang, SORT_STRING | SORT_FLAG_CASE);
 
-            $mydata = json_encode($lang);
-            file_put_contents(resource_path("lang") . '/' . $data->file, $mydata);
-        }
-        $data->update();
+            $myData = json_encode($lang);
 
-        if ($oldLocale !== $data->locale) {
-            $this->fixContentLocale($oldLocale, $data->locale);
+            file_put_contents($file, $myData);
         }
 
-        // if (file_exists(public_path().'/assets/languages/'.$old_file) && !empty($old_file)) {
-        //     unlink(public_path().'/assets/languages/'.$old_file);
-        // }
-        //--- Logic Section Ends
-
-        //--- Redirect Section
         $msg = __('Data Updated Successfully.');
         return response()->json($msg);
-        //--- Redirect Section Ends
     }
 
     public function status($id1, $id2)
@@ -267,7 +218,7 @@ class LanguageController extends Controller
     {
         // Traversal logic based and adapted from https://github.com/joedixon/laravel-translation
 
-        $translationMethods = ['trans', '__'];
+        $translationMethods = ['trans', '__', '@lang'];
         $scanPaths = [implode(",", config("view.paths")), app_path("Http/Controllers"), app_path("Providers"), app_path("Traits")];
         $disk = new Filesystem;
 
