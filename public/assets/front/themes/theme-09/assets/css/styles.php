@@ -43,15 +43,15 @@ background: <?php echo $theme_color_2; ?>;}
 background: <?php echo $theme_color_2; ?>;}
 
 .logo-header {
-background: <?php echo $theme_color_2; ?>; }
+background: <?php echo $theme_color_1; ?>; }
 
 .helpful-links-inner a {
-    color: <?php echo $text_color_2; ?>;
+    color: <?php echo $text_color_1; ?>;
     transition: all .3s;
 }
 
 .helpful-links-inner a:hover {
-    color: <?php echo $theme_color_1; ?>;
+    filter: brightness(.7);
     transition: all .3s;
 }
 
@@ -382,6 +382,11 @@ border: 2px solid <?php echo $theme_color_1; ?>;
 a.sell-btn {
 background: <?php echo $theme_color_1; ?>;
 }
+
+.top-header {
+    background-color: <?php echo $theme_color_2; ?>;
+}
+
 .top-header .content .right-content .list ul li a.sell-btn:hover {
 transition: 0.3s;
 background: #fff;
@@ -449,6 +454,15 @@ color: <?php echo $text_color_1; ?>;
     color: <?php echo $theme_color_1; ?>;
     background: <?php echo $text_color_1; ?>;
     border: 1px solid <?php echo $theme_color_1; ?>;
+}
+
+.top-header .left-content .list ul li .nice-select::after {
+    border-bottom: 2px solid <?php echo $text_color_2; ?>;
+    border-right: 2px solid <?php echo $text_color_2; ?>;
+}
+
+.nice-select .list li, .nice-select .current {
+    color: <?php echo $text_color_2; ?>;
 }
 
 .flash-deals .flas-deal-slider .item .price .new-price {
@@ -631,6 +645,10 @@ background: <?php echo $text_color_1; ?>;
 
 .categories_title {
     background: <?php echo $text_color_1; ?>;
+}
+
+.mainmenu-area {
+    background-color: <?php echo $theme_color_1; ?>;
 }
 
 .mainmenu-area .categories_menu .categories_title h2, .mainmenu-area .categories_menu .categories_title h2 i.arrow-down {
@@ -827,28 +845,28 @@ font-weight: 600;
 
 .logo-header .search-box {
     border: none;
-    background:<?php echo $text_color_1; ?>;
+    background:<?php echo $text_color_1; ?>40;
     border-radius:8px;
 }
 
 .logo-header .search-box .search-form input::-webkit-placeholder {
-    color: <?php echo $text_color_2; ?>!important;
+    color: <?php echo $text_color_1; ?>!important;
     opacity: .8;
 }
 .logo-header .search-box .search-form input::-moz-placeholder {
-    color: <?php echo $text_color_2; ?>!important;
+    color: <?php echo $text_color_1; ?>!important;
     opacity: .8;
 }
 .logo-header .search-box .search-form input::-ms-placeholder {
-    color: <?php echo $text_color_2; ?>!important;
+    color: <?php echo $text_color_1; ?>!important;
     opacity: .8;
 }
 .logo-header .search-box .search-form input::-o-placeholder {
-    color: <?php echo $text_color_2; ?>!important;
+    color: <?php echo $text_color_1; ?>!important;
     opacity: .8;
 }
 .logo-header .search-box .search-form input::placeholder {
-    color: <?php echo $text_color_2; ?>!important;
+    color: <?php echo $text_color_1; ?>!important;
     opacity: .8;
 }
 
@@ -928,11 +946,7 @@ color: <?php echo $theme_color_1; ?>;
 }
 
 .section-top .section-title {
-    color:<?php echo $theme_color_1; ?>;
-}
-
-.section-top .section-title.title-oferta {
-    color:<?php echo $theme_color_1; ?>;
+    color:<?php echo $theme_color_2; ?>;
 }
 
 .item .item-img .extra-list ul li span {
@@ -954,7 +968,7 @@ color: <?php echo $theme_color_1; ?>;
 }
 
 .footer {
-    background-color: <?php echo $text_color_1; ?>;
+    background-color: <?php echo $theme_color_1; ?>;
 }
 
 .footer .footer-info-area .text p, .footer .footer-widget ul li a,
@@ -963,7 +977,7 @@ color: <?php echo $theme_color_1; ?>;
 .footer .footer-widget .title,
 .footer .footer-widget ul li
 {
-color:  <?php echo $text_color_2; ?>;
+color:  <?php echo $text_color_1; ?>;
 }
 
 
@@ -1047,8 +1061,12 @@ color:  <?php echo $text_color_2; ?>;
     color:  <?php echo $text_color_1; ?>;
 }
 
+.top-header .content .right-content .list li.login .links, .top-header .left-content .list ul li .currency-selector span, .top-header ul li.my-dropdown.profilearea .profile .text, .top-header .content .right-content .list li .nice-select, .top-header .left-content .list ul li .language-selector i {
+    color: <?php echo $text_color_2; ?>;
+}
+
 .slidee a, .slidee .owl-next, .slidee .owl-prev {
-    color: <?php echo $theme_color_1; ?>;
+    color: <?php echo $text_color_1; ?>;
 }
 
 .fundoForm {

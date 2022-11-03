@@ -34,7 +34,7 @@ a {
 }
 
 .categori-item .section-top {
-    border-bottom: 1px solid #f2f2f2;
+    border-bottom: 1px solid #f2f2f242;
 }
 
 .section-top .section-title:after {
@@ -165,7 +165,7 @@ a {
 }
 
 .info-area {
-    background: #fff;
+    background: transparent;
     padding: 2rem 0;
 }
 
@@ -1392,8 +1392,9 @@ h1, h2, h3, h4, h5, h6, p, a, span, li {
 }
 
 .hot-and-new-item .owl-carousel .owl-controls .owl-nav .owl-prev, .hot-and-new-item .owl-carousel .owl-controls .owl-nav .owl-next {
-    border-radius: 0;
     font-size: 18px;
+    top: -40px;
+    border-radius: 100%;
 }
 
 .hot-and-new-item .categori .item-list li .single-box .right-area .text a {
@@ -1540,6 +1541,7 @@ h1, h2, h3, h4, h5, h6, p, a, span, li {
 
 .footer {
     padding: 40px 0px 0px;
+    border-top: 1px solid #f0f0f04d;
 }
 
 .footer .title {
@@ -1781,10 +1783,6 @@ h1, h2, h3, h4, h5, h6, p, a, span, li {
     background-color: #FAFAFA;
 }
 
-.hot-and-new-item .owl-carousel .owl-controls .owl-nav .owl-prev, .hot-and-new-item .owl-carousel .owl-controls .owl-nav .owl-next {
-    top: -40px;
-}
-
 .blog-area .aside .slider-wrapper .slide-item .top-area .right .content .name {
     text-transform: none;
     font-weight: 300;
@@ -1895,14 +1893,6 @@ h1, h2, h3, h4, h5, h6, p, a, span, li {
     /* z-index: 9; */
 }
 
-.row-theme {
-    background-color: #ffff;
-    padding: 0rem 0rem 0rem;
-    border-radius: 7px;
-    margin-left: 0em;
-}
-
-
 .fundoForm {
     padding: 15px;
     align-items: center;
@@ -1971,3 +1961,56 @@ h1, h2, h3, h4, h5, h6, p, a, span, li {
     }
 }
 
+/* CSS PARA BLACK FRIDAY DESCOMENTAR PARA FUNCIONAR */
+
+body {
+    background-color: #222;
+    background-attachment: fixed;
+    background-size: 700px;
+}
+
+.electronics-section .aside {
+    border: none;
+}
+
+.section-top {
+    border-bottom: 1px solid rgba(252, 252, 252, 0.425);
+}
+
+.accessories-slider .categori .item-slide {
+    background-color: #fff;
+    margin: 5px;
+    border-radius: 15px;
+}
+
+.hot-and-new-item .categori .item-list li .single-box .left-area img {
+    border-radius: 15px;
+}
+
+.hot-and-new-item .categori .item-list li .single-box {
+    margin-bottom: 0;
+    padding:5px;
+}
+
+.breadcrumb-area {
+    background-color:rgb(17, 17, 17);
+}
+
+.breadcrumb-area .pages li a {
+    color: #fff;
+}
+
+.sub-categori .container, 
+.checkout .container, 
+.compare-page .container, 
+.user-dashbord .container, 
+.about .container, 
+.product-details-page .container,
+.blog-details .container,
+.marcas-page .container,
+.blogpagearea .container,
+.cartpage .container {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 10px;
+}
