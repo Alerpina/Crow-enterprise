@@ -17,7 +17,7 @@
                 @else
                 <div class="col-lg-12">
                     @endif
-                    <div class="row row-theme col-lg-12">
+                    <div class="row">
                         @foreach($discount_products as $prod)
 
                         @include('front.themes.theme-09.components.flash-product')
