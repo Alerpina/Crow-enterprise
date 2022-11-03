@@ -15,7 +15,7 @@ class Cart extends CachedModel
     protected $storeSettings;
     protected $storeLocale;
 
-    public function __construct($oldCart)
+    public function __construct($oldCart = null)
     {
         parent::__construct();
 
