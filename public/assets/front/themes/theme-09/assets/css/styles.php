@@ -274,8 +274,8 @@ border-bottom: 3px solid <?php echo $theme_color_1; ?>;
 }
 
 .logo-header .helpful-links ul li.compare .compare-product .icon span {
-color: #333;
-border: 1px solid <?php echo $theme_color_1; ?>;
+color: <?php echo $theme_color_1; ?>;
+border: 1px solid transparent;
 background: <?php echo $text_color_1; ?>;
 }
 .hero-area .info-box .icon {
@@ -638,8 +638,8 @@ background: <?php echo $theme_color_1; ?>;
 background-color: <?php echo $theme_color_1; ?>;
 }
 .logo-header .helpful-links ul li.wishlist .wish span {
-color: #333;
-border: 1px solid  <?php echo $theme_color_1; ?>;
+color: <?php echo $theme_color_1; ?>;
+border: transparent;
 background: <?php echo $text_color_1; ?>;
 }
 
@@ -648,7 +648,7 @@ background: <?php echo $text_color_1; ?>;
 }
 
 .mainmenu-area {
-    background-color: <?php echo $theme_color_1; ?>;
+    background-color: <?php echo $text_color_2; ?>;
 }
 
 .mainmenu-area .categories_menu .categories_title h2, .mainmenu-area .categories_menu .categories_title h2 i.arrow-down {
@@ -913,8 +913,8 @@ font-weight: 600;
 }
 
 .logo-header .helpful-links ul li.my-dropdown .cart .icon span {
-    color: #333;
-    border: 1px solid <?php echo $theme_color_1; ?>;
+    color: <?php echo $theme_color_1; ?> ;
+    border: transparent;
     background: <?php echo $text_color_1; ?> ;
 }
 
@@ -1061,12 +1061,16 @@ color:  <?php echo $text_color_1; ?>;
     color:  <?php echo $text_color_1; ?>;
 }
 
+.info-area .info-box .info .details .text {
+    color: <?php echo $text_color_2; ?>;
+}
+
 .top-header .content .right-content .list li.login .links, .top-header .left-content .list ul li .currency-selector span, .top-header ul li.my-dropdown.profilearea .profile .text, .top-header .content .right-content .list li .nice-select, .top-header .left-content .list ul li .language-selector i {
     color: <?php echo $text_color_2; ?>;
 }
 
 .slidee a, .slidee .owl-next, .slidee .owl-prev {
-    color: <?php echo $text_color_1; ?>;
+    color: <?php echo $theme_color_2; ?>;
 }
 
 .fundoForm {
