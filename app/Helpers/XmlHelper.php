@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\CategoryTranslation;
 use App\Models\Language;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductTranslation;
 use App\Models\Subcategory;
@@ -126,5 +127,14 @@ class XmlHelper
             $progress->finish();
             $command->info("Produtos importados com sucesso");
         });
+    }
+
+    public static function exportOrderXml(Command $command, int $total): void
+    {
+        // select orders
+        $orders = Order::query()->latest()->take($total)->get();
+        ds($orders);
+        // generate xml
+        // make it available as public URL
     }
 }
