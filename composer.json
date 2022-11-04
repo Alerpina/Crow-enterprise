@@ -13,6 +13,7 @@
         "bmatovu/laravel-xml": "^3.1",
         "developersrede/erede-php": "^5.0",
         "doctrine/dbal": "^2.10",
+        "dompdf/dompdf": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.5",
         "laravel/framework": "^9.11",
