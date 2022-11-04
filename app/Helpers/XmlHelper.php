@@ -2,20 +2,21 @@
 
 namespace App\Helpers;
 
+use DOMDocument;
 use App\Models\Brand;
-use App\Models\Category;
-use App\Models\CategoryTranslation;
-use App\Models\Language;
 use App\Models\Order;
 use App\Models\Product;
-use App\Models\ProductTranslation;
+use App\Models\Category;
+use App\Models\Language;
 use App\Models\Subcategory;
-use App\Models\SubcategoryTranslation;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\File;
 use Illuminate\Console\Command;
+use App\Models\ProductTranslation;
 use Illuminate\Support\Facades\DB;
+use App\Models\CategoryTranslation;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\File;
+use App\Models\SubcategoryTranslation;
 
 class XmlHelper
 {
@@ -133,8 +134,75 @@ class XmlHelper
     {
         // select orders
         $orders = Order::query()->latest()->take($total)->get();
-        ds($orders);
+
         // generate xml
+        $xml = new DOMDocument("1.0", "UTF-8");
+
+        $pedidos = $xml->createElement('Pedidos');
+
+        $orders->each(function (Order $order) use ($xml, $pedidos) {
+            $item = $xml->createElement('Item');
+            $detalhes = $xml->createElement('Detalhes');
+
+            $numeroFatura = $xml->createElement('NumeroFatura', sprintf("%'.08d", $order->id));
+            $data = $xml->createElement('Data', $order->created_at->format('Y-m-d h:i:s'));
+            $idPedido = $xml->createElement('IdPedido', $order->order_number);
+            $envio = $xml->createElement('Envio', $order->shipping == 'pickup' ? 'Retirar no local' : 'Enviar para o endereço');
+            $tipoEnvio = $xml->createElement('TipoEnvio', $order->shipping_type);
+            $tipoEmbalagem = $xml->createElement('TipoEmbalagem', $order->packing_type);
+            $metodoPagamento = $xml->createElement('MetodoPagamento', $order->method);
+
+            $detalhes->append($numeroFatura);
+            $detalhes->append($data);
+            $detalhes->append($idPedido);
+            $detalhes->append($envio);
+            $detalhes->append($tipoEnvio);
+            $detalhes->append($tipoEmbalagem);
+            $detalhes->append($metodoPagamento);
+
+            $cliente = $xml->createElement('Cliente');
+
+            $nome = $xml->createElement('Nome', $order->customer_name);
+            $email = $xml->createElement('Email', $order->customer_email);
+            $cpfCnpj = $xml->createElement('CpfCnpj', $order->customer_document);
+            $telefone = $xml->createElement('Telefone', $order->customer_phone);
+
+            $endereco = $xml->createElement('Endereco');
+
+            $rua = $xml->createElement('Rua', $order->customer_address);
+            $numero = $xml->createElement('Numero', $order->customer_address_number);
+            $complemento = $xml->createElement('Complemento', $order->customer_complement);
+            $bairro = $xml->createElement('Bairro', $order->customer_district);
+            $cidade = $xml->createElement('Cidade', $order->customer_city);
+            $estado = $xml->createElement('Estado', $order->customer_state);
+            $pais = $xml->createElement('Pais', $order->customer_country);
+            $cep = $xml->createElement('Cep', $order->customer_zip);
+
+            $endereco->append($rua);
+            $endereco->append($numero);
+            $endereco->append($complemento);
+            $endereco->append($bairro);
+            $endereco->append($cidade);
+            $endereco->append($estado);
+            $endereco->append($pais);
+            $endereco->append($cep);
+
+            $cliente->append($nome);
+            $cliente->append($email);
+            $cliente->append($cpfCnpj);
+            $cliente->append($telefone);
+            $cliente->append($endereco);
+
+            $item->append($detalhes);
+            $item->append($cliente);
+
+            $pedidos->append($item);
+        });
+
+        $xml->append($pedidos);
+
+        $xml->save(public_path('storage/xml/OrdersExport.xml'));
+
         // make it available as public URL
     }
 }
