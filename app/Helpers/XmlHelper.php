@@ -193,8 +193,33 @@ class XmlHelper
             $cliente->append($telefone);
             $cliente->append($endereco);
 
+            $carrinho = $xml->createElement('Carrinho');
+
+            $total = $xml->createElement('Total', number_format($order->cart['totalPrice'], 2, ',', '.'));
+            $desconto = $xml->createElement('Desconto', number_format($order->coupon_discount, 2, ',', '.'));
+
+            $produtos = $xml->createElement('Produtos');
+
+            collect($order->cart['items'])->each(function ($product) use ($produtos, $xml) {
+                $item = $xml->createElement('Item');
+
+                $codigo = $xml->createElement('Codigo', $product['item']['sku']);
+                $nome = $xml->createElement('Nome', $product['item']['name']);
+
+
+                $item->append($codigo);
+                $item->append($nome);
+
+                $produtos->append($item);
+            });
+
+            $carrinho->append($total);
+            $carrinho->append($desconto);
+            $carrinho->append($produtos);
+
             $item->append($detalhes);
             $item->append($cliente);
+            $item->append($carrinho);
 
             $pedidos->append($item);
         });
