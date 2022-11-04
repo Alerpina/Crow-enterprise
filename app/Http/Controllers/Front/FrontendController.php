@@ -780,6 +780,7 @@ class FrontendController extends Controller
 
     public function downloadListPDF(Request $request)
     {
+        set_time_limit(0);
         $main_store = Generalsetting::first();
         $store = Generalsetting::find($main_store->store_comprasparaguai);
         $locale = $store->defaultLang->locale;
@@ -821,6 +822,7 @@ class FrontendController extends Controller
         // (Optional) Setup the paper size and orientation
         $dompdf->setPaper('A4');
 
+        set_time_limit(30);
         return view('front.pdfview', compact('products', 'currency'));
     }
 
