@@ -205,10 +205,17 @@ class XmlHelper
 
                 $codigo = $xml->createElement('Codigo', $product['item']['sku']);
                 $nome = $xml->createElement('Nome', $product['item']['name']);
+                $quantidade = $xml->createElement('Quantidade', $product['qty']);
+                $valorUnitario = $xml->createElement('ValorUnitario', number_format($product['item']['price'], 2, ',', '.'));
+                $valorTotal = $xml->createElement('ValorTotal', number_format($product['item']['price'] * $product['qty'], 2, ',', '.'));
+
 
 
                 $item->append($codigo);
                 $item->append($nome);
+                $item->append($quantidade);
+                $item->append($valorUnitario);
+                $item->append($valorTotal);
 
                 $produtos->append($item);
             });
@@ -226,7 +233,7 @@ class XmlHelper
 
         $xml->append($pedidos);
 
-        $xml->save(public_path('storage/xml/OrdersExport.xml'));
+        $xml->save(storage_path('app/public/xml/OrdersExport.xml'));
 
         // make it available as public URL
     }
