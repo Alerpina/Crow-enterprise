@@ -130,17 +130,24 @@ class XmlHelper
         });
     }
 
-    public static function exportOrderXml(Command $command, int $total): void
+    public static function exportOrderXml(Command $command, int $total): int
     {
-        // select orders
         $orders = Order::query()->latest()->take($total)->get();
 
-        // generate xml
+        if (!$orders) {
+            $command->info("No orders found.");
+            return 1;
+        }
+
+        $command->info("Exporting the last {$total} orders");
+
+        $progress = $command->output->createProgressBar($orders->count());
+
         $xml = new DOMDocument("1.0", "UTF-8");
 
         $pedidos = $xml->createElement('Pedidos');
 
-        $orders->each(function (Order $order) use ($xml, $pedidos) {
+        $orders->each(function (Order $order) use ($xml, $pedidos, $progress) {
             $item = $xml->createElement('Item');
             $detalhes = $xml->createElement('Detalhes');
 
@@ -209,8 +216,6 @@ class XmlHelper
                 $valorUnitario = $xml->createElement('ValorUnitario', number_format($product['item']['price'], 2, ',', '.'));
                 $valorTotal = $xml->createElement('ValorTotal', number_format($product['item']['price'] * $product['qty'], 2, ',', '.'));
 
-
-
                 $item->append($codigo);
                 $item->append($nome);
                 $item->append($quantidade);
@@ -229,12 +234,15 @@ class XmlHelper
             $item->append($carrinho);
 
             $pedidos->append($item);
+            $progress->advance();
         });
 
         $xml->append($pedidos);
 
         $xml->save(storage_path('app/public/xml/OrdersExport.xml'));
 
-        // make it available as public URL
+        $command->info("\nOrders exported successfuly and available at " . asset('storage/xml/OrdersExport.xml'));
+
+        return 0;
     }
 }
