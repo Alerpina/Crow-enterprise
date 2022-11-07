@@ -79,7 +79,7 @@
                         $currency->thousands_separator)
                         }}
                     </td>
-                    <td>{{ $product->brand }}</td>
+                    <td>{{ $product->brand->name }}</td>
                 </tr>
                 @endforeach
             </tbody>
