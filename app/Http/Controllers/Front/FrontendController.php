@@ -780,49 +780,14 @@ class FrontendController extends Controller
 
     public function downloadListPDF(Request $request)
     {
-        set_time_limit(0);
-        $main_store = Generalsetting::first();
-        $store = Generalsetting::find($main_store->store_comprasparaguai);
-        $locale = $store->defaultLang->locale;
-
         if (Session::has('currency')) {
             $currency = Currency::find(Session::get('currency'));
         } else {
             $currency = Currency::find($this->storeSettings->currency_id);
         }
 
-        $products = DB::table('products')
-        ->select(
-            'products.sku as sku',
-            'products.photo as photo',
-            'product_translations.name as name',
-            'product_translations.details as details',
-            'products.price as price',
-            'brands.name as brand'
-        )
-        ->join('product_translations', 'products.id', '=', 'product_translations.product_id')
-        ->join('product_store', 'products.id', '=', 'product_store.product_id')
-        ->leftJoin('brands', 'brands.id', '=', 'products.brand_id')
-        ->where('product_store.store_id', '=', $store->id)
-        ->where('product_translations.locale', '=', $locale)
-        ->where('products.status', 1)->get();
-
-        $options = new Options();
-        $options->set('defaultFont', 'sans-serif');
-
-        $options->set('enable_remote', true);
-        $options->set('isPhpEnabled', true);
-
-        $dompdf = new Dompdf($options);
-
-        $view = view('front.pdfview', compact('products', 'currency'));
-
-        $dompdf->loadHtml($view);
-
-        // (Optional) Setup the paper size and orientation
-        $dompdf->setPaper('A4');
-
-        set_time_limit(30);
+        $products = Product::where('status', 1)->with('brand')->get();
+        
         return view('front.pdfview', compact('products', 'currency'));
     }
 
