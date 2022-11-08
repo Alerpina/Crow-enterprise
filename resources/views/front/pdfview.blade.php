@@ -79,7 +79,7 @@
                         $currency->thousands_separator)
                         }}
                     </td>
-                    <td>{{ $product->brand->name }}</td>
+                    <td>{{ $product->brand->name != __("Deleted") ? $product->brand->name : '' }}</td>
                 </tr>
                 @endforeach
             </tbody>
