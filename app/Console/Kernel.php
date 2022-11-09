@@ -66,6 +66,8 @@ class Kernel extends ConsoleKernel
         if (env("ENABLE_MERCADO_LIVRE", false)) {
             $schedule->command('regenerate:token')->cron('0 */4 * * *'); //Every four hours
         }
+
+        $schedule->command('product:import')->hourly();
     }
 
     /**
