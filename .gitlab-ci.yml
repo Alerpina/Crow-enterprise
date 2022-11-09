@@ -24,8 +24,6 @@ cache:
   image: mysql
   script:
     - echo "SELECT 'OK';" | mysql --user=root --password="$MYSQL_ROOT_PASSWORD" --host=mysql "$MYSQL_DATABASE"
-  only:
-    - feature/migrate-crow-store
 
 2-composer:
   stage: building
@@ -35,8 +33,6 @@ cache:
     - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
     - cp .env.example .env
     - php artisan key:generate
-  only:
-    - feature/migrate-crow-store
 
 3-db-seeding:
   stage: building
@@ -56,8 +52,6 @@ cache:
       - db.sql
     expire_in: 1 days
     when: always
-  only:
-    - feature/migrate-crow-store
 
 # 4-phpunit:
 #   stage: testing
