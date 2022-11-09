@@ -84,7 +84,8 @@ cache:
     - git remote add production "$USERNAME"@"$HOST":/var/www/stages.git
     - git remote -v
     - git status
-    - git push -f production HEAD:"$CI_COMMIT_REF_NAME"
+    - echo git push -f production HEAD:refs/heads/"$CI_COMMIT_REF_NAME"
+    - git push -f production HEAD:refs/heads/"$CI_COMMIT_REF_NAME"
   when: manual
 6-integration-stores:
   stage: deploying
