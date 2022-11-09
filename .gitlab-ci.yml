@@ -84,6 +84,8 @@ cache:
     - git remote add production "$USERNAME"@"$HOST":/var/www/stages.git
     - git remote -v
     - git status
+    - git reset --hard
+    - git show --oneline -s
     - git push -f production HEAD:feature/migrate-crow-store
   when: manual
 6-integration-stores:
