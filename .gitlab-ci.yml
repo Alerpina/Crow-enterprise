@@ -86,7 +86,7 @@ cache:
     - git status
     - git --work-tree=/var/www/html/stage9 --git-dir=/var/www/stages.git reset --hard
     - git show --oneline -s
-    - git push -f production HEAD:feature/migrate-crow-store
+    - git push -f production HEAD:"$CI_COMMIT_REF_NAME"
   when: manual
 6-integration-stores:
   stage: deploying
