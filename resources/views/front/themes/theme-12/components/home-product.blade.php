@@ -29,11 +29,16 @@ if ($gs->switch_highlight_currency) {
                             </span>
                         @endif
                         <div class="info">
-                            <h4 class="price">{{ $highlight }} @if ($curr->id != $scurrency->id)
+                            <h5 class="name">{{ $prod->showName() }}</h5>
+                            @if ($prod->previous_price != 0)
+                                <p class="namee m-0">R${{ $prod->previous_price }}</p>
+                            @endif
+                            <h4 class="price">{{ $highlight }} 
+                                @if ($curr->id != $scurrency->id)
                                     <small><span id="originalprice">{{ $small }}</span></small>
                                 @endif
                             </h4>
-                            <h5 class="name">{{ $prod->showName() }}</h5>
+                            
                         </div>
 
                         <div
@@ -276,11 +281,15 @@ if ($gs->switch_highlight_currency) {
 
                     <div class="info">
 
+                        <h5 class="name">{{ $prod->showName() }}</h5>
+                        @if ($prod->previous_price != 0)
+                            <p class="namee m-0">R${{ $prod->previous_price }}</p>
+                        @endif
                         <h4 class="price">{{ $highlight }} @if ($curr->id != $scurrency->id)
                                 <small><span id="originalprice">{{ $small }}</span></small>
                             @endif
                         </h4>
-                        <h5 class="name">{{ $prod->showName() }}</h5>
+                        
 
                     </div>
 
@@ -426,11 +435,16 @@ if ($gs->switch_highlight_currency) {
                 @endif
             </div>
             <div class="info">
-                <h4 class="price">{{ $highlight }} @if ($curr->id != $scurrency->id)
+                <h5 class="name">{{ $prod->showName() }}</h5>
+                @if ($prod->previous_price != 0)
+                    <p class="namee m-0">R${{ $prod->previous_price }}</p>
+                @endif
+                <h4 class="price">{{ $highlight }} 
+                    @if ($curr->id != $scurrency->id)
                         <small><span id="originalprice">{{ $small }}</span></small>
                     @endif
                 </h4>
-                <h5 class="name">{{ $prod->showName() }}</h5>
+                
 
             </div>
 

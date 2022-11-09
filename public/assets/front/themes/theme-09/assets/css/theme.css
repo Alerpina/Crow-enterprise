@@ -223,10 +223,14 @@ a {
     padding: 4rem 0;
 }
 
+.item .item-img img {
+    padding: 10px;
+}
+
 .item {
     position: relative;
     margin: 0 10px;
-    padding: 1rem 10px 2rem;
+    padding: 1rem 0 2rem;
     overflow: hidden;
     display: block;
     transition: all .3s;
@@ -234,12 +238,6 @@ a {
     background-color: #fff;
     border-radius: 10px;
     border: 1px solid #ececec !important;
-}
-
-.item:hover .badge-danger.descont-card {
-    top: -20px;
-    transition: all .9s;
-    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.05) !important;
 }
 
 .item:hover {
@@ -1211,7 +1209,7 @@ h1, h2, h3, h4, h5, h6, p, a, span, li {
 
 .item .info .name {
     font-size: 16px;
-    color: #686868;
+    color: #222;
     font-weight: 400;
     letter-spacing: 1px;
     text-align: left;
@@ -1778,11 +1776,6 @@ h1, h2, h3, h4, h5, h6, p, a, span, li {
 .slider-buttom-category {
     background-color: transparent;
 }
-
-.item:hover .extra-list {
-    background-color: #FAFAFA;
-}
-
 .blog-area .aside .slider-wrapper .slide-item .top-area .right .content .name {
     text-transform: none;
     font-weight: 300;
@@ -1883,14 +1876,14 @@ h1, h2, h3, h4, h5, h6, p, a, span, li {
     color: rgb(255, 255, 255);
     -webkit-box-pack: center;
     justify-content: center;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     font-size: 20px;
     position: absolute;
     width: 100%;
     top: 0;
     transition: initial;
-    /* z-index: 9; */
+    z-index: 9;
 }
 
 .fundoForm {
@@ -1923,7 +1916,6 @@ h1, h2, h3, h4, h5, h6, p, a, span, li {
 }
 .namee {
     text-align: left;
-    color: gray;
 }
 
 .foot {
