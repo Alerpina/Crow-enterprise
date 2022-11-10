@@ -322,7 +322,7 @@
                                                 <div class="content">
                                                     <h4 class="name">{{ $review->title }}</h4>
                                                     @if ($prod->previous_price != 0)
-                                                        <p class="namee"><s>R$ {{ $prod->previous_price }}</s></p>
+                                                        <p class="namee"><s>{{$scurrency->sign}}{{ $prod->previous_price }}</s></p>
                                                     @endif
                                                     <p class="dagenation">{{ $review->subtitle }}</p>
                                                 </div>

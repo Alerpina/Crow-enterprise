@@ -24,7 +24,7 @@
 
                     <h5 class="name">{{ $prod->showName() }}</h5>
                     @if ($prod->previous_price != 0)
-                        <p class="namee m-0">R${{ $prod->previous_price }}</p>
+                        <p class="namee m-0">{{$scurrency->sign}}{{ $prod->previous_price }}</p>
                     @endif
                     <h4 class="price">{{ $highlight }}
                         <!-- <del><small>{{ $prod->showPreviousPrice() }}</small></del> -->
