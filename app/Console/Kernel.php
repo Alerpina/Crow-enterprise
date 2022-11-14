@@ -24,6 +24,7 @@ class Kernel extends ConsoleKernel
         Commands\CheckDiscrepancies::class,
         Commands\GenerateAccessToken::class,
         Commands\ProductImport::class,
+        Commands\OrderExport::class
         //
     ];
 
@@ -68,6 +69,8 @@ class Kernel extends ConsoleKernel
         }
 
         $schedule->command('product:import')->hourly();
+
+        $schedule->command('order:export')->hourly();
     }
 
     /**

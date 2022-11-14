@@ -572,7 +572,7 @@ class OrderController extends Controller
             $order_curr = $first_curr;
         }
         return view('admin.order.invoice', compact('order', 'cart', 'first_curr', 'order_curr'));
-    }
+        }
 
     public function receipt($id)
     {
