@@ -65,16 +65,16 @@
                                     @endif
                                 @endif
 
-                                @if (Auth::guard('admin')->check())
-                                    <li>
-                                        <div class="mybadge1">
-                                            <a href="{{ route('admin.logout') }}">
-                                                {{ __('Viewing as Admin') }}
-                                                <i class="fas fa-power-off"></i>
-                                                {{ __('Logout') }}
-                                            </a>
-                                        </div>
-                                    </li>
+                                @if(Auth::guard('admin')->check())
+                                <li>
+                                    <div class="mybadge1">
+                                        <a href="{{ route('admin.logout') }}">
+                                            {{ __('Viewing as Admin')}}
+                                            <i class="fas fa-power-off"></i>
+                                            {{ __('Logout') }}
+                                        </a>
+                                    </div>
+                                </li>
                                 @endif
                             </ul>
                         </div>
@@ -92,59 +92,132 @@
                                         </a>
                                     </li>
                                 @else
-                                    <li class="profilearea my-dropdown">
-                                        <a href="javascript: ;" id="profile-icon" class="profile carticon">
-                                            <span class="text">
-                                                <i class="far fa-user"></i> {{ __('My Account') }}
-                                                <i class="fas fa-chevron-down"></i>
-                                            </span>
-                                        </a>
-                                        <div class="my-dropdown-menu profile-dropdown">
-                                            <ul class="profile-links">
-                                                @if (!Auth::user()->IsVendor())
-                                                    <li>
-                                                        <a href="{{ route('user-dashboard') }}">
-                                                            <i class="fas fa-angle-double-right"></i>
-                                                            {{ __('User Panel') }}
-                                                        </a>
-                                                    </li>
-                                                @endif
+                                <li class="openperfil profilearea my-dropdown separador-right">
+                                    <a href="javascript: ;" id="profile-icon" class="profile carticon">
+                                        <span class="text">
+                                            {{ __("Account") }}
+                                            <i class="fas fa-caret-down"></i>
+                                        </span>
+                                    </a>
+                                    <div class="my-dropdown-menu profile-dropdown">
+                                        <ul class="profile-links">
+                                            <li>
+                                                <a href="{{ route('user-dashboard') }}">
+                                                    <i class="fas fa-caret-right"></i>
+                                                    {{ __("User Panel") }}
+                                                </a>
+                                            </li>
 
-                                                @if (config('features.marketplace'))
-                                                    @if (Auth::user()->IsVendor())
-                                                        <li>
-                                                            <a href="{{ route('vendor-dashboard') }}">
-                                                                <i class="fas fa-angle-double-right"></i>
-                                                                {{ __('Vendor Panel') }}
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a
-                                                                href="{{ route('front.vendor', str_replace(' ', '-', Auth::user()->shop_name)) }}">
-                                                                <i class="fas fa-angle-double-right"></i>
-                                                                {{ __('My Store') }}
-                                                            </a>
-                                                        </li>
-                                                    @endif
-                                                @endif
-                                                @if (!Auth::user()->IsVendor())
-                                                    <li>
-                                                        <a href="{{ route('user-profile') }}">
-                                                            <i class="fas fa-angle-double-right"></i>
-                                                            {{ __('Edit Profile') }}
-                                                        </a>
-                                                    </li>
-                                                @endif
-                                                <li>
-                                                    <a href="{{ route('user-logout') }}">
-                                                        <i class="fas fa-angle-double-right"></i>
-                                                        {{ __('Logout') }}
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
+                                            @if(config("features.marketplace"))
+                                            @if(Auth::user()->IsVendor())
+                                            <li>
+                                                <a href="{{ route('vendor-dashboard') }}">
+                                                    <i class="fas fa-caret-right"></i>
+                                                    {{ __("Vendor Panel") }}
+                                                </a>
+                                            </li>
+                                            @endif
+                                            @endif
+
+                                            <li>
+                                                <a href="{{ route('user-profile') }}">
+                                                    <i class="fas fa-caret-right"></i>
+                                                    {{ __("Edit Profile") }}
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ route('user-logout') }}">
+                                                    <i class="fas fa-caret-right"></i>
+                                                    {{ __("Logout") }}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
                                 @endif
+                                <li class="openstore profilearea my-dropdown">
+                                    <a href="javascript: ;" id="profile-icon" class="profile carticon">
+                                        <span class="text">
+                                            {{ __("Our Store") }}
+                                            <i class="fas fa-caret-down"></i>
+                                        </span>
+                                    </a>
+                                    <div class="my-dropdown-menu profile-dropdown">
+                                        <ul class="profile-links">
+                                            @if ($gs->is_brands == 1)
+                                            <li>
+                                                <a href="{{ route('front.brands') }}">
+                                                    <i class="fas fa-caret-right"></i>
+                                                    {{ __("Brands") }}
+                                                </a>
+                                            </li>
+                                            @endif
+
+                                            @if($gs->is_blog == 1)
+                                            <li>
+                                                <a href="{{ route('front.blog') }}">
+                                                    <i class="fas fa-caret-right"></i>
+                                                    {{ __("Blog") }}
+                                                </a>
+                                            </li>
+                                            @endif
+
+                                            @if($gs->is_faq == 1)
+                                            <li>
+                                                <a href="{{ route('front.faq') }}">
+                                                    <i class="fas fa-caret-right"></i>
+                                                    {{ __("Faq") }}
+                                                </a>
+                                            </li>
+                                            @endif
+                                            @if($gs->policy)
+                                            <li>
+                                                <a href="{{ route('front.policy') }}">
+                                                    <i class="fas fa-caret-right"></i>
+                                                    {{ __("Buy & Return Policy") }}
+                                                </a>
+                                            </li>
+                                            @endif
+
+                                            @foreach($pheader as $data)
+                                            <li>
+                                                <a href="{{ route('front.page',$data->slug) }}">
+                                                    <i class="fas fa-caret-right"></i>
+                                                    {{ $data->title }}
+                                                </a>
+                                            </li>
+                                            @endforeach
+
+                                            @if($gs->is_contact == 1)
+                                            <li>
+                                                <a href="{{ route('front.contact') }}">
+                                                    <i class="fas fa-caret-right"></i>
+                                                    {{ __("Contact Us") }}
+                                                </a>
+                                            </li>
+                                            @endif
+
+                                            @if($gs->is_cart)
+                                            <li>
+                                                <a href="javascript:;" data-toggle="modal"
+                                                    data-target="#track-order-modal">
+                                                    <i class="fas fa-caret-right"></i>
+                                                    {{ __("Track Order") }}
+                                                </a>
+                                            </li>
+                                            @endif
+
+                                            @if($gs->team_show_header == 1)
+                                            <li>
+                                                <a href="{{ route('front.team_member') }}">
+                                                    <i class="fas fa-caret-right"></i>
+                                                    {{ __('Team') }}
+                                                </a>
+                                            </li>
+                                            @endif
+                                        </ul>
+                                    </div>
+                                </li>
                                 @if (config('features.marketplace'))
                                     @if (!Auth::guard('web')->check() || (Auth::guard('web')->check() && !Auth::user()->IsVendor()))
                                         <li class="login ml-0">
@@ -246,7 +319,9 @@
 
                             @if (Auth::guard('web')->check())
                                 <a href="{{ route('user-wishlists') }}" class="wish">
-
+                                    <svg width="28" height="28" viewBox="0 0 30 30" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M2.5 10.5C2.49985 9.60296 2.67849 8.71489 3.0255 7.88768C3.37251 7.06048 3.88092 6.31074 4.52102 5.68228C5.16111 5.05383 5.92005 4.55926 6.75348 4.22748C7.58691 3.89571 8.47811 3.73339 9.375 3.75C10.4362 3.74436 11.4865 3.96433 12.4562 4.39534C13.426 4.82634 14.2931 5.45853 15 6.25C15.7069 5.45853 16.574 4.82634 17.5438 4.39534C18.5135 3.96433 19.5638 3.74436 20.625 3.75C21.5219 3.73339 22.4131 3.89571 23.2465 4.22748C24.0799 4.55926 24.8389 5.05383 25.479 5.68228C26.1191 6.31074 26.6275 7.06048 26.9745 7.88768C27.3215 8.71489 27.5002 9.60296 27.5 10.5C27.5 17.195 19.5262 22.25 15 26.25C10.4837 22.2163 2.5 17.2 2.5 10.5Z" fill="currentColor"/>
+                                    </svg>  
                                     <span id="wishlist-count">{{ count(Auth::user()->wishlists) }}</span>
                                 </a>
                             @else

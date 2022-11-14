@@ -79,7 +79,6 @@ cache:
 #     - master
 5-stage9:
   stage: deploying
-  needs: ["3-db-seeding"]
   script:
     - eval $(ssh-agent -s)
     - echo "$LARAVEL9_TOKEN" | tr -d '\r' | ssh-add - > /dev/null
@@ -90,9 +89,7 @@ cache:
     - git remote add production "$USERNAME"@"$HOST":/var/www/stages.git
     - git remote -v
     - git status
-    - git push -f production HEAD:feature/migrate-crow-store
-  only:
-    - feature/migrate-crow-store
+    - git push -f production HEAD:refs/heads/"$CI_COMMIT_REF_NAME"
   when: manual
 6-integration-stores:
   stage: deploying
