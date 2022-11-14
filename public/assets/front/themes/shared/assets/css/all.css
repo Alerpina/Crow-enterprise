@@ -48639,6 +48639,12 @@ h5.titlereceipt {
   font-weight: 700;
 }
 
+.namee {
+  margin: 0;
+  color: #aaa;
+  text-decoration: line-through;
+}
+
 @media (min-width:577px) {
   .subscribePreloader__text {
     position: absolute;

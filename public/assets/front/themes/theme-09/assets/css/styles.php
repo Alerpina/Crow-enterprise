@@ -1052,10 +1052,6 @@ color:  <?php echo $text_color_1; ?>;
     color:  <?php echo $text_color_2; ?>;
 }
 
-.badge-danger.descont-card {
-    background-color: <?php echo $theme_color_1; ?>;
-}
-
 .badge-primary{
     background-color: <?php echo $theme_color_1; ?>;
     color:  <?php echo $text_color_1; ?>;
@@ -1067,6 +1063,10 @@ color:  <?php echo $text_color_1; ?>;
 
 .top-header .content .right-content .list li.login .links, .top-header .left-content .list ul li .currency-selector span, .top-header ul li.my-dropdown.profilearea .profile .text, .top-header .content .right-content .list li .nice-select, .top-header .left-content .list ul li .language-selector i {
     color: <?php echo $text_color_2; ?>;
+}
+
+.item:hover .extra-list {
+    background-color: <?php echo $text_color_1; ?>;
 }
 
 .slidee a, .slidee .owl-next, .slidee .owl-prev {
