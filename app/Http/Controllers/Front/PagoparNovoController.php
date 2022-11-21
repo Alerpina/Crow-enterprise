@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Front;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CallbackPagoparPost;
+use App\Models\Cart;
 use App\Models\Currency;
 use App\Models\Notification;
 use App\Models\Order;
+use App\Models\Product;
 use App\Traits\Gateway;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
@@ -44,18 +46,19 @@ class PagoparNovoController extends Controller
     {
         $products = [];
         foreach ($items as $product) {
-            $description = $product["item"]->translations()->where("locale", "es")->first();
+            $prod = new Product($product["item"]);
+            $description = $prod->translations()->where("locale", "es")->first();
 
             $products[] = [
                 "ciudad" => self::CITY,
-                "nombre" => $product["item"]->name,
+                "nombre" => $prod->name,
                 "cantidad" => $product["qty"],
                 "categoria" => self::CATEGORY,
                 "public_key" => $this->credentials["publicKey"],
-                "url_imagen" => $product["item"]->photo,
+                "url_imagen" => $prod->photo,
                 "descripcion" => $description->details ?? "Producto sin descripción",
-                "id_producto" => $product["item"]->id,
-                "precio_total" => intval($product["item"]->price*$product["qty"]*$currency->value),
+                "id_producto" => $prod->id,
+                "precio_total" => intval($prod->price*$product["qty"]*$currency->value),
                 "vendedor_telefono" => "",
                 "vendedor_direccion" => "",
                 "vendedor_direccion_referencia" => "",
@@ -95,7 +98,8 @@ class PagoparNovoController extends Controller
         $token = sha1($this->credentials["privateKey"] . $order_id."{$amount}");
         $currency = Currency::where("name", $this->checkCurrency)->first();
 
-        $items = $this->order->cart->items;
+        $cart = new Cart($this->order->cart);
+        $items = $cart->items;
 
         $data = $this->build_data_structure($items, $order_id, $amount, $token, $currency);
 
