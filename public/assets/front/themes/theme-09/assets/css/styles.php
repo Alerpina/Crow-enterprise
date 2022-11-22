@@ -295,8 +295,13 @@ color: <?php echo $theme_color_1; ?>; }
 .product-details-page .right-area .product-info .contact-seller .list li a:hover {
 background: <?php echo $theme_color_1; ?>;
 border-color: <?php echo $theme_color_1; ?>; }
+
 .product-details-page .right-area .product-info .product-price .price {
-color: <?php echo $theme_color_1; ?>;}
+color: <?php echo $text_color_1; ?>;
+background: <?php echo $theme_color_1; ?>;
+padding: 0 10px;
+}
+
 .product-details-page .right-area .product-info .product-size .siz-list li.active .box {
 border: 1px solid <?php echo $theme_color_1; ?>; }
 
@@ -503,7 +508,9 @@ color: <?php echo $theme_color_1; ?>; }
 
 .product-details-page .right-area .product-info .info-meta-3 .meta-list li.favorite a, .product-details-page .right-area .product-info .info-meta-3 .meta-list li.compare a {
 border: 1px solid <?php echo $theme_color_1; ?>;
+color: <?php echo $text_color_1; ?>;
 background: <?php echo $theme_color_1; ?>;}
+
 .product-details-page .right-area .product-info .info-meta-3 .meta-list li.favorite a:hover, .product-details-page .right-area .product-info .info-meta-3 .meta-list li.compare a:hover {
 background: #fff;
 color: <?php echo $theme_color_1; ?>; }
@@ -536,8 +543,8 @@ border: 1px solid <?php echo $theme_color_1; ?>;
 
 background: <?php echo $theme_color_1; ?>;
 border: 1px solid <?php echo $theme_color_1; ?>;
-
-}
+color: <?php echo $text_color_1; ?>;
+} 
 
 .subscribePreloader__text {
 background: <?php echo $theme_color_1; ?>c7;
