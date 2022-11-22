@@ -46,19 +46,16 @@ class PagoparNovoController extends Controller
     {
         $products = [];
         foreach ($items as $product) {
-            $prod = new Product($product["item"]);
-            $description = $prod->translations()->where("locale", "es")->first();
-
             $products[] = [
                 "ciudad" => self::CITY,
-                "nombre" => $prod->name,
+                "nombre" => $product["item"]["name"],
                 "cantidad" => $product["qty"],
                 "categoria" => self::CATEGORY,
                 "public_key" => $this->credentials["publicKey"],
-                "url_imagen" => $prod->photo,
-                "descripcion" => $description->details ?? "Producto sin descripción",
-                "id_producto" => $prod->id,
-                "precio_total" => intval($prod->price*$product["qty"]*$currency->value),
+                "url_imagen" => $product["item"]["photo"],
+                "descripcion" => $product["item"]["details"] ?? "Producto sin descripción",
+                "id_producto" => $product["item"]["id"],
+                "precio_total" => intval($product["item"]["price"]*$product["qty"]*$currency->value),
                 "vendedor_telefono" => "",
                 "vendedor_direccion" => "",
                 "vendedor_direccion_referencia" => "",
