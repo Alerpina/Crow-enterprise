@@ -1607,7 +1607,11 @@ class ProductController extends Controller
         $data->update($input);
         $data = Product::findOrFail($id);
 
-        $new_slug = Str::slug($data->name, '-') . '-' . strtolower(Str::slug($data->sku));
+        if ($this->storeSettings->ftp_folder) {
+            $new_slug = $data->slug;
+        } else{
+            $new_slug = Str::slug($data->name, '-') . '-' . strtolower(Str::slug($data->sku));
+        }
 
         if (config("features.marketplace")) {
             $vendor_products = Product::where('slug', $data->slug)->where('user_id', '!=', 0)->get();
