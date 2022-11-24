@@ -1072,6 +1072,7 @@
                     processData: false,
                     success: function(data) {
                         if (data != 0) {
+                            $('#uploadgallery').val(null);
                             $('.selected-image .row').removeClass('justify-content-center');
                             $('.selected-image .row h3').remove();
                             var arr = $.map(data, function(el) {
