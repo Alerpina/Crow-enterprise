@@ -58,25 +58,24 @@ cache:
     when: always
   only:
     - feature/migrate-crow-store
-
-# 4-phpunit:
-#   stage: testing
-#   services:
-#   - name: mysql:latest
-#     command: ["--default-authentication-plugin=mysql_native_password"]
-#   needs: ["3-db-seeding"]
-#   script:
-#     - php -v
-#     - mysql --host=mysql --user=root --password="${MYSQL_ROOT_PASSWORD}" "${MYSQL_DATABASE}" < db.sql
-#     - ./vendor/phpunit/phpunit/phpunit --version
-#     - php -d short_open_tag=off ./vendor/phpunit/phpunit/phpunit -v --colors=never --stderr
-#   artifacts:
-#     paths:
-#       - ./storage/logs # for debugging
-#     expire_in: 1 days
-#     when: on_failure
-#   only:
-#     - master
+4-tag:
+  stage: deploying
+  needs: ["3-db-seeding"]
+  variables:
+    TAG: gitlab_${CI_PIPELINE_IID}_${CI_PIPELINE_ID}_${CI_COMMIT_REF_SLUG}
+  before_script:
+    - PROJECT_URL=$(echo $CI_PROJECT_URL | sed 's/https:\/\///')
+    - git remote set-url origin https://gitlab-ci-token:$GITLAB_TOKEN@$PROJECT_URL
+  script:
+    - echo "Build and tag the commit"
+    - echo "$GITLAB_TOKEN"
+    - echo "$PROJECT_URL"
+    - git tag $TAG
+    - git push origin $TAG
+  when: manual
+  only:
+    - feature/migrate-crow-store
+## TODO: phpunit
 5-stage9:
   stage: deploying
   script:
@@ -104,9 +103,9 @@ cache:
     - git remote add production "$USERNAME"@"$HOST":/var/www/crow-enterprise.git
     - git remote -v
     - git status
-    - git push -f production HEAD:feature/migrate-crow-store
+    - git push -f production HEAD:refs/tags/"$CI_COMMIT_TAG"
   only:
-    - feature/migrate-crow-store
+    - tags
   when: manual
 7-normal-stores:
   stage: deploying
@@ -121,7 +120,7 @@ cache:
     - git remote add production "$USERNAME"@"$SECOND_HOST":/var/www/crow-enterprise.git
     - git remote -v
     - git status
-    - git push -f production HEAD:feature/migrate-crow-store
+    - git push -f production HEAD:refs/tags/"$CI_COMMIT_TAG"
   only:
-    - feature/migrate-crow-store
+    - tags
   when: manual
