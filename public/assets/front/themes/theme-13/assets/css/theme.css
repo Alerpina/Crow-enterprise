@@ -2242,6 +2242,7 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width:991px){
     .box-title-featured {
         margin: 0 24px;
+        font-size: .8em;
     }
 }
 
