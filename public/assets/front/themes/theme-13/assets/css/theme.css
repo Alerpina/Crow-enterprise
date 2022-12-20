@@ -335,18 +335,15 @@ a {
 
 .item .info {
     text-align: initial;
-    padding: 0 20px;
+    line-height: auto !important;
 }
 
-@media (max-width:768px) {
-    .item .info {
-        padding: 20px 20px 50px;
-    }
-
-    .oferta-relampago .item .info {
-        padding: 20px 20px 80px;
+@media only screen and (max-width: 991px) {
+    .item .info .name {
+        font-size: 16px !important;
     }
 }
+
 .item .info .name {
     height: auto;
     font-weight: 300;
@@ -404,6 +401,10 @@ a {
 .shadow-banner:hover{
     box-shadow: 0 0 30px -10px #6a6a6a85;
     transition: all .4s;
+}
+
+.banner-effect {
+    margin: 0 0 5px;
 }
 
 .position-top .banner-effect{
@@ -2056,7 +2057,7 @@ h1, h2, h3, h4, h5, h6 {
     justify-content: center;
     align-items: center;
     height: 100%;
-    padding:10px 0;
+    padding:10px 5px;
     border-radius: 10px;
 }
 
@@ -2196,7 +2197,7 @@ h1, h2, h3, h4, h5, h6 {
 .titulo-categorias {
     font-weight: 700;
     color: #333;
-    font-size: 30px;
+    font-size: 2em;
 }
 
 .desc-categorias {
@@ -2236,6 +2237,12 @@ h1, h2, h3, h4, h5, h6 {
     height: 100%;
     border-radius: 10px;
     padding: 1rem;
+}
+
+@media (max-width:991px){
+    .box-title-featured {
+        margin: 0 24px;
+    }
 }
 
 .trending-item-slider.owl-carousel .owl-stage {

@@ -275,8 +275,7 @@
             <div class="row mainmenu-area-innner">
                 <div class="col-6 col-lg-2">
                     <div class="box-button-site" data-menu-toggle-main="#menu-browse-site">
-                        <i class="fas fa-bars"></i>
-                        <p>{{ __('Browse the site') }}</p>
+                        <p><i class="fas fa-bars"></i> {{ __('Browse the site') }}</p>
                         <div id="menu-browse-site" class="container-menu">
                             <ul>
                                 <li>

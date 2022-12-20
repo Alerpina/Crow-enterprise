@@ -6,7 +6,7 @@
             <div class="col-lg-3">
                 <div class="box-title-featured text-center">
                      <h4 style="font-weight:500;letter-spacing:-1px;">Visite nossa categoria</h4>
-                     <h2 style="word-break:break-all;line-height: 42px;padding:1rem 0;font-size:2.5rem;">{{ __("Flash Deal") }}</h2>
+                     <h2 style="word-break:break-all;font-size:2.5rem;">{{ __("Flash Deal") }}</h2>
                      <p>Fique por dentro dos lançamentos e novidades da loja!</p>
                 </div>
             </div>
