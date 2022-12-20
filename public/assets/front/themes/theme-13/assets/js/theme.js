@@ -360,12 +360,11 @@ $(function ($) {
 
         // flas_deal_slider
         var $flas_deal_slider = $('.flas-deal-slider');
-
         if ($flas_deal_slider.children().length > 1) {
             $flas_deal_slider.owlCarousel({
                 loop: true,
                 nav: true,
-                navText: ['<i class="fas fa-caret-left"></i>', '<i class="fas fa-caret-right"></i>'],
+                navText: ['<i class="fas fa-chevron-left"></i>', '<i class="fas fa-chevron-right"></i>'],
                 dots: false,
                 margin: 10,
                 autoplay: true,
@@ -382,10 +381,7 @@ $(function ($) {
                         items: 2
                     },
                     992: {
-                        items: 3
-                    },
-                    1200: {
-                        items: 5
+                        items: 4
                     }
                 }
             });
@@ -445,14 +441,11 @@ $(function ($) {
             nav: true,
             center: false,
             autoplayHoverPause: true,
-            navText: ["<i class='fas fa-caret-left'></i>", "<i class='fas fa-caret-right'></i>"],
+            navText: ['<i class="fas fa-chevron-left"></i>', '<i class="fas fa-chevron-right"></i>'],
             smartSpeed: 800,
             responsive: {
                 0: {
-                    items: 2
-                },
-                414: {
-                    items: 2
+                    items: 1
                 },
                 768: {
                     items: 3
@@ -460,10 +453,7 @@ $(function ($) {
                 992: {
                     items: 4
                 },
-                1200: {
-                    items: 5
-                }
-            }
+            },
         });
 
 
@@ -537,12 +527,45 @@ $(function ($) {
                 loop: true,
                 nav: false,
                 navText: ["<i class='fas fa-caret-left'></i>", "<i class='fas fa-caret-right'></i>"],
-                dots: false,
+                dots: true,
                 margin: 30,
                 autoplay: true,
                 autoplayTimeout: 6000,
                 smartSpeed: 1000,
-                items: 1,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    1200: {
+                        items: 2
+                    }
+                }
+            });
+
+        }
+
+        // aside_review_slider
+        var $carouselBlogsItems = $('.carousel-blogs-items');
+
+        if ($carouselBlogsItems.length >= 1) {
+
+            $carouselBlogsItems.owlCarousel({
+                loop: true,
+                nav: true,
+                dots:false,
+                navText: ['<i class="fas fa-chevron-left"></i>', '<i class="fas fa-chevron-right"></i>'],
+                margin: 30,
+                autoplay: true,
+                autoplayTimeout: 3500,
+                smartSpeed: 500,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    1200: {
+                        items: 2
+                    }
+                }
             });
 
         }

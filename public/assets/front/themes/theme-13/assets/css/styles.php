@@ -430,7 +430,7 @@ background: <?php echo $theme_color_1; ?>;
 }
 .item .add-to-cart-btn{
 background: <?php echo $text_color_2; ?>;
-border: 1px solid <?php echo $text_color_2; ?>;
+border: 1px solid <?php echo $theme_color_2; ?>;
 color: <?php echo $theme_color_2; ?>;
 }
 .item .add-to-cart-btn:hover {
@@ -625,7 +625,7 @@ background-color: <?php echo $theme_color_1; ?>;
 }
 
 .mainmenu-area .categories_menu .categories_title h2, .mainmenu-area .categories_menu .categories_title h2 i.arrow-down {
-    color: <?php echo $theme_color_1; ?>;
+    color: <?php echo $theme_color_2; ?>;
 }
 
 nav .menu li:last-child a{
@@ -644,17 +644,13 @@ color: <?php echo $theme_color_1; ?>;
     border:1px solid <?php echo $text_color_1; ?>;
 }
 
-.info-area > .container  {
-    background-color: <?php echo $text_color_2; ?>;
-}
-<!--Alterado do dinâmico $theme_color_1 com uma variável inexistente pois foi a melhor forma que encontrei de estilizar sem quebrar o resto do layout-->
-
-.info-area .info-box .info .title {
-    color: <?php echo $theme_color_2; ?>;
+.info-area .info-big-box {
+    background:  <?php echo $theme_color_2; ?>;
+    background: linear-gradient(0deg, <?php echo $theme_color_2; ?> 0%, <?php echo $theme_color_2; ?>d9 100%);
 }
 
-.info-area .info-box .info .details .text {
-    color: <?php echo $theme_color_2; ?>;
+.info-area .info-box .info .title, .info-area .info-box .info .details .text {
+    color: <?php echo $text_color_2; ?>;
 }
 
 .blogpagearea .blog-box .details .read-more-btn {
@@ -880,10 +876,6 @@ color: <?php echo $theme_color_1; ?>;
     border: 1px solid <?php echo $text_color_1; ?>;
 }
 
-.section-top .section-title {
-    color:<?php echo $theme_color_2; ?>;
-}
-
 .item:hover .extra-list {
     background-color: <?php echo $text_color_2; ?>;
 }
@@ -910,10 +902,6 @@ color: <?php echo $theme_color_1; ?>;
 .blog-area .aside .slider-wrapper .slide-item .review-text::after,
 .blog-area .aside .slider-wrapper .slide-item .review-text::before {
     color: <?php echo $theme_color_1; ?>;
-}
-
-.footer {
-    background-color: <?php echo $text_color_2; ?>;
 }
 
 .footer .footer-info-area .text p, .footer .footer-widget ul li a,
@@ -1116,10 +1104,6 @@ color:  <?php echo $theme_color_2; ?>;
     background-color: <?php echo $theme_color_2; ?>;
 }
 
-.info-area .info-box .info .title {
-    color: <?php echo $theme_color_2; ?>;
-}
-
 @media (max-width: 767px) {
     .button-open-search {
         color: <?php echo $text_color_2; ?>;
@@ -1133,4 +1117,18 @@ color:  <?php echo $theme_color_2; ?>;
     .menufixed {
         background-color: <?php echo $theme_color_2; ?>;
     }
+}
+
+.box-title-featured {
+    background-color: <?php echo $theme_color_1; ?>;
+    background: linear-gradient(0deg, <?php echo $theme_color_1; ?> 0%, <?php echo $theme_color_1; ?>a1 100%);
+}
+
+.box-title-featured *{
+    color: <?php echo $text_color_1; ?>;
+}
+
+
+.footer .box-footer {
+    background-color: <?php echo $text_color_2; ?>;
 }

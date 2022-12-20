@@ -158,9 +158,11 @@ if ($gs->switch_highlight_currency) {
                 @endif
 
             </a>
+            @if ($prod->discount_date != "")
             <div class="deal-counter">
                 <div data-countdown="{{ $prod->discount_date }}"></div>
             </div>
+            @endif
         </div>
 
     @endif
@@ -312,9 +314,11 @@ if ($gs->switch_highlight_currency) {
             @endif
 
         </a>
-        <div class="deal-counter">
-            <div data-countdown="{{ $prod->discount_date }}"></div>
-        </div>
+        @if ($prod->discount_date != "")
+            <div class="deal-counter">
+                <div data-countdown="{{ $prod->discount_date }}"></div>
+            </div>
+        @endif
     </div>
 
 @endif
