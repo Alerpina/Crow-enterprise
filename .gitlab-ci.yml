@@ -1,5 +1,5 @@
 default:
-  image: lorisleiva/laravel-docker:latest
+  image: lorisleiva/laravel-docker:8.1
 
 services:
   - mysql:latest
