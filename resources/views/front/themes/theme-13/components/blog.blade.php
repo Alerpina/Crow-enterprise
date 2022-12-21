@@ -18,7 +18,7 @@
                                             {{ mb_strlen($blogg->title, 'utf-8') > 40 ? mb_substr($blogg->title, 0, 40, 'utf-8') . '...' : $blogg->title }}
                                         </h4>
                                         <div class="details mb-3">
-                                            {{ substr(strip_tags($blogg->details), 0, 170) }}
+                                            {!! substr(strip_tags($blogg->details), 0, 170) !!}
                                         </div>
                                         <h4><small>Clique para ler mais <i class="fas fa-caret-right"></i></small></h4>
                                     </div>

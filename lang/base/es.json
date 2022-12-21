@@ -974,5 +974,6 @@
   "Zimple Phone#": "Tel\u00e9fono Zimple#",
   "Zip": "C\u00f3digo Postal",
   "Zip:": "C\u00f3digo Postal:",
-  "{$this->name} Error": "Error de {$ this-> name}"
+  "{$this->name} Error": "Error de {$ this-> name}",
+  "Categories Highlight":"Destacado de categorías"
 }

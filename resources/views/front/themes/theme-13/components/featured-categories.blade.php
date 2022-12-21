@@ -15,7 +15,7 @@
             <div class="row">
                 @if ($categoryhasimage)
                     <div class="col-12">
-                        <h3 class="titulo-categorias">{{ __('Category Highlight') }}</h2>
+                        <h3 class="titulo-categorias">{{ __('Categories Highlight') }}</h2>
                     </div>
                 @endif
                 <div class="carousel-categorys-highlight new-style-carousel owl-carousel owl-theme owl-loaded">
