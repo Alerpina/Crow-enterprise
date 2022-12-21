@@ -273,7 +273,7 @@
     <div class="mainmenu-area mainmenu-bb">
         <div class="container">
             <div class="row mainmenu-area-innner">
-                <div class="col-6 col-lg-2 pr-0">
+                <div class="col-6 col-lg-2 order-2 order-lg-1 pl-0 pl-md-3">
                     <div class="box-button-site" data-menu-toggle-main="#menu-browse-site">
                         <p><i class="fas fa-bars"></i> {{ __('Browse the site') }}</p>
                         <div id="menu-browse-site" class="container-menu">
@@ -350,7 +350,7 @@
                     </div>
 
                 </div>
-                <div class="col-6 col-lg-10 d-flex justify-content-center align-items-center">
+                <div class="col-6 col-lg-10 order-1 order-lg-2 d-flex justify-content-center align-items-center">
                     <!--categorie menu start-->
                     <div class="categories_menu vertical">
                         <div class="categories_title">
