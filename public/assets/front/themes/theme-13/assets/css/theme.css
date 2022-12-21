@@ -4,6 +4,12 @@ body {
     background-color: #F3F3F3;
 }
 
+@media (max-width:567px){
+    body {
+        font-size: 12px;
+    }
+}
+
 h1, h2, h3, h4, h5, h6 {
     color: #000000;
 }
@@ -38,7 +44,7 @@ a {
 }
 
 .section-top .section-title {
-    font-size: 30px;
+    font-size: 2em;
     font-weight: 700;
     color: #333;
     margin-left: 6px;
@@ -2242,7 +2248,6 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width:991px){
     .box-title-featured {
         margin: 0 24px;
-        font-size: .8em;
     }
 }
 

@@ -935,7 +935,7 @@ color:  <?php echo $theme_color_2; ?>;
 }
 
 #services-carousel .owl-controls .owl-nav .owl-prev, #services-carousel .owl-controls .owl-nav .owl-next {
-    color: <?php echo $theme_color_2; ?>;
+    color: <?php echo $text_color_2; ?>;
 }
 
 .icon-filter {

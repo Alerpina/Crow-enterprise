@@ -273,7 +273,7 @@
     <div class="mainmenu-area mainmenu-bb">
         <div class="container">
             <div class="row mainmenu-area-innner">
-                <div class="col-6 col-lg-2">
+                <div class="col-6 col-lg-2 pr-0">
                     <div class="box-button-site" data-menu-toggle-main="#menu-browse-site">
                         <p><i class="fas fa-bars"></i> {{ __('Browse the site') }}</p>
                         <div id="menu-browse-site" class="container-menu">
