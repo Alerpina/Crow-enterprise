@@ -24,11 +24,6 @@
                         {{ __('NEWS') }}
                     </h4>
                     <ul class="link-list">
-                        @if ($gs->is_home == 1)
-                            <li><a href="{{ route('front.page', 'black-friday-16') }}"
-                                    class="ft">{{ __('black friday') }}</a></li>
-                        @endif
-
                         @if ($gs->is_blog == 1)
                             <li><a href="{{ route('front.page', 'compra-segura-16') }}"
                                     class="ft">{{ __('safe buy') }}</a></li>
@@ -38,12 +33,6 @@
                             <li><a href="{{ route('front.page', 'pioneer-channel-8') }}"
                                     class="ft">{{ __('pioneer channel') }}</a></li>
                         @endif
-
-                        @if ($gs->is_contact == 1)
-                            <li><a href="{{ route('front.page', 'natal-24') }}"
-                                    class="ft">{{ __('Natal') }}</a></li>
-                        @endif
-
                     </ul>
                     <div class="fotter-social-links">
                         <ul style="width:200px;">
