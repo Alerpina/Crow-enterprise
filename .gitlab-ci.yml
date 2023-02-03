@@ -134,7 +134,5 @@ cache:
     - git remote add production "$USER"@"$TREE_HOST":/var/www/stores.stages.git
     - git remote -v
     - git status
-    - git push -f production HEAD:refs/tags/"$CI_COMMIT_TAG"
-  only:
-    - tags
+    - git push -f production HEAD:refs/heads/"$CI_COMMIT_REF_NAME"
   when: manual
