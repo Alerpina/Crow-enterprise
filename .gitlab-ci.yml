@@ -122,7 +122,7 @@ cache:
   only:
     - tags
   when: manual
-  8-stages-stores9:
+8-stages-stores9:
   stage: deploying
   script:
     - eval $(ssh-agent -s)
