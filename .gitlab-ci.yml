@@ -122,3 +122,19 @@ cache:
   only:
     - tags
   when: manual
+  7-stages-stores9:
+  stage: deploying
+  script:
+    - eval $(ssh-agent -s)
+    - echo "$STORES_STAGES_TOKEN" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan "$TREE_HOST" >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+    - git remote add production "$USER"@"$TREE_HOST":/var/www/stores.stages.git
+    - git remote -v
+    - git status
+    - git push -f production HEAD:refs/tags/"$CI_COMMIT_TAG"
+  only:
+    - tags
+  when: manual
