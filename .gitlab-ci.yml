@@ -7,7 +7,8 @@ services:
 stages:
   - building
   - testing
-  - deploying
+  - deploying-stagings
+  - deploying-production
 
 variables:
   MYSQL_DATABASE: ci
@@ -59,7 +60,7 @@ cache:
   only:
     - feature/migrate-crow-store
 4-tag:
-  stage: deploying
+  stage: deploying-production
   needs: ["3-db-seeding"]
   variables:
     TAG: gitlab_${CI_PIPELINE_IID}_${CI_PIPELINE_ID}_${CI_COMMIT_REF_SLUG}
@@ -77,7 +78,7 @@ cache:
     - feature/migrate-crow-store
 ## TODO: phpunit
 5-stage9:
-  stage: deploying
+  stage: deploying-stagings
   script:
     - eval $(ssh-agent -s)
     - echo "$LARAVEL9_TOKEN" | tr -d '\r' | ssh-add - > /dev/null
@@ -91,7 +92,7 @@ cache:
     - git push -f production HEAD:refs/heads/"$CI_COMMIT_REF_NAME"
   when: manual
 6-integration-stores:
-  stage: deploying
+  stage: deploying-production
   script:
     - eval $(ssh-agent -s)
     - echo "$LARAVEL9_TOKEN" | tr -d '\r' | ssh-add - > /dev/null
@@ -107,7 +108,7 @@ cache:
     - tags
   when: manual
 7-normal-stores:
-  stage: deploying
+  stage: deploying-production
   script:
     - eval $(ssh-agent -s)
     - echo "$SECOND_LARAVEL9_TOKEN" | tr -d '\r' | ssh-add - > /dev/null
@@ -123,7 +124,7 @@ cache:
     - tags
   when: manual
 8-stores9-stages:
-  stage: deploying
+  stage: deploying-stagings
   script:
     - eval $(ssh-agent -s)
     - echo "$STORES_STAGES_TOKEN" | tr -d '\r' | ssh-add - > /dev/null
