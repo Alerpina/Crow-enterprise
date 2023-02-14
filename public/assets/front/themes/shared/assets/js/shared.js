@@ -1403,7 +1403,7 @@ $(function ($) {
             var customizable_gallery = $("#customizable_gallery").val();
             var customizable_name = $("#customizable_name").val();
             var customizable_number = $("#customizable_number").val();
-            var customizable_gallery_count = $("#customizable_gallery_count").val();
+            var customizable_gallery_count = ($("#customizable_gallery_count").val() === undefined) ? "": $("#customizable_gallery_count").val();
             var customizable_logo = $("#image-upload").val();
             var agree_terms = $("#agreeCustomTerms").val();
             var is_customizable_number = $("#is_customizable_number").val();
@@ -1494,7 +1494,7 @@ $(function ($) {
             var customizable_gallery = $("#customizable_gallery").val();
             var customizable_name = $("#customizable_name").val();
             var customizable_number = $("#customizable_number").val();
-            var customizable_gallery_count = $("#customizable_gallery_count").val();
+            var customizable_gallery_count = ($("#customizable_gallery_count").val() === undefined) ? "": $("#customizable_gallery_count").val();
             var customizable_logo = $("#image-upload").val();
             var agree_terms = $("#agreeCustomTerms").val();
             var is_customizable_number = $("#is_customizable_number").val();
