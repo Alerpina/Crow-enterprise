@@ -5,27 +5,29 @@
 <style>
     /** scroll into anchor considering the fixed header **/
     /** Source: https://css-tricks.com/hash-tag-links-padding/#more-from-kirk-gleffe **/
-    .section-title:target {
+    /* .section-title:target {
         margin-top: -40px;
         padding-top: 80px;
-    }
+    } */
 
     .slider-buttom-category .single-category .left .title {
         font-size: 1rem;
         word-wrap: anywhere;
+        margin-left:1em;
     }
 
-    .slider-buttom-category .single-category .left {
+    /* .slider-buttom-category .single-category .left {
         margin-right: inherit !important;
-    }
+    } */
 
     .slider-buttom-category .single-category .right {
-        max-width: 80px;
+        max-height: 10em;
         filter: none !important;
     }
 
     .slider-buttom-category .single-category {
         align-self: stretch;
+        height: 11em;
     }
 
     .item .info {
@@ -130,7 +132,7 @@
                 </h2>
             </div>
             @endif
-            <div class="col-xl-2 col-lg-3 col-md-4 sc-common-padding d-flex flex-column">
+            <div class="col-xl-4 col-md-6 sc-common-padding d-flex flex-column">
                 <a href="{{route('front.brand', $brand->slug)}}" class="single-category">
                     <div class="left">
                         <h5 class="title">
@@ -141,7 +143,7 @@
                         </p>
                     </div>
                     <div class="right">
-                        <img src="{{ $brand->thumbnail }}" alt="{{$brand->name}}">
+                        <img id="imagemMarca" src="{{ $brand->thumbnail }}" alt="{{$brand->name}}">
                     </div>
                 </a>
             </div>

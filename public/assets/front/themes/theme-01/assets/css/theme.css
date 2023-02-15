@@ -886,3 +886,19 @@ a {
     border-top-right-radius: 4px;
     font-size: 20px;
   }
+
+  .slider-buttom-category .single-category .left .title{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  /* .single-category{
+    overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  } */

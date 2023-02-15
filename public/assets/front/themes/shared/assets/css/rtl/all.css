@@ -13944,9 +13944,9 @@ input[type=checkbox]:checked:disabled + label:before {
   color: #555;
   margin-bottom: 0px;
 }
-.slider-buttom-category .sc-common-padding{
+/* .slider-buttom-category .sc-common-padding{
   padding: 3px 3px!important;
-}
+} */
 .slider-buttom-category .single-category:hover .right img{
   transform: scale(1.2);
 }

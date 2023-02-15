@@ -702,7 +702,7 @@ background: <?php echo $theme_color_1; ?> !important;
 
 }
 .slider-buttom-category .single-category::before,.slider-buttom-category .single-category {
-background: <?php echo $theme_color_1; ?>;
+background: <?php echo $theme_color_2; ?>;
 }
 
 .slider-buttom-category .single-category .left .title, .slider-buttom-category .single-category .left .count {
