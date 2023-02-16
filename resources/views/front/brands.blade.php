@@ -143,7 +143,7 @@
                         </p>
                     </div>
                     <div class="right">
-                        <img id="imagemMarca" src="{{ $brand->thumbnail }}" alt="{{$brand->name}}">
+                        <img class="imagemMarca" src="{{ $brand->thumbnail }}" alt="{{$brand->name}}">
                     </div>
                 </a>
             </div>

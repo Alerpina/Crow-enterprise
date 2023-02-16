@@ -45564,7 +45564,7 @@ input[type=checkbox]:checked:disabled+label:before {
   margin-bottom: 0px;
   text-align: center;
 }
-#imagemMarca{
+.single-category .right .imagemMarca{
   max-width: 50%;
   max-height: 35vh;
   margin-left: 1em;
