@@ -77,7 +77,7 @@ cache:
   only:
     - feature/migrate-crow-store
 ## TODO: phpunit
-5-integration-stores:
+5-integration-stage:
   stage: deploying-stagings
   script:
     - eval $(ssh-agent -s)
@@ -91,7 +91,7 @@ cache:
     - git status
     - git push -f production HEAD:refs/heads/"$CI_COMMIT_REF_NAME"
   when: manual
-6-normal-stores:
+6-normal-stage:
   stage: deploying-stagings
   script:
     - eval $(ssh-agent -s)
