@@ -78,7 +78,7 @@
             @php
             $numberLink = false;
             @endphp
-            <div class="col">
+            <div class="col-md-12">
                 <ul class="nav nav-pills">
                     @foreach($chars as $char)
                     @if(is_numeric($char))
