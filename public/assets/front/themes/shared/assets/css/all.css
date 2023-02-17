@@ -45516,7 +45516,9 @@ input[type=checkbox]:checked:disabled+label:before {
   -o-transition: 0.3s ease-in;
   transition: 0.3s ease-in;
   background-color: white;
-  margin:10px 0;
+  margin: 10px 0;
+  border: 1px solid #0000002b;
+  border-radius: 4px;
 }
 
 .slider-buttom-category .single-category .right {
@@ -45524,21 +45526,22 @@ input[type=checkbox]:checked:disabled+label:before {
 }
 
 .slider-buttom-category .single-category .right img {
-  width: 100%;
+  width: auto;
+  height: auto;
   -webkit-transition: .3s all;
   -moz-transition: .3s all;
   -o-transition: .3s all;
   transition: .3s all;
+  object-fit: fill;
 }
 
 .slider-buttom-category .single-category .left {
   flex: 1;
   position:absolute;
-  left:0;
+  /* left:0; */
   right:0;
   margin-left:auto;
   margin-right:auto;
-  background: white;
   z-index: 2;
   width: 50%;
 }
@@ -45561,10 +45564,14 @@ input[type=checkbox]:checked:disabled+label:before {
   margin-bottom: 0px;
   text-align: center;
 }
-
-.slider-buttom-category .sc-common-padding {
-  padding: 3px 3px!important;
+.single-category .right .imagemMarca{
+  max-width: 50%;
+  max-height: 35vh;
+  margin-left: 1em;
 }
+/* .slider-buttom-category .sc-common-padding {
+  padding: 3px 3px!important;
+} */
 
 .slider-buttom-category .single-category:hover {
   box-shadow: 0 0 40px -15px #1c1c1c;

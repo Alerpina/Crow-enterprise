@@ -1780,8 +1780,8 @@ h1, h2 {
 }
 
 .slider-buttom-category .single-category {
-    border: 1px solid #dbdbdb;
-    border-radius: 3px;
+    border:1px solid #dbdbdb69;
+    border-radius: 6px;
 }
 
 .owl-carousel .owl-stage {
@@ -1843,3 +1843,12 @@ h1, h2 {
 .footer .footer-info-area .footer-logo img {
     max-width: 300px;
 }
+
+
+.slider-buttom-category .single-category .left .title{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }

@@ -715,7 +715,7 @@ background: <?php echo $theme_color_1; ?> !important;
 
 }
 .slider-buttom-category .single-category::before,.slider-buttom-category .single-category {
-background: <?php echo $theme_color_1; ?>;
+background: white;
 }
 
 .slider-buttom-category .single-category .left .title, .slider-buttom-category .single-category .left .count {
@@ -890,7 +890,7 @@ color: <?php echo $theme_color_1; ?>;
 }
 
 .section-top .section-title {
-    color:<?php echo $theme_color_2; ?>;
+    color:<?php echo $theme_color_1; ?>;
 }
 
 .item:hover .extra-list {

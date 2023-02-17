@@ -726,7 +726,7 @@ background: <?php echo $theme_color_1; ?> !important;
 
 }
 .slider-buttom-category .single-category::before {
-background: <?php echo $theme_color_1; ?>;
+background: white;
 
 }
 .custom-control-input:checked~.custom-control-label::before {

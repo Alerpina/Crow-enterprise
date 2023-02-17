@@ -2324,11 +2324,11 @@ input[type="checkbox"] + label::before {
         max-width: 25%;
     }
     
-    .col-xl-2 {
+    /* .col-xl-2 {
         -ms-flex: 0 0 16.666667%;
         flex: 0 0 16.666667%;
         max-width: 16.666667%;
-    }
+    } */
 }
 
 .checkout-area .content-box .content .payment-information .nav a span:after {
@@ -2372,3 +2372,11 @@ input[type="checkbox"] + label::before {
 .menufixed {
     top: 2.5rem;
 }
+
+.slider-buttom-category .single-category .left .title{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
