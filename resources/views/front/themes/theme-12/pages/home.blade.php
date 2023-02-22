@@ -34,7 +34,7 @@
             .menufixed {
                 position: absolute;
                 z-index: 99;
-                top: 32px;
+                top: 30px !important;
                 width: 100%;
             }
         }
