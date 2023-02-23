@@ -760,11 +760,7 @@
                         $.notify(data.errors[error], "error");
                     }
                 } else {
-                    $.notify(data, "success");
-                    setTimeout(function(){
-
-                        window.location.reload();
-                    }, 1000);
+                    window.location.replace(data);
                 }
                 if (admin_loader == 1) {
                     $('.gocover').hide();
