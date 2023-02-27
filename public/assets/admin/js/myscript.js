@@ -755,15 +755,19 @@
             processData: false,
             success: function(data) {
                 console.log(data);
+                if (data['redirect']) {
+                    window.location.replace(data['redirect']);
+                    return
+                }
+
                 if ((data.errors)) {
                     for (var error in data.errors) {
                         $.notify(data.errors[error], "error");
                     }
-                } else if (data['redirect']) {
-                    window.location.replace(data['redirect']);
                 } else {
                     $.notify(data, "success");
                     setTimeout(function(){
+
                         window.location.reload();
                     }, 1000);
                 }
