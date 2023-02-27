@@ -759,8 +759,13 @@
                     for (var error in data.errors) {
                         $.notify(data.errors[error], "error");
                     }
+                } else if (data['redirect']) {
+                    window.location.replace(data['redirect']);
                 } else {
-                    window.location.replace(data);
+                    $.notify(data, "success");
+                    setTimeout(function(){
+                        window.location.reload();
+                    }, 1000);
                 }
                 if (admin_loader == 1) {
                     $('.gocover').hide();

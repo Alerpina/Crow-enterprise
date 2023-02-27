@@ -832,7 +832,7 @@ class ProductController extends Controller
 
         session()->flash('success', __('New Product Added Successfully.'));
 
-        return response()->json(route('admin-prod-index'));
+        return response()->json(['redirect' => route('admin-prod-index')]);
         //--- Redirect Section Ends
     }
 
@@ -1697,7 +1697,7 @@ class ProductController extends Controller
 
         session()->flash('success', __('Product Updated Successfully.'));
 
-        return response()->json(route('admin-prod-index'));
+        return response()->json(['redirect' => route('admin-prod-index')]);
         //--- Redirect Section Ends
     }
 
