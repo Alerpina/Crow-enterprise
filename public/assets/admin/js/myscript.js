@@ -756,7 +756,7 @@
             success: function(data) {
                 console.log(data);
                 if (data['redirect']) {
-                    window.location.replace(data['redirect']);
+                    window.location.href = data['redirect'];
                     return
                 }
 
