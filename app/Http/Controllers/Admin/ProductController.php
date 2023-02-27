@@ -830,8 +830,9 @@ class ProductController extends Controller
             return response()->json(array('status' => 'ok'), Response::HTTP_CREATED);
         }
 
-        $msg = __('New Product Added Successfully.');
-        return response()->json($msg);
+        session()->flash('success', __('New Product Added Successfully.'));
+
+        return response()->json(['redirect' => route('admin-prod-index')]);
         //--- Redirect Section Ends
     }
 
@@ -1694,8 +1695,9 @@ class ProductController extends Controller
             return response()->json(array('status' => 'ok'));
         }
 
-        $msg = __('Product Updated Successfully.');
-        return response()->json($msg);
+        session()->flash('success', __('Product Updated Successfully.'));
+
+        return response()->json(['redirect' => route('admin-prod-index')]);
         //--- Redirect Section Ends
     }
 
