@@ -754,7 +754,6 @@
             cache: false,
             processData: false,
             success: function(data) {
-                console.log(data);
                 if (data['redirect']) {
                     window.location.href = data['redirect'];
                     return
