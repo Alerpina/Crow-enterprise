@@ -152,7 +152,8 @@ class CatalogController extends Controller
         $maxprice = $maxprice / $curr->value;
 
         $qty = $request->qty;
-        $sort = $request->sort;
+        $sort = $request->sort ?? 
+            config("app.sort")[config("app.default_sort.collumn")][config("app.default_sort.order")];
         $searchHttp = $request->searchHttp;
         $data['sort'] = $sort;
 
@@ -228,26 +229,13 @@ class CatalogController extends Controller
         ->when($sort, function ($query, $sort) {
             foreach (config("app.sort") as $collumn => $options) {
                 foreach ($options as $order => $option) {
-                    if ($sort == $option) {
-                        if ($collumn == 'name') {
-                            return $query->orderByTranslation($collumn, $order);
-                        }
-
-                        return $query->orderBy($collumn, $order);
+                    if ($sort === $option) {
+                        return $collumn === 'name' ? 
+                            $query->orderByTranslation($collumn, $order) :
+                            $query->orderBy($collumn, $order);
                     }
                 }
             }
-        }, function ($query) use (&$data) {
-            $collumn = config("app.default_sort.collumn");
-            $order = config("app.default_sort.order");
-  
-            $data['sort'] = config("app.sort")[$collumn][$order];
-
-            if ($collumn == 'name') {
-                return $query->orderByTranslation($collumn, $order);
-            }
-  
-            return $query->orderBy($collumn, $order);
         });
 
         $prods = $prods->where(function ($query) use ($cat, $subcat, $childcategory, $request) {
