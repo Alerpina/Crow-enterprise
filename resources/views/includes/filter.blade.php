@@ -22,6 +22,8 @@
 						<select id="sortby" name="sort" class="short-item">
 							<option value="date_desc" {{$sort === 'date_desc' ? 'selected' : ''}}>{{__("Latest Product")}}</option>
 							<option value="date_asc" {{$sort === 'date_asc' ? 'selected' : ''}}>{{__("Oldest Product")}}</option>
+							<option value="name_asc" {{$sort === 'name_asc' ? 'selected' : ''}}>{{__("Name (A-Z)")}}</option>
+							<option value="name_desc" {{$sort === 'name_desc' ? 'selected' : ''}}>{{__("Name (Z-A)")}}</option>
 							<option value="price_asc" {{$sort === 'price_asc' ? 'selected' : ''}}>{{__("Lowest Price")}}</option>
 							<option value="price_desc" {{$sort === 'price_desc' ? 'selected' : ''}}>{{__("Highest Price")}}</option>
 							<option value="availability" {{$sort === 'availability' ? 'selected' : ''}}>{{__("Availability")}}</option>

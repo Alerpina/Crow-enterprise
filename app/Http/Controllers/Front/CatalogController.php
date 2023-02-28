@@ -225,27 +225,30 @@ class CatalogController extends Controller
       ->when($maxprice, function ($query, $maxprice) {
           return $query->where('price', '<=', $maxprice);
       })
-      ->when($sort, function ($query, $sort) {
-          if ($sort == 'date_desc') {
-              return $query->orderBy('products.id', 'DESC');
-          } elseif ($sort == 'date_asc') {
-              return $query->orderBy('products.id', 'ASC');
-          } elseif ($sort == 'price_desc') {
-              return $query->orderBy('price', 'DESC');
-          } elseif ($sort == 'price_asc') {
-              return $query->orderBy('price', 'ASC');
-          } elseif ($sort == 'availability') {
-              return $query->orderBy('stock', 'DESC');
-          }
-      })
-      ->when(empty($sort), function ($query) use (&$data) {
-          $collumn = config("app.default_sort.collumn");
-          $order = config("app.default_sort.order");
+        ->when($sort, function ($query, $sort) {
+            foreach (config("app.sort") as $collumn => $options) {
+                foreach ($options as $order => $option) {
+                    if ($sort == $option) {
+                        if ($collumn == 'name') {
+                            return $query->orderByTranslation($collumn, $order);
+                        }
 
-          $data['sort'] = config("app.sort")[$collumn][$order];
+                        return $query->orderBy($collumn, $order);
+                    }
+                }
+            }
+        }, function ($query) use (&$data) {
+            $collumn = config("app.default_sort.collumn");
+            $order = config("app.default_sort.order");
+  
+            $data['sort'] = config("app.sort")[$collumn][$order];
 
-          return $query->orderBy($collumn, $order);
-      });
+            if ($collumn == 'name') {
+                return $query->orderByTranslation($collumn, $order);
+            }
+  
+            return $query->orderBy($collumn, $order);
+        });
 
         $prods = $prods->where(function ($query) use ($cat, $subcat, $childcategory, $request) {
             $flag = 0;
