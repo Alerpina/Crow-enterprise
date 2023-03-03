@@ -53,11 +53,25 @@ background: <?php echo "#fff"; ?>;
 border: 0.5px solid <?php echo "#fff"; ?>;
 z-index: 100;
 }
-
+.mainmenu-area {
+    height: auto;
+    border: none !important;
+    background: <?php echo $theme_color_1; ?>;
+}
 .bottomtotop i {
     color: <?php echo $text_color_1; ?>;
 }
+.menufixed .logo-header {
+    background: linear-gradient(<?php echo $text_color_2; ?> ,<?php echo $text_color_1; ?>);
+    padding: 10px 0;
+}
 
+@media (min-width: 768px){
+    .menufixed .logo-header {
+        padding: 15px 0;
+        background: linear-gradient(<?php echo $text_color_2; ?> ,<?php echo $text_color_1; ?>);
+    }
+}
 .mybtn1,
 .bottomtotop i,
 .logo-header .search-box .categori-container .categoris option:hover,
@@ -645,8 +659,18 @@ color: <?php echo $theme_color_1; ?>;
     border:1px solid <?php echo $text_color_1; ?>;
 }
 
+.flash-deals .flas-deal-slider .deal-counter {
+    background-color: <?php echo $theme_color_1; ?>;
+    margin: 0;
+    display: inline-block;
+    position: absolute;
+    bottom: 0;
+    border-radius: 5px;
+    box-shadow: 0 0 15px -5px #888888ad;
+    border: none;
+}
 .info-area > .container  {
-    background: linear-gradient(#00B4FF , #0078AB);
+    background: linear-gradient(<?php echo $theme_color_1; ?> , <?php echo $theme_color_1; ?>);
     border-radius: 0.5em;
     padding: 1em;
 }
@@ -1010,17 +1034,39 @@ display: flex;
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media (max-width:768px){
     .item .extra-list {
         background-color: <?php echo $text_color_2; ?>b8;
     }
     .info-area > .container  {
-    background: linear-gradient(#00B4FF , #0078AB);
+    background: linear-gradient(<?php echo $code_color_1; ?> , <?php echo $theme_color_1; ?>);
     border-radius: 0em;
     padding: 1em;
+    }
 }
+.lermaisBlog{
+    text-align: center;
+    padding: 1em;
+    background-color: <?php echo $theme_color_1; ?>;
+    color: white;
 }
-
 .item .item-img .extra-list ul li span {
     color: <?php echo $theme_color_1; ?>;
     transition: .3s all;
@@ -1061,12 +1107,18 @@ color:  <?php echo $theme_color_2; ?>;
 .footer .title {
     color: <?php echo $theme_color_2; ?>;
 }
-
+name m-0{
+    color: <?php echo $theme_color_2; ?>;
+}
 .footer .copy-bg .content .content p {
     color: <?php echo $theme_color_2; ?>;
     opacity: .7;
 }
-
+.footer .copy-bg{
+    background: <?php echo $text_color_2; ?>;
+margin-top: 35px;
+padding: 15px;
+}
 .footer .fotter-social-links ul li a {
     color: <?php echo $text_color_2; ?>;
     background-color: <?php echo $theme_color_2; ?>;

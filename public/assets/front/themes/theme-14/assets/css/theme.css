@@ -409,12 +409,7 @@ span a .icoAcess{
 .logoHeader{
     max-width: 6vw;
 }
-.lermaisBlog{
-    text-align: center;
-    padding: 1em;
-    background-color: #00B4FF;
-    color: white;
-}
+
 .item {
     position: relative;
     margin: 7px;
@@ -457,9 +452,16 @@ span a .icoAcess{
     top: 10px !important;
     opacity: 100;
 }
-
+.hot-and-new-item .categori .item-list li .single-box{
+    position: relative;
+margin-bottom: 0;
+display: -webkit-box;
+display: -ms-flexbox;
+display: flex;
+}
 .item .info {
     text-align: initial;
+    margin-bottom: 1.3em;
     
 }
 
@@ -1572,6 +1574,12 @@ right: auto;
     background-color: #fff;
     border-radius: 10em;
 }
+.trending-item-slider .owl-stage-outer .owl-stage .owl-item .item:hover .item-cart-area {
+    bottom: 1em;
+    transition: all linear .3s;
+    background-color: #fff;
+    border-radius: 10em;
+}
 
 .flash-deals .item:hover .item-cart-area {
     bottom:2.1rem;
@@ -1979,17 +1987,7 @@ left: auto;
     border-radius: 0px;
 }
 
-.menufixed .logo-header {
-    background: linear-gradient(#000000 , #262626);
-    padding: 10px 0;
-}
 
-@media (min-width: 768px){
-    .menufixed .logo-header {
-        padding: 15px 0;
-        background: linear-gradient(#000000 , #262626);
-    }
-}
 
 .nav-fixed .logo-header {
     padding: 10px 0;
@@ -2093,12 +2091,6 @@ left: auto;
         top: 3px;
     }
 }
-
-.mainmenu-area {
-    height: auto;
-    border: none !important;
-    background: #00b4ff;
-}
 .justificar{
     justify-content: center;
     align-content: center;
@@ -2109,7 +2101,6 @@ left: auto;
     height: auto;
     width: 100%;
     max-width: 6em;
-    opacity: 0.5;
 }
 
 .slider-buttom-category {
@@ -2411,16 +2402,6 @@ left: auto;
     justify-content: center;
 }
 
-.flash-deals .flas-deal-slider .deal-counter {
-    background-color: #00b4ff;
-    margin: 0;
-    display: inline-block;
-    position: absolute;
-    bottom: 0;
-    border-radius: 5px;
-    box-shadow: 0 0 15px -5px #888888ad;
-    border: none;
-}
 .flash-deals .flas-deal-slider .deal-counter * {
     color: #fff;
 }
