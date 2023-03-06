@@ -421,7 +421,7 @@ span a .icoAcess{
     transition: unset;
     transition: all .3s;
     border: 1px solid #f4f4f4 !important;
-    height: 97%;
+    height: 94%;
     background-color: #fff;
     border-radius: 2.1em;
 }
@@ -491,7 +491,7 @@ display: flex;
         transition: unset;
         transition: all .3s;
         border: 1px solid #f4f4f4 !important;
-        height: 95%;
+        height: 92%;
         background-color: #fff;
         border-radius: 1.3em;
     }
@@ -1503,7 +1503,7 @@ right: auto;
 
 .flash-deals .flas-deal-slider .item {
     margin: 20px 10px;
-    min-height: 470px;
+    min-height: 430px;
 }
 
 .full-stars {
