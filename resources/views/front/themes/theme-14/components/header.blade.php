@@ -150,7 +150,13 @@
                     <!--PARTE DO LOGIN-->
                     @if (!Auth::guard('web')->check())
                         <a href="{{ route('user.login') }}" id="profile-icon" class="profile carticon">
-                            <i class="fas fa-user-circle peopleIcon"></i>
+                        <svg class="img-fluid peopleIcon" width="50" height="50" viewBox="0 0 48 48" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M24 42C33.9411 42 42 33.9411 42 24C42 14.0589 33.9411 6 24 6C14.0589 6 6 14.0589 6 24C6 33.9411 14.0589 42 24 42ZM24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44Z" fill="currentColor"/>
+                                <path d="M12 35.6309C12 34.5972 12.772 33.7241 13.7995 33.6103C21.515 32.7559 26.5206 32.8325 34.218 33.6287C35.2324 33.7337 36 34.5918 36 35.6116C36 36.1807 35.7551 36.7275 35.3262 37.1014C26.2414 45.0195 21.0488 44.9103 12.6402 37.1087C12.2306 36.7286 12 36.1897 12 35.6309Z" fill="currentColor"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M34.1151 34.6234C26.4784 33.8334 21.5449 33.7587 13.9095 34.6042C13.3954 34.6612 13 35.1002 13 35.6309C13 35.9171 13.1187 36.1885 13.3204 36.3757C17.4879 40.2423 20.6461 41.9887 23.7333 41.9999C26.8309 42.0113 30.1592 40.2783 34.6691 36.3476C34.8767 36.1667 35 35.8964 35 35.6116C35 35.0998 34.6154 34.6752 34.1151 34.6234ZM13.6894 32.6164C21.4852 31.7531 26.5628 31.8315 34.3209 32.6341C35.8495 32.7922 37 34.0838 37 35.6116C37 36.465 36.6336 37.2884 35.9832 37.8553C31.4083 41.8426 27.598 44.0141 23.726 43.9999C19.8435 43.9857 16.2011 41.7767 11.9601 37.8418C11.3425 37.2688 11 36.4624 11 35.6309C11 34.0943 12.1487 32.787 13.6894 32.6164Z" fill="#333333"/>
+                            <path d="M32 20C32 24.4183 28.4183 28 24 28C19.5817 28 16 24.4183 16 20C16 15.5817 19.5817 12 24 12C28.4183 12 32 15.5817 32 20Z" fill="currentColor"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M24 26C27.3137 26 30 23.3137 30 20C30 16.6863 27.3137 14 24 14C20.6863 14 18 16.6863 18 20C18 23.3137 20.6863 26 24 26ZM24 28C28.4183 28 32 24.4183 32 20C32 15.5817 28.4183 12 24 12C19.5817 12 16 15.5817 16 20C16 24.4183 19.5817 28 24 28Z" fill="currentColor"/>
+                        </svg>
                             <span class="text">
                                 {{ __('Enter or register') }}
                             </span>
@@ -183,41 +189,14 @@
                     <div class="helpful-links">
                         <ul class="helpful-links-inner">
 
-                            @if ($gs->is_cart)
-                                <li class="my-dropdown">
-                                    <a href="javascript:;" class="cart carticon">
-                                        <div class="icon">
-                                            <svg class="img-fluid icons-header" width="30" height="30"
-                                                viewBox="0 0 30 30" fill="currentColor"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M26.35 8.75C26.134 8.37577 25.8247 8.06392 25.4523 7.84484C25.0799 7.62577 24.657 7.50696 24.225 7.5H8.225L7.5 4.675C7.42675 4.4023 7.26333 4.16243 7.03635 3.99447C6.80937 3.8265 6.5322 3.74033 6.25 3.75H3.75C3.41848 3.75 3.10054 3.8817 2.86612 4.11612C2.6317 4.35054 2.5 4.66848 2.5 5C2.5 5.33152 2.6317 5.64946 2.86612 5.88388C3.10054 6.1183 3.41848 6.25 3.75 6.25H5.3L8.75 19.075C8.82325 19.3477 8.98667 19.5876 9.21365 19.7555C9.44063 19.9235 9.7178 20.0097 10 20H21.25C21.4808 19.9993 21.707 19.9347 21.9033 19.8133C22.0997 19.692 22.2586 19.5186 22.3625 19.3125L26.4625 11.1125C26.6402 10.74 26.7229 10.3293 26.7033 9.9171C26.6837 9.50487 26.5623 9.10391 26.35 8.75Z"
-                                                    fill="currentColor" />
-                                                <path
-                                                    d="M9.375 26.25C10.4105 26.25 11.25 25.4105 11.25 24.375C11.25 23.3395 10.4105 22.5 9.375 22.5C8.33947 22.5 7.5 23.3395 7.5 24.375C7.5 25.4105 8.33947 26.25 9.375 26.25Z"
-                                                    fill="currentColor" />
-                                                <path
-                                                    d="M21.875 26.25C22.9105 26.25 23.75 25.4105 23.75 24.375C23.75 23.3395 22.9105 22.5 21.875 22.5C20.8395 22.5 20 23.3395 20 24.375C20 25.4105 20.8395 26.25 21.875 26.25Z"
-                                                    fill="currentColor" />
-                                            </svg>
-
-                                            <span class="cart-quantity" id="cart-count">
-                                                {{ Session::has('cart') ? count(Session::get('cart')->items) : '0' }}
-                                            </span>
-                                        </div>
-                                    </a>
-                                    <div class="my-dropdown-menu" id="cart-items">
-                                        @include('load.cart')
-                                    </div>
-                                </li>
-                            @endif
+                      
 
                             <li class="wishlist" data-toggle="tooltip" data-placement="top"
                                 title="{{ __('Wish') }}">
 
                                 @if (Auth::guard('web')->check())
                                     <a href="{{ route('user-wishlists') }}" class="wish">
-                                        <svg class="img-fluid icons-header" width="30" height="30"
+                                        <svg class="img-fluid icons-header" width="40" height=40"
                                             viewBox="0 0 30 30" fill="currentColor"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -230,7 +209,7 @@
                                 @else
                                     <a href="javascript:;" data-toggle="modal" id="wish-btn"
                                         data-target="#comment-log-reg" class="wish">
-                                        <svg class="img-fluid icons-header" width="30" height="30"
+                                        <svg class="img-fluid icons-header" width="40" height="40"
                                             viewBox="0 0 30 30" fill="currentColor"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -242,6 +221,22 @@
                                 @endif
 
                             </li>
+
+                            @if ($gs->is_cart)
+                                <li class="my-dropdown">
+                                    <a href="javascript:;" class="cart carticon">
+                                        <div class="icon">
+                                        <svg class="img-fluid icons-header" width="40" height="40" fill="currentColor" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 6.82666 6.82666" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs></defs><g id="Layer_x0020_1"><path class="fil0" d="M1.55535 2.08935l0.545213 0c-0.0629055,0.296634 -0.0871063,0.604571 -0.0871063,0.901752 0,0.0883346 0.0716614,0.159996 0.159996,0.159996 0.0883346,0 0.159996,-0.0716614 0.159996,-0.159996 0,-0.296043 0.0249724,-0.606878 0.0939606,-0.901752l1.86312 0c0.0689921,0.294874 0.0939606,0.605709 0.0939606,0.901752 0,0.0883346 0.0716614,0.159996 0.159996,0.159996 0.0883346,0 0.159996,-0.0716614 0.159996,-0.159996 0,-0.297181 -0.0242008,-0.605118 -0.0871063,-0.901752l0.568992 0c0.0430472,0 0.0781535,0.0340039 0.0799252,0.0766181l0.295819 3.60532 6.69291e-005 -3.93701e-006c0.00361024,0.0440315 -0.0291575,0.0826654 -0.073189,0.0862756 -0.00223622,0.000185039 -0.00445669,0.000267717 -0.00666142,0.000267717l-4.22365 0c-0.0441811,0 -0.08,-0.0358189 -0.08,-0.08 0,-0.00337008 0.000208661,-0.00668504 0.000614173,-0.00994488l0.295776 -3.60478 0.079689 0.00625197 -0.0797323 -0.00654331c0.00344488,-0.0420354 0.038815,-0.0738071 0.0803268,-0.0734567z"/><path class="fil0" d="M2.09345 2.9911c0,0.0441811 0.0358189,0.08 0.08,0.08 0.0441811,0 0.08,-0.0358189 0.08,-0.08 0,-1.01507 0.293035,-1.66029 0.668114,-1.93883 0.13865,-0.102961 0.28835,-0.154445 0.437406,-0.154445 0.149051,0 0.298756,0.0514843 0.437402,0.154449 0.375075,0.278531 0.668114,0.923744 0.668114,1.93882 0,0.0441811 0.0358189,0.08 0.08,0.08 0.0441811,0 0.08,-0.0358189 0.08,-0.08 0,-1.07127 -0.321547,-1.76132 -0.733114,-2.06695 -0.16726,-0.124213 -0.349512,-0.186323 -0.532402,-0.186323 -0.182886,0 -0.365142,0.0621063 -0.532406,0.186319 -0.411567,0.305638 -0.733114,0.995693 -0.733114,2.06695z"/></g><rect class="fil1"/></svg>
+                                            <span class="cart-quantity" id="cart-count">
+                                                {{ Session::has('cart') ? count(Session::get('cart')->items) : '0' }}
+                                            </span>
+                                        </div>
+                                    </a>
+                                    <div class="my-dropdown-menu" id="cart-items">
+                                        @include('load.cart')
+                                    </div>
+                                </li>
+                            @endif
 
                             <li class="compare" data-toggle="tooltip" data-placement="top"
                                 title="{{ __('Compare') }}">
