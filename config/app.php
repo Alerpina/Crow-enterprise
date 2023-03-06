@@ -239,14 +239,16 @@ return [
             'asc' => 'price_asc',
             'desc' => 'price_desc',
         ],
-
         'id' => [
             'asc' => 'date_asc',
             'desc' => 'date_desc',
         ],
-
         'stock' => [
             'desc' => 'availability',
+        ],
+        'name' => [
+            'asc' => 'name_asc',
+            'desc' => 'name_desc',
         ],
     ],
 ];
