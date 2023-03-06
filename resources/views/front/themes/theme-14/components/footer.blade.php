@@ -92,7 +92,7 @@
                         @if ($socials->f_status == 1)
                             <li>
                                 <a href="{{ $socials->facebook }}" class="facebook" target="_blank">
-                                    <i class="fab fa-facebook-f"></i>
+                                    <i class="fab fa-facebook-f icoFooter"></i>
                                 </a>
                             </li>
                         @endif
@@ -100,7 +100,7 @@
                         @if ($socials->i_status == 1)
                             <li>
                                 <a href="{{ $socials->instagram }}" class="instagram" target="_blank">
-                                    <i class="fab fa-instagram"></i>
+                                    <i class="fab fa-instagram icoFooter"></i>
                                 </a>
                             </li>
                         @endif
@@ -108,7 +108,7 @@
                         @if ($socials->t_status == 1)
                             <li>
                                 <a href="{{ $socials->twitter }}" class="twitter" target="_blank">
-                                    <i class="fab fa-twitter"></i>
+                                    <i class="fab fa-twitter icoFooter"></i>
                                 </a>
                             </li>
                         @endif
@@ -116,7 +116,7 @@
                         @if ($socials->l_status == 1)
                             <li>
                                 <a href="{{ $socials->linkedin }}" class="linkedin" target="_blank">
-                                    <i class="fab fa-linkedin-in"></i>
+                                    <i class="fab fa-linkedin-in icoFooter"></i>
                                 </a>
                             </li>
                         @endif
@@ -124,7 +124,7 @@
                         @if ($socials->d_status == 1)
                             <li>
                                 <a href="{{ $socials->dribble }}" class="dribbble" target="_blank">
-                                    <i class="fab fa-dribbble"></i>
+                                    <i class="fab fa-dribbble icoFooter"></i>
                                 </a>
                             </li>
                         @endif
@@ -132,7 +132,7 @@
                         @if ($socials->y_status == 1)
                             <li>
                                 <a href="{{ $socials->youtube }}" class="youtube" target="_blank">
-                                    <i class="fab fa-youtube"></i>
+                                    <i class="fab fa-youtube icoFooter"></i>
                                 </a>
                             </li>
                         @endif
