@@ -1208,7 +1208,7 @@ h1, h2, h3, h4, h5, h6, p, a, span, li {
 }
 
 .item .info .name {
-    font-size: 16px;
+    font-size: 14px;
     color: #222;
     font-weight: 400;
     letter-spacing: 1px;
@@ -1216,7 +1216,7 @@ h1, h2, h3, h4, h5, h6, p, a, span, li {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
 }
 
