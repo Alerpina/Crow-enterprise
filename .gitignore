@@ -18,3 +18,4 @@ yarn-error.log
 !/lang/admin_pt-br.json
 !/lang/admin_es.json
 !/lang/base/*
+.DS_Store

@@ -22,7 +22,7 @@
                         }
                     @endphp
 
-                    <h5 class="name">{{ $prod->showName() }}</h5>
+                    <h5 class="name">{{ $prod->name }}</h5>
                     @if ($prod->previous_price != 0)
                         <p class="namee m-0">{{$scurrency->sign}}{{ $prod->previous_price }}</p>
                     @endif
