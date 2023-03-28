@@ -840,6 +840,10 @@ class Product extends LocalizedModel
         return $name;
     }
 
+    public function capitalizeName()
+    {
+        return ucwords(strtolower($this->name));
+    }
 
     public function emptyStock()
     {
