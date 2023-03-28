@@ -111,7 +111,7 @@
                                 @endif
                             </h4>
                         @endif
-                        <h5 class="name">{{ $prod->capitalizeName() }}</h5>
+                        <h5 class="name">{{ str($prod->name)->title }}</h5>
                         @if ($gs->is_cart)
                             <div class="item-cart-area">
                                 @if ($prod->product_type == 'affiliate')

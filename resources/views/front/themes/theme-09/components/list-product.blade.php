@@ -37,8 +37,8 @@ $small = $prod->firstCurrencyPrice();
                 @endif
                 @if($curr->id != $scurrency->id)<small>{{ $small }}</small> @endif
             </h4>
-            <p class="text"><a href="{{ route('front.product',$prod->slug) }}">{{ mb_strlen($prod->capitalizeName(),'utf-8') > 35 ?
-                    mb_substr($prod->capitalizeName(),0,35,'utf-8').'...' : $prod->capitalizeName() }}</a></p>
+            <p class="text"><a href="{{ route('front.product',$prod->slug) }}">{{ mb_strlen(str($prod->name)->title,'utf-8') > 35 ?
+                    mb_substr(str($prod->name)->title,0,35,'utf-8').'...' : str($prod->name)->title }}</a></p>
         </div>
     </div>
 </li>
@@ -84,8 +84,8 @@ $small = $prod->firstCurrencyPrice();
                 @endif
             </h4>
             @endif
-            <p class="text"><a href="{{ route('front.product',$prod->slug) }}">{{ mb_strlen($prod->capitalizeName(),'utf-8') > 35 ?
-                    mb_substr($prod->capitalizeName(),0,35,'utf-8').'...' : $prod->capitalizeName() }}</a></p>
+            <p class="text"><a href="{{ route('front.product',$prod->slug) }}">{{ mb_strlen(str($prod->name)->title,'utf-8') > 35 ?
+                    mb_substr(str($prod->name)->title,0,35,'utf-8').'...' : str($prod->name)->title }}</a></p>
         </div>
     </div>
 </li>
