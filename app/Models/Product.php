@@ -6,6 +6,8 @@ use stdClass;
 use App\Models\Currency;
 use App\Models\Generalsetting;
 use Spatie\Activitylog\LogOptions;
+use Illuminate\Support\Str;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
@@ -842,7 +844,7 @@ class Product extends LocalizedModel
 
     public function capitalizeName()
     {
-        return ucwords(strtolower($this->name));
+        return Str::title($this->name);
     }
 
     public function emptyStock()
