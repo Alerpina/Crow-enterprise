@@ -60,10 +60,12 @@
                     @endif
                     <div class="categori-item-area">
                         <div class="row" id="ajaxContent">
-                            @if(!config("features.marketplace"))
-                            @include('includes.product.filtered-products')
+                            @if (env('THEME') === 'theme-09')
+                                @include('front.themes.theme-09.components.filtered-products')
+                            @elseif(!config("features.marketplace"))
+                                @include('includes.product.filtered-products')
                             @else
-                            @include('includes.product.aggregated-products')
+                                @include('includes.product.aggregated-products')
                             @endif
                         </div>
                         <div id="ajaxLoader" class="ajax-loader"
