@@ -18,7 +18,7 @@
                                         @foreach($hot_products as $prod)
                                         <div class="item-slide">
                                             <ul class="item-list">
-                                                @include('includes.product.list-product')
+                                                @include('front.themes.theme-09.components.list-product')
                                             </ul>
                                         </div>
                                         @endforeach
@@ -39,7 +39,7 @@
                                         @foreach($latest_products as $prod)
                                         <div class="item-slide">
                                             <ul class="item-list">
-                                                @include('includes.product.list-product')
+                                                @include('front.themes.theme-09.components.list-product')
                                             </ul>
                                         </div>
                                         @endforeach
@@ -61,7 +61,7 @@
                                         @foreach($trending_products as $prod)
                                         <div class="item-slide">
                                             <ul class="item-list">
-                                                @include('includes.product.list-product')
+                                                @include('front.themes.theme-09.components.list-product')
                                             </ul>
                                         </div>
                                         @endforeach
@@ -83,7 +83,7 @@
                                         @foreach($sale_products as $prod)
                                         <div class="item-slide">
                                             <ul class="item-list">
-                                                @include('includes.product.list-product')
+                                                @include('front.themes.theme-09.components.list-product')
                                             </ul>
                                         </div>
                                         @endforeach

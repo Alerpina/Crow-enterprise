@@ -19,7 +19,7 @@
                 @endif
                 <div class="row">
                     @foreach ($best_products as $prod)
-                        @include('includes.product.home-product')
+                        @include('front.themes.theme-09.components.home-product')
                     @endforeach
                 </div>
             </div>
@@ -172,7 +172,7 @@
                 @endif
                 <div class="row">
                     @foreach ($best_products as $prod)
-                        @include('includes.product.home-product')
+                        @include('front.themes.theme-09.components.home-product')
                     @endforeach
                 </div>
             </div>

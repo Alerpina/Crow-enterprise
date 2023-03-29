@@ -53,7 +53,11 @@
           @include('includes.filter')
           <div class="categori-item-area">
             <div class="row" id="ajaxContent">
-              @include('includes.product.filtered-products')
+                @if (env('THEME') === 'theme-09')
+                   @include('front.themes.theme-09.components.filtered-products')
+                @else
+                    @include('includes.product.filtered-products')
+                @endif
             </div>
             <div id="ajaxLoader" class="ajax-loader"
               style="background: url({{asset('storage/images/'.$gs->loader)}}) no-repeat scroll center center rgba(0,0,0,.6);">
