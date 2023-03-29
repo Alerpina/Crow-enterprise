@@ -5,6 +5,7 @@ namespace App\Models;
 use stdClass;
 use App\Models\Currency;
 use App\Models\Generalsetting;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Support\Str;
 
@@ -842,9 +843,17 @@ class Product extends LocalizedModel
         return $name;
     }
 
-    public function capitalizeName()
+    /**
+     * Get the user's first name.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+
+    public function capitalizeName(): Attribute
     {
-        return Str::title($this->name);
+        return Attribute::make(
+            get: fn () => Str::title($this->name),
+        );
     }
 
     public function emptyStock()

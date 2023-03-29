@@ -28,7 +28,7 @@ if ($gs->switch_highlight_currency) {
                             </span>
                         @endif
                         <div class="info">
-                            <h5 class="name">{{ str($prod->name)->title }}</h5>
+                            <h5 class="name">{{ $prod->capitalize_name }}</h5>
                             @if ($prod->previous_price != 0)
                                 <p class="namee m-0">{{$scurrency->sign}}{{ $prod->previous_price }}</p>
                             @endif
@@ -258,7 +258,7 @@ if ($gs->switch_highlight_currency) {
 
                     <div class="info">
 
-                        <h5 class="name">{{ str($prod->name)->title }}</h5>
+                        <h5 class="name">{{ $prod->capitalize_name }}</h5>
                         @if ($prod->previous_price != 0)
                             <p class="namee m-0">{{$scurrency->sign}}{{ $prod->previous_price }}</p>
                         @endif
@@ -411,7 +411,7 @@ if ($gs->switch_highlight_currency) {
                 @endif
             </div>
             <div class="info">
-                <h5 class="name">{{ str($prod->name)->title }}</h5>
+                <h5 class="name">{{ $prod->capitalize_name }}</h5>
                 @if ($prod->previous_price != 0)
                     <p class="namee m-0">{{$scurrency->sign}}{{ $prod->previous_price }}</p>
                 @endif
