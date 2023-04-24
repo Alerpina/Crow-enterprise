@@ -95,8 +95,7 @@
                                             <div class="col-xl-6">
                                                 <div class="input-form">
                                                     <h4 class="heading">{{ __('Valid OAuth Redirect URI') }} *
-                                                        <span>{{ __('Copy this url and paste it to your Valid OAuth Redirect URI in
-                                                                                    developers.facebook.com.') }}</span>
+                                                        <span>{{ __('Copy this url and paste it to your Valid OAuth Redirect URI in developers.facebook.com.') }}</span>
                                                     </h4>
                                                     @php
                                                         $url = url('/auth/facebook/callback');

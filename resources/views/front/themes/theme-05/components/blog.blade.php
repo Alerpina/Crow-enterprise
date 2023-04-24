@@ -41,8 +41,7 @@
                                                 {{ substr(strip_tags($blogg->details), 0, 170) }}
                                             </p>
                                             <a class="read-more-btn"
-                                                href="{{ route('front.blogshow', $blogg->id) }}">{{ __("Read
-                                                                                    More") }}</a>
+                                                href="{{ route('front.blogshow', $blogg->id) }}">{{ __("Read More") }}</a>
                                         </div>
                                     </div>
                                 </div>

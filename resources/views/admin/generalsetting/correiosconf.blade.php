@@ -75,9 +75,7 @@
                                             <p>{{ __('Search your Zip Code:') }} <a
                                                     href="https://buscacepinter.correios.com.br/app/faixa_cep_uf_localidade/index.php"
                                                     target="_blank">BuscaFaixaCep</a></p>
-                                            <p>{{ __('Local zip code will use the settings registered with the General
-                                                                                        Shipping, not the address settings.') }}
-                                            </p>
+                                            <p>{{ __('Local zip code will use the settings registered with the General Shipping, not the mail settings.')}}</p>
                                         </div>
                                     </div>
                                 </div>

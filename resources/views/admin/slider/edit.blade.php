@@ -128,16 +128,14 @@
                                                         <div class="row">
                                                             <div class="col-sm-4">
                                                                 <label class="control-label"
-                                                                    for="title_size">{{ __('Font
-                                                                                                                                    Size') }}<span>
+                                                                    for="title_size">{{ __('Font Size') }}<span>
                                                                         {{ __('(px)') }}</span></label>
                                                                 <input class="form-control" type="number" name="title_size"
                                                                     value="{{ $data->title_size }}" min="1">
                                                             </div>
                                                             <div class="col-sm-4">
                                                                 <label class="control-label"
-                                                                    for="title_color">{{ __('Font
-                                                                                                                                    Color') }}
+                                                                    for="title_color">{{ __('Font Color') }}
                                                                 </label>
                                                                 <div class="input-group colorpicker-component cp">
                                                                     <input type="text" name="title_color"
@@ -274,8 +272,7 @@
                                                         <div class="row">
                                                             <div class="col-sm-4">
                                                                 <label class="control-label"
-                                                                    for="subtitle_size">{{ __('Font
-                                                                                                                                    Size') }}
+                                                                    for="subtitle_size">{{ __('Font Size') }}
                                                                     <span>
                                                                         {{ __('(px)') }}</span></label>
                                                                 <input class="form-control" type="number"
@@ -421,8 +418,7 @@
                                                         <div class="row">
                                                             <div class="col-sm-4">
                                                                 <label class="control-label"
-                                                                    for="details_size">{{ __('Font
-                                                                                                                                    Size') }}
+                                                                    for="details_size">{{ __('Font Size') }}
                                                                     <span>
                                                                         {{ __('(px)') }}</span></label>
                                                                 <input class="form-control" type="number"
@@ -431,8 +427,7 @@
                                                             </div>
                                                             <div class="col-sm-4">
                                                                 <label class="control-label"
-                                                                    for="details_color">{{ __('Font
-                                                                                                                                    Color') }}
+                                                                    for="details_color">{{ __('Font Color') }}
                                                                 </label>
                                                                 <div class="input-group colorpicker-component cp">
                                                                     <input type="text" name="details_color"

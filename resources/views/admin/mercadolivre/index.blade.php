@@ -64,11 +64,9 @@
                                                 <div class="col-xl-12">
                                                     <div class="input-form">
                                                         <h4 class="heading">
-                                                            {{ __('Mercado Livre Authorization Code, Access &
-                                                                                                                                                                            Refresh Token') }}
+                                                            {{ __('Mercado Livre Authorization Code, Access & Refresh Token') }}
                                                             *
-                                                            <span>({{ __('Get all Mercado Livre credentials by simply clicking
-                                                                                                                                                                                the button below.') }})</span>
+                                                            <span>({{ __('Get all Mercado Livre credentials by simply clicking the button below.') }})</span>
                                                         </h4>
                                                         <a class="btn btn-success" target="_blank"
                                                             href="https://auth.mercadolivre.com.br/authorization?response_type=code&client_id={{ $meli->app_id }}&redirect_uri={{ $meli->redirect_uri }}">{{ __('Get it here') }}</a>

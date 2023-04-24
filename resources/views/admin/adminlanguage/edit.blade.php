@@ -77,12 +77,10 @@
                                             <h4 class="heading">{{ __('Language Direction') }} *</h4>
                                             <select name="rtl" class="input-field" required="">
                                                 <option value="0" {{ $data->rtl == '0' ? 'selected' : '' }}>
-                                                    {{ __('Left To
-                                                                                                    Right') }}
+                                                    {{ __('Left To Right') }}
                                                 </option>
                                                 <option value="1" {{ $data->rtl == '1' ? 'selected' : '' }}>
-                                                    {{ __('Right To
-                                                                                                    Left') }}
+                                                    {{ __('Right To Left') }}
                                                 </option>
                                             </select>
                                         </div>

@@ -18,8 +18,7 @@
                 <label for="image-upload" class="img-label mt-4" id="image-label"><i class="icofont-upload-alt"></i>{{
                     __('Upload Image') }}</label>
                 <input type="file" name="customizable_logo" class="img-upload" id="image-upload">
-                <h4 class="customize-title">{{ __('Accepted formats: png, jpg
-                    and svg.') }}</h4><br>
+                <h4 class="customize-title">{{ __('Accepted formats: png, jpg and svg.') }}</h4><br>
                 <div class="row">
                     <button type="submit" class="btn btn-primary uploadLogoBtn"
                         style="margin-top: -10px; margin-left: 10px">

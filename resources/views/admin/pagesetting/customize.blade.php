@@ -145,8 +145,7 @@
                                             </div>
                                             <div class="card-body p-3">
                                                 <p class="card-text">
-                                                    {{ __('Show banners above the content, side by side, in a retangular
-                                                                            format.') }}
+                                                    {{ __('Show banners above the content, side by side, in a retangular format.') }}
                                                 </p>
                                             </div>
                                         </div>
@@ -225,8 +224,7 @@
                                             </div>
                                             <div class="card-body p-3">
                                                 <p class="card-text">
-                                                    {{ __('Show banners below the content, side by side, in a retangular
-                                                                            format.') }}
+                                                    {{ __('Show banners below the content, side by side, in a retangular format.') }}
                                                 </p>
                                             </div>
                                         </div>
@@ -260,8 +258,7 @@
                                             </div>
                                             <div class="card-body p-3">
                                                 <p class="card-text">
-                                                    {{ __('Show a block listing products marked as either hot, new, trending or
-                                                                            sales, with a small size.') }}
+                                                    {{ __('Show a block listing products marked as either hot, new, trending or sales, with a small size.') }}
                                                 </p>
                                             </div>
                                         </div>
@@ -334,8 +331,7 @@
 
                                 <div class="row">
                                     <div class="col">
-                                        <p>{{ __('Some content can have a special configuration. Use the slider to select a specific
-                                                            setting.') }}
+                                        <p>{{ __('Some content can have a special configuration. Use the slider to select a specific setting.') }}
                                         </p>
                                         <hr>
                                     </div>
@@ -354,8 +350,7 @@
                                             </div>
                                             <div class="card-body p-3">
                                                 <p class="card-text">
-                                                    {{ __('Banners and sliders will be show in a random order instead of the
-                                                                            order specified in the record.') }}
+                                                    {{ __('Banners and sliders will be show in a random order instead of the order specified in the record.') }}
                                                 </p>
                                             </div>
                                         </div>

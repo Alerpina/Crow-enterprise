@@ -83,8 +83,7 @@
 
                                             <a href="javascript:;" id="lang-btn" class="add-fild-btn"><i
                                                     class="icofont-plus"></i>
-                                                {{ __('Add
-                                                                      More Field') }}</a>
+                                                {{ __('Add More Field') }}</a>
                                         </div>
                                     </div>
 

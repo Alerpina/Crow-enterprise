@@ -30,8 +30,7 @@
                                                         href="javascript:;" class="mybtn1 copy"><i
                                                             class="fas fa-copy"></i></a></label>
                                                 <br>
-                                                <small>{{ __("This is your affilate link just copy the link and paste
-                                                    anywhere you want.") }}</small>
+                                                <small>{{ __("This is your affilate link just copy the link and paste anywhere you want.") }}</small>
                                             </div>
                                             <div class="col-lg-8 pt-2">
                                                 <textarea id="affilate_address" class="input-field affilate"
@@ -60,8 +59,7 @@
                                                         data-placement="top" title="Copy" href="javascript:;"
                                                         class="mybtn1 copy"><i class="fas fa-copy"></i></a></label>
                                                 <br>
-                                                <small>{{ __("This is your affilate banner html code just copy the code
-                                                    and paste anywhere you want.") }}</small>
+                                                <small>{{ __("This is your affilate banner html code just copy the code and paste anywhere you want.") }}</small>
                                             </div>
                                             <div class="col-lg-8 pt-2">
                                                 <textarea id="affilate_html" class="input-field affilate" name="address"

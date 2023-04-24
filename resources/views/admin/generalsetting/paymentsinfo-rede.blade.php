@@ -128,8 +128,7 @@
                                                 <div class="input-form">
                                                     <h4 class="heading">{{ __('Installments') }} *</h4>
                                                     <textarea class="input-field" name="rede_installments" placeholder="{{ __('Number of installments.') }}">{{ $admstore->rede_installments }}</textarea>
-                                                    <small>*{{ __('Number of installments in which the transaction will be
-                                                                                                        authorized. 2 to 12.') }}</small>
+                                                    <small>*{{ __('Number of installments in which the transaction will be authorized. 2 to 12.') }}</small>
                                                     <br>
                                                     <small>**{{ __('Not sending this field will be considered in cash.') }}</small>
                                                 </div>
@@ -142,8 +141,7 @@
                                                         placeholder="{{ __('Minimum Installment price.') }}">{{ $admstore->rede_minimum_installment_price }}</textarea>
                                                     <small>*{{ __('Minimum price of each installment.') }}</small>
                                                     <br>
-                                                    <small>**{{ __('Not sending this field will cause the installments be
-                                                                                                        set as default.') }}</small>
+                                                    <small>**{{ __('Not sending this field will cause the installments be set as default.') }}</small>
                                                 </div>
                                             </div>
 
