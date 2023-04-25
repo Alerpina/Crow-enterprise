@@ -41,8 +41,7 @@
                             <div class="box-insert-img">
                                 <label for="receipt">{{ __('Choose File') }}</label>
                                 <input type="file" name="receipt" id="receipt" onchange="readURL(this)" required>
-                                <button type="submit" id="btnUpload" class="btn btn-success btn-ok">{{ __('Send
-                                    Receipt') }}</button>
+                                <button type="submit" id="btnUpload" class="btn btn-success btn-ok">{{ __('Send Receipt') }}</button>
                             </div>
                         </form>
                     </div>

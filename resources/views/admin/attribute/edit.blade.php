@@ -348,8 +348,7 @@
                                                 for="detailsStatus1">{{ __('Show on Details Page') }}</label>
                                             <br>
                                             <span
-                                                class="tooltiptext">{{ __('Show the attribute itself on product details at the
-                                                                      store.') }}</span>
+                                                class="tooltiptext">{{ __('Show the attribute itself on product details at the store.') }}</span>
                                         </div>
                                     </div>
 

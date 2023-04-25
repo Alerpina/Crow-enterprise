@@ -12,8 +12,7 @@
 
             @if(($productt->ref_code != null) && ($admstore->reference_code == 1))
             <h4>
-                <span class="badge badge-primary" style="background-color: {{$admstore->ref_color}}">{{ __('Reference
-                    Code') }}:
+                <span class="badge badge-primary" style="background-color: {{$admstore->ref_color}}">{{ __('Reference Code') }}:
                     {{ $productt->ref_code }}
                 </span>
             </h4>

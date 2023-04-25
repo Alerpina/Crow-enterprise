@@ -601,8 +601,7 @@
                                                                             <label>
                                                                                 {{ __('Size Price') }} :
                                                                                 <span>
-                                                                                    {{ __('(This price will be added with base
-                                                                                                                                                            price)') }}
+                                                                                    {{ __('(This price will be added with base price)') }}
                                                                                 </span>
                                                                             </label>
                                                                             <input type="number" step="0.01"
@@ -646,8 +645,7 @@
                                                                         <label>
                                                                             {{ __('Size Price') }} :
                                                                             <span>
-                                                                                {{ __('(This price will be added with base
-                                                                                                                                                        price)') }}
+                                                                                {{ __('(This price will be added with base price)') }}
                                                                             </span>
                                                                         </label>
                                                                         <input type="number" step="0.01"

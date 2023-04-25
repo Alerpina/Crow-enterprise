@@ -398,8 +398,7 @@
                                                                     <label>
                                                                         {{ __('Color Gallery') }}
                                                                         <span>
-                                                                            {{ __('(These photos will be displayed when this
-                                                                                                                                                                                                                            color is selected)') }}
+                                                                            {{ __('(These photos will be displayed when this color is selected)') }}
                                                                         </span>
                                                                     </label>
                                                                 </div>
@@ -458,8 +457,7 @@
                                                         <a href="javascript:;"
                                                             id="{{ config(' features.color_gallery') ? 'color-btn-with-gallery' : 'color-btn' }}"
                                                             class="add-more mt-4 mb-3"><i
-                                                                class="fas fa-plus"></i>{{ __('Add
-                                                                                                                                                                                        More Color') }}
+                                                                class="fas fa-plus"></i>{{ __('Add More Color') }}
                                                         </a>
                                                     </div>
                                                 </div>
@@ -513,8 +511,7 @@
                                                                     <label>
                                                                         {{ __('Material Gallery') }}
                                                                         <span>
-                                                                            {{ __('(These photos will be displayed when this
-                                                                                                                                                                                                                            material is selected)') }}
+                                                                            {{ __('(These photos will be displayed when this material is selected)') }}
                                                                         </span>
                                                                     </label>
                                                                 </div>
@@ -563,8 +560,7 @@
 
                                                             <a href="javascript:;" id="material-btn"
                                                                 class="add-more mt-4 mb-3"><i
-                                                                    class="fas fa-plus"></i>{{ __('Add
-                                                                                                                                                                                                More Materials') }}
+                                                                    class="fas fa-plus"></i>{{ __('Add More Materials') }}
                                                             </a>
                                                         </div>
                                                     </div>
@@ -650,8 +646,7 @@
                                                                     <label>
                                                                         {{ __('Size Price') }} :
                                                                         <span>
-                                                                            {{ __('(This price will be added with base
-                                                                                                                                                                                                                                price)') }}
+                                                                            {{ __('(This price will be added with base price)') }}
                                                                         </span>
                                                                     </label>
                                                                     <input type="number" step="0.01"

@@ -69,8 +69,7 @@
 
     @if($gs->is_simplified_checkout && (!empty($gs->simplified_checkout_number)))
     <div class="dropdown-cart-action">
-        <a href="#" class="mybtn1" data-toggle="modal" data-target="#simplified-checkout-modal">{{ __("Simplified
-            Checkout") }}</a>
+        <a href="#" class="mybtn1" data-toggle="modal" data-target="#simplified-checkout-modal">{{ __("Simplified Checkout") }}</a>
     </div>
     @endif
 </div>

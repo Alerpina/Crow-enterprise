@@ -118,8 +118,7 @@
                                                 <div class="input-form">
                                                     <h4 class="heading">{{ __('Installments') }} *</h4>
                                                     <textarea class="input-field" name="pagarme_installments" placeholder="{{ __('Number of installments.') }}">{{ $admstore->pagarme_installments }}</textarea>
-                                                    <small>*{{ __('Number of installments in which the transaction will be
-                                                                                                        authorized. 2 to 12.') }}</small>
+                                                    <small>*{{ __('Number of installments in which the transaction will be authorized. 2 to 12.') }}</small>
                                                     <br>
                                                     <small>**{{ __('Not sending this field will be considered in cash.') }}</small>
                                                 </div>

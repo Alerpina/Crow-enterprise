@@ -137,8 +137,7 @@
                                                 </select>
                                             </div>
                                             <div class="alert alert-info ml-2 mb-0 p-2">
-                                                {{ __('If the total order amount is greater than the maximum insurance amount, the service will
-                                                                                                                      not be shown') }}
+                                                {{ __('If the total order amount is greater than the maximum insurance amount, the service will not be shown') }}
                                             </div>
                                         </div>
                                     </div>

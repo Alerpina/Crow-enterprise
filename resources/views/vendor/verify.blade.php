@@ -79,8 +79,7 @@
                                                 </div>
                                             </div>
                                             <a href="javascript:;" id="attachment-btn" class="add-more mt-4"><i
-                                                    class="fas fa-plus"></i>{{ __('Add
-                                                                        More Attachment') }}
+                                                    class="fas fa-plus"></i>{{ __('Add More Attachment') }}
                                             </a>
                                         </div>
                                     </div>

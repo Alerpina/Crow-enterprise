@@ -39,18 +39,15 @@
                         </li>
                         <li>
                             @if (request()->input('type') == 'category')
-                                <a href="{{ route('admin-attr-manage', [$data->id, 'type' => 'category']) }}">{{ __('Manage
-                                                            Attribute') }}
+                                <a href="{{ route('admin-attr-manage', [$data->id, 'type' => 'category']) }}">{{ __('Manage Attribute') }}
                                 </a>
                             @endif
                             @if (request()->input('type') == 'subcategory')
-                                <a href="{{ route('admin-attr-manage', [$data->id, 'type' => 'subcategory']) }}">{{ __('Manage
-                                                            Attribute') }}
+                                <a href="{{ route('admin-attr-manage', [$data->id, 'type' => 'subcategory']) }}">{{ __('Manage Attribute') }}
                                 </a>
                             @endif
                             @if (request()->input('type') == 'childcategory')
-                                <a href="{{ route('admin-attr-manage', [$data->id, 'type' => 'childcategory']) }}">{{ __('Manage
-                                                            Attribute') }}
+                                <a href="{{ route('admin-attr-manage', [$data->id, 'type' => 'childcategory']) }}">{{ __('Manage Attribute') }}
                                 </a>
                             @endif
                         </li>
