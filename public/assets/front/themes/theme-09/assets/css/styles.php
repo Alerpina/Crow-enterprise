@@ -1113,4 +1113,6 @@ color:  <?php echo $text_color_1; ?>;
     background-color: <?php echo $text_color_1; ?>;
     text-transform: uppercase;
 }
-
+.product-details-page .right-area .product-info .product-price .price small{
+    color: <?php echo $text_color_1; ?> !important;
+}
