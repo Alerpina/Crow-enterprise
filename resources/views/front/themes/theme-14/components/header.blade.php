@@ -263,8 +263,7 @@
         </div>
     </section>
     <!-- Logo Header Area End -->
-
-    <!--Main-Menu Area Start-->
+ <!--Main-Menu Area Start-->
     <div class="mainmenu-area mainmenu-bb">
         <div class="container-fluid">
             <div class="row mainmenu-area-innner">
@@ -278,216 +277,68 @@
                         </div>
                         <div class="categories_menu_inner">
                             <ul style="width:100%;">
-                                @php
-                                    $i = 1;
-                                @endphp
-
-                                @foreach ($categories as $category)
-                                    @php
-                                        $count = count($category->subs_order_by);
-                                    @endphp
-                                    <li
-                                        class="{{ $count ? 'dropdown_list' : '' }}
-                                        {{ $i >= 15 ? 'rx-child' : '' }} qntd">
-
-                                        @if ($count)
-                                            @if ($category->photo)
-                                                <div class="img">
-                                                    <img src="{{ asset('storage/images/categories/' . $category->photo) }}"
-                                                        alt="">
-                                                </div>
-                                            @endif
-                                            <div class="link-area">
-                                                <span><a href="{{ route('front.category', $category->slug) }}">
-                                                        {{ $category->name }} </a>
-                                                </span>
-
-                                                @if ($count)
-                                                    <a href="javascript:;">
-                                                        <i class="fa fa-angle-right" aria-hidden="true"></i>
-                                                    </a>
-                                                @endif
-                                            </div>
-                                        @else
-                                            <a href="{{ route('front.category', $category->slug) }}">
-                                                @if ($category->photo)
-                                                    <img
-                                                        src="{{ asset('storage/images/categories/' . $category->photo) }}">
-                                                @endif
-                                                {{ $category->name }}
+                            <div class="categories_menu_inner_horizontal">
+                    @php
+                        $categoryhasimage = false;
+                        foreach ($categories->where('is_featured', '=', 1) as $cat) {
+                            if (!empty($cat->image)) {
+                                $categoryhasimage = true;
+                                break;
+                            }
+                            $categoryhasimage = false;
+                        }
+                    @endphp
+                    {{-- Slider buttom Category Start --}}
+                    <section class="slider-buttom-category categorias-destaq">
+                            <div class="row">
+                                    @foreach ($categories->where('is_featured', '=', 1) as $cat)
+                                        <div class="card-cat">
+                                            <a class="linkCategories" href="{{ route('front.category', $cat->slug) }}">
+                                            <img class="img-fluid categoriesImage" src="{{ asset('storage/images/categories/' . $cat->image) }}"
+                                    alt="">
+                                                <h6 class="text-center desc-categorias">{{ $cat->name }}</h6>
                                             </a>
-                                        @endif
+                                        </div>
+                                    @endforeach
+                            </div>
+                    </section>
+                    {{-- Slider buttom banner End --}}
 
-                                        @if ($count)
-                                            @php
-                                                $ck = 0;
 
-                                                foreach ($category->subs_order_by as $subcat):
-                                                    if (count($subcat->childs_order_by) > 0):
-                                                        $ck = 1;
-                                                        break;
-                                                    endif;
-                                                endforeach;
-
-                                            @endphp
-
-                                            <ul
-                                                class="{{ $ck == 1 ? 'categories_mega_menu' : 'categories_mega_menu column_1' }}">
-
-                                                @foreach ($category->subs_order_by as $subcat)
-                                                    <li>
-                                                        <a
-                                                            href="{{ route('front.subcat', ['slug1' => $category->slug, 'slug2' => $subcat->slug]) }}">
-                                                            {{ $subcat->name }}
-                                                        </a>
-
-                                                        @if (count($subcat->childs_order_by) > 0)
-                                                            <div class="categorie_sub_menu">
-                                                                <ul>
-                                                                    @foreach ($subcat->childs_order_by as $childcat)
-                                                                        <li>
-                                                                            <a
-                                                                                href="{{ route('front.childcat', ['slug1' => $category->slug, 'slug2' => $subcat->slug, 'slug3' => $childcat->slug]) }}">
-                                                                                {{ $childcat->name }}
-                                                                            </a>
-                                                                        </li>
-                                                                    @endforeach
-                                                                </ul>
-                                                            </div>
-                                                        @endif
-                                                    </li>
-                                                @endforeach
-
-                                            </ul>
-                                        @endif
-
-                                    </li>
-
-                                    @php
-                                        $i++;
-                                    @endphp
-
-                                    @if ($i == 15)
-                                        <li>
-                                            <a href="{{ route('front.categories') }}"><i class="fas fa-plus"></i>
-                                                {{ __('See All Categories') }}
-                                            </a>
-                                        </li>
-                                    @break
-                                @endif
-                            @endforeach
+                </div>
 
                         </ul>
                     </div>
                 </div>
                 <div class="categories_menu horizontal">
                     <div class="categories_title_horizontal">
-                        <h2 class="categori_toggle"><i class="fa fa-bars"></i> {{ __('Categories') }}
-                            <i class="fa fa-angle-down arrow-down"></i>
-                        </h2>
                     </div>
                     <div class="categories_menu_inner_horizontal">
-                        <ul>
-                            @php
-                                $i = 1;
-                            @endphp
-
-                            @foreach ($categories as $category)
-                                @php
-                                    $count = count($category->subs_order_by);
-                                @endphp
-                                <li
-                                    class="{{ $count ? 'dropdown_list' : '' }}
-                                        {{ $i >= 15 ? 'rx-child' : '' }}">
-
-                                    @if ($count)
-                                        @if ($category->photo)
-                                            <div class="img">
-                                                <img src="{{ asset('storage/images/categories/' . $category->photo) }}"
-                                                    alt="">
-                                            </div>
-                                        @endif
-                                        <div class="link-area">
-                                            <span><a href="{{ route('front.category', $category->slug) }}">
-                                                    {{ $category->name }} <i class="fa fa-angle-down icoAcess" aria-hidden="true"></i></a>
-                                            </span>
-
-                                            @if ($count)
-                                                <a href="javascript:;">
-                                                    <i class="fa fa-angle-right" aria-hidden="true"></i>
-                                                </a>
-                                            @endif
+                    @php
+                        $categoryhasimage = false;
+                        foreach ($categories->where('is_featured', '=', 1) as $cat) {
+                            if (!empty($cat->image)) {
+                                $categoryhasimage = true;
+                                break;
+                            }
+                            $categoryhasimage = false;
+                        }
+                    @endphp
+                    {{-- Slider buttom Category Start --}}
+                    <section class="slider-buttom-category categorias-destaq">
+                            <div class="row">
+                                    @foreach ($categories->where('is_featured', '=', 1) as $cat)
+                                        <div class="card-cat">
+                                            <a class="linkCategories" href="{{ route('front.category', $cat->slug) }}">
+                                                <h6 class="text-center desc-categorias">{{ $cat->name }}</h6>
+                                            </a>
                                         </div>
-                                    @else
-                                        <a href="{{ route('front.category', $category->slug) }}">
-                                            @if ($category->photo)
-                                                <img
-                                                    src="{{ asset('storage/images/categories/' . $category->photo) }}">
-                                            @endif
-                                            {{ $category->name }}
-                                        </a>
-                                    @endif
+                                    @endforeach
+                            </div>
+                    </section>
+                    {{-- Slider buttom banner End --}}
 
-                                    @if ($count)
-                                        @php
-                                            $ck = 0;
 
-                                            foreach ($category->subs_order_by as $subcat):
-                                                if (count($subcat->childs_order_by) > 0):
-                                                    $ck = 1;
-                                                    break;
-                                                endif;
-                                            endforeach;
-
-                                        @endphp
-
-                                        <ul
-                                            class="{{ $ck == 1 ? 'categories_mega_menu' : 'categories_mega_menu column_1' }}">
-
-                                            @foreach ($category->subs_order_by as $subcat)
-                                                <li>
-                                                    <a
-                                                        href="{{ route('front.subcat', ['slug1' => $category->slug, 'slug2' => $subcat->slug]) }}">
-                                                        {{ $subcat->name }}
-                                                    </a>
-
-                                                    @if (count($subcat->childs_order_by) > 0)
-                                                        <div class="categorie_sub_menu">
-                                                            <ul>
-                                                                @foreach ($subcat->childs_order_by as $childcat)
-                                                                    <li>
-                                                                        <a
-                                                                            href="{{ route('front.childcat', ['slug1' => $category->slug, 'slug2' => $subcat->slug, 'slug3' => $childcat->slug]) }}">
-                                                                            {{ $childcat->name }}
-                                                                        </a>
-                                                                    </li>
-                                                                @endforeach
-                                                            </ul>
-                                                        </div>
-                                                    @endif
-                                                </li>
-                                            @endforeach
-
-                                        </ul>
-                                    @endif
-
-                                </li>
-
-                                @php
-                                    $i++;
-                                @endphp
-
-                                @if ($i == 6)
-                                    <li>
-                                        <a href="#" class="open-more-categ""><i class="fas fa-plus"></i>
-                                            {{ __('See All Categories') }}
-                                        </a>
-                                    </li>
-                                @break
-                            @endif
-                        @endforeach
-
-                    </ul>
                 </div>
             </div>
             <!--categorie menu end-->

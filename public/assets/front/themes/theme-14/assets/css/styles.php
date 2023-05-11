@@ -524,7 +524,8 @@ border: 1px solid <?php echo $theme_color_1; ?>;
 .product-details-page .xzoom-container .owl-carousel .owl-controls .owl-nav .owl-prev,
 .product-details-page .xzoom-container .owl-carousel .owl-controls .owl-nav .owl-next {
     background: <?php echo $theme_color_2; ?>;
-    border: 1px solid <?php echo $theme_color_2; ?>;
+    border: 1px solid <?php echo $text_color_2; ?>;
+    color: <?php echo $text_color_2; ?>;
 
 }
 
@@ -1205,7 +1206,14 @@ padding: 15px;
 .top-header {
     background-color: <?php echo $text_color_1; ?>;
 }
+.categories_menu .categories_menu_inner_horizontal .slider-buttom-category .row .card-cat .linkCategories h6{
+    color: <?php echo $theme_color_2; ?>;
+}
 
+ul .categories_menu_inner_horizontal .slider-buttom-category .row .card-cat .linkCategories h6 {
+    color: <?php echo $text_color_1; ?> !important;
+    font-weight: 400;
+}
 .top-header .left-content .list ul li .nice-select,
 .top-header .content .right-content .list li.login .links,
 .top-header .left-content .list ul li .currency-selector span,
@@ -1213,7 +1221,7 @@ padding: 15px;
 .top-header .content .right-content .list li .nice-select,
 .top-header .left-content .list ul li .language-selector i
 {
-    color: <?php echo $text_color_1; ?>;
+    color: <?php echo $theme_color_2; ?>;
 }
 
 .top-header .left-content .list ul li .nice-select::after,

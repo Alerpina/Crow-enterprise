@@ -54,9 +54,31 @@ a {
 justify-items: center;
 display: flex;
 }
+ul .categories_menu_inner_horizontal .slider-buttom-category .row{
+    display: grid;
+text-align: left;
+justify-content: start;
+}
+ul .categories_menu_inner_horizontal .slider-buttom-category .row .card-cat .linkCategories {
+    display: flex;
+}
+ul .categories_menu_inner_horizontal .slider-buttom-category {
+    padding: 1em !important;
+}
+ul .categories_menu_inner_horizontal .slider-buttom-category .row .card-cat .linkCategories h6 {
+    margin-left: 0 !important;
+    margin-right: 0 !important;  
+}
+.categories_menu .categories_menu_inner_horizontal .slider-buttom-category .row .card-cat .linkCategories h6{
+    margin-left: 3em;
+    margin-right: 3em;  
+}
 .owl-item .card-cat a .categoriesImage{
     width: 8em;
     height: 8em;
+}
+.slider-buttom-category {
+    padding: 1rem 0;
 }
 .slider-buttom-category .container .row .categorieBorder{
     border-bottom: 3px solid #d0d0d0;
@@ -1530,10 +1552,11 @@ right: auto;
 }
 
 .item .info .price {
-    line-height: 22px;
+    line-height: 27px;
     margin-bottom: 10px;
     color: rgb(24, 24, 24);
     font-size: 22px;
+    display: grid;
     font-weight: bold;
 }
 
@@ -1587,7 +1610,7 @@ right: auto;
 }
 
 .flash-deals .item:hover .item-cart-area {
-    bottom:2.1rem;
+    bottom:2.3rem;
 }
 
 .item:hover .item-img img {
@@ -1679,6 +1702,15 @@ right: auto;
 }
 
 @media only screen and (max-width: 414px) {
+    .categories_title h2 {
+    font-size: 11px !important;
+    }
+    #profile-icon .text {
+        font-size: 12px !important;
+    }
+    .box-button-site p {
+        font-size: 11px !important;
+    }
     .flash-deals .flas-deal-slider .deal-counter span {
         font-size: 18px;
         line-height: 22px;
