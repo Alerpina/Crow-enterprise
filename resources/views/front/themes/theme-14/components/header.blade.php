@@ -278,7 +278,6 @@
                         <div class="categories_menu_inner">
                             <ul style="width:100%;">
                             <div class="categories_menu_inner_horizontal">
-                    @if ($ps->featured_category == 1)
                     @php
                         $categoryhasimage = false;
                         foreach ($categories->where('is_featured', '=', 1) as $cat) {
@@ -305,7 +304,6 @@
                     </section>
                     {{-- Slider buttom banner End --}}
 
-                @endif
 
                 </div>
 
@@ -316,7 +314,6 @@
                     <div class="categories_title_horizontal">
                     </div>
                     <div class="categories_menu_inner_horizontal">
-                    @if ($ps->featured_category == 1)
                     @php
                         $categoryhasimage = false;
                         foreach ($categories->where('is_featured', '=', 1) as $cat) {
@@ -341,7 +338,6 @@
                     </section>
                     {{-- Slider buttom banner End --}}
 
-                @endif
 
                 </div>
             </div>
