@@ -628,7 +628,7 @@ if ($gs->switch_highlight_currency) {
                 <img class="img-fluid"
                     src="{{ filter_var($prod->thumbnail, FILTER_VALIDATE_URL)
                         ? $prod->thumbnail
-                        : asset('assets/images/thumbnails/' . $prod->thumbnail) }}"
+                        : asset('storage/images/thumbnails/' . $prod->thumbnail) }}"
                     alt="">
                 @if ($gs->is_rating == 1)
                     <div class="stars">
