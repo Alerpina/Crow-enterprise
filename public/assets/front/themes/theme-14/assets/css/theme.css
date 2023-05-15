@@ -532,9 +532,9 @@ display: flex;
     display: -webkit-box;
     -webkit-line-clamp: 2; /* number of lines to show */
     -webkit-box-orient: vertical;
-    z-index: 999;
-position: relative;
-text-transform: uppercase;
+    z-index: 10;
+    position: relative;
+    text-transform: uppercase;
 }
 
 .item .add-to-cart-btn {
