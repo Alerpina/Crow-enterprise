@@ -49,7 +49,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($cart->items as $product)
+                                @foreach ($cart['items'] as $product)
                                     <tr>
                                         <td>{{ $product['item']['id'] }}</td>
                                         <td>
