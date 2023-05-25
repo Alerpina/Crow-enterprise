@@ -1128,7 +1128,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .top-header {
-    padding: 4px 0 !important;
     background-color: #363636;
     border:none;
 }
@@ -1912,6 +1911,7 @@ h1, h2, h3, h4, h5, h6 {
 @media only screen and (max-width: 414px) {
     .top-header .left-content .list ul li .language-selector i {
         top: 3px;
+        padding: 5px 5px;
     }
 }
 

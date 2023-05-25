@@ -31,10 +31,14 @@
                 backdrop-filter: blur(10px);
             }
 
+            .menufixed.nav-fixed .top-header {
+                display: none
+            }
+
             .menufixed {
                 position: absolute;
                 z-index: 99;
-                top: 30px !important;
+                top: 0 !important;
                 width: 100%;
             }
         }

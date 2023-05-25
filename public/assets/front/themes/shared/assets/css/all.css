@@ -37106,7 +37106,6 @@ Breadcrumb Area Start
 
 .top-header {
   background: #0f78f2;
-  padding: 3px 0px 3px;
   border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
 }
 
@@ -46845,10 +46844,6 @@ input.form-control.card-elements {
   font-size: 16px;
 }
 
-.top-header {
-  padding: 6px 0px 6px!important;
-}
-
 .top-header ul li.my-dropdown.profilearea .my-dropdown-menu .profile-links li a {
   font-size: 14px;
   font-weight: 600;
@@ -47710,9 +47705,6 @@ p.product-unit-price {
     display: block;
   }
   /* Top header Start */
-  .top-header {
-    padding: 6px 0px 0px!important;
-  }
   .top-header .content {
     display: block;
     float: left;
