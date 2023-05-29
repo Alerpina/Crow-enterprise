@@ -571,10 +571,8 @@ display: flex;
 }
 
 .banner-section.position-top {
-    position: relative;
-    padding: 0;
-    bottom: 10em;
-    top: 15px;
+    position: static;
+    padding: 2rem 0;
 }
 
 @media (max-width:768px) {
