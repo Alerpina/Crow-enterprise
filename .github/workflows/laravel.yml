@@ -1,4 +1,4 @@
-name: Pipeline Stage Stores9
+name: Pipeline Stages Stores9
 
 on:
    workflow_dispatch:
