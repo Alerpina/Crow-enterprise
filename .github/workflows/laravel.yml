@@ -1,8 +1,6 @@
 name: Pipeline Stages Stores9
 
 on:
-  push:
-    branches: [feature/migrate-crow-store]
   workflow_dispatch:
   
 jobs:
