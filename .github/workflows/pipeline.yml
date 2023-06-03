@@ -15,5 +15,5 @@ jobs:
         username: ${{ secrets.SSH_USER }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
-         cd /var/www/html/stage1
-         ./server_deploy.sh
+         cd /var/www
+         ./pipeline-stores9-stages.sh
