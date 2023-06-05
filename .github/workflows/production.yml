@@ -1,4 +1,4 @@
-name: Pipeline produção Stores9
+name: Pipeline production Stores9
  
 on:
    workflow_dispatch:
