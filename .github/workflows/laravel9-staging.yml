@@ -32,6 +32,6 @@ jobs:
         username: ${{ secrets.SSH_USER2 }}
         key: ${{ secrets.SSH_PRIVATE_KEY_L9 }}
         script: |
-         cd /var/www
+         cd /var/www/
          ./pipeline-laravel9-stages.sh
          
