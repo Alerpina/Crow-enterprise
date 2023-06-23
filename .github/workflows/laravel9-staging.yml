@@ -38,4 +38,3 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY_L9 }}
         port: ${{ secrets.PORT }}
         script: cd ${{ secrets.WORK_DIR2 }} && ./pipeline-laravel9-stages.sh
-        run: echo "Em produção no STAGE9 > stage9.cloudcrow.com.br"
