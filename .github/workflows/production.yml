@@ -1,4 +1,4 @@
-name: Pipeline production Stores9
+name: Pipeline production (Lojas sem integração)
  
 on:
    workflow_dispatch:
