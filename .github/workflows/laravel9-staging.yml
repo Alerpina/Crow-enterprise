@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         php-version: '8.1'
 
@@ -16,7 +16,7 @@ jobs:
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
     - name: Instalando dependências e pacotes
-      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      run: composer install
 
     - name: Gerando chave artisan
       run: php artisan key:generate
@@ -24,7 +24,7 @@ jobs:
     - name: Permissões nos diretórios
       run: chmod -R 775 storage bootstrap/cache
       
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Deploy to production
       uses: appleboy/ssh-action@master
       with:
