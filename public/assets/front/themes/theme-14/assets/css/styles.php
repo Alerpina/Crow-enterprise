@@ -64,14 +64,14 @@ z-index: 100;
     color: <?php echo $text_color_1; ?>;
 }
 .menufixed .logo-header {
-    background: linear-gradient(<?php echo $text_color_2; ?> ,<?php echo $text_color_1; ?>);
+    background: black;
     padding: 10px 0;
 }
 
 @media (min-width: 768px){
     .menufixed .logo-header {
         padding: 15px 0;
-        background: linear-gradient(<?php echo $text_color_2; ?> ,<?php echo $text_color_2; ?>cf);
+        background: black;
     }
 }
 .mybtn1,
@@ -1091,7 +1091,7 @@ display: flex;
 }
 
 .footer {
-    background-color: #474747;
+    background-color: #2e313a;
 }
 
 .footer h3 {
