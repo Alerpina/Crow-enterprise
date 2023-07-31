@@ -123,7 +123,7 @@ $small = $product->firstCurrencyPrice();
                     </p>
                     @endif
                     @if($product->youtube != null)
-                        <span> &nbsp; Watch the product video:
+                        <span> &nbsp; {{ __("Watch the product video") }}
                             <a href="{{ $product->youtube }}" class="video-play-btn mfp-iframe" >
                                 <i class="fas fa-play"></i>
                             </a>

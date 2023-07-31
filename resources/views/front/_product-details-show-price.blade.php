@@ -42,7 +42,7 @@
     </div>
     @endif
     @if($productt->youtube != null)
-        <span> &nbsp; Watch the product video:
+        <span> &nbsp; {{ __("Watch the product video") }}
             <a href="{{ $productt->youtube }}" class="video-play-btn mfp-iframe" >
                 <i class="fas fa-play"></i>
             </a>
