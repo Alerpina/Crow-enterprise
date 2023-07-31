@@ -40,8 +40,12 @@
     </p>
     @endif
     @if($productt->youtube != null)
-    <a href="{{ $productt->youtube }}" class="video-play-btn mfp-iframe">
-        <i class="fas fa-play"></i>
-    </a>
+    <button class="button-YT">
+        <a href="{{ $productt->youtube }}" >Veja o video do produto:
+            <a href="{{ $productt->youtube }}" class="video-play-btn mfp-iframe">
+                <i class="fas fa-play"></i>
+            </a>
+        </a>
+    </button>
     @endif
 </div>
