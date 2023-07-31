@@ -146,7 +146,7 @@
                 @if ($ps->featured_category == 1)
                     <div class="footer-widget info-link-widget">
                         <h4 class="title mb-1">
-                            {{ __('Departments') }}
+                            {{ __('Departaments') }}
                         </h4>
                         <ul class="link-list">
 
