@@ -1,4 +1,4 @@
-<div class="product-price">
+<div class="product-price d-flex align-items-center">
     @if($gs->show_product_prices)
     <p class="title">{{ __("Price") }} :</p>
     @endif
@@ -30,6 +30,7 @@
         @endif
     </p>
     @else
+    <div>
     <p class="price">
         <span id="originalprice">
             {{ $productt->showVendorMinPrice() }} até {{ $productt->showVendorMaxPrice()
@@ -38,14 +39,14 @@
             <small><span id="originalprice">{{ $small }}</span></small>
             @endif
     </p>
+    </div>
     @endif
     @if($productt->youtube != null)
-    <button class="button-YT">
-        <a href="{{ $productt->youtube }}" >Veja o video do produto:
-            <a href="{{ $productt->youtube }}" class="video-play-btn mfp-iframe">
+        <a href="{{ $productt->youtube }}"  >
+            &nbsp; Watch the product video:
+            <a href="{{ $productt->youtube }}" class="video-play-btn mfp-iframe" >
                 <i class="fas fa-play"></i>
             </a>
         </a>
-    </button>
     @endif
 </div>
