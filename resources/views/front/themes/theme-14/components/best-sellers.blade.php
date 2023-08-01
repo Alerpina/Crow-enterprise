@@ -29,16 +29,17 @@
                         @if($ps->best_seller_banner)
                         <a class="banner-effect sider-bar-align" href="{{ $ps->best_seller_banner_link }}">
                             <img src="{{asset('storage/images/banners/'.$ps->best_seller_banner)}}" alt=""
-                                style="width:100%;border-radius: 5px;">
+                                style="width:200px; object-fit: cover; object-position: center; height: 350px; border-radius: 5px;">
                         </a>
                         @endif
                         @if($ps->best_seller_banner1)
                         <a class="banner-effect sider-bar-align" href="{{ $ps->best_seller_banner_link1 }}">
                             <img src="{{asset('storage/images/banners/'.$ps->best_seller_banner1)}}" alt=""
-                                style="width:100%;border-radius: 5px;">
+                                style="width:200px; object-fit: cover; object-position: center; height: 350px; border-radius: 5px;">
                         </a>
                         @endif
                     </div>
+                    
                 </div>
             </div>
         </div>

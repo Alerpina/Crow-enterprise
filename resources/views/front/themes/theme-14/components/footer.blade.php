@@ -1,8 +1,8 @@
 <!-- Footer Area Start -->
 <footer class="footer" id="footer">
     <div class="container">
-        <div class="row justify-content-between">
-            <div class="col-12 col-md-3 d-flex flex-column justify-content-start align-items-center">
+        <div class="row">
+            <div class="col-md-3 d-flex flex-column justify-content-start align-items-center">
                 <div class="footer-info-area">
                     <div class="footer-logo">
                         <a href="{{ route('front.index') }}" class="logo-link">
@@ -14,18 +14,7 @@
                             {!! $gs->footer !!}
                         </p>
                     </div>
-                    <h4 class="title mb-1">
-                        {{ __('Opening hours') }}
-                    </h4>
-                    <div class="text m-0">
-                        <p>
-                            {{ __('Monday to friday - 8h / 17h') }} <br>
-                            {{ __('Saturday - 8h / 12h') }} <br>
-                            {{ __('Sunday - Closed') }}
-                        </p>
-                    </div>
                 </div>
-
             </div>
             <div class="col-md-3">
                 <div class="footer-widget info-link-widget">
@@ -80,7 +69,6 @@
                                 </a>
                             </li>
                         @endif
-
                     </ul>
                 </div>
                 <div class="fotter-social-links">
@@ -140,7 +128,21 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
+                <div class="footer-widget">
+                    <h4 class="title mb-1">
+                        {{ __('Opening hours') }}
+                    </h4>
+                    <div class="text m-0">
+                        <p>
+                            {{ __('Monday to friday - 8h / 17h') }} <br>
+                            {{ __('Saturday - 8h / 12h') }} <br>
+                            {{ __('Sunday - Closed') }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
                 @if ($ps->featured_category == 1)
                     <div class="footer-widget info-link-widget">
                         <h4 class="title mb-1">
@@ -171,11 +173,6 @@
                         </ul>
                     </div>
                 @endif
-            </div>
-            <div class="col-md-3">
-                <div class="Footer-Demais">
-                    {!! $gs->copyright !!}
-                </div>
             </div>
         </div>
     </div>
