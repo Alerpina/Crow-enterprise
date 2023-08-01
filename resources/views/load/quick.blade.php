@@ -125,13 +125,13 @@ $small = $product->firstCurrencyPrice();
                     @if(env('THEME') === 'theme-09')
                         @if($productt->youtube != null)
                             <span> &nbsp; {{ __("Watch the product video") }}
-                                <a href="{{ $productt->youtube }}" class="video-play-btn mfp-iframe" >
+                                <a href="{{ $producst->youtube }}" class="video-play-btn mfp-iframe" >
                                     <i class="fas fa-play"></i>
                                 </a>
                             </span>
                         @endif
                     @else
-                        <a href="{{ $productt->youtube }}" class="video-play-btn mfp-iframe" >
+                        <a href="{{ $product->youtube }}" class="video-play-btn mfp-iframe" >
                             <i class="fas fa-play"></i>
                         </a>
                     @endif
