@@ -105,7 +105,7 @@ class XmlHelper
                     $product['ref_code_int'] = $item['Codigo'];
                     $product['external_name'] = $item['Nome'];
                     $product['slug'] = Str::slug($item['Nome']);
-                    $product['price'] = $item['Valor'];
+                    $product['price'] = floatval(str_replace(',', '.', $item['Valor']));
                     $product['stock'] = $item['Estoque'];
                     $product['category_id'] = $category->id;
                     $product['subcategory_id'] = $subcategory->id;
