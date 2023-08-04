@@ -16,18 +16,14 @@ use stdClass;
 class AdminEmail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    private $objDemo;
-    private $mailData;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(stdClass $objDemo, array $mailData)
+    public function __construct(private stdClass $objDemo, private array $mailData)
     {
-        $this->objDemo = $objDemo;
-        $this->mailData = $mailData;
+
     }
 
     /**
