@@ -2,6 +2,8 @@
 
 namespace App\Classes;
 
+use App\Jobs\AdminEmail as JobsAdminEmail;
+use App\Jobs\ProcessEmail;
 use App\Mail\AdminEmail;
 use App\Models\BankAccount;
 use App\Models\Order;
@@ -11,6 +13,8 @@ use App\Models\Generalsetting;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Models\CartAbandonment;
+use Illuminate\Contracts\Queue\Job;
+use Illuminate\Queue\Jobs\Job as JobsJob;
 
 class GeniusMailer
 {
@@ -194,7 +198,7 @@ class GeniusMailer
         $objDemo->reply = $mailData['reply'] ?? $this->storeSettings->from_email;
 
         try {
-            Mail::to($objDemo->to)->queue(new AdminEmail($mailData['body'], $objDemo->subject, ['to_email' => $objDemo->to, 'from_email' => $objDemo->from_email, 'from_name' => $objDemo->from_name, 'reply' => $objDemo->reply]));
+            JobsAdminEmail::dispatch($objDemo, $mailData);
         } catch (\Exception $e) {
             Log::debug('genius_mailer_custom', [$e->getMessage()]);
         }
