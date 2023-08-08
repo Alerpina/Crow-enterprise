@@ -45,7 +45,7 @@ a {
         flex: 0 0 24%;
         max-width: 35%;
     }
-    .menufixed.nav-fixed .logo-header {
+    .menufixed.nav-fixed .mainmenu-area {
         display: none;
     }
 }
