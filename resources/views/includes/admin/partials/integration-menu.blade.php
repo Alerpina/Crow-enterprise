@@ -63,4 +63,10 @@
             href="{{ route('admin-gs-integrations-mercadolivre-index') }}">{{ __('Mercado Livre') }}</a>
     </li>
     @endif
+    @if (config('services.bling.id') && config('services.bling.secret'))    
+        <li class="nav-item border-bottom mb-2 {{request()->is('admin/authenticate/*') ? 'border-success' : ''}}">
+            <a class="nav-link {{request()->is('admin/authenticate/*') ? 'text-success' : ''}}"
+                href="{{ route('admin.bling.authenticate') }}">{{ __('Bling') }}</a>
+        </li>
+    @endif
 </ul>
