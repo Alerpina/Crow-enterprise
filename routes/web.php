@@ -40,6 +40,14 @@ Route::group([
         });
 
         Route::group([
+            'as' => 'bling.',
+            'prefix' => 'bling'
+        ], function () {
+            Route::get('/', 'BlingController@authenticate')->name('authenticate');
+            Route::get('/token', 'BlingController@setTokens')->name('set.token');
+        });
+
+        Route::group([
             'as' => 'conv-',
             'prefix' => 'conv'
         ], function () {
