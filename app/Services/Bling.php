@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Http;
 
 class Bling
 {
-    private string $url = "https://www.bling.com.br/Api/v3/oauth/";
+    private string $base_url = "https://www.bling.com.br/Api/v3/";
+    private string $auth_url;
     public $access_token;
     public $refresh_token;
 
@@ -17,6 +18,7 @@ class Bling
 
     public function __construct(string $access_token = null, string $refresh_token = null)
     {
+        $this->auth_url = $this->base_url . "oauth/";
         $this->client_id = config('services.bling.id');
         $this->client_secret = config('services.bling.secret');
         $this->state = config('services.bling.state');
@@ -32,14 +34,14 @@ class Bling
             'state' => $this->state,
         ];
 
-        return redirect()->away($this->url . 'authorize?' . http_build_query($params));
+        return redirect()->away($this->auth_url . 'authorize?' . http_build_query($params));
     }
 
     public function generateTokens(string $code): void
     {
         $response = Http::withHeaders([
             'Authorization' => 'Basic ' . base64_encode($this->client_id . ':' . $this->client_secret)
-        ])->post($this->url . 'token', [
+        ])->post($this->auth_url . 'token', [
             'grant_type' => 'authorization_code',
             'code' => $code,
         ])->collect();
@@ -57,11 +59,62 @@ class Bling
     {
         $response = Http::withHeaders([
             'Authorization' => 'Basic ' . base64_encode($this->client_id . ':' . $this->client_secret)
-        ])->post($this->url . 'token', [
+        ])->post($this->auth_url . 'token', [
             'grant_type' => 'refresh_token',
             'refresh_token' => $this->refresh_token,
         ])->collect();
 
         $this->access_token = $response->get('access_token');
+    }
+
+    private function isSetAccessToken(): void
+    {
+        if (!$this->access_token) {
+            throw new \Exception("The access token isn't defined");
+        }
+    }
+
+    /**
+     * @param string $name The name of category
+     * @return int The id of category in Bling!
+     */
+    public function createCategory(string $name): int
+    {
+        $this->isSetAccessToken();
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $this->access_token
+        ])->asJson()->post($this->base_url . 'categorias/produtos', [
+            'descricao' => $name
+        ])->collect();
+
+        return $response->get('data')['id'];
+    }
+
+    /**
+     * @param string $name The name of category
+     * @param int $id The id of category in Bling!
+     */
+    public function updateCategory(string $name, int $id): void
+    {
+        $this->isSetAccessToken();
+
+        Http::withHeaders([
+            'Authorization' => 'Bearer ' . $this->access_token
+        ])->asJson()->put($this->base_url . 'categorias/produtos/' . $id, [
+            'descricao' => $name
+        ]);
+    }
+
+    /**
+     * @param int $id The id of category in Bling!
+     */
+    public function deleteCategory(int $id): void
+    {
+        $this->isSetAccessToken();
+
+        Http::withHeaders([
+            'Authorization' => 'Bearer ' . $this->access_token
+        ])->delete($this->base_url . 'categorias/produtos/' . $id);
     }
 }
