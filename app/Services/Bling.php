@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Services\Bling\DTOs\ProductDTO;
+use App\Services\Bling\DTOs\StockDTO;
 use App\Services\Bling\Enums\Status;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Http;
@@ -159,7 +160,7 @@ class Bling
     {
         $this->isSetAccessToken();
 
-        $response = Http::withHeaders([
+        Http::withHeaders([
             'Authorization' => 'Bearer ' . $this->access_token
         ])->asJson()->patch($this->base_url . 'produtos/' . $id . '/situacoes', [
             'situacao' => $status->value,
@@ -173,8 +174,35 @@ class Bling
     {
         $this->isSetAccessToken();
 
-        $response = Http::withHeaders([
+        Http::withHeaders([
             'Authorization' => 'Bearer ' . $this->access_token
         ])->delete($this->base_url . 'produtos/' . $id);
+    }
+
+    #Warehouse section
+    /**
+     * @return array Response data of request
+     */
+    public function getWarehouses(): array
+    {
+        $this->isSetAccessToken();
+
+        return Http::withHeaders([
+            'Authorization' => 'Bearer ' . $this->access_token
+        ])->get($this->base_url . 'depositos')->collect()->toArray();
+    }
+
+    #Stock section
+    /**
+     * 
+     * @param App\Services\Bling\DTOs\StockDTO $stock Data of stock
+     */
+    public function createStock(StockDTO $stock): void
+    {
+        $this->isSetAccessToken();
+
+        Http::withHeaders([
+            'Authorization' => 'Bearer ' . $this->access_token
+        ])->post($this->base_url . 'estoques', $stock->toArray());
     }
 }
