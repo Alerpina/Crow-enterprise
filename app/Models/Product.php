@@ -136,6 +136,18 @@ class Product extends LocalizedModel
         return $this->hasMany(License::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function image(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => filter_var($this->photo, FILTER_VALIDATE_URL) 
+                ? $this->photo 
+                : asset('storage/images/products/' . $this->photo),
+        );
+    }
+
     public static function filterProducts($collection)
     {
         foreach ($collection as $key => $data) {
