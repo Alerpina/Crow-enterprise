@@ -78,7 +78,7 @@ ul .categories_menu_inner_horizontal .slider-buttom-category .row .card-cat .lin
     height: 8em;
 }
 .slider-buttom-category {
-    padding: 1rem 0;
+    padding: 0rem 0;
 }
 .slider-buttom-category .container .row .categorieBorder{
     border-bottom: 3px solid #d0d0d0;
