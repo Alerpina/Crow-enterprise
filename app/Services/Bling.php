@@ -2,8 +2,11 @@
 
 namespace App\Services;
 
+use App\Services\Bling\DTOs\ProductDTO;
+use App\Services\Bling\Enums\Status;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class Bling
 {
@@ -74,6 +77,7 @@ class Bling
         }
     }
 
+    #Category section
     /**
      * @param string $name The name of category
      * @return int The id of category in Bling!
@@ -116,5 +120,61 @@ class Bling
         Http::withHeaders([
             'Authorization' => 'Bearer ' . $this->access_token
         ])->delete($this->base_url . 'categorias/produtos/' . $id);
+    }
+
+    #Product section
+    /**
+     * @param ProductDTO $product The product data
+     * @return int The id of category in Bling!
+     */
+    public function createProduct(ProductDTO $product): int
+    {
+        $this->isSetAccessToken();
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $this->access_token
+        ])->asJson()->post($this->base_url . 'produtos', $product->toArray())->collect();
+
+        return $response->get('data')['id'];
+    }
+
+    /**
+     * @param ProductDTO $product The product data
+     * @param int $id The id of product in Bling!
+     */
+    public function updateProduct(ProductDTO $product, int $id): void
+    {
+        $this->isSetAccessToken();
+
+        Http::withHeaders([
+            'Authorization' => 'Bearer ' . $this->access_token
+        ])->asJson()->put($this->base_url . 'produtos/' . $id, $product->toArray());
+    }
+
+    /**
+     * @param int $id The id of product in Bling!
+     * @param App\Services\Bling\Enums\Status $status The status to change
+     */
+    public function changeProductStatus(int $id, Status $status): void
+    {
+        $this->isSetAccessToken();
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $this->access_token
+        ])->asJson()->patch($this->base_url . 'produtos/' . $id . '/situacoes', [
+            'situacao' => $status->value,
+        ]);
+    }
+
+    /**
+     * @param int $id The id of product in Bling!
+     */
+    public function deleteProduct(int $id): void
+    {
+        $this->isSetAccessToken();
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $this->access_token
+        ])->delete($this->base_url . 'produtos/' . $id);
     }
 }
