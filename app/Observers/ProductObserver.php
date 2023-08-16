@@ -6,8 +6,8 @@ use App\Models\Generalsetting;
 use App\Models\Product;
 use App\Services\Bling;
 use App\Services\Bling\DTOs\ProductDTO;
+use App\Services\Bling\DTOs\StockDTO;
 use App\Services\Bling\Enums\Status;
-use Illuminate\Support\Facades\Log;
 
 class ProductObserver
 {
@@ -15,6 +15,19 @@ class ProductObserver
 
     public function __construct() {
         $this->bling = new Bling(Generalsetting::first()->bling_access_token);
+    }
+
+    private function syncStock(Product $product)
+    {
+        $warehouses = $this->bling->getWarehouses();
+
+        if (isset($warehouses['data'][0]['id'])) {
+            $this->bling->createStock(new StockDTO(
+                $product->ref_code,
+                $warehouses['data'][0]['id'],
+                $product->stock
+            ));
+        }
     }
 
     /**
@@ -40,6 +53,8 @@ class ProductObserver
                 $product->length,
                 $product->image,
             ));
+
+            $this->syncStock($product);
         }
     }
 
@@ -66,6 +81,8 @@ class ProductObserver
                 $product->length,
                 $product->image,
             ), intval($product->ref_code));
+
+            $this->syncStock($product);
         }
     }
 
