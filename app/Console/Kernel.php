@@ -73,6 +73,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('order:export')->hourly();
 
         $schedule->command('bling:refresh')->everyFourHours();
+
+        $schedule->command('bling:stock')->everyThirtyMinutes();
     }
 
     /**
