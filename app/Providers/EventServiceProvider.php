@@ -10,7 +10,9 @@ use App\Events\WatchPix;
 use App\Listeners\HandleBackInStock;
 use App\Listeners\HandleWatchPix;
 use App\Models\Category;
+use App\Models\Product;
 use App\Observers\CategoryObserver;
+use App\Observers\ProductObserver;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -41,5 +43,6 @@ class EventServiceProvider extends ServiceProvider
         parent::boot();
 
         Category::observe(CategoryObserver::class);
+        Product::observe(ProductObserver::class);
     }
 }
