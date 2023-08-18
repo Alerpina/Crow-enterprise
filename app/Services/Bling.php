@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Services\Bling\DTOs\ContactDTO;
+use App\Services\Bling\DTOs\OrderDTO;
 use App\Services\Bling\DTOs\ProductDTO;
 use App\Services\Bling\DTOs\StockDTO;
 use App\Services\Bling\Enums\Status;
@@ -204,5 +206,45 @@ class Bling
         Http::withHeaders([
             'Authorization' => 'Bearer ' . $this->access_token
         ])->post($this->base_url . 'estoques', $stock->toArray());
+    }
+
+    #Payment Method section
+    /**
+     * @return array Response data of request
+     */
+    public function getPaymentMethods(): array
+    {
+        $this->isSetAccessToken();
+
+        return Http::withHeaders([
+            'Authorization' => 'Bearer ' . $this->access_token
+        ])->get($this->base_url . 'formas-pagamentos')->collect()->toArray()['data'];
+    }
+
+    #Contact section
+    /**
+     * 
+     * @param App\Services\Bling\DTOs\ContactDTO $stock Data of stock
+     */
+    public function createContact(ContactDTO $contact): void
+    {
+        $this->isSetAccessToken();
+
+        Http::withHeaders([
+            'Authorization' => 'Bearer ' . $this->access_token
+        ])->post($this->base_url . 'contatos', $contact->toArray());
+    }
+
+    #Order section
+    /**
+     * @param App\Services\Bling\DTOs\OrderDTO $order The order data
+     */
+    public function createOrder(OrderDTO $order): void
+    {
+        $this->isSetAccessToken();
+
+        Http::withHeaders([
+            'Authorization' => 'Bearer ' . $this->access_token
+        ])->asJson()->post($this->base_url . 'pedidos/vendas', $order->toArray())->collect();
     }
 }
