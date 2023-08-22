@@ -9,7 +9,7 @@ use App\Services\Bling;
 use App\Services\Bling\DTOs\ContactDTO;
 use App\Services\Bling\DTOs\OrderDTO;
 use App\Services\Bling\DTOs\OrderProductDTO;
-use App\Services\Bling\DTOs\OrderTransportDTO;
+use App\Services\Bling\DTOs\TransportDTO;
 use App\Services\Bling\Enums\PaymentMethod;
 use Illuminate\Console\Command;
 
@@ -46,32 +46,46 @@ class SendOrdersToBling extends Command
                 if ($order->method == __('Cash on Delivery')) {
                     $payment = $payments->where('tipoPagamento', PaymentMethod::Money->value)->first();
                 }
-    
+
                 $user = User::where('email', $order->customer_email)->first();
-    
+                $contact_id = null;
+
                 if (!$user || !$user?->ref_code) {
                     $contact_id = $bling->createContact(new ContactDTO(
-                        $order->customer_name
+                        $order->customer_name,
+                        document: $order->customer_document,
+                        transport: new TransportDTO(
+                            intval($order->customer_address_number),
+                            $order->customer_address,
+                            $order->customer_complement,
+                            $order->customer_city,
+                            $order->customer_country,
+                            $order->customer_zip,
+                            $order->customer_district
+                        )
                     ))['data']['id'];
                 }
-    
+
                 if ($user && !$user->ref_code) {
                     $user->ref_code = $contact_id;
                     $user->save();
                 }
 
-                $contact_id = $user->ref_code;
-    
+                if (!$contact_id) {
+                    $contact_id = $user->ref_code;
+                }
+
                 $products_in_order = new OrderProductDTO();
                 foreach ($order->cart['items'] as $product) {
                     $products_in_order->insertProduct(
-                        $product['item']['id'],
+                        $product['item']['sku'],
                         $product['qty'],
                         $product['item']['price'],
-                        $product['item']['name']
+                        $product['item']['name'],
+                        $product['item']['ref_code'],
                     );
                 }
-    
+
                 $order->ref_code = $bling->createOrder(new OrderDTO(
                     $order->id,
                     $order->created_at,
@@ -82,14 +96,15 @@ class SendOrdersToBling extends Command
                     $order->pay_amount,
                     $payment['id'],
                     $order->coupon_discount,
-                    new OrderTransportDTO(
+                    new TransportDTO(
                         intval($order->shipping_address_number) ?? intval($order->customer_address_number),
                         $order->shipping_address ?? $order->customer_address,
                         $order->shipping_complement ?? $order->customer_complement,
                         $order->shipping_city != "" ? $order->shipping_city : $order->customer_city,
                         $order->shipping_country ?? $order->customer_country,
                         $order->shipping_zip ?? $order->customer_zip,
-                        $order->shipping_district ?? $order->customer_district
+                        $order->shipping_district ?? $order->customer_district,
+                        $order->shipping
                     )
                 ))['data']['id'];
 
