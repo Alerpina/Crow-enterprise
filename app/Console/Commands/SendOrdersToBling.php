@@ -9,6 +9,7 @@ use App\Services\Bling;
 use App\Services\Bling\DTOs\ContactDTO;
 use App\Services\Bling\DTOs\OrderDTO;
 use App\Services\Bling\DTOs\OrderProductDTO;
+use App\Services\Bling\DTOs\OrderTransportDTO;
 use App\Services\Bling\Enums\PaymentMethod;
 use Illuminate\Console\Command;
 
@@ -78,8 +79,18 @@ class SendOrdersToBling extends Command
                     intval($contact_id),
                     $products_in_order,
                     $order->created_at,
-                    $order->cart['totalPrice'],
-                    $payment['id']
+                    $order->pay_amount,
+                    $payment['id'],
+                    $order->coupon_discount,
+                    new OrderTransportDTO(
+                        intval($order->shipping_address_number) ?? intval($order->customer_address_number),
+                        $order->shipping_address ?? $order->customer_address,
+                        $order->shipping_complement ?? $order->customer_complement,
+                        $order->shipping_city != "" ? $order->shipping_city : $order->customer_city,
+                        $order->shipping_country ?? $order->customer_country,
+                        $order->shipping_zip ?? $order->customer_zip,
+                        $order->shipping_district ?? $order->customer_district
+                    )
                 ))['data']['id'];
 
                 $order->save();
