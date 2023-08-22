@@ -7,16 +7,28 @@ use App\Services\Bling\Enums\TypeOfContact;
 class ContactDTO
 {
     public function __construct(
-        public string $name,
-        public TypeOfContact $type = TypeOfContact::Physical
+        private string $name,
+        private TypeOfContact $type = TypeOfContact::Physical,
+        private ?string $document = null,
+        private ?TransportDTO $transport = null
     ) {
     }
 
     public function toArray(): array
     {
-        return [
+        $data = [
             "nome" => $this->name,
             "tipo" => $this->type,
         ];
+
+        if ($this->transport) {
+            $data['endereco']['geral'] = $this->transport->toArray();
+        }
+
+        if ($this->document) {
+            $data['numeroDocumento'] = $this->document;
+        }
+
+        return $data;
     }
 }
