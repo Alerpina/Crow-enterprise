@@ -8,14 +8,21 @@ class OrderProductDTO
 {
     private array $products;
 
-    public function insertProduct(int $id, int $quantity, float $value, string $description)
+    public function insertProduct(string $code, int $quantity, float $value, string $description, ?string $ref_code = null)
     {
-        $this->products[] = [
-            'id' => $id,
+        $data = [
+            'codigo' => $code,
+            'unidade' => 'UN',
             'quantidade' => $quantity,
             'valor' => $value,
             'descricao' => $description,
         ];
+
+        if ($ref_code) {
+            $data['produto']['id'] = $ref_code;
+        }
+
+        $this->products[] = $data;
     }
 
     public function toArray(): array
