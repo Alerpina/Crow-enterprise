@@ -16,7 +16,7 @@ class OrderDTO
         private float $payment_value,
         private int $payment_id,
         private ?float $discount = null,
-        private ?OrderTransportDTO $transport = null,
+        private ?TransportDTO $transport = null,
     ) {
     }
 
