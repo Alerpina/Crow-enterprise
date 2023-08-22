@@ -226,25 +226,25 @@ class Bling
      * 
      * @param App\Services\Bling\DTOs\ContactDTO $stock Data of stock
      */
-    public function createContact(ContactDTO $contact): void
+    public function createContact(ContactDTO $contact): array
     {
         $this->isSetAccessToken();
 
-        Http::withHeaders([
+        return Http::withHeaders([
             'Authorization' => 'Bearer ' . $this->access_token
-        ])->post($this->base_url . 'contatos', $contact->toArray());
+        ])->post($this->base_url . 'contatos', $contact->toArray())->collect()->toArray();
     }
 
     #Order section
     /**
      * @param App\Services\Bling\DTOs\OrderDTO $order The order data
      */
-    public function createOrder(OrderDTO $order): void
+    public function createOrder(OrderDTO $order): array
     {
         $this->isSetAccessToken();
 
-        Http::withHeaders([
+        return Http::withHeaders([
             'Authorization' => 'Bearer ' . $this->access_token
-        ])->asJson()->post($this->base_url . 'pedidos/vendas', $order->toArray())->collect();
+        ])->asJson()->post($this->base_url . 'pedidos/vendas', $order->toArray())->collect()->toArray();
     }
 }
