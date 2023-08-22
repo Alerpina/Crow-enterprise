@@ -15,12 +15,14 @@ class OrderDTO
         private DateTimeInterface $payment_date,
         private float $payment_value,
         private int $payment_id,
+        private ?float $discount = null,
+        private ?OrderTransportDTO $transport = null,
     ) {
     }
 
     public function toArray()
     {
-        return [
+        $data = [
             'numero' => $this->id,
             'data' => $this->date,
             'numeroPedidoCompra' => $this->orderNumber,
@@ -38,5 +40,15 @@ class OrderDTO
                 ]
             ]
         ];
+
+        if ($this->discount) {
+            $data['desconto']['valor'] = $this->discount;
+        }
+
+        if ($this->transport) {
+            $data['transporte']['etiqueta'] = $this->transport->toArray();
+        }
+
+        return $data;
     }
 }
