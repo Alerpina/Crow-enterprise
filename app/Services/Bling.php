@@ -205,4 +205,21 @@ class Bling
             'Authorization' => 'Bearer ' . $this->access_token
         ])->post($this->base_url . 'estoques', $stock->toArray());
     }
+
+    /**
+     * @param array $ids The ids of products
+     * @return array
+     */
+    public function getStocks(array $ids): array
+    {
+        $this->isSetAccessToken();
+
+        $query = http_build_query(['idsProdutos' => $ids]);
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $this->access_token
+        ])->get($this->base_url . 'estoques/saldos?', preg_replace('/\%5B\d+\%5D/', '%5B%5D', $query))->collect();
+
+        return $response->get('data');
+    }
 }
