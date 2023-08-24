@@ -7,6 +7,7 @@ use App\Services\Bling\DTOs\OrderDTO;
 use App\Services\Bling\DTOs\ProductDTO;
 use App\Services\Bling\DTOs\StockDTO;
 use App\Services\Bling\Enums\Status;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -233,9 +234,16 @@ class Bling
     {
         $this->isSetAccessToken();
 
-        return Http::withHeaders([
+        $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $this->access_token
-        ])->get($this->base_url . 'formas-pagamentos')->collect()->toArray()['data'];
+        ])->get($this->base_url . 'formas-pagamentos');
+
+        if (!$response->ok()) {
+            Log::error("Erro ao pegar os meios de pagamento de Bling", $response);
+            throw new Exception("Erro ao pegar os meios de pagamento d Bling");
+        }
+
+        return $response->collect()->toArray()['data'];
     }
 
     #Contact section
@@ -247,9 +255,16 @@ class Bling
     {
         $this->isSetAccessToken();
 
-        return Http::withHeaders([
+        $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $this->access_token
-        ])->post($this->base_url . 'contatos', $contact->toArray())->collect()->toArray();
+        ])->post($this->base_url . 'contatos', $contact->toArray());
+
+        if (!$response->created()) {
+            Log::error("Erro ao enviar o contato para Bling", $response);
+            throw new Exception("Erro ao contato o pedido para Bling");
+        }
+
+        return $response->collect()->toArray();
     }
 
     #Order section
@@ -260,8 +275,15 @@ class Bling
     {
         $this->isSetAccessToken();
 
-        return Http::withHeaders([
+        $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $this->access_token
-        ])->asJson()->post($this->base_url . 'pedidos/vendas', $order->toArray())->collect()->toArray();
+        ])->asJson()->post($this->base_url . 'pedidos/vendas', $order->toArray());
+
+        if (!$response->created()) {
+            Log::error("Erro ao enviar o pedido para Bling", $response);
+            throw new Exception("Erro ao enviar o pedido para Bling");
+        }
+        
+        return $response->collect()->toArray();
     }
 }
