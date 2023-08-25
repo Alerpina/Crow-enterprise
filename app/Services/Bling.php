@@ -238,7 +238,7 @@ class Bling
             'Authorization' => 'Bearer ' . $this->access_token
         ])->get($this->base_url . 'formas-pagamentos');
 
-        if (!$response->ok()) {
+        if (!($response->status() == 201 || $response->status() == 200)) {
             Log::error("Erro ao pegar os meios de pagamento de Bling", $response->collect()->toArray());
             throw new Exception("Erro ao pegar os meios de pagamento d Bling");
         }
@@ -259,7 +259,7 @@ class Bling
             'Authorization' => 'Bearer ' . $this->access_token
         ])->post($this->base_url . 'contatos', $contact->toArray());
 
-        if (!$response->created()) {
+        if (!($response->status() == 201 || $response->status() == 200)) {
             Log::error("Erro ao enviar o contato para Bling", $response->collect()->toArray());
             throw new Exception("Erro ao contato o pedido para Bling");
         }
@@ -279,7 +279,7 @@ class Bling
             'Authorization' => 'Bearer ' . $this->access_token
         ])->asJson()->post($this->base_url . 'pedidos/vendas', $order->toArray());
 
-        if (!$response->created()) {
+        if (!($response->status() == 201 || $response->status() == 200)) {
             Log::error("Erro ao enviar o pedido para Bling", $response->collect()->toArray());
             throw new Exception("Erro ao enviar o pedido para Bling");
         }
