@@ -2,9 +2,12 @@
 
 namespace App\Services;
 
+use App\Services\Bling\DTOs\ContactDTO;
+use App\Services\Bling\DTOs\OrderDTO;
 use App\Services\Bling\DTOs\ProductDTO;
 use App\Services\Bling\DTOs\StockDTO;
 use App\Services\Bling\Enums\Status;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -221,5 +224,66 @@ class Bling
         ])->get($this->base_url . 'estoques/saldos?', preg_replace('/\%5B\d+\%5D/', '%5B%5D', $query))->collect();
 
         return $response->get('data');
+    }
+
+    #Payment Method section
+    /**
+     * @return array Response data of request
+     */
+    public function getPaymentMethods(): array
+    {
+        $this->isSetAccessToken();
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $this->access_token
+        ])->get($this->base_url . 'formas-pagamentos');
+
+        if (!($response->status() == 201 || $response->status() == 200)) {
+            Log::error("Erro ao pegar os meios de pagamento de Bling", $response->collect()->toArray());
+            throw new Exception("Erro ao pegar os meios de pagamento d Bling");
+        }
+
+        return $response->collect()->toArray()['data'];
+    }
+
+    #Contact section
+    /**
+     * 
+     * @param App\Services\Bling\DTOs\ContactDTO $stock Data of stock
+     */
+    public function createContact(ContactDTO $contact): array
+    {
+        $this->isSetAccessToken();
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $this->access_token
+        ])->post($this->base_url . 'contatos', $contact->toArray());
+
+        if (!($response->status() == 201 || $response->status() == 200)) {
+            Log::error("Erro ao enviar o contato para Bling", $response->collect()->toArray());
+            throw new Exception("Erro ao contato o pedido para Bling");
+        }
+
+        return $response->collect()->toArray();
+    }
+
+    #Order section
+    /**
+     * @param App\Services\Bling\DTOs\OrderDTO $order The order data
+     */
+    public function createOrder(OrderDTO $order): array
+    {
+        $this->isSetAccessToken();
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $this->access_token
+        ])->asJson()->post($this->base_url . 'pedidos/vendas', $order->toArray());
+
+        if (!($response->status() == 201 || $response->status() == 200)) {
+            Log::error("Erro ao enviar o pedido para Bling", $response->collect()->toArray());
+            throw new Exception("Erro ao enviar o pedido para Bling");
+        }
+        
+        return $response->collect()->toArray();
     }
 }
