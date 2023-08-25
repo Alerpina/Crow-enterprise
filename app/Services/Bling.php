@@ -239,7 +239,7 @@ class Bling
         ])->get($this->base_url . 'formas-pagamentos');
 
         if (!$response->ok()) {
-            Log::error("Erro ao pegar os meios de pagamento de Bling", $response);
+            Log::error("Erro ao pegar os meios de pagamento de Bling", $response->collect()->toArray());
             throw new Exception("Erro ao pegar os meios de pagamento d Bling");
         }
 
@@ -260,7 +260,7 @@ class Bling
         ])->post($this->base_url . 'contatos', $contact->toArray());
 
         if (!$response->created()) {
-            Log::error("Erro ao enviar o contato para Bling", $response);
+            Log::error("Erro ao enviar o contato para Bling", $response->collect()->toArray());
             throw new Exception("Erro ao contato o pedido para Bling");
         }
 
@@ -280,7 +280,7 @@ class Bling
         ])->asJson()->post($this->base_url . 'pedidos/vendas', $order->toArray());
 
         if (!$response->created()) {
-            Log::error("Erro ao enviar o pedido para Bling", $response);
+            Log::error("Erro ao enviar o pedido para Bling", $response->collect()->toArray());
             throw new Exception("Erro ao enviar o pedido para Bling");
         }
         
