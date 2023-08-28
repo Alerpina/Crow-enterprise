@@ -617,7 +617,7 @@
                                                 @if (!empty($product['keys']))
                                                     @foreach (array_combine(explode(',', $product['keys']), explode('~', $product['values'])) as $key => $value)
                                                         <p>
-                                                            <b>{{ App\Models\Attribute::where('input_name', $key)->first()->name }}
+                                                            <b>{{ App\Models\Attribute::where('input_name', $key)->first()->name ?? null}}
                                                                 :
                                                             </b> {{ $value }}
                                                         </p>
